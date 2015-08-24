@@ -46,5 +46,4 @@ Credits
 
 License
 -------
-=======
-# school-management
+
