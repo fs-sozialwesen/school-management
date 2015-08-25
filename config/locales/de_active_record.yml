@@ -1,0 +1,44 @@
+de:
+  activerecord:
+    models:
+      education_subject:
+        one:    Fachrichtung
+        other:  Fachrichtungen
+      internship:
+        one:    Praktikum
+        other:  Praktika
+      student:
+        one:    Auszubildende(r)
+        other:  Auszubildende
+      teacher:  Lehrer
+      user:
+        one:    Login
+        other:  Logins
+    attributes:
+      internship:
+        created_at: Angelegt
+        end_date:   Ende
+        start_date: Beginn
+        status:     Status
+        updated_at: Bearbeitet
+      student:
+        address:            Adresse
+        created_at:         Angelegt
+        education_subject:  Fachrichtung
+        email:              Email
+        first_name:         Vorname
+        internships:        Praktika
+        last_name:          Nachname
+        phone:              Telefon
+        team:               Klasse
+        updated_at:         Bearbeitet
+      teacher:
+        address:            Adresse
+        created_at:         Angelegt
+        email:              Email
+        first_name:         Vorname
+        last_name:          Nachname
+        phone:              Telefon
+        updated_at:         Bearbeitet
+      user:
+        login: "Handle"

@@ -57,7 +57,7 @@ de:
       show_in_app:
         menu: "Anzeigen in App"
       new:
-        title: "Hinzufügen %{model_label}"
+        title: "%{model_label} hinzufügen"
         menu: "Neu"
         breadcrumb: "Hinzufügen"
         link: "%{model_label} hinzufügen"
