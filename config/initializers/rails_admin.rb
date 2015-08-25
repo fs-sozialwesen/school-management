@@ -24,7 +24,7 @@ RailsAdmin.config do |config|
     index                         # mandatory
     new
     # export
-    history_index
+    # history_index
     # bulk_delete
 
     # member actions:
@@ -32,10 +32,10 @@ RailsAdmin.config do |config|
     edit
     delete
     # history_show
-    # show_in_app
+    show_in_app
   end
 
-  # config.model 'EducationSubject' do
-  #   parent 'kk'
-  # end
 end
+
+RailsAdmin::Config::Fields::Types::register(:email, RailsAdmin::FieldType::EmailField)
+RailsAdmin::Config::Fields::Types::register(:address, RailsAdmin::FieldType::AddressField)
