@@ -1,0 +1,26 @@
+.page-header
+  = link_to teachers_path, class: 'btn btn-default' do 
+    span.glyphicon.glyphicon-list-alt
+    |  Back 
+  = link_to edit_teacher_path(@teacher), class: 'btn btn-primary' do 
+    span.glyphicon.glyphicon-pencil
+    |  Edit 
+  h1
+    | Show teacher
+dl.dl-horizontal
+  dt
+    | First name:
+  dd
+    = @teacher.first_name
+  dt
+    | Last name:
+  dd
+    = @teacher.last_name
+  dt
+    | Address:
+  dd
+    = @teacher.address
+  dt
+    | Email:
+  dd
+    = @teacher.email
