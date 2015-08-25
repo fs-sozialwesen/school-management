@@ -10,19 +10,20 @@ class Teacher < ActiveRecord::Base
     navigation_label 'Stammdaten'
 
     list do
-      include_fields :first_name, :last_name, :email
+      field :name
+      include_all_fields
+      exclude_fields :first_name, :last_name
+      field(:email, :email)
       field(:created_at) { date_format :short }
       field(:updated_at) { date_format :short }
     end
 
     show do
       field :name
-      field :address do
-        formatted_value do
-          value.gsub( /\n/, '<br>').html_safe
-        end
-      end
       include_all_fields
+      exclude_fields :first_name, :last_name
+      field(:email, :email)
+      field(:address, :address)
       field(:created_at) { date_format :short }
       field(:updated_at) { date_format :short }
     end
