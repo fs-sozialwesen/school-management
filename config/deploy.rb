@@ -18,8 +18,8 @@ set :user, 'school_management_deploy'
 set :stages, ["staging", "production"]
 set :default_stage, "staging"
 
-# set :linked_files, %w{config/database.yml}
-# set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
+set :linked_files, %w{config/database.yml}
+set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
 
 
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
