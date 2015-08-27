@@ -7,14 +7,23 @@ sudo apt-get install git nodejs npm postgresql postgresql-contrib postgresql-ser
 
 
 # Add user
-sudo adduser school_management_deploy
-sudo usermod -a -G sudo school_management_deploy
+sudo adduser school_deploy
+sudo usermod -a -G sudo school_deploy
 
 # app dir
 sudo mkdir /var/www/school-management
 
 # and give new user access
-sudo chown school_management_deploy:school_management_deploy /var/www/school-management
+sudo chown school_deploy:school_deploy /var/www/school-management
+
+# install ruby-install
+# https://github.com/postmodern/ruby-install#readme
+wget -O ruby-install-0.5.0.tar.gz https://github.com/postmodern/ruby-install/archive/v0.5.0.tar.gz
+tar -xzvf ruby-install-0.5.0.tar.gz
+cd ruby-install-0.5.0/
+sudo make install
+
+ruby-install ruby 2.2.3
 
 
 # install chruby
@@ -25,13 +34,6 @@ cd chruby-0.3.9/
 sudo make install
 
 #sudo ./scripts/setup.sh
-
-# install ruby-install
-# https://github.com/postmodern/ruby-install#readme
-wget -O ruby-install-0.5.0.tar.gz https://github.com/postmodern/ruby-install/archive/v0.5.0.tar.gz
-tar -xzvf ruby-install-0.5.0.tar.gz
-cd ruby-install-0.5.0/
-sudo make install
 
 source /usr/local/share/chruby/chruby.sh
 
@@ -44,3 +46,16 @@ sudo -u postgres psql postgres
 \password postgres
 CREATE EXTENSION adminpack;
 
+
+
+# Notes
+
+# hosteurope
+
+# Plesk stoppen oder deinstallieren
+# (http://syscfg.net/blog/posts/Host_Europe_vServer_Plesk_deinstallieren)
+/etc/init.d/psa stopall
+
+# Apache stoppen und Autostart deaktivieren
+/etc/init.d/apache2 stop
+update-rc.d -f apache2 remove
