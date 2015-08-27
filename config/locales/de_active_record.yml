@@ -1,6 +1,7 @@
 de:
   attributes:
     address:            Adresse
+    course:             Klasse
     created_at:         Angelegt
     education_subject:  Fachrichtung
     email:              Email
@@ -9,10 +10,15 @@ de:
     internships:        Praktika
     last_name:          Nachname
     phone:              Telefon
+    start_date:         Beginn
+    students:           Schüler
     team:               Klasse
     updated_at:         Bearbeitet
   activerecord:
     models:
+      course:
+        one: Klasse
+        other: Klassen
       education_subject:
         one:    Fachrichtung
         other:  Fachrichtungen
@@ -27,8 +33,9 @@ de:
         one:    Login
         other:  Logins
     attributes:
+      course:
+        teacher: Klassenlehrer
       internship:
-        start_date: Beginn
         status:     Status
       user:
         login: "Handle"

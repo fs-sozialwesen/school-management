@@ -1,0 +1,30 @@
+.page-header
+  = link_to courses_path, class: 'btn btn-default' do 
+    span.glyphicon.glyphicon-list-alt
+    |  Back 
+  = link_to edit_course_path(@course), class: 'btn btn-primary' do 
+    span.glyphicon.glyphicon-pencil
+    |  Edit 
+  h1
+    | Show course
+dl.dl-horizontal
+  dt
+    | Name:
+  dd
+    = @course.name
+  dt
+    | Education subject:
+  dd
+    = @course.education_subject
+  dt
+    | Teacher:
+  dd
+    = @course.teacher
+  dt
+    | Start date:
+  dd
+    = @course.start_date
+  dt
+    | End date:
+  dd
+    = @course.end_date

@@ -1,5 +1,7 @@
 class Student < ActiveRecord::Base
 
+  belongs_to :course
+
   validates :first_name, :last_name, :email, :address, :phone, presence: true
 
   def name
@@ -10,7 +12,9 @@ class Student < ActiveRecord::Base
     # navigation_label 'Stammdaten'
 
     list do
-      include_fields :first_name, :last_name, :phone
+      field :name
+      exclude_fields :first_name, :last_name
+      include_fields :course, :phone
       field(:email, :email)
       field(:created_at) { date_format :short }
       field(:updated_at) { date_format :short }
