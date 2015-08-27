@@ -1,13 +1,28 @@
 / navigation styled for Bootstrap 3.0
-nav.navbar.navbar-inverse.navbar-fixed-top
+
+nav.navbar.navbar-inverse.navbar-fixed-top role="navigation"
   .container
     .navbar-header
-      button.navbar-toggle[type="button" data-toggle="collapse" data-target=".navbar-collapse"]
+      button.navbar-toggle.collapsed type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar"
         span.sr-only Toggle navigation
         span.icon-bar
         span.icon-bar
         span.icon-bar
       = link_to 'Home', root_path, class: 'navbar-brand'
-    .collapse.navbar-collapse
-      ul.nav.navbar-nav
-        == render 'layouts/navigation_links'
+    #navbar.collapse.navbar-collapse
+      - if user_signed_in?
+        ul.nav.navbar-nav
+          li = link_to 'Administration', rails_admin_path
+
+        ul.nav.navbar-nav.navbar-right
+          li.dropdown
+            a.dropdown-toggle href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" User <span class="caret"></span>
+            ul.dropdown-menu
+              li = link_to 'Profil', edit_user_registration_path
+              li = link_to 'Abmelden', destroy_user_session_path, method: 'delete'
+              li.divider role="separator"
+              li: a href="#" Nachrichten
+      - else
+        ul.nav.navbar-nav
+          li = link_to 'Anmelden', new_user_session_path
+          li = link_to 'Bewerben', new_user_registration_path
