@@ -20,6 +20,7 @@ group :development do
   gem 'web-console', '~> 2.0'
   gem 'spring'
   gem 'bootstrap-generators', '~> 3.3.4'
+  gem 'capistrano3-puma'
 end
 
 gem 'bootstrap-sass'
