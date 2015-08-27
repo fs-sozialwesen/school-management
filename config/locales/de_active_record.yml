@@ -1,4 +1,16 @@
 de:
+  attributes:
+    address:            Adresse
+    created_at:         Angelegt
+    education_subject:  Fachrichtung
+    email:              Email
+    end_date:           Ende
+    first_name:         Vorname
+    internships:        Praktika
+    last_name:          Nachname
+    phone:              Telefon
+    team:               Klasse
+    updated_at:         Bearbeitet
   activerecord:
     models:
       education_subject:
@@ -16,29 +28,20 @@ de:
         other:  Logins
     attributes:
       internship:
-        created_at: Angelegt
-        end_date:   Ende
         start_date: Beginn
         status:     Status
-        updated_at: Bearbeitet
-      student:
-        address:            Adresse
-        created_at:         Angelegt
-        education_subject:  Fachrichtung
-        email:              Email
-        first_name:         Vorname
-        internships:        Praktika
-        last_name:          Nachname
-        phone:              Telefon
-        team:               Klasse
-        updated_at:         Bearbeitet
-      teacher:
-        address:            Adresse
-        created_at:         Angelegt
-        email:              Email
-        first_name:         Vorname
-        last_name:          Nachname
-        phone:              Telefon
-        updated_at:         Bearbeitet
       user:
         login: "Handle"
+        encrypted_password: Verschlüsseltes Passwort
+        reset_password_token: Reset-Password-Token
+        reset_password_sent_at: Passwort zurück gesetzt am
+        sign_in_count: Anzahl Anmeldungen
+        current_sign_in_at: Aktuell angemeldet um
+        last_sign_in_at: Zuletzt angemeldet am
+        current_sign_in_ip: current_sign_in_ip
+        last_sign_in_ip: last_sign_in_ip
+        confirmation_token: string
+        confirmed_at: Bestätigt am
+        confirmation_sent_at: Bestätigung gesendet am
+        unconfirmed_email: Unbestätigte Email
+        role: Rolle
