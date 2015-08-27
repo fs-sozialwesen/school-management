@@ -6,9 +6,9 @@ set :stage, :staging
 # server in each group is considered to be the first
 # unless any hosts have the primary property set.
 
-role :app, %w{school_management_deploy@qua.as}
-role :web, %w{school_management_deploy@qua.as}
-role :db,  %w{school_management_deploy@qua.as}
+role :app, %w{school_deploy@qua.as}
+role :web, %w{school_deploy@qua.as}
+role :db,  %w{school_deploy@qua.as}
 
 # Extended Server Syntax
 # ======================
