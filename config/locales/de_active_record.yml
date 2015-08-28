@@ -37,6 +37,8 @@ de:
         teacher: Klassenlehrer
       internship:
         status:     Status
+      student:
+        year: Jahrgang
       user:
         login: "Handle"
         encrypted_password: Verschlüsseltes Passwort
