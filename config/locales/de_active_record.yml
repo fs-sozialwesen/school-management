@@ -1,6 +1,7 @@
 de:
   attributes:
     address:            Adresse
+    city:               Ort
     course:             Klasse
     created_at:         Angelegt
     education_subject:  Fachrichtung
@@ -11,9 +12,11 @@ de:
     last_name:          Nachname
     phone:              Telefon
     start_date:         Beginn
-    students:           Schüler
+    street:             Straße/Nr
+    students:           Auszubildende
     team:               Klasse
     updated_at:         Bearbeitet
+    zip:                PLZ
   activerecord:
     models:
       course:
@@ -39,6 +42,8 @@ de:
         status:     Status
       student:
         year: Jahrgang
+      teacher:
+        courses: Klassenlehrer von
       user:
         login: "Handle"
         encrypted_password: Verschlüsseltes Passwort

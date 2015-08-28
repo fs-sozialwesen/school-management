@@ -1,5 +1,7 @@
 class Teacher < ActiveRecord::Base
 
+  has_many :courses
+
   validates :first_name, :last_name, :email, presence: true
 
   def name
@@ -10,12 +12,13 @@ class Teacher < ActiveRecord::Base
     navigation_label 'Stammdaten'
 
     list do
-      field :name
-      include_all_fields
-      exclude_fields :first_name, :last_name
+      field :first_name
+      field :last_name
       field(:email, :email)
-      field(:created_at) { date_format :short }
-      field(:updated_at) { date_format :short }
+      field :city
+      field :courses
+      # field(:created_at) { date_format :short }
+      # field(:updated_at) { date_format :short }
     end
 
     show do
@@ -23,7 +26,6 @@ class Teacher < ActiveRecord::Base
       include_all_fields
       exclude_fields :first_name, :last_name
       field(:email, :email)
-      field(:address, :address)
       field(:created_at) { date_format :short }
       field(:updated_at) { date_format :short }
     end
