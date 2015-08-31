@@ -5,6 +5,8 @@ class Course < ActiveRecord::Base
 
   has_many :students
 
+  has_paper_trail
+
 
   validates :name, :education_subject, :start_date, :end_date, presence: true
 

@@ -5,8 +5,8 @@ de:
     home:
       name: "Home"
     pagination:
-      previous: "&laquo; Vor"
-      next: "Zurück &raquo;"
+      previous: "&laquo; Zurück"
+      next: "Weiter &raquo;"
       truncate: "…"
     misc:
       filter_date_format: "dd.mm.yy" # a combination of 'dd', 'mm' and 'yy' with any delimiter. No other interpolation will be done!

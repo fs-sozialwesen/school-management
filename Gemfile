@@ -10,6 +10,7 @@ gem 'jquery-rails'
 gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 gem 'rails_admin'
+gem 'paper_trail', '~> 3.0'
 
 group :development, :test do
   gem 'byebug'
