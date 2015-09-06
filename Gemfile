@@ -54,9 +54,12 @@ group :development do
   gem 'spring-commands-rspec'
 end
 
-group :development, :test do
+group :development, :test, :staging do
   gem 'factory_girl_rails'
   gem 'faker'
+end
+
+group :development, :test do
   gem 'pry-rails'
   gem 'pry-rescue'
   gem 'rspec-rails'
