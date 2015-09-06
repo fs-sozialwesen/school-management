@@ -1,10 +1,8 @@
 FactoryGirl.define do
   factory :course do
-    name "MyString"
-education_subject "MyString"
-teacher nil
-start_date "2015-08-27"
-end_date "2015-08-27"
+    start_date { Date.new [2013, 2014, 2015].sample, 9, 1 }
+    end_date { start_date + 3.years }
+    name { education_subject.name[0..5] + start_date.year.to_s[2..3] }
   end
 
 end
