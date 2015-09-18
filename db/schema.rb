@@ -49,6 +49,25 @@ ActiveRecord::Schema.define(version: 20150828155758) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "institutions", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "carrier_id"
+    t.string   "street"
+    t.string   "zip"
+    t.string   "city"
+    t.string   "county"
+    t.string   "email"
+    t.string   "phone"
+    t.string   "fax"
+    t.string   "contact_person"
+    t.string   "homepage"
+    t.text     "comments"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  add_index "institutions", ["carrier_id"], name: "index_institutions_on_carrier_id", using: :btree
+
   create_table "students", force: :cascade do |t|
     t.string   "first_name"
     t.string   "last_name"
