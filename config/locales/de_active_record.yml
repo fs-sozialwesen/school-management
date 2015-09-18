@@ -4,6 +4,7 @@ de:
     carrier:            Träger
     city:               Ort
     comments:           Bemerkungen
+    contact_person:     Ansprechpartner
     course:             Klasse
     created_at:         Angelegt
     date_of_birth:      Geburtsdatum
@@ -14,8 +15,10 @@ de:
     first_name:         Vorname
     internships:        Praktika
     institution:        Einrichtung
+    institutions:       Einrichtungen
     last_name:          Nachname
     mentor:             Praxisanleiter
+    mentors:            Praxisanleiter
     phone:              Telefon
     place_of_birth:     Geburtsort
     start_date:         Beginn
