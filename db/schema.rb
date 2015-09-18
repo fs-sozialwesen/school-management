@@ -16,6 +16,21 @@ ActiveRecord::Schema.define(version: 20150828155758) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "carriers", force: :cascade do |t|
+    t.string   "name"
+    t.string   "street"
+    t.string   "zip"
+    t.string   "city"
+    t.string   "email"
+    t.string   "phone"
+    t.string   "fax"
+    t.string   "contact_person"
+    t.string   "homepage"
+    t.text     "comments"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
   create_table "courses", force: :cascade do |t|
     t.string   "name"
     t.integer  "teacher_id"
