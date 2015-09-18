@@ -1,24 +1,33 @@
 de:
   attributes:
     address:            Adresse
+    carrier:            Träger
     city:               Ort
+    comments:           Bemerkungen
     course:             Klasse
     created_at:         Angelegt
+    date_of_birth:      Geburtsdatum
+    description:        Beschreibung
     education_subject:  Fachrichtung
     email:              Email
     end_date:           Ende
     first_name:         Vorname
     internships:        Praktika
+    institution:        Einrichtung
     last_name:          Nachname
+    mentor:             Praxisanleiter
     phone:              Telefon
+    place_of_birth:     Geburtsort
     start_date:         Beginn
     street:             Straße/Nr
     students:           Auszubildende
     team:               Klasse
     updated_at:         Bearbeitet
+    work_area:          Arbeitsfeld
     zip:                PLZ
   activerecord:
     models:
+      carrier: Träger
       course:
         one: Klasse
         other: Klassen
@@ -28,6 +37,13 @@ de:
       internship:
         one:    Praktikum
         other:  Praktika
+      internship_position:
+        one:    Praktikumsplatz
+        other:  Praktikumsplätze
+      institution:
+        one:    Einrichtung
+        other:  Einrichtungen
+      mentor: Praxisanleiter
       student:
         one:    Auszubildende(r)
         other:  Auszubildende
@@ -38,8 +54,12 @@ de:
     attributes:
       course:
         teacher: Klassenlehrer
+      education_subject:
+        short_name: Kürzel
       internship:
         status:     Status
+      internship_position:
+        accommodation: Unterkunft
       student:
         year: Jahrgang
       teacher:
