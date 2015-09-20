@@ -2,6 +2,7 @@ class Student < ActiveRecord::Base
 
   belongs_to :course
   belongs_to :education_subject
+  has_many :internships, inverse_of: :student
 
   validates :first_name, :last_name, :email, :street, :zip, :city, :phone, presence: true
 
