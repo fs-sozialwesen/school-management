@@ -9,7 +9,6 @@ class Teacher < ActiveRecord::Base
   end
 
   rails_admin do
-    navigation_label 'Stammdaten'
 
     list do
       field :first_name
