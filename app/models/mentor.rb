@@ -1,7 +1,7 @@
-class Mentor < ActiveRecord::Base
+class Mentor < Person
 
-  belongs_to :carrier,     inverse_of: :mentors
-  belongs_to :institution, inverse_of: :mentors
+  # belongs_to :carrier,     inverse_of: :mentors
+  # belongs_to :institution, inverse_of: :mentors
   has_many :internships,   inverse_of: :mentor
 
   def name

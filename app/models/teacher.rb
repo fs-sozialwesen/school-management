@@ -1,14 +1,16 @@
-class Teacher < ActiveRecord::Base
+class Teacher < Person
 
   has_many :courses
 
-  validates :first_name, :last_name, :email, presence: true
+  # validates :first_name, :last_name, :email, presence: true
 
   def name
     "#{first_name} #{last_name}"
   end
 
   rails_admin do
+
+    navigation_label 'Stammdaten'
 
     list do
       field :first_name

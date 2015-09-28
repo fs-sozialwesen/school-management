@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150920010845) do
+ActiveRecord::Schema.define(version: 20150928202734) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,8 +40,6 @@ ActiveRecord::Schema.define(version: 20150920010845) do
     t.datetime "updated_at",           null: false
     t.integer  "education_subject_id"
   end
-
-  add_index "courses", ["teacher_id"], name: "index_courses_on_teacher_id", using: :btree
 
   create_table "education_subjects", force: :cascade do |t|
     t.string   "name"
@@ -98,51 +96,22 @@ ActiveRecord::Schema.define(version: 20150920010845) do
   end
 
   add_index "internships", ["internship_position_id"], name: "index_internships_on_internship_position_id", using: :btree
-  add_index "internships", ["mentor_id"], name: "index_internships_on_mentor_id", using: :btree
-  add_index "internships", ["student_id"], name: "index_internships_on_student_id", using: :btree
 
-  create_table "mentors", force: :cascade do |t|
-    t.string   "first_name"
-    t.string   "last_name"
-    t.integer  "carrier_id"
-    t.integer  "institution_id"
-    t.string   "email"
-    t.string   "phone"
-    t.text     "comments"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
-  end
-
-  add_index "mentors", ["carrier_id"], name: "index_mentors_on_carrier_id", using: :btree
-  add_index "mentors", ["institution_id"], name: "index_mentors_on_institution_id", using: :btree
-
-  create_table "students", force: :cascade do |t|
+  create_table "people", force: :cascade do |t|
+    t.string   "type"
     t.string   "first_name"
     t.string   "last_name"
     t.string   "email"
     t.string   "phone"
+    t.string   "mobile"
+    t.string   "street"
+    t.string   "zip"
+    t.string   "city"
     t.date     "date_of_birth"
     t.string   "place_of_birth"
-    t.text     "comments"
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
-    t.integer  "course_id"
-    t.integer  "education_subject_id"
-    t.integer  "year"
-    t.string   "street"
-    t.string   "zip",                  limit: 10
-    t.string   "city"
-  end
-
-  create_table "teachers", force: :cascade do |t|
-    t.string   "first_name"
-    t.string   "last_name"
-    t.string   "email"
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
-    t.string   "street"
-    t.string   "zip",        limit: 10
-    t.string   "city"
+    t.string   "gender"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -181,12 +150,7 @@ ActiveRecord::Schema.define(version: 20150920010845) do
 
   add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
 
-  add_foreign_key "courses", "teachers"
   add_foreign_key "institutions", "carriers"
   add_foreign_key "internship_positions", "institutions"
   add_foreign_key "internships", "internship_positions"
-  add_foreign_key "internships", "mentors"
-  add_foreign_key "internships", "students"
-  add_foreign_key "mentors", "carriers"
-  add_foreign_key "mentors", "institutions"
 end

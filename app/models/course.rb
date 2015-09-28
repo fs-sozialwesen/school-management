@@ -3,16 +3,20 @@ class Course < ActiveRecord::Base
   belongs_to :teacher
   belongs_to :education_subject
 
-  has_many :students
+  # has_one :leadership
+  # has_one :course_teacher, through: :leadership
+
+  # has_many :course_memberships
+  # has_many :students, through: :course_memberships
 
   has_paper_trail
 
 
   validates :name, :education_subject, :start_date, :end_date, presence: true
 
-  def students_count
-    students.count
-  end
+  # def students_count
+  #   students.count
+  # end
 
   rails_admin do
     # configure :students do
@@ -30,7 +34,7 @@ class Course < ActiveRecord::Base
       field :name
       field :education_subject
       field :teacher
-      field(:students_count) { label { I18n.t('attributes.students') } }
+      # field(:students_count) { label { I18n.t('attributes.students') } }
       field(:start_date) { formatted_value { value.year } }
       field(:end_date) { formatted_value { value.year } }
       # field(:created_at) { date_format :short }
@@ -39,9 +43,9 @@ class Course < ActiveRecord::Base
 
     show do
       field :name
-      field(:students_count) { label { I18n.t('attributes.students') } }
+      # field(:students_count) { label { I18n.t('attributes.students') } }
 
-      field :students
+      # field :students
       # exclude_fields :first_name, :last_name
       # field(:email, :email)
       # field(:address, :address)
