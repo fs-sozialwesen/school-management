@@ -10,25 +10,15 @@ puts 'CREATED ADMIN USER: ' << user.email
 # Environment variables (ENV['...']) can be set in the file .env file.
 
 unless Rails.env.production?
-  EducationSubject.delete_all
-  Course.delete_all
-  Teacher.delete_all
   Student.delete_all
 
-  education_subjects = ENV['EDUCATION_SUBJECTS'].split(',').map do |subject|
-    EducationSubject.create! name: subject
-  end
-  teachers = FactoryGirl.create_list :teacher, 6
-  years = [2013, 2014, 2015]
-  education_subjects.each do |education_subject|
-    years.each do |year|
-      course = FactoryGirl.create(:course,
-        teacher:           teachers.sample,
-        education_subject: education_subject,
-        start_date:        Date.new(year, 9, 1)
-      )
-      students_count = (12..20).to_a.sample
-      FactoryGirl.create_list :student, students_count, course: course, year: year, education_subject: education_subject
-    end
+  # generate 6 to 32 students for each class
+  Course.all.each do |course|
+    students_count = (6..32).to_a.sample
+    FactoryGirl.create_list :student,
+      students_count,
+      course: course,
+      year: course.start_date.year,
+      education_subject: course.education_subject
   end
 end
