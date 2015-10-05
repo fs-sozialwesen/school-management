@@ -10,11 +10,11 @@ class Teacher < Person
 
   rails_admin do
 
-    navigation_label 'Stammdaten'
+    # navigation_label 'Stammdaten'
 
     list do
-      field :first_name
-      field :last_name
+      field :first_name, :self_link
+      field :last_name, :self_link
       field(:email, :email)
       field :city
       field :courses

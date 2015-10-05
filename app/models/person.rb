@@ -4,8 +4,8 @@ class Person < ActiveRecord::Base
 
 
   rails_admin do
-
-    navigation_label 'Stammdaten'
+    hide
+    # navigation_label 'Stammdaten'
 
   end
 

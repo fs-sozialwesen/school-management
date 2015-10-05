@@ -11,5 +11,9 @@ class InternshipPosition < ActiveRecord::Base
       enum { ['Kindertagesstätten', 'Hort', 'Heim', 'Tagesgruppe', 'offene Kinder- und Jugendarbeit', 'Psychiatrie', 'Schule'] }
     end
 
+    edit do
+      exclude_fields :internships
+    end
+
   end
 end
