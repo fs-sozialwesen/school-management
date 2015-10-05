@@ -9,6 +9,7 @@ namespace :legacy_data do
     Course.delete_all
     Teacher.delete_all
     EducationSubject.delete_all
+    Carrier.delete_all
 
   end
 
@@ -30,8 +31,5 @@ namespace :legacy_data do
 
     Importer.import_all
 
-    # StudentImporter.new.run
-
-    # Importer.new(Carrier, 'traeger', %i(id name street zip city email homepage phone fax)).run
   end
 end

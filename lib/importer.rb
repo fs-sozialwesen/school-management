@@ -5,6 +5,7 @@ module Importer
     import_teachers
     import_courses
     import_students
+    import_carriers
   end
 
   def self.encrypt_string(string)
@@ -103,6 +104,32 @@ module Importer
 
     ActiveRecord::Base.connection.reset_pk_sequence!(Student.table_name)
     ActiveRecord::Base.connection.reset_pk_sequence!(CourseMembership.table_name)
+  end
+
+  def self.import_carriers
+    puts 'import carriers'
+    LegacyDatum.where(old_table: 'traeger').all.each do |legacy_datum|
+      data = legacy_datum.data
+      carrier                = Carrier.new
+      carrier.id             = data['id']
+      carrier.name           = data['name_1']
+      carrier.email          = encrypt_string data['email']
+      street, number         = data['strasse'], data['hausnummer']
+      street                 += (" #{number}") if number.present?
+      carrier.street         = encrypt_string street
+      carrier.zip            = data['plz']
+      carrier.city           = data['ort']
+      carrier.phone          = encrypt_string data['telefon']
+      carrier.fax            = encrypt_string data['telefax']
+      carrier.contact_person = encrypt_string "#{data['vorname']} #{data['nachname']}"
+      carrier.homepage       = data['homepage']
+      carrier.comments       = encrypt_string data['kurzbeschreibung']
+      carrier.save!
+      # geschlecht: 1
+    end
+
+
+    ActiveRecord::Base.connection.reset_pk_sequence!(Carrier.table_name)
   end
 
 
