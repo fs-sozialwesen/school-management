@@ -6,6 +6,7 @@ de:
     comments:             Bemerkungen
     contact_person:       Ansprechpartner
     course:               Klasse
+    course_teacher:       Klassenlehrer
     created_at:           Angelegt
     date_of_birth:        Geburtsdatum
     description:          Beschreibung
@@ -39,6 +40,7 @@ de:
       education_subject:
         one:    Fachrichtung
         other:  Fachrichtungen
+      employee: Mitarbeiter
       internship:
         one:    Praktikum
         other:  Praktika

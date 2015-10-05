@@ -1,15 +1,6 @@
 class LegacyDatum < ActiveRecord::Base
   serialize :data, Hash
 
-  def self.method_missing(meth_name, *args, &block)
-    meth_name = meth_name.to_s
-    if meth_name.in? %w(ausbildungsart lehrer klassen azubi)
-      where(old_table: meth_name).pluck(:data)
-    else
-      super meth_name, *args, &block
-    end
-  end
-
   rails_admin do
 
     navigation_label 'Stammdaten'
@@ -18,10 +9,12 @@ class LegacyDatum < ActiveRecord::Base
       label 'alte Tabelle'
       column_width 150
     end
+
     configure(:old_id) do
       label 'alte ID'
       column_width 90
     end
+
     configure :data do
       label 'Daten'
       pretty_value do

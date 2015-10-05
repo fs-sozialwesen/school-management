@@ -8,6 +8,8 @@ class Student < Person
   has_one :course, through: :course_membership
   has_one :education_subject, through: :course
 
+  has_one :course_teacher, through: :course, source: :teacher
+
   has_many :internships, inverse_of: :student
 
   Course.course_scopes.each do |course_sym, course_name|
@@ -52,17 +54,24 @@ class Student < Person
       group(:default) do
         field :first_name
         field :last_name
+        field :email, :email
+        field :date_of_birth
+        field :place_of_birth
       end
-      group(:addresssdsdsd) do
+      group(:address) do
+        label 'Adresse'
         field :street
         field :zip
         field :city
       end
-
-      group(:efefefef) do
-        field :date_of_birth
-        field :created_at
+      group(:course) do
+        label 'Klasse'
+        field :course
+        field :course_teacher
+        field :education_subject
+        field :year
       end
+
     end
 
     edit do

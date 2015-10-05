@@ -2,6 +2,8 @@ class User < ActiveRecord::Base
   enum role: {user: 0, admin: 1, student: 2, teacher: 3}
   after_initialize :set_default_role, if: :new_record?
 
+  has_one :person, inverse_of: :user
+
   def set_default_role
     self.role ||= :user
   end
@@ -15,11 +17,12 @@ class User < ActiveRecord::Base
     navigation_label 'Stammdaten'
 
     list do
-      include_all_fields
-      exclude_fields %i(encrypted_password reset_password_token reset_password_sent_at
-          remember_created_at sign_in_count current_sign_in_ip last_sign_in_ip
-          confirmation_token confirmation_sent_at unconfirmed_email)
+      # include_all_fields
+      # exclude_fields %i(encrypted_password reset_password_token reset_password_sent_at
+      #     remember_created_at sign_in_count current_sign_in_ip last_sign_in_ip
+      #     confirmation_token confirmation_sent_at unconfirmed_email)
       field(:email, :email)
+      field :person
       field(:created_at) { date_format :short }
       field(:updated_at) { date_format :short }
     end
@@ -27,9 +30,7 @@ class User < ActiveRecord::Base
     show do
       field :name
       include_all_fields
-      exclude_fields :first_name, :last_name
       field(:email, :email)
-      field(:address, :address)
       field(:created_at) { date_format :short }
       field(:updated_at) { date_format :short }
     end

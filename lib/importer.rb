@@ -1,8 +1,9 @@
 module Importer
 
   def self.import_all
-    import_education_subjects
+    import_employees
     import_teachers
+    import_education_subjects
     import_courses
     import_students
     import_carriers
@@ -20,14 +21,34 @@ module Importer
     [first, last].join '@'
   end
 
+  def self.import_employees
+    puts 'import employees'
+
+    LegacyDatum.where(old_table: 'mitarbeiter').all.each do |legacy_datum|
+      data = legacy_datum.data
+
+      employee            = Employee.new
+      employee.first_name = data['vorname']
+      employee.last_name  = data['nachname']
+      employee.email      = data['email']
+      employee.save!
+
+      employee.create_login!
+
+      ActiveRecord::Base.connection.reset_pk_sequence!(Person.table_name)
+    end
+
+  end
+
   def self.import_education_subjects
     puts 'import education_subjects'
-    LegacyDatum.ausbildungsart.each do |legacy_data|
-      education_subject            = EducationSubject.new
+    LegacyDatum.where(old_table: 'ausbildungsart').all.each do |legacy_datum|
+      data = legacy_datum.data
 
-      education_subject.id         = legacy_data['id']
-      education_subject.name       = legacy_data['name']
-      education_subject.short_name = legacy_data['shortname']
+      education_subject            = EducationSubject.new
+      education_subject.id         = data['id']
+      education_subject.name       = data['name']
+      education_subject.short_name = data['shortname']
 
       education_subject.save!
     end
@@ -38,14 +59,15 @@ module Importer
 
   def self.import_teachers
     puts 'import teachers'
-    LegacyDatum.lehrer.each do |legacy_data|
-      teacher            = Teacher.new
+    LegacyDatum.where(old_table: 'lehrer').all.each do |legacy_datum|
+      data = legacy_datum.data
 
-      teacher.id         = legacy_data['id']
-      teacher.email      = encrypt_email(legacy_data['email'])
-      teacher.first_name = legacy_data['vorname']
-      teacher.last_name  = legacy_data['nachname']
-      teacher.gender     = legacy_data['geschlecht'].to_i == 1 ? 'f' : 'm'
+      teacher            = Teacher.new
+      teacher.id         = data['id']
+      teacher.email      = encrypt_email(data['email'])
+      teacher.first_name = data['vorname']
+      teacher.last_name  = data['nachname']
+      teacher.gender     = data['geschlecht'].to_i == 1 ? 'f' : 'm'
 
       teacher.save!
     end
@@ -55,14 +77,16 @@ module Importer
 
   def self.import_courses
     puts 'import courses'
-    LegacyDatum.klassen.each do |legacy_data|
+    LegacyDatum.where(old_table: 'klassen').all.each do |legacy_datum|
+      data = legacy_datum.data
+
       course                      = Course.new
-      course.id                   = legacy_data['id']
-      course.education_subject_id = legacy_data['ausbildungsart_id']
-      course.name                 = legacy_data['name']
-      course.teacher_id           = legacy_data['lehrer_id']
-      course.start_date           = legacy_data['start_date']
-      course.end_date             = legacy_data['end_date']
+      course.id                   = data['id']
+      course.education_subject_id = data['ausbildungsart_id']
+      course.name                 = data['name']
+      course.teacher_id           = data['lehrer_id']
+      course.start_date           = data['start_date']
+      course.end_date             = data['end_date']
       course.save!
     end
 

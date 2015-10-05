@@ -3,5 +3,13 @@ body.rails_admin {
     width: 50%;
     float: left;
     padding-right: 20px;
+
+    dt {
+      float: right;
+    }
+
+    dd.well {
+      padding: 8px 12px;
+    }
   }
 }

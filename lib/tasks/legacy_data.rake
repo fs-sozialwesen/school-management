@@ -3,13 +3,17 @@ namespace :legacy_data do
   desc 'deletes all data in the database'
   task :clear => %w(environment) do
 
-    Carrier.delete_all
-    CourseMembership.delete_all
-    Student.delete_all
-    Course.delete_all
-    Teacher.delete_all
-    EducationSubject.delete_all
-    Carrier.delete_all
+    [
+      User,
+      Employee,
+      Carrier,
+      CourseMembership,
+      Student,
+      Course,
+      Teacher,
+      EducationSubject,
+      Carrier,
+    ].each { |model| model.delete_all }
 
   end
 
