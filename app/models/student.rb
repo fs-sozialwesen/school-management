@@ -1,37 +1,73 @@
 class Student < Person
 
-  # belongs_to :course
   # belongs_to :education_subject
+
+  has_many :course_memberships, dependent: :delete_all
+  has_many :courses, through: :course_memberships
+  has_one :course_membership, -> { where active: true }
+  has_one :course, through: :course_membership
+  has_one :education_subject, through: :course
+
   has_many :internships, inverse_of: :student
 
-  validates :street, :zip, :city, :phone, presence: true
+  Course.course_scopes.each do |course_sym, course_name|
+    scope course_sym, -> do
+      includes(:course_memberships, :courses).
+        where(course_memberships: {active: true}).
+        where(courses: {name: course_name})
+    end
+  end
+
+
+  validates :street, presence: true
+  validates :zip,    presence: true
+  validates :city,   presence: true
 
   def name
     "#{first_name} #{last_name}"
   end
 
+  def year
+    course.start_date.year if course.present?
+  end
+
   rails_admin do
-      # navigation_label 'Praktikum'
       parent Course
 
-
     list do
-      # filters [:course, :education_subject]
-      field :first_name
-      field :last_name
-      # field(:year) { column_width 30 }
-      # field(:email, :email)
-      # include_fields :education_subject, :course, :city
-      # field(:created_at) { date_format :short }
-      # field(:updated_at) { date_format :short }
+      scopes [nil] + Course.course_scopes.keys.sort
+      sort_by :last_name
+      field :first_name, :self_link
+      field :last_name, :self_link
+      # field :course
+      # field :education_subject
+      # field(:year) do
+      #   column_width 30
+      # end
+      field(:email, :email)
+      field :city
     end
 
-    # show do
-    #   group(:default)
-    #   group(:address)
-    #   field(:name) { group :default }
-    #   field(:city) { group :address }
-    # end
+    show do
+      group(:default) do
+        field :first_name
+        field :last_name
+      end
+      group(:addresssdsdsd) do
+        field :street
+        field :zip
+        field :city
+      end
+
+      group(:efefefef) do
+        field :date_of_birth
+        field :created_at
+      end
+    end
+
+    edit do
+      exclude_fields :course_memberships, :courses, :course_membership, :course, :internships, :type
+    end
 
   end
 end
