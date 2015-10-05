@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   rails_admin do
-    # navigation_label 'Stammdaten'
+    navigation_label 'Stammdaten'
 
     list do
       include_all_fields
