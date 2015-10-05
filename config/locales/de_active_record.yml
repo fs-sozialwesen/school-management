@@ -48,14 +48,18 @@ de:
       institution:
         one:    Einrichtung
         other:  Einrichtungen
+      legacy_datum: Importierte Daten
       mentor: Praxisanleiter
+      person:
+        one: Person
+        other: Personen
       student:
         one:    Auszubildende(r)
         other:  Auszubildende
       teacher:  Lehrer
       user:
-        one:    Login
-        other:  Logins
+        one:    Account
+        other:  Accounts
     attributes:
       course:
         teacher: Klassenlehrer

@@ -110,6 +110,14 @@ ActiveRecord::Schema.define(version: 20151001175636) do
 
   add_index "internships", ["internship_position_id"], name: "index_internships_on_internship_position_id", using: :btree
 
+  create_table "legacy_data", force: :cascade do |t|
+    t.string   "old_table"
+    t.integer  "old_id"
+    t.text     "data"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "people", force: :cascade do |t|
     t.string   "type"
     t.string   "first_name"

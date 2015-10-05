@@ -1,5 +1,8 @@
 RailsAdmin.config do |config|
 
+  config.default_items_per_page = 50
+  config.label_methods = [:display_name, :name, :title] # Default is [:name, :title]
+
   ### Popular gems integration
 
   ## == Devise ==
@@ -26,20 +29,21 @@ RailsAdmin.config do |config|
 
     # collection actions:
     index                         # mandatory
-    new
-    export
-    history_index
+    new           { except ['LegacyDatum'] }
+    export        { except %w(LegacyDatum EducationSubject) }
+    history_index { except %w(LegacyDatum EducationSubject) }
     # bulk_delete
 
     # member actions:
     show
-    edit
-    delete
-    history_show
-    show_in_app
+    edit         { except %w(LegacyDatum EducationSubject) }
+    delete       { except %w(LegacyDatum Course EducationSubject) }
+    history_show { except %w(LegacyDatum EducationSubject) }
+    # show_in_app { except ['LegacyDatum'] }
   end
 
 end
 
+RailsAdmin::Config::Fields::Types::register(:self_link, RailsAdmin::FieldType::SelfLinkField)
 RailsAdmin::Config::Fields::Types::register(:email, RailsAdmin::FieldType::EmailField)
 RailsAdmin::Config::Fields::Types::register(:address, RailsAdmin::FieldType::AddressField)
