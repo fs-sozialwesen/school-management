@@ -16,7 +16,8 @@ module Importer
   def self.encrypt_email(email)
     return unless email.present?
     first, last = email.split '@'
-    [encrypt_string(first), last].join '@'
+    first = Digest::MD5.hexdigest first
+    [first, last].join '@'
   end
 
   def self.import_education_subjects
