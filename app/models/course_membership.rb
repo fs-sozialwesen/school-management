@@ -7,6 +7,8 @@ class CourseMembership < ActiveRecord::Base
   before_create :set_defaults
   after_create :deactivate_older_memberships
 
+  has_paper_trail
+
 
   def name
     "#{student.try :name} #{course.try :name}"

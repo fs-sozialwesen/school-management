@@ -4,6 +4,8 @@ class Mentor < Person
   # belongs_to :institution, inverse_of: :mentors
   has_many :internships,   inverse_of: :mentor
 
+  has_paper_trail
+
   def name
     "#{first_name} #{last_name}"
   end

@@ -4,6 +4,8 @@ class Teacher < Person
 
   # validates :first_name, :last_name, :email, presence: true
 
+  has_paper_trail
+
   rails_admin do
 
     # navigation_label 'Stammdaten'

@@ -12,6 +12,8 @@ class Student < Person
 
   has_many :internships, inverse_of: :student
 
+  has_paper_trail
+
   Course.course_scopes.each do |course_sym, course_name|
     scope course_sym, -> do
       includes(:course_memberships, :courses).
