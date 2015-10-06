@@ -12,38 +12,41 @@ class Course < ActiveRecord::Base
 
   has_paper_trail
 
-  scope :active, -> { where('end_date > ?', Date.today) }
+  scope :active,   -> { where('end_date > ?',  Date.today) }
+  scope :inactive, -> { where('end_date <= ?', Date.today) }
 
   validates :name, :education_subject, :start_date, :end_date, presence: true
 
   def self.course_scopes
-    active.pluck(:name).each_with_object({}) do |name, hsh|
-      hsh[name.downcase.gsub(' ', '_').to_sym] = name
+    active.all.each_with_object({}) do |course, hsh|
+      hsh[course.underscore_name] = course.name
     end
   end
 
-  def students_count
-    students.count
+  def underscore_name
+    name.downcase.gsub(' ', '_').to_sym
   end
 
   rails_admin do
-    # configure :students do
-    #     pretty_value do
-    #     course = bindings[:object]
-    #     course.inspect
-    #   end
-    #   # children_fields [:name, :phone, :logo] # will be used for searching/filtering, first field will be used for sorting
-    #   read_only true # won't be editable in forms (alternatively, hide it in edit section)
-    # end
+    configure :students do
+        pretty_value do
+          course      = bindings[:object]
+          url_options = { model_name: 'student', scope: course.underscore_name }
+          url         = bindings[:view].rails_admin.index_path url_options
+          bindings[:view].link_to "#{course.students.count} #{I18n.t('attributes.students')}", url
+        end
+      # children_fields [:first_name, :phone] # will be used for searching/filtering, first field will be used for sorting
+      # read_only true # won't be editable in forms (alternatively, hide it in edit section)
+    end
 
     list do
-      scopes [:active, nil]
+      scopes [:active, :inactive, nil]
       sort_by :education_subject
 
       field :name, :self_link
       field :education_subject
       field :teacher
-      field(:students_count) { label { I18n.t('attributes.students') } }
+      field :students
       field(:start_date) { formatted_value { "#{value.month}/#{value.year}" } }
       field(:end_date) { formatted_value { "#{value.month}/#{value.year}" } }
     end

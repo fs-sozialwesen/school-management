@@ -38,7 +38,7 @@ de:
       records: "Datensatz"
       username: "Nutzer"
       changes: "Änderungen"
-      created_at: "Datum/uhrzeit"
+      created_at: "Datum/Uhrzeit"
       item: "Element"
       message: "Meldung"
     actions:
@@ -129,3 +129,10 @@ de:
         default_col_sep: ","
         col_sep: "Spalten-Separator"
         col_sep_help: "Trennzeichen für Spaltenwerte festlegen. Unverändert lassen für Standardwert ('%{value}')" # value is default_col_sep
+    scopes:
+      course:
+        _all: Alle
+        active: Aktuell
+        inactive: Archiv
+      student:
+        _all: Alle

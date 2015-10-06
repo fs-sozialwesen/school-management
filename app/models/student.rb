@@ -15,6 +15,7 @@ class Student < Person
   has_paper_trail
 
   Course.course_scopes.each do |course_sym, course_name|
+    I18n.backend.store_translations :de, {admin: {scopes: {student: {course_sym => course_name}}}}
     scope course_sym, -> do
       includes(:course_memberships, :courses).
         where(course_memberships: {active: true}).
