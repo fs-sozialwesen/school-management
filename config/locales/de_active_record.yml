@@ -51,14 +51,26 @@ de:
         one:    Einrichtung
         other:  Einrichtungen
       legacy_datum: Importierte Daten
+      lesson:
+        one: Stunde
+        other: Stunden
       mentor: Praxisanleiter
       person:
         one: Person
         other: Personen
+      room:
+        one: Raum
+        other: Räume
       student:
         one:    Auszubildende(r)
         other:  Auszubildende
+      subject:
+        one: Fach
+        other: Fächer
       teacher:  Lehrer
+      timetable:
+        one: Stundenplan
+        other: Stundenpläne
       user:
         one:    Account
         other:  Accounts
@@ -71,6 +83,13 @@ de:
         status:     Status
       internship_position:
         accommodation: Unterkunft
+      lesson:
+        timetable: Stundenplan
+        teacher: Lehrer
+        subject: Fach
+        room: Raum
+        start_time: Start
+        end_time: Ende
       student:
         year: Jahrgang
       teacher:

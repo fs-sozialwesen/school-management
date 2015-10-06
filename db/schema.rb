@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151005184247) do
+ActiveRecord::Schema.define(version: 20151006044951) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -118,6 +118,23 @@ ActiveRecord::Schema.define(version: 20151005184247) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "lessons", force: :cascade do |t|
+    t.integer  "timetable_id"
+    t.integer  "teacher_id"
+    t.integer  "subject_id"
+    t.integer  "room_id"
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.string   "comments"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "lessons", ["room_id"], name: "index_lessons_on_room_id", using: :btree
+  add_index "lessons", ["subject_id"], name: "index_lessons_on_subject_id", using: :btree
+  add_index "lessons", ["teacher_id"], name: "index_lessons_on_teacher_id", using: :btree
+  add_index "lessons", ["timetable_id"], name: "index_lessons_on_timetable_id", using: :btree
+
   create_table "people", force: :cascade do |t|
     t.string   "type"
     t.string   "first_name"
@@ -135,6 +152,31 @@ ActiveRecord::Schema.define(version: 20151005184247) do
     t.datetime "updated_at",     null: false
     t.integer  "user_id"
   end
+
+  create_table "rooms", force: :cascade do |t|
+    t.string   "name"
+    t.text     "comments"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "subjects", force: :cascade do |t|
+    t.string   "name"
+    t.text     "comments"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "timetables", force: :cascade do |t|
+    t.integer  "course_id"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.text     "comments"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "timetables", ["course_id"], name: "index_timetables_on_course_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -176,4 +218,8 @@ ActiveRecord::Schema.define(version: 20151005184247) do
   add_foreign_key "institutions", "carriers"
   add_foreign_key "internship_positions", "institutions"
   add_foreign_key "internships", "internship_positions"
+  add_foreign_key "lessons", "rooms"
+  add_foreign_key "lessons", "subjects"
+  add_foreign_key "lessons", "timetables"
+  add_foreign_key "timetables", "courses"
 end
