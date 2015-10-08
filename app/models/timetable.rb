@@ -1,31 +1,31 @@
-class Timetable < ActiveRecord::Base
-  belongs_to :course
+class Timetable
 
-  validates :course, :start_date, :end_date, presence: true
-  validate :start_date_is_a_monday
-  validate :end_date_is_a_friday
-  validate :start_and_end_are_in_same_week
-
-  def name
-    "#{course.name} (#{start_date})" if course
+  # has_lessons could be one of course, teacher, room
+  def initialize(has_lessons, date_in_week = Date.today)
+    raise 'first param must have a "lessons" association' unless has_lessons.respond_to? :lessons
+    raise 'first param must be a Date' unless date_in_week.is_a? Date
+    @has_lessons  = has_lessons
+    @date_in_week = date_in_week
   end
 
-  rails_admin do
-    navigation_label 'Stundenplan'
+  def monday
+    @date_in_week - @date_in_week.wday + 1
   end
 
-  private
-
-  def start_date_is_a_monday
-    errors.add(:start_date, "muss ein Montag sein") unless start_date.wday == 1
+  def friday
+    monday + 4
   end
 
-  def end_date_is_a_friday
-    errors.add(:end_date, "muss ein Freitag sein") unless end_date.wday == 5
+  def time_blocks
+    TimeBlock.order(:position).where id: time_block_ids
   end
 
-  def start_and_end_are_in_same_week
-    errors.add(:end_date, "muss in der gleichen Woche liegen") unless start_date.cweek == end_date.cweek
+  def time_block_ids
+    lessons.pluck(:time_block_id).uniq
+  end
+
+  def lessons
+    @has_lessons.lessons.where('date >= ?', monday).where('date <= ?', friday)
   end
 
 end

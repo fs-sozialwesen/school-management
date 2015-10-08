@@ -8,6 +8,7 @@ de:
     course:               Klasse
     course_teacher:       Klassenlehrer
     created_at:           Angelegt
+    date:                 Datum
     date_of_birth:        Geburtsdatum
     description:          Beschreibung
     education_subject:    Fachrichtung
@@ -28,6 +29,7 @@ de:
     student:              Auszubildende(r)
     students:             Auszubildende
     team:                 Klasse
+    time_block:           Zeit
     updated_at:           Bearbeitet
     work_area:            Arbeitsfeld
     zip:                  PLZ
@@ -68,6 +70,9 @@ de:
         one: Fach
         other: Fächer
       teacher:  Lehrer
+      time_block:
+        one: Zeitblock
+        other: Zeitblöcke
       timetable:
         one: Stundenplan
         other: Stundenpläne

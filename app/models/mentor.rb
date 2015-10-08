@@ -12,7 +12,7 @@ class Mentor < Person
 
 
   rails_admin do
-    navigation_label 'Praktikum'
+    # navigation_label 'Praktikum'
     parent Institution
 
   end

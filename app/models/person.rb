@@ -22,7 +22,7 @@ class Person < ActiveRecord::Base
 
   rails_admin do
     hide
-    # navigation_label 'Stammdaten'
+    # navigation_label I18n.t(:basic_data)
 
   end
 

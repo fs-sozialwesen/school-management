@@ -9,6 +9,7 @@ class Course < ActiveRecord::Base
   has_many :course_memberships
   has_many :active_course_memberships, -> { where active: true }, class_name: 'CourseMembership'
   has_many :students, through: :active_course_memberships
+  has_many :lessons, inverse_of: :course
 
   has_paper_trail
 
@@ -28,6 +29,9 @@ class Course < ActiveRecord::Base
   end
 
   rails_admin do
+
+    weight -2
+
     configure :students do
         pretty_value do
           course      = bindings[:object]

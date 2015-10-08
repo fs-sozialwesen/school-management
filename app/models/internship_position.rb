@@ -6,7 +6,6 @@ class InternshipPosition < ActiveRecord::Base
   has_paper_trail
 
   rails_admin do
-    navigation_label 'Praktikum'
     parent Institution
 
     configure :work_area, :enum do

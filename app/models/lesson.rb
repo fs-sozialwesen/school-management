@@ -1,26 +1,34 @@
 class Lesson < ActiveRecord::Base
-  belongs_to :timetable
-  belongs_to :teacher
-  belongs_to :subject
-  belongs_to :room
 
-  validates :teacher, :timetable, :subject, :start_time, :end_time, presence: true
+  belongs_to :course,  inverse_of: :lessons
+  belongs_to :teacher, inverse_of: :lessons
+  belongs_to :subject, inverse_of: :lessons
+  belongs_to :room,    inverse_of: :lessons
+  belongs_to :time_block
 
-  validate :same_day
-  validate :end_after_start
+  validates :course, :teacher, :subject, :room, :time_block, :date, presence: true
 
   rails_admin do
-    parent Timetable
-  end
+    navigation_label I18n.t(:timetable)
 
-  private
+    list do
+      field :date
+      field :time_block
+      field :course
+      field :subject
+      field :teacher
+      field :room
+    end
 
-  def same_day
-    errors.add(:end_time, 'muss am selben Tag sein') unless start_time.to_date == end_time.to_date
-  end
-
-  def end_after_start
-    errors.add(:end_time, 'muss nach der Startzeit liegen') unless start_time < end_time
+    edit do
+      field :date
+      field :time_block
+      field :course
+      field :subject
+      field :teacher
+      field :room
+      field :comments
+    end
   end
 
 end

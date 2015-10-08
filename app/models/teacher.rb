@@ -1,6 +1,7 @@
 class Teacher < Person
 
   has_many :courses
+  has_many :lessons, inverse_of: :teacher
 
   # validates :first_name, :last_name, :email, presence: true
 

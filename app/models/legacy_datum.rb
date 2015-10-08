@@ -3,7 +3,7 @@ class LegacyDatum < ActiveRecord::Base
 
   rails_admin do
 
-    navigation_label 'Stammdaten'
+    navigation_label I18n.t(:basic_data)
 
     configure(:old_table) do
       label 'alte Tabelle'

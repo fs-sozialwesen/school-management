@@ -14,8 +14,10 @@ nav.navbar.navbar-inverse.navbar-fixed-top role="navigation"
         ul.nav.navbar-nav
           - if current_user.admin?
             li = link_to 'Administration', rails_admin_path
+            li = link_to 'Stundenpläne', '#'
           - if current_user.student?
-            li = link_to 'Stundenplan', root_path
+            li = link_to  t(:timetable), '#'
+            li = link_to 'Praktikumsplätze', '#'
 
         ul.nav.navbar-nav.navbar-right
           li.dropdown

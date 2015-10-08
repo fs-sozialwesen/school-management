@@ -6,7 +6,8 @@ class Carrier < ActiveRecord::Base
   has_paper_trail
 
   rails_admin do
-    navigation_label 'Praktikum'
+    navigation_label I18n.t(:internship)
+    weight -1
 
     edit do
       exclude_fields :institutions

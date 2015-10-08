@@ -1,17 +1,17 @@
 FactoryGirl.define do
 
-  FIRST_NAMES = %w(Sabine Carola Marianne Thomas Mike Claudia Klaus Conrad Max Johannes Florian
+  first_names  = %w(Sabine Carola Marianne Thomas Mike Claudia Klaus Conrad Max Johannes Florian
                       Anne Björn Franziska Sarah Tobias Yvonne)
-  LAST_NAMES = %w(Meier Müller Schulze Schmidt Schmitt Meyer Varoufakis Steinbrecher Landsknecht Albrecht)
-  EMAIL_HOSTS = %w(gmx.net web.de yahoo.com gmail.com)
-  CITYS = %w(Aschersleben Ballenstedt Quedlinburg Halberstadt Hettstedt Wernigerode)
+  last_names   = %w(Meier Müller Schulze Schmidt Schmitt Meyer Varoufakis Steinbrecher Landsknecht Albrecht)
+  emails_hosts = %w(gmx.net web.de yahoo.com gmail.com)
+  cities       = %w(Aschersleben Ballenstedt Quedlinburg Halberstadt Hettstedt Wernigerode)
 
-  sequence(:first_name) { FIRST_NAMES.sample }
-  sequence(:last_name) { LAST_NAMES.sample }
-  sequence(:city) { CITYS.sample }
+  sequence(:first_name) { first_names.sample }
+  sequence(:last_name) { last_names.sample }
+  sequence(:city) { cities.sample }
   sequence(:street) { "Sehr Lange Str. #{(rand*180).to_i}" }
   sequence(:zip) { rand.to_s[2..6] }
-  sequence(:email) { |n| "info_#{n}@#{EMAIL_HOSTS.sample}" }
+  sequence(:email) { |n| "info_#{n}@#{emails_hosts.sample}" }
   sequence(:phone) { '0' + rand.to_s[2..(7..11).to_a.sample] }
   sequence(:mobile) { '0' + rand.to_s[2..(7..11).to_a.sample] }
   sequence :date_of_birth do
@@ -26,11 +26,11 @@ FactoryGirl.define do
   factory :person do
     first_name
     last_name
-    email { "#{first_name}.#{last_name}@#{EMAIL_HOSTS.sample}".downcase }
+    email { "#{first_name}.#{last_name}@#{emails_hosts.sample}".downcase }
     phone
     mobile
     date_of_birth
-    place_of_birth { CITYS.sample }
+    place_of_birth { cities.sample }
 
     city
     street

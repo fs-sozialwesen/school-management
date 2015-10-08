@@ -4,7 +4,7 @@ class Employee < Person
 
   rails_admin do
 
-    navigation_label 'Stammdaten'
+    navigation_label I18n.t(:basic_data)
 
     list do
       field :first_name, :self_link

@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  enum role: {user: 0, admin: 1, student: 2, teacher: 3}
+  enum role: { user: 0, admin: 1, student: 2, teacher: 3 }
   after_initialize :set_default_role, if: :new_record?
 
   has_one :person, inverse_of: :user
@@ -14,7 +14,8 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   rails_admin do
-    navigation_label 'Stammdaten'
+    navigation_label I18n.t(:basic_data)
+    weight +20
 
     list do
       # include_all_fields

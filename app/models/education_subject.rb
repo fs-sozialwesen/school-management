@@ -9,7 +9,7 @@ class EducationSubject < ActiveRecord::Base
   end
 
   rails_admin do
-    navigation_label 'Stammdaten'
+    navigation_label I18n.t(:basic_data)
 
     list do
       field :name
