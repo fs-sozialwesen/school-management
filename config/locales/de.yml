@@ -1,4 +1,12 @@
 de:
   basic_data: Stammdaten
+  course: Klasse
   internship: Praktikum
+  room_plan: Raumplan
+  teacher: LehrerIn
   timetable: Stundenplan
+  timetables:
+    show:
+      title_course_html: Stundenplan für Klasse %{course}
+      title_teacher_html: Stundenplan für %{teacher}
+      title_room_html: "Raumplan: <strong>%{room}</strong>"

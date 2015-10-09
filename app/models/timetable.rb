@@ -8,12 +8,20 @@ class Timetable
     @date_in_week = date_in_week
   end
 
+  def name
+    @has_lessons.name
+  end
+
   def monday
     @date_in_week - @date_in_week.wday + 1
   end
 
   def friday
     monday + 4
+  end
+
+  def weekdays
+    monday..friday
   end
 
   def time_blocks
@@ -25,7 +33,31 @@ class Timetable
   end
 
   def lessons
-    @has_lessons.lessons.where('date >= ?', monday).where('date <= ?', friday)
+    @has_lessons.
+      lessons.
+      includes(:time_block).
+      order('time_blocks.position', :date).
+      where('date >= ?', monday).
+      where('date <= ?', friday)
+  end
+
+  def lessons_by_time_block
+    lessons.all.each_with_object({}) do |lesson, hsh|
+      hsh[lesson.time_block] ||= {}
+      hsh[lesson.time_block][lesson.date] = lesson
+    end
+  end
+
+  def course?
+    @has_lessons.is_a? Course
+  end
+
+  def teacher?
+    @has_lessons.is_a? Teacher
+  end
+
+  def room?
+    @has_lessons.is_a? Room
   end
 
 end

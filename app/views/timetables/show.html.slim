@@ -1,0 +1,36 @@
+.timetables.show
+
+  h1
+    - if @timetable.course?
+      = t('.title_course_html', course: @timetable.name)
+    - if @timetable.teacher?
+      = t('.title_teacher_html', teacher: @timetable.name)
+    - if @timetable.room?
+      = t('.title_room_html', room: @timetable.name)
+
+  ul.nav.nav-tabs
+    li[class=(@date == @last_week ? 'active' : nil)] = link_to 'letzte Woche',  timetable_url(id: @last_week, room_name: params[:room_name])
+    li[class=(@date == @this_week ? 'active' : nil)] = link_to 'diese Woche',   timetable_url(id: @this_week, room_name: params[:room_name])
+    li[class=(@date == @next_week ? 'active' : nil)] = link_to 'nächste Woche', timetable_url(id: @next_week, room_name: params[:room_name])
+
+
+  table.table.table-bordered.table-hover.table-striped
+    thead
+      th Zeit
+      - @timetable.weekdays.each do |day|
+        th = l day, format: '%A %d.%m.'
+    tbody
+      - @timetable.lessons_by_time_block.each do |time_block, lessons|
+        tr
+          th = time_block.name
+          - @timetable.weekdays.each do |day|
+            td
+              - if lesson = lessons[day]
+                p.subject  = lesson.subject.name
+                - unless @timetable.teacher?
+                  p.teacher  = lesson.teacher.name
+                - unless @timetable.course?
+                  p.course   = lesson.course.name
+                - unless @timetable.room?
+                  p.room     = lesson.room.name
+                  p.comments = lesson.comments

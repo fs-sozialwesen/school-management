@@ -6,6 +6,8 @@ class TimeBlock < ActiveRecord::Base
 
   default_scope -> { order :position }
 
+  scope :active, -> { where active: true }
+
   def name
     "#{start_time} - #{end_time}"
   end
