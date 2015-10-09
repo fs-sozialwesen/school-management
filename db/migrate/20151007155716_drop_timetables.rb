@@ -1,6 +1,6 @@
 class DropTimetables < ActiveRecord::Migration
   def change
-    remove_index :lessons, :timetable_id, column: :timetable_id
+    remove_index :lessons, :timetable_id
     remove_foreign_key :lessons, :timetables
     remove_column :lessons, :timetable_id
 
