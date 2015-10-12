@@ -134,5 +134,9 @@ de:
         _all: Alle
         active: Aktuell
         inactive: Archiv
+      time_block:
+        _all: Alle
+        active: Aktuell
+        inactive: Archiv
       student:
         _all: Alle

@@ -157,5 +157,21 @@ module Importer
     ActiveRecord::Base.connection.reset_pk_sequence!(Carrier.table_name)
   end
 
+  def self.import_time_blocks
+    puts 'import time blocks'
+
+    TimeBlock.delete_all
+
+    TimeBlock.create! [
+        {start_time:  '8:00', end_time:  '9:30', position: 1, active: true}, # 08.00 bis 09.30 Uhr
+        {start_time:  '9:45', end_time: '11:15', position: 2, active: true}, # 09.45 bis 11.15 Uhr
+        {start_time: '11:30', end_time: '13:00', position: 3, active: true}, # 11.30 bis 13.00 Uhr
+        {start_time: '13:30', end_time: '15:00', position: 4, active: true}, # 13.30 bis 15.00 Uhr
+        {start_time: '15:15', end_time: '16:45', position: 5, active: true}, # 15.15 bis 16.45 Uhr
+      ]
+
+    ActiveRecord::Base.connection.reset_pk_sequence!(TimeBlock.table_name)
+  end
+
 
 end

@@ -1,5 +1,6 @@
 de:
   attributes:
+    active:               aktiv
     address:              Adresse
     carrier:              Träger
     city:                 Ort
@@ -99,6 +100,9 @@ de:
         year: Jahrgang
       teacher:
         courses: Klassenlehrer von
+      time_block:
+        name: Zeit
+        position: Block
       user:
         login: "Handle"
         encrypted_password: Verschlüsseltes Passwort
