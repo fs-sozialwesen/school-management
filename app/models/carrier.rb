@@ -3,6 +3,8 @@ class Carrier < ActiveRecord::Base
   has_many :institutions, inverse_of: :carrier
   # has_many :mentors, inverse_of: :carrier
 
+  composed_of :address, mapping: [%w(street street), %w(city city), %w(zip zip)]
+
   has_paper_trail
 
   rails_admin do

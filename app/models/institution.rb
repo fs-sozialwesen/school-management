@@ -4,6 +4,8 @@ class Institution < ActiveRecord::Base
   has_many :internship_positions, inverse_of: :institution
   # has_many :mentors,              inverse_of: :institution
 
+  composed_of :address, mapping: [%w(street street), %w(city city), %w(zip zip)]
+
   has_paper_trail
 
   rails_admin do
