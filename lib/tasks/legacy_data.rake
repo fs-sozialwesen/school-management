@@ -12,6 +12,7 @@ namespace :legacy_data do
       Course,
       Teacher,
       EducationSubject,
+      Institution,
       Carrier,
     ].each { |model| model.delete_all }
 

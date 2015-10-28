@@ -6,4 +6,8 @@ Rails.application.routes.draw do
   devise_for :users
   resources :users
   resources :timetables, only: [:index, :show]
+  resources :internship_positions, only: [:index]
+  # get 'internship_positions/index'
+
+
 end

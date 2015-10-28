@@ -157,6 +157,47 @@ module Importer
     ActiveRecord::Base.connection.reset_pk_sequence!(Carrier.table_name)
   end
 
+  def self.import_institutions
+    puts 'import institutions'
+    institutions = {}
+
+    LegacyDatum.where(old_table: 'praktikumsplatz').all.each do |legacy_datum|
+      data = legacy_datum.data
+      carrier_id = data['traeger_id'].to_i
+      next if carrier_id == 0
+      institutions[carrier_id] ||= {}
+      institutions[carrier_id][data['name']] = data
+    end
+
+    institutions.each do |carrier_id, institutions|
+      begin
+        carrier = Carrier.find carrier_id
+        institutions.each do |name, data|
+          institution = carrier.institutions.build
+          # institution.id             = data['id']
+          institution.name           = data['name']
+          # institution.email          = encrypt_string data['email']
+          street, number             = data['strasse'], data['hausnummer']
+          street                     += (" #{number}") if number.present?
+          institution.street         = encrypt_string street
+          institution.zip            = data['plz']
+          institution.city           = data['ort']
+          institution.phone          = encrypt_string data['telefon']
+          institution.fax            = encrypt_string data['telefax']
+          institution.contact_person = encrypt_string "#{data['vorname']} #{data['nachname']}"
+          institution.homepage       = data['homepage']
+          institution.comments       = data['kurzbeschreibung']
+          institution.save!
+        end
+      rescue ActiveRecord::RecordNotFound => e
+
+      end
+    end
+
+
+    ActiveRecord::Base.connection.reset_pk_sequence!(Institution.table_name)
+  end
+
   def self.import_time_blocks
     puts 'import time blocks'
 

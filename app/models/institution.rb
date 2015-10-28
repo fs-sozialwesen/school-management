@@ -9,6 +9,13 @@ class Institution < ActiveRecord::Base
   rails_admin do
     parent Carrier
 
+    list do
+      sort_by :carrier
+      field :carrier
+      field :name, :self_link
+      field :city
+    end
+
     edit do
       exclude_fields :internship_positions
     end
