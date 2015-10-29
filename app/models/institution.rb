@@ -1,7 +1,7 @@
 class Institution < ActiveRecord::Base
 
   belongs_to :carrier,            inverse_of: :institutions
-  has_many :internship_positions, inverse_of: :institution
+  has_many :internship_positions, inverse_of: :institution, dependent: :delete_all
   # has_many :mentors,              inverse_of: :institution
 
   composed_of :address, mapping: [%w(street street), %w(city city), %w(zip zip)]
@@ -31,6 +31,12 @@ class Institution < ActiveRecord::Base
         field :fax
         field :homepage
       end
+      group :carrier do
+        field :carrier do
+          inline_add false
+          inline_edit false
+        end
+      end
       group :address do
         label 'Adresse'
         field :carrier_address
@@ -53,6 +59,9 @@ class Institution < ActiveRecord::Base
         field :phone
         field :fax
         field(:homepage) { pretty_value { bindings[:view].link_to value, value } }
+      end
+      group :carrier do
+        field :carrier
       end
       group :address do
         label 'Adresse'

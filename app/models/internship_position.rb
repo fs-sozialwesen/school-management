@@ -17,6 +17,7 @@ class InternshipPosition < ActiveRecord::Base
       field :name, :self_link
       field :education_subject
       field :institution
+      field :year
       field :accommodation
     end
 

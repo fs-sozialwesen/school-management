@@ -2,7 +2,13 @@ class InternshipPositionsController < ApplicationController
 
   def index
     student = current_user.person
-    @internship_positions = InternshipPosition.where(education_subject: student.education_subject, year: Date.today.year).all
+    @internship_positions = InternshipPosition.
+      includes(institution: :carrier).
+      where(
+        education_subject: student.education_subject,
+        year: Date.today.year
+      ).
+      all
   end
 
   def show

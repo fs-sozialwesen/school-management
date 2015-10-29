@@ -7,9 +7,18 @@ class Carrier < ActiveRecord::Base
 
   has_paper_trail
 
+  def institutions_count
+    institutions.count
+  end
+
   rails_admin do
     navigation_label I18n.t(:internship)
     weight -1
+
+    list do
+      field :name, :self_link
+      field :institutions_count
+    end
 
     edit do
       exclude_fields :institutions
