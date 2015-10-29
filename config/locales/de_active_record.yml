@@ -18,6 +18,7 @@ de:
     first_name:           Vorname
     internships:          Praktika
     internship_position:  Praktikumsplatz
+    internship_positions: Praktikumsplätze
     institution:          Einrichtung
     institutions:         Einrichtungen
     last_name:            Nachname
@@ -89,6 +90,8 @@ de:
         status:     Status
       internship_position:
         accommodation: Unterkunft
+      institution:
+        carrier_address: Gleiche Adresse wie Träger
       lesson:
         timetable: Stundenplan
         teacher: Lehrer

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151007172009) do
+ActiveRecord::Schema.define(version: 20151029013208) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -74,8 +74,9 @@ ActiveRecord::Schema.define(version: 20151007172009) do
     t.string   "contact_person"
     t.string   "homepage"
     t.text     "comments"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+    t.boolean  "carrier_address", default: true
   end
 
   add_index "institutions", ["carrier_id"], name: "index_institutions_on_carrier_id", using: :btree
@@ -93,8 +94,10 @@ ActiveRecord::Schema.define(version: 20151007172009) do
     t.text     "comments"
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
+    t.integer  "education_subject_id"
   end
 
+  add_index "internship_positions", ["education_subject_id"], name: "index_internship_positions_on_education_subject_id", using: :btree
   add_index "internship_positions", ["institution_id"], name: "index_internship_positions_on_institution_id", using: :btree
 
   create_table "internships", force: :cascade do |t|
@@ -217,6 +220,7 @@ ActiveRecord::Schema.define(version: 20151007172009) do
 
   add_foreign_key "course_memberships", "courses"
   add_foreign_key "institutions", "carriers"
+  add_foreign_key "internship_positions", "education_subjects"
   add_foreign_key "internship_positions", "institutions"
   add_foreign_key "internships", "internship_positions"
   add_foreign_key "lessons", "courses"

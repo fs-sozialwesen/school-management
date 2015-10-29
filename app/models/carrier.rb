@@ -21,14 +21,22 @@ class Carrier < ActiveRecord::Base
         field :email
         field :comments
       end
+
       group :contact do
         label 'Kontakt'
         field :contact_person
         field :phone
         field :fax
+      end
+      group :address do
+        label 'Adresse'
         field :street
         field :zip
         field :city
+      end
+
+      group :institutions do
+        field :institutions
       end
     end
 

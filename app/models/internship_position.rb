@@ -1,5 +1,6 @@
 class InternshipPosition < ActiveRecord::Base
 
+  belongs_to :education_subject
   belongs_to :institution, inverse_of: :internship_positions
   has_many :internships, inverse_of: :internship_position
 
@@ -12,8 +13,23 @@ class InternshipPosition < ActiveRecord::Base
       enum { ['Kindertagesstätten', 'Hort', 'Heim', 'Tagesgruppe', 'offene Kinder- und Jugendarbeit', 'Psychiatrie', 'Schule'] }
     end
 
+    list do
+      field :name, :self_link
+      field :education_subject
+      field :institution
+      field :accommodation
+    end
+
     edit do
       exclude_fields :internships
+    end
+
+    show do
+      field :name
+      field :education_subject
+      field :institution
+      field :comments
+      field :accommodation
     end
 
   end

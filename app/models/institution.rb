@@ -19,25 +19,52 @@ class Institution < ActiveRecord::Base
     end
 
     edit do
-      exclude_fields :internship_positions
-    end
-
-    show do
       group :default do
         field :name
-        field :email
         field :comments
       end
       group :contact do
         label 'Kontakt'
         field :contact_person
+        field :email
         field :phone
         field :fax
+        field :homepage
+      end
+      group :address do
+        label 'Adresse'
+        field :carrier_address
         field :street
         field :zip
         field :city
+      end
+    end
+
+    show do
+      group :default do
+        field :name
+        field :comments
+      end
+
+      group :contact do
+        label 'Kontakt'
+        field :contact_person
+        field :email, :email
+        field :phone
+        field :fax
         field(:homepage) { pretty_value { bindings[:view].link_to value, value } }
       end
+      group :address do
+        label 'Adresse'
+        field :carrier_address
+        field :street
+        field :zip
+        field :city
+      end
+      group :internship_positions do
+        field :internship_positions
+      end
+
     end
 
   end

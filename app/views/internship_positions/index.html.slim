@@ -4,7 +4,18 @@ table.table.table-hover.table-striped.table-condensed
   thead
     tr
       th Name
+      th Beschreibung
+      th Träger/Einrichtung
+      th Ort
+      th Unterkunft
   tbody
     - @internship_positions.each do |internship_position|
       tr
-        td = internship_position.name
+        td = link_to internship_position.name, internship_position
+        td = internship_position.description
+        td
+          = internship_position.institution.carrier.name
+          br
+          = internship_position.institution.name
+        td = internship_position.institution.city
+        td = internship_position.accommodation ? 'ja' : '-'
