@@ -6,11 +6,11 @@ namespace :legacy_data do
     [
       User,
       Employee,
-      Carrier,
       CourseMembership,
       Student,
       Course,
       Teacher,
+      InternshipPosition,
       EducationSubject,
       Institution,
       Carrier,
