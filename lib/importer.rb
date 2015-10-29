@@ -7,6 +7,7 @@ module Importer
     import_courses
     import_students
     import_carriers
+    import_institutions
   end
 
   def self.encrypt_string(string)
@@ -19,6 +20,10 @@ module Importer
     first, last = email.split '@'
     first = Digest::MD5.hexdigest first
     [first, last].join '@'
+  end
+
+  def self.unquote(string)
+    string.gsub(/&\w+;/, '&quot;' => '"', '&amp;' => '&')
   end
 
   def self.import_employees
@@ -137,7 +142,7 @@ module Importer
       data = legacy_datum.data
       carrier                = Carrier.new
       carrier.id             = data['id']
-      carrier.name           = data['name_1']
+      carrier.name           = unquote data['name_1']
       carrier.email          = encrypt_string data['email']
       street, number         = data['strasse'], data['hausnummer']
       street                 += (" #{number}") if number.present?
@@ -159,23 +164,31 @@ module Importer
 
   def self.import_institutions
     puts 'import institutions'
-    institutions = {}
+    # {
+    #   1 => {
+    #     'Kita BlahHauptstrMerseburg' => [data1, data2]
+    #   }
+    # }
+    mapping = {}
 
     LegacyDatum.where(old_table: 'praktikumsplatz').all.each do |legacy_datum|
       data = legacy_datum.data
       carrier_id = data['traeger_id'].to_i
       next if carrier_id == 0
-      institutions[carrier_id] ||= {}
-      institutions[carrier_id][data['name']] = data
+      mapping[carrier_id] ||= {}
+      identifier = data['name'] + data['strasse'] + data['ort']
+      mapping[carrier_id][identifier] ||= []
+      mapping[carrier_id][identifier] << data
     end
 
-    institutions.each do |carrier_id, institutions|
+    mapping.each do |carrier_id, institutions|
       begin
         carrier = Carrier.find carrier_id
-        institutions.each do |name, data|
-          institution = carrier.institutions.build
+        institutions.each do |identifier, internship_positions|
+          data                       = internship_positions.first
+          institution                = carrier.institutions.build
           # institution.id             = data['id']
-          institution.name           = data['name']
+          institution.name           = unquote data['name']
           # institution.email          = encrypt_string data['email']
           street, number             = data['strasse'], data['hausnummer']
           street                     += (" #{number}") if number.present?
@@ -186,8 +199,21 @@ module Importer
           institution.fax            = encrypt_string data['telefax']
           institution.contact_person = encrypt_string "#{data['vorname']} #{data['nachname']}"
           institution.homepage       = data['homepage']
-          institution.comments       = data['kurzbeschreibung']
+          # institution.comments       = data['kurzbeschreibung']
           institution.save!
+
+          internship_positions.each do |data|
+            internship_position                       = institution.internship_positions.build
+            internship_position.year                  = data['jahr']
+            internship_position.education_subject_id  = data['art']
+            internship_position.name                  = "#{data['jahr']} - #{data['art']} - #{institution.name} (#{data['kurzbeschreibung'][0..20]} ...)"
+            internship_position.description           = data['kurzbeschreibung']
+            internship_position.application_documents = data['bewerbungsunterlagen']
+            internship_position.accommodation         = data['unterkunft'].to_i == 1
+
+            internship_position.save!
+          end
+
         end
       rescue ActiveRecord::RecordNotFound => e
 
