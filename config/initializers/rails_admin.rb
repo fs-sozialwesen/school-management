@@ -47,3 +47,4 @@ end
 RailsAdmin::Config::Fields::Types::register(:self_link, RailsAdmin::FieldType::SelfLinkField)
 RailsAdmin::Config::Fields::Types::register(:email, RailsAdmin::FieldType::EmailField)
 RailsAdmin::Config::Fields::Types::register(:address, RailsAdmin::FieldType::AddressField)
+RailsAdmin::Config::Fields::Types::register(:metadata, RailsAdmin::FieldType::AddressField)

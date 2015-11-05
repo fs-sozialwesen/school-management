@@ -13,10 +13,13 @@ de:
     date_of_birth:        Geburtsdatum
     description:          Beschreibung
     education_subject:    Fachrichtung
+    education_subjects:   Fachrichtungen
     email:                Email
     end_date:             Ende
     first_name:           Vorname
     internships:          Praktika
+    internship_offer:     Praktikumsangebot
+    internship_offers:    Praktikumsangebote
     internship_position:  Praktikumsplatz
     internship_positions: Praktikumsplätze
     institution:          Einrichtung
@@ -48,6 +51,9 @@ de:
       internship:
         one:    Praktikum
         other:  Praktika
+      internship_offer:
+        one: Praktikumsangebot
+        other: Praktikumsangebote
       internship_position:
         one:    Praktikumsplatz
         other:  Praktikumsplätze
@@ -88,8 +94,18 @@ de:
         short_name: Kürzel
       internship:
         status:     Status
-      internship_position:
+      internship_offer:
         accommodation: Unterkunft
+        accommodation_details: Unterkunft Details
+        application_by_email: Bewerbung per E-Mail
+        application_by_mail: Bewerbung per Post
+        application_by_phone: Bewerbung per Telefon
+        application_documents: Bewerbungsdokumente
+        application_options: Bewerbung per
+        name: Name der Einrichtung
+        positions_sum: Plätze gesamt
+      internship_position:
+        number_of_positions: Anzahl Plätze
       institution:
         carrier_address: Gleiche Adresse wie Träger
       lesson:

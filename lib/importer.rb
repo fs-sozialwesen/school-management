@@ -162,56 +162,61 @@ module Importer
     ActiveRecord::Base.connection.reset_pk_sequence!(Carrier.table_name)
   end
 
-  def self.import_institutions
-    puts 'import institutions'
+  def self.import_internship_offers
+    puts 'import internship offers'
     # {
-    #   1 => {
-    #     'Kita BlahHauptstrMerseburg' => [data1, data2]
-    #   }
+    #   carrier_id_1 => {
+    #     'Kita Blah' => [data1, data2],
+    #     'Kita Blub' => [data2, data4],
+    #   },
+    #   carrier_id_2 => {
+    #     'Kita Blah2' => [data21, data22],
+    #     'Kita Blub2' => [data22, data24],
+    #   },
     # }
     mapping = {}
 
     LegacyDatum.where(old_table: 'praktikumsplatz').all.each do |legacy_datum|
       data = legacy_datum.data
       carrier_id = data['traeger_id'].to_i
-      next if carrier_id == 0
+      year = data['jahr'].to_i
+      next if carrier_id == 0 or year != 2015
       mapping[carrier_id] ||= {}
-      identifier = data['name'] + data['strasse'] + data['ort']
-      mapping[carrier_id][identifier] ||= []
-      mapping[carrier_id][identifier] << data
+      mapping[carrier_id][data['name']] ||= []
+      mapping[carrier_id][data['name']] << data
     end
 
-    mapping.each do |carrier_id, institutions|
+    mapping.each do |carrier_id, internship_offers|
       begin
         carrier = Carrier.find carrier_id
-        institutions.each do |identifier, internship_positions|
-          data                       = internship_positions.first
-          institution                = carrier.institutions.build
-          # institution.id             = data['id']
-          institution.name           = unquote data['name']
-          # institution.email          = encrypt_string data['email']
-          street, number             = data['strasse'], data['hausnummer']
-          street                     += (" #{number}") if number.present?
-          institution.street         = encrypt_string street
-          institution.zip            = data['plz']
-          institution.city           = data['ort']
-          institution.phone          = encrypt_string data['telefon']
-          institution.fax            = encrypt_string data['telefax']
-          institution.contact_person = encrypt_string "#{data['vorname']} #{data['nachname']}"
-          institution.homepage       = data['homepage']
-          # institution.comments       = data['kurzbeschreibung']
-          institution.save!
+        internship_offers.each do |name, internship_positions|
+          internship_offer                       = carrier.internship_offers.build
+          internship_offer.name                  = unquote name
+          internship_offer.email                 = encrypt_string first_present(internship_positions, 'email')
+          street                                 =  first_present(internship_positions, 'strasse')
+          number                                 =  first_present(internship_positions, 'hausnummer')
+          street                                 += (" #{number}") if number.present?
+          internship_offer.street                = encrypt_string street
+          internship_offer.zip                   = first_present(internship_positions, 'plz')
+          internship_offer.city                  = first_present(internship_positions, 'ort')
+          internship_offer.phone                 = encrypt_string first_present(internship_positions, 'telefon')
+          internship_offer.fax                   = encrypt_string first_present(internship_positions, 'telefax')
+          internship_offer.homepage              = first_present(internship_positions, 'homepage')
+          internship_offer.description           = first_present(internship_positions, 'kurzbeschreibung')
+          internship_offer.accommodation         = first_present(internship_positions, 'unterkunft').to_i == 1
+          internship_offer.accommodation_details = first_present(internship_positions, 'unterkunft_kosten')
+          application = internship_offer.application_options
+          application.by_phone  = first_present(internship_positions, 'bewerbungtele')
+          application.by_email  = first_present(internship_positions, 'bewerbungmail')
+          application.by_mail   = first_present(internship_positions, 'bewerbungpost')
+          application.documents = first_present(internship_positions, 'bewerbungsunterlagen')
+          internship_offer.save!
 
-          internship_positions.each do |data|
-            internship_position                       = institution.internship_positions.build
-            internship_position.year                  = data['jahr']
-            internship_position.education_subject_id  = data['art']
-            internship_position.name                  = "#{data['jahr']} - #{data['art']} - #{institution.name} (#{data['kurzbeschreibung'][0..20]} ...)"
-            internship_position.description           = data['kurzbeschreibung']
-            internship_position.application_documents = data['bewerbungsunterlagen']
-            internship_position.accommodation         = data['unterkunft'].to_i == 1
-
-            internship_position.save!
+          internship_positions.group_by { |i| i['art'].to_i }.each do |education_subject_id, array|
+            internship_offer.internship_positions.create!(
+              education_subject_id: education_subject_id,
+              number_of_positions: array.size
+            )
           end
 
         end
@@ -222,6 +227,10 @@ module Importer
 
 
     ActiveRecord::Base.connection.reset_pk_sequence!(Institution.table_name)
+  end
+
+  def self.first_present(array, attribute)
+    array.map { |data| data[attribute] }.uniq.compact.first
   end
 
   def self.import_time_blocks

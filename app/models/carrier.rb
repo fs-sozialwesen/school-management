@@ -1,9 +1,9 @@
 class Carrier < ActiveRecord::Base
 
-  has_many :institutions, inverse_of: :carrier
+  has_many :internship_offers, inverse_of: :carrier
   # has_many :mentors, inverse_of: :carrier
 
-  composed_of :address, mapping: [%w(street street), %w(city city), %w(zip zip)]
+  # composed_of :address, mapping: [%w(street street), %w(city city), %w(zip zip)]
 
   has_paper_trail
 
@@ -17,11 +17,11 @@ class Carrier < ActiveRecord::Base
 
     list do
       field :name, :self_link
-      field :institutions_count
+      # field :institutions_count
     end
 
     edit do
-      exclude_fields :institutions
+      # exclude_fields :institutions
     end
 
     show do
@@ -45,7 +45,7 @@ class Carrier < ActiveRecord::Base
       end
 
       group :institutions do
-        field :institutions
+        # field :institutions
       end
     end
 

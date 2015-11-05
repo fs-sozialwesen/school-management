@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151029013208) do
+ActiveRecord::Schema.define(version: 20151102054622) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -80,6 +80,37 @@ ActiveRecord::Schema.define(version: 20151029013208) do
   end
 
   add_index "institutions", ["carrier_id"], name: "index_institutions_on_carrier_id", using: :btree
+
+  create_table "internship_offers", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "carrier_id"
+    t.text     "description"
+    t.string   "email"
+    t.string   "work_area"
+    t.string   "city"
+    t.string   "street"
+    t.string   "zip"
+    t.string   "phone"
+    t.string   "fax"
+    t.string   "homepage"
+    t.string   "contact_person"
+    t.boolean  "accommodation"
+    t.text     "accommodation_details"
+    t.text     "application_documents"
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+    t.string   "type"
+    t.integer  "internship_offer_id"
+    t.integer  "education_subject_id"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.integer  "number_of_positions",   default: 1
+    t.jsonb    "application_options"
+  end
+
+  add_index "internship_offers", ["carrier_id"], name: "index_internship_offers_on_carrier_id", using: :btree
+  add_index "internship_offers", ["education_subject_id"], name: "index_internship_offers_on_education_subject_id", using: :btree
+  add_index "internship_offers", ["internship_offer_id"], name: "index_internship_offers_on_internship_offer_id", using: :btree
 
   create_table "internship_positions", force: :cascade do |t|
     t.string   "name"
@@ -220,6 +251,9 @@ ActiveRecord::Schema.define(version: 20151029013208) do
 
   add_foreign_key "course_memberships", "courses"
   add_foreign_key "institutions", "carriers"
+  add_foreign_key "internship_offers", "carriers"
+  add_foreign_key "internship_offers", "education_subjects"
+  add_foreign_key "internship_offers", "internship_offers"
   add_foreign_key "internship_positions", "education_subjects"
   add_foreign_key "internship_positions", "institutions"
   add_foreign_key "internships", "internship_positions"
