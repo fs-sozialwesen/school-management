@@ -1,5 +1,5 @@
 class LoginsController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_login!
   after_action :verify_authorized
 
   def index
