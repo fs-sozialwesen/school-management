@@ -9,16 +9,16 @@ RailsAdmin.config do |config|
   config.authenticate_with do
     warden.authenticate! scope: :user
   end
-  config.current_user_method(&:current_user)
+  config.current_user_method(&:current_login)
 
   ## == Cancan ==
   # config.authorize_with :cancan
 
   ## == PaperTrail ==
-  config.audit_with :paper_trail, 'User', 'PaperTrail::Version' # PaperTrail >= 3.0.0
+  config.audit_with :paper_trail, 'Login', 'PaperTrail::Version' # PaperTrail >= 3.0.0
 
   config.authorize_with do |_controller|
-    redirect_to main_app.root_path unless current_user.try(:admin?)
+    redirect_to main_app.root_path unless current_user.try(:manager?)
   end
 
   ### More at https://github.com/sferik/rails_admin/wiki/Base-configuration

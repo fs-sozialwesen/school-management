@@ -1,6 +1,6 @@
 class InternshipOffer < ActiveRecord::Base
 
-  belongs_to :carrier, inverse_of: :internship_offers
+  belongs_to :organisation, inverse_of: :internship_offers
   has_many :internship_positions, inverse_of: :internship_offer
 
   # serialize :accommodation_details, Hash
@@ -23,7 +23,7 @@ class InternshipOffer < ActiveRecord::Base
   end
 
   rails_admin do
-    parent Carrier
+    # parent Organisation
 
     configure :application_by_phone, :boolean
     configure :application_by_email, :boolean
@@ -34,21 +34,21 @@ class InternshipOffer < ActiveRecord::Base
     end
 
     list do
-      sort_by :carrier
+      sort_by :organisation
       # field :id
       field :name, :self_link
-      field :carrier
+      field :organisation
       # field :application_options
       # field :application_documents
       field :city
       field :description
-      field :accommodation
+      # field :accommodation
       field :education_subjects
       field :positions_sum
     end
 
     show do
-      field :carrier
+      field :organisation
       field :name
       field :city
       field :description
@@ -73,8 +73,8 @@ class InternshipOffer < ActiveRecord::Base
         field :fax
         field :homepage
       end
-      group :carrier do
-        field :carrier do
+      group :organisation do
+        field :organisation do
           inline_add false
           inline_edit false
         end

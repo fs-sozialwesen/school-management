@@ -1,10 +1,10 @@
-class CreateInternshipOffers < ActiveRecord::Migration
+class CreateInternshipPositions < ActiveRecord::Migration
   def change
-    create_table :internship_offers do |t|
+    create_table :internship_positions do |t|
       t.string :name
-      t.references :organisation, index: true, foreign_key: true
+      t.references :internship_offer, index: true, foreign_key: true
+      t.references :education_subject, index: true, foreign_key: true
       t.text :description
-      t.string :work_area
 
       t.string :street
       t.string :zip
@@ -19,6 +19,10 @@ class CreateInternshipOffers < ActiveRecord::Migration
       t.string :contact_person
       t.jsonb :accommodation_options
       t.jsonb :application_options
+
+      t.date :start_date
+      t.date :end_date
+      t.integer :number_of_positions, default: 1
 
       t.timestamps null: false
     end

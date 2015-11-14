@@ -1,8 +1,6 @@
 class CourseMembership < ActiveRecord::Base
-  belongs_to :student
-  belongs_to :course
-
-  validates :student, :course, presence: true
+  belongs_to :student, required: true, class_name: 'Role::Student'
+  belongs_to :course, required: true
 
   before_create :set_defaults
   after_create :deactivate_older_memberships

@@ -1,12 +1,12 @@
-class InternshipPosition < InternshipOffer
+class InternshipPosition < ActiveRecord::Base
 
-  belongs_to :education_subject
-  belongs_to :internship_offer, inverse_of: :internship_positions
-  has_one :carrier, through: :internship_offer
+  belongs_to :education_subject, required: true
+  belongs_to :internship_offer, inverse_of: :internship_positions, required: true
+  has_one :organisation, through: :internship_offer
   # has_many :internships, inverse_of: :internship_position
 
-  validates :education_subject, presence: true
-  validates :internship_offer, presence: true
+  # validates :education_subject, presence: true
+  # validates :internship_offer, presence: true
   validates :number_of_positions, presence: true
 
   has_paper_trail
@@ -29,14 +29,14 @@ class InternshipPosition < InternshipOffer
     #
     list do
       sort_by :name
-      field :carrier
+      field :organisation
       field :internship_offer
       field :education_subject
       field :number_of_positions
     end
 
     show do
-      field :carrier
+      field :organisation
       field :internship_offer
       field :education_subject
       field :number_of_positions

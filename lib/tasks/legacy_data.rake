@@ -4,17 +4,15 @@ namespace :legacy_data do
   task :clear => %w(environment) do
 
     [
-      User,
-      Employee,
-      CourseMembership,
-      Student,
+      # Login,
+      # CourseMembership,
       Course,
-      Teacher,
-      InternshipPosition,
+      Contract,
+      Role,
+      Organisation,
+      Person,
       EducationSubject,
-      Institution,
-      Carrier,
-    ].each { |model| model.delete_all }
+    ].each { |model| model.destroy_all }
 
   end
 

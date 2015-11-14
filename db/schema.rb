@@ -11,25 +11,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151102054622) do
+ActiveRecord::Schema.define(version: 20151101010122) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "carriers", force: :cascade do |t|
-    t.string   "name"
-    t.string   "street"
-    t.string   "zip"
-    t.string   "city"
-    t.string   "email"
-    t.string   "phone"
-    t.string   "fax"
-    t.string   "contact_person"
-    t.string   "homepage"
+  create_table "contracts", force: :cascade do |t|
+    t.string   "type"
+    t.integer  "role_id"
+    t.integer  "first_party_id"
+    t.string   "first_party_type"
+    t.integer  "second_party_id"
+    t.string   "second_party_type"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.text     "text"
     t.text     "comments"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.string   "state"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
   end
+
+  add_index "contracts", ["first_party_type", "first_party_id"], name: "index_contracts_on_first_party_type_and_first_party_id", using: :btree
+  add_index "contracts", ["role_id"], name: "index_contracts_on_role_id", using: :btree
+  add_index "contracts", ["second_party_type", "second_party_id"], name: "index_contracts_on_second_party_type_and_second_party_id", using: :btree
 
   create_table "course_memberships", force: :cascade do |t|
     t.integer  "student_id"
@@ -45,104 +50,75 @@ ActiveRecord::Schema.define(version: 20151102054622) do
   add_index "course_memberships", ["student_id"], name: "index_course_memberships_on_student_id", using: :btree
 
   create_table "courses", force: :cascade do |t|
-    t.string   "name"
+    t.string   "name",                 null: false
+    t.integer  "education_subject_id"
     t.integer  "teacher_id"
     t.date     "start_date"
     t.date     "end_date"
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
-    t.integer  "education_subject_id"
   end
+
+  add_index "courses", ["education_subject_id"], name: "index_courses_on_education_subject_id", using: :btree
+  add_index "courses", ["teacher_id"], name: "index_courses_on_teacher_id", using: :btree
 
   create_table "education_subjects", force: :cascade do |t|
+    t.integer  "school_id"
     t.string   "name"
+    t.string   "short_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string   "short_name"
   end
 
-  create_table "institutions", force: :cascade do |t|
-    t.string   "name"
-    t.integer  "carrier_id"
-    t.string   "street"
-    t.string   "zip"
-    t.string   "city"
-    t.string   "county"
-    t.string   "email"
-    t.string   "phone"
-    t.string   "fax"
-    t.string   "contact_person"
-    t.string   "homepage"
-    t.text     "comments"
-    t.datetime "created_at",                     null: false
-    t.datetime "updated_at",                     null: false
-    t.boolean  "carrier_address", default: true
-  end
-
-  add_index "institutions", ["carrier_id"], name: "index_institutions_on_carrier_id", using: :btree
+  add_index "education_subjects", ["school_id"], name: "index_education_subjects_on_school_id", using: :btree
 
   create_table "internship_offers", force: :cascade do |t|
     t.string   "name"
-    t.integer  "carrier_id"
+    t.integer  "organisation_id"
     t.text     "description"
-    t.string   "email"
     t.string   "work_area"
-    t.string   "city"
     t.string   "street"
     t.string   "zip"
+    t.string   "city"
+    t.string   "email"
     t.string   "phone"
+    t.string   "mobile"
     t.string   "fax"
     t.string   "homepage"
     t.string   "contact_person"
-    t.boolean  "accommodation"
-    t.text     "accommodation_details"
-    t.text     "application_documents"
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
-    t.string   "type"
-    t.integer  "internship_offer_id"
-    t.integer  "education_subject_id"
-    t.date     "start_date"
-    t.date     "end_date"
-    t.integer  "number_of_positions",   default: 1
+    t.jsonb    "accommodation_options"
     t.jsonb    "application_options"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
   end
 
-  add_index "internship_offers", ["carrier_id"], name: "index_internship_offers_on_carrier_id", using: :btree
-  add_index "internship_offers", ["education_subject_id"], name: "index_internship_offers_on_education_subject_id", using: :btree
-  add_index "internship_offers", ["internship_offer_id"], name: "index_internship_offers_on_internship_offer_id", using: :btree
+  add_index "internship_offers", ["organisation_id"], name: "index_internship_offers_on_organisation_id", using: :btree
 
   create_table "internship_positions", force: :cascade do |t|
     t.string   "name"
-    t.integer  "institution_id"
-    t.string   "work_area"
-    t.text     "description"
-    t.boolean  "accommodation"
-    t.integer  "kind_of_application"
-    t.integer  "year"
-    t.string   "application_documents"
-    t.string   "contact_person"
-    t.text     "comments"
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
+    t.integer  "internship_offer_id"
     t.integer  "education_subject_id"
+    t.text     "description"
+    t.string   "street"
+    t.string   "zip"
+    t.string   "city"
+    t.string   "email"
+    t.string   "phone"
+    t.string   "mobile"
+    t.string   "fax"
+    t.string   "homepage"
+    t.string   "contact_person"
+    t.jsonb    "accommodation_options"
+    t.jsonb    "application_options"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.integer  "number_of_positions",   default: 1
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
   end
 
   add_index "internship_positions", ["education_subject_id"], name: "index_internship_positions_on_education_subject_id", using: :btree
-  add_index "internship_positions", ["institution_id"], name: "index_internship_positions_on_institution_id", using: :btree
-
-  create_table "internships", force: :cascade do |t|
-    t.integer  "student_id"
-    t.integer  "internship_position_id"
-    t.integer  "mentor_id"
-    t.date     "start_date"
-    t.date     "end_date"
-    t.string   "state"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-  end
-
-  add_index "internships", ["internship_position_id"], name: "index_internships_on_internship_position_id", using: :btree
+  add_index "internship_positions", ["internship_offer_id"], name: "index_internship_positions_on_internship_offer_id", using: :btree
 
   create_table "legacy_data", force: :cascade do |t|
     t.string   "old_table"
@@ -152,68 +128,8 @@ ActiveRecord::Schema.define(version: 20151102054622) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "lessons", force: :cascade do |t|
-    t.integer  "teacher_id"
-    t.integer  "subject_id"
-    t.integer  "room_id"
-    t.string   "comments"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-    t.integer  "course_id"
-    t.date     "date"
-    t.string   "state"
-    t.integer  "time_block_id"
-  end
-
-  add_index "lessons", ["room_id"], name: "index_lessons_on_room_id", using: :btree
-  add_index "lessons", ["subject_id"], name: "index_lessons_on_subject_id", using: :btree
-  add_index "lessons", ["teacher_id"], name: "index_lessons_on_teacher_id", using: :btree
-  add_index "lessons", ["time_block_id"], name: "index_lessons_on_time_block_id", using: :btree
-
-  create_table "people", force: :cascade do |t|
-    t.string   "type"
-    t.string   "first_name"
-    t.string   "last_name"
-    t.string   "email"
-    t.string   "phone"
-    t.string   "mobile"
-    t.string   "street"
-    t.string   "zip"
-    t.string   "city"
-    t.date     "date_of_birth"
-    t.string   "place_of_birth"
-    t.string   "gender"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
-    t.integer  "user_id"
-  end
-
-  create_table "rooms", force: :cascade do |t|
-    t.string   "name"
-    t.text     "comments"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "subjects", force: :cascade do |t|
-    t.string   "name"
-    t.text     "comments"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "time_blocks", force: :cascade do |t|
-    t.integer  "start_hour"
-    t.integer  "start_minute"
-    t.integer  "end_hour"
-    t.integer  "end_minute"
-    t.integer  "position"
-    t.boolean  "active"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
-  end
-
-  create_table "users", force: :cascade do |t|
+  create_table "logins", force: :cascade do |t|
+    t.integer  "person_id"
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
     t.string   "reset_password_token"
@@ -224,18 +140,68 @@ ActiveRecord::Schema.define(version: 20151102054622) do
     t.datetime "last_sign_in_at"
     t.inet     "current_sign_in_ip"
     t.inet     "last_sign_in_ip"
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
-    t.string   "name"
     t.string   "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string   "unconfirmed_email"
-    t.integer  "role"
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+  add_index "logins", ["confirmation_token"], name: "index_logins_on_confirmation_token", unique: true, using: :btree
+  add_index "logins", ["email"], name: "index_logins_on_email", unique: true, using: :btree
+  add_index "logins", ["person_id"], name: "index_logins_on_person_id", using: :btree
+  add_index "logins", ["reset_password_token"], name: "index_logins_on_reset_password_token", unique: true, using: :btree
+
+  create_table "organisations", force: :cascade do |t|
+    t.string   "type",           default: "Organisation"
+    t.string   "name",                                    null: false
+    t.string   "kind"
+    t.string   "contact_person"
+    t.integer  "carrier_id"
+    t.string   "street"
+    t.string   "zip"
+    t.string   "city"
+    t.string   "email"
+    t.string   "phone"
+    t.string   "mobile"
+    t.string   "fax"
+    t.string   "homepage"
+    t.text     "comments"
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
+  end
+
+  add_index "organisations", ["carrier_id"], name: "index_organisations_on_carrier_id", using: :btree
+
+  create_table "people", force: :cascade do |t|
+    t.string   "first_name",     null: false
+    t.string   "last_name",      null: false
+    t.string   "gender"
+    t.date     "date_of_birth"
+    t.string   "place_of_birth"
+    t.string   "street"
+    t.string   "zip"
+    t.string   "city"
+    t.string   "email"
+    t.string   "phone"
+    t.string   "mobile"
+    t.string   "fax"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  create_table "roles", force: :cascade do |t|
+    t.integer  "organisation_id"
+    t.integer  "person_id"
+    t.string   "type"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_index "roles", ["organisation_id"], name: "index_roles_on_organisation_id", using: :btree
+  add_index "roles", ["person_id"], name: "index_roles_on_person_id", using: :btree
+  add_index "roles", ["type"], name: "index_roles_on_type", using: :btree
 
   create_table "versions", force: :cascade do |t|
     t.string   "item_type",      null: false
@@ -243,22 +209,19 @@ ActiveRecord::Schema.define(version: 20151102054622) do
     t.string   "event",          null: false
     t.string   "whodunnit"
     t.text     "object"
-    t.datetime "created_at"
     t.text     "object_changes"
+    t.datetime "created_at"
   end
 
   add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
 
+  add_foreign_key "contracts", "roles"
   add_foreign_key "course_memberships", "courses"
-  add_foreign_key "institutions", "carriers"
-  add_foreign_key "internship_offers", "carriers"
-  add_foreign_key "internship_offers", "education_subjects"
-  add_foreign_key "internship_offers", "internship_offers"
+  add_foreign_key "courses", "education_subjects"
+  add_foreign_key "internship_offers", "organisations"
   add_foreign_key "internship_positions", "education_subjects"
-  add_foreign_key "internship_positions", "institutions"
-  add_foreign_key "internships", "internship_positions"
-  add_foreign_key "lessons", "courses"
-  add_foreign_key "lessons", "rooms"
-  add_foreign_key "lessons", "subjects"
-  add_foreign_key "lessons", "time_blocks"
+  add_foreign_key "internship_positions", "internship_offers"
+  add_foreign_key "logins", "people"
+  add_foreign_key "roles", "organisations"
+  add_foreign_key "roles", "people"
 end

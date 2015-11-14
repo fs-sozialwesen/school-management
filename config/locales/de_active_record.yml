@@ -27,8 +27,10 @@ de:
     last_name:            Nachname
     mentor:               Praxisanleiter
     mentors:              Praxisanleiter
+    organisation:         Organisation
     phone:                Telefon
     place_of_birth:       Geburtsort
+    school:               Schule
     start_date:           Beginn
     street:               Straße/Nr
     student:              Auszubildende(r)
@@ -40,14 +42,15 @@ de:
     zip:                  PLZ
   activerecord:
     models:
-      carrier: Träger
+      contract:
+        one: Vertrag
+        other: Verträge
       course:
         one: Klasse
         other: Klassen
       education_subject:
         one:    Fachrichtung
         other:  Fachrichtungen
-      employee: Mitarbeiter
       internship:
         one:    Praktikum
         other:  Praktika
@@ -64,29 +67,40 @@ de:
       lesson:
         one: Stunde
         other: Stunden
-      mentor: Praxisanleiter
+      login: Login
+      organisation:
+        one: Organisation
+        other: Organisationen
+      organisation/school:
+        one: Schule
+        other: Schulen
       person:
         one: Person
         other: Personen
+      role:
+        one: Rolle
+        other: Rollen
+      role/admin:
+        one: Administrator
+        other: Administratoren
+      role/manager: Manager
+      role/mentor: Praxisanleiter
+      role/student:
+        one:    Auszubildende(r)
+        other:  Auszubildende
+      role/teacher:  Lehrer
       room:
         one: Raum
         other: Räume
-      student:
-        one:    Auszubildende(r)
-        other:  Auszubildende
       subject:
         one: Fach
         other: Fächer
-      teacher:  Lehrer
       time_block:
         one: Zeitblock
         other: Zeitblöcke
       timetable:
         one: Stundenplan
         other: Stundenpläne
-      user:
-        one:    Account
-        other:  Accounts
     attributes:
       course:
         teacher: Klassenlehrer
@@ -115,8 +129,9 @@ de:
         room: Raum
         start_time: Start
         end_time: Ende
-      student:
+      role/student:
         year: Jahrgang
+        organisation: Schule
       teacher:
         courses: Klassenlehrer von
       time_block:

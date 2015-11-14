@@ -1,7 +1,7 @@
 class Course < ActiveRecord::Base
 
-  belongs_to :teacher
-  belongs_to :education_subject
+  belongs_to :teacher, required: true, class_name: 'Role::Teacher'
+  belongs_to :education_subject, required: true
 
   # has_one :leadership
   # has_one :course_teacher, through: :leadership
@@ -9,14 +9,18 @@ class Course < ActiveRecord::Base
   has_many :course_memberships
   has_many :active_course_memberships, -> { where active: true }, class_name: 'CourseMembership'
   has_many :students, through: :active_course_memberships
-  has_many :lessons, inverse_of: :course
+  # has_many :lessons, inverse_of: :course
 
   has_paper_trail
 
   scope :active,   -> { where('end_date > ?',  Date.today) }
   scope :inactive, -> { where('end_date <= ?', Date.today) }
 
-  validates :name, :education_subject, :start_date, :end_date, presence: true
+  validates :name, :start_date, :end_date, presence: true
+
+  def display_name
+    "#{name} (#{education_subject.school.name})"
+  end
 
   def self.course_scopes
     active.all.each_with_object({}) do |course, hsh|

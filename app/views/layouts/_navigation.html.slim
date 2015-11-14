@@ -10,9 +10,9 @@ nav.navbar.navbar-inverse.navbar-fixed-top role="navigation"
         span.icon-bar
       = link_to 'Home', root_path, class: 'navbar-brand'
     #navbar.collapse.navbar-collapse
-      - if user_signed_in?
+      - if login_signed_in?
         ul.nav.navbar-nav
-          - if current_user.admin?
+          - if current_user.manager?
             li = link_to 'Administration', rails_admin_path
             li = link_to 'Stundenpläne', '#'
           - if current_user.student? or current_user.teacher?
@@ -24,11 +24,11 @@ nav.navbar.navbar-inverse.navbar-fixed-top role="navigation"
           li.dropdown
             a.dropdown-toggle href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" User <span class="caret"></span>
             ul.dropdown-menu
-              li = link_to 'Profil', edit_user_registration_path
-              li = link_to 'Abmelden', destroy_user_session_path, method: 'delete'
+              li = link_to 'Profil', edit_login_registration_path
+              li = link_to 'Abmelden', destroy_login_session_path, method: 'delete'
               li.divider role="separator"
               li: a href="#" Nachrichten
       - else
         ul.nav.navbar-nav
-          li = link_to 'Anmelden', new_user_session_path
+          li = link_to 'Anmelden', new_login_session_path
           /li = link_to 'Bewerben', new_user_registration_path
