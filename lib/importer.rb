@@ -30,7 +30,7 @@ module Importer
   def self.import_schools
     puts 'import schools'
 
-    LegacyDatum.where(old_table: 'schulen').all.each do |legacy_datum|
+    LegacyDatum.where(old_table: 'schulen').order(:old_id).all.each do |legacy_datum|
       data = legacy_datum.data
       carrier_id = data['carrier_id'].to_i
       common_options = data.slice('id', 'name', 'street', 'zip', 'city', 'phone', 'fax', 'email')
