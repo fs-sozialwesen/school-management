@@ -46,6 +46,18 @@ sudo -u postgres psql postgres
 \password postgres
 CREATE EXTENSION adminpack;
 
+# update postgres to 9.4
+# https://wiki.postgresql.org/wiki/Apt#Quickstart
+sudo apt-get install wget ca-certificates
+wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+sudo apt-get update
+# sudo apt-get upgrade
+sudo apt-get install postgresql-9.4 pgadmin3
+
+sudo /etc/init.d/postgresql stop
+sudo vi /etc/postgresql/9.4/main/postgresql.conf
+# change port to 5432
+sudo /etc/init.d/postgresql start 9.4
 
 
 # Notes
