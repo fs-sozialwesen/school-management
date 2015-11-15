@@ -8,20 +8,20 @@ class Role < ActiveRecord::Base
     has_one :education_subject, through: :course
     has_one :school, through: :education_subject
 
-    Course.course_scopes.each do |course_sym, course_name|
-      I18n.backend.store_translations :de, {admin: {scopes: {'role~student' => {course_sym => course_name}}}}
-      scope course_sym, -> do
-        includes(:course_memberships, :courses).
-          where(course_memberships: {active: true}).
-          where(courses: {name: course_name})
-      end
-    end
+    # Course.course_scopes.each do |course_sym, course_name|
+    #   I18n.backend.store_translations :de, {admin: {scopes: {'role~student' => {course_sym => course_name}}}}
+    #   scope course_sym, -> do
+    #     includes(:course_memberships, :courses).
+    #       where(course_memberships: {active: true}).
+    #       where(courses: {name: course_name})
+    #   end
+    # end
 
     rails_admin do
       parent Course
 
       list do
-        scopes [nil] + Course.course_scopes.keys.sort
+        # scopes [nil] + Course.course_scopes.keys.sort
         # field :organisation
         field :school
         field :person

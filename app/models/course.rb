@@ -22,11 +22,11 @@ class Course < ActiveRecord::Base
     "#{name} (#{education_subject.school.name})"
   end
 
-  def self.course_scopes
-    active.all.each_with_object({}) do |course, hsh|
-      hsh[course.underscore_name] = course.name
-    end
-  end
+  # def self.course_scopes
+  #   active.all.each_with_object({}) do |course, hsh|
+  #     hsh[course.underscore_name] = course.name
+  #   end
+  # end
 
   def underscore_name
     name.downcase.gsub(' ', '_').to_sym
