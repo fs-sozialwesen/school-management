@@ -1,14 +1,11 @@
 class Person < ActiveRecord::Base
 
   has_one :login, inverse_of: :person, dependent: :destroy
-  # has_one :contact, as: :contactable#, dependent: :destroy
   has_many :roles, dependent: :destroy
-
   has_many :contracts, as: :first_party
 
   validates :first_name, :last_name, presence: true
-
-  # accepts_nested_attributes_for :contact
+  validate :student_has_no_other_roles
 
   has_one :as_admin,   class_name: 'Role::Admin'
   has_one :as_manager, class_name: 'Role::Manager'
@@ -23,22 +20,16 @@ class Person < ActiveRecord::Base
   scope :mentors,  -> { joins(:as_mentor)}
 
   %w[admin manager teacher student mentor].each do |role|
-    as_role = "as_#{role}".to_sym
-    define_method "#{role}?" do
-      send(as_role).present? && send(as_role).persisted?
-    end
+    define_method("#{role}?") { as(role).present? && as(role).persisted? }
+  end
+
+  def as(role)
+    send "as_#{role}"
   end
 
   def name
     "#{first_name} #{last_name}"
   end
-
-  def role_names
-    roles.all.map do |role|
-      role.class.model_name.human
-    end.join(', ')
-  end
-
 
   rails_admin do
     # hide
@@ -49,10 +40,14 @@ class Person < ActiveRecord::Base
       field :last_name
       field :city
       field :email
-      field :role_names
       field :roles
     end
   end
 
+  private
+
+  def student_has_no_other_roles
+    errors.add :base, I18n.t(:student_cant_have_other_roles) if student? && roles.count > 0
+  end
 
 end
