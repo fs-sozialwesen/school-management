@@ -1,31 +1,38 @@
 
 
+
 table.table.table-hover.table-striped.table-condensed
   thead
     tr
-      th Name
       th Arbeitsfeld
-      th Träger/Einrichtung
+      th Träger
+      th Einrichtung
       th Beschreibung
       th Ort
-      th Unterkunft
+      /th Unterkunft
+    tr
+      form
+        td
+        td: input.form-control type="text" placeholder="Filter"
+        td: input.form-control type="text" placeholder="Filter"
+        td: input.form-control type="text" placeholder="Filter"
+        td: input.form-control type="text" placeholder="Filter"
   tbody
     - @internship_positions.each do |internship_position|
-      - institution = internship_position.institution
-      - carrier = institution.carrier
+      - internship_offer = internship_position.internship_offer
+      - organisation = internship_offer.organisation
       tr
-        td = link_to internship_position.name, internship_position
-        td = internship_position.work_area
+        /td = link_to internship_position.name, internship_position
+        td = internship_offer.work_area
         td
-          - if carrier.homepage.present?
-            = link_to carrier.name, "http://#{carrier.homepage}#", target: '_blank'
+          - if organisation.homepage.present?
+            = link_to organisation.name, "http://#{organisation.homepage}#", target: '_blank'
           - else
-            = carrier.name
-          br
-          - if institution.homepage.present?
-            = link_to institution.name, "http://#{institution.homepage}#", target: '_blank'
+            = organisation.name
+        td
+          - if internship_offer.homepage.present?
+            = link_to internship_offer.name, "http://#{internship_offer.homepage}#", target: '_blank'
           - else
-            = institution.name
-        td = internship_position.description
-        td = internship_position.institution.city
-        td = internship_position.accommodation ? '✓' : '-'
+            = internship_offer.name
+        td = link_to internship_offer.description, internship_position
+        td = internship_offer.city

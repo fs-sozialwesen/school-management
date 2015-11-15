@@ -1,3 +1,81 @@
-h1
-  span Praktikumsplatz
-  =< @internship_position.name
+- organisation = @internship_offer.organisation
+.page-header
+  h1
+    - if @internship_offer.homepage.present?
+      = link_to @internship_offer.name, "http://#{@internship_offer.homepage}#", target: '_blank'
+    - else
+      = @internship_offer.name
+    br
+    small
+      - if organisation.homepage.present?
+        = link_to organisation.name, "http://#{organisation.homepage}#", target: '_blank'
+      - else
+        = organisation.name
+
+.row
+  .col-md-12
+    .panel.panel-default
+      /.panel-heading
+        .panel-title Beschreibung
+      .panel-body
+        = @internship_offer.description
+.row
+  .col-md-3
+    .panel.panel-default
+      .panel-heading
+        .panel-title Bewerbung
+      table.table.table-condensed
+        - appli = @internship_offer.application_options
+        tr
+          th telefonisch
+          td = appli.by_phone ? '✓' : '-'
+        tr
+          th per Post
+          td = appli.by_mail ? '✓' : '-'
+        tr
+          th per E-Mail
+          td = appli.by_email ? '✓' : '-'
+        tr
+          th Erforderliche Dokumente
+          td = appli.documents
+  .col-md-3
+    .panel.panel-default
+      .panel-heading
+        .panel-title Adresse
+      .panel-body
+        address
+          - link = ['https://maps.google.de?q=', @internship_offer.street, @internship_offer.zip, @internship_offer.city].join(' ')
+          = link_to link, target: '_blank' do
+              = @internship_offer.street
+              br
+              => @internship_offer.zip
+              = @internship_offer.city
+  .col-md-3
+    .panel.panel-default
+      .panel-heading
+        .panel-title Kontaktdaten
+      table.table.table-condensed
+        tr
+          th Ansprechpartner
+          td = @internship_offer.contact_person
+        tr
+          th E-Mail
+          td = @internship_offer.email
+        tr
+          th Telefon
+          td = @internship_offer.phone
+        tr
+          th Fax
+          td = @internship_offer.fax
+  .col-md-3
+    .panel.panel-default
+      .panel-heading
+        .panel-title Unterkunft
+      table.table.table-condensed
+        tr
+          th Verfügbar
+          td
+        tr
+          th Kosten
+          td
+

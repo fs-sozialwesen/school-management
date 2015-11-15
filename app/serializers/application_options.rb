@@ -14,13 +14,17 @@ class ApplicationOptions
     res.compact
   end
 
-  def self.dump(options)
+  def to_hash
     {
-      by_phone:  options.by_phone,
-      by_email:  options.by_email,
-      by_mail:   options.by_mail,
-      documents: options.documents,
+      by_phone:  by_phone,
+      by_email:  by_email,
+      by_mail:   by_mail,
+      documents: documents,
     }
+  end
+
+  def self.dump(options)
+    options.to_hash
   end
 
   def self.load(options)

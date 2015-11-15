@@ -130,8 +130,9 @@ de:
         start_time: Start
         end_time: Ende
       role/student:
-        year: Jahrgang
         organisation: Schule
+        person: Name
+        year: Jahrgang
       teacher:
         courses: Klassenlehrer von
       time_block:
