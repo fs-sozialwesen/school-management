@@ -7,14 +7,8 @@ class CreatePeople < ActiveRecord::Migration
       t.date :date_of_birth
       t.string :place_of_birth
 
-      t.string :street
-      t.string :zip
-      t.string :city
-
-      t.string :email
-      t.string :phone
-      t.string :mobile
-      t.string :fax
+      t.jsonb :address, default: '{}'
+      t.jsonb :contact, default: '{}'
 
       t.timestamps null: false
     end

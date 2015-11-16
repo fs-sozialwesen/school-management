@@ -1,5 +1,11 @@
 class InternshipPosition < ActiveRecord::Base
 
+  serialize :address,  Address
+  serialize :contact,  Contact
+  serialize :housing,  Housing
+  serialize :applying, Applying
+  serialize :inherits, Inherits
+
   belongs_to :education_subject, required: true
   belongs_to :internship_offer, inverse_of: :internship_positions, required: true
   has_one :organisation, through: :internship_offer

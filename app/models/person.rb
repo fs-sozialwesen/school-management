@@ -1,5 +1,8 @@
 class Person < ActiveRecord::Base
 
+  serialize :address, Address
+  serialize :contact, Contact
+
   has_one :login, inverse_of: :person, dependent: :destroy
   has_many :roles, dependent: :destroy
   has_many :contracts, as: :first_party
@@ -31,6 +34,14 @@ class Person < ActiveRecord::Base
     "#{first_name} #{last_name}"
   end
 
+  def generate_login!(pw)
+    create_login do |login|
+      login.email    = contact.email
+      login.password = login.password_confirmation = pw
+      login.confirm!
+    end
+  end
+
   rails_admin do
     # hide
     # navigation_label I18n.t(:basic_data)
@@ -38,8 +49,8 @@ class Person < ActiveRecord::Base
     list do
       field :first_name
       field :last_name
-      field :city
-      field :email
+      # field :city
+      # field :email
       field :roles
     end
   end

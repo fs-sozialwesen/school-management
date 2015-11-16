@@ -2,6 +2,7 @@ class JsonSerializer
   include Virtus.model
 
   def self.dump(options)
+    return options if options.is_a? Hash
     options.attributes.to_h
   end
 

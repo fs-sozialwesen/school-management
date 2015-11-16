@@ -77,19 +77,12 @@ ActiveRecord::Schema.define(version: 20151101010122) do
     t.integer  "organisation_id"
     t.text     "description"
     t.string   "work_area"
-    t.string   "street"
-    t.string   "zip"
-    t.string   "city"
-    t.string   "email"
-    t.string   "phone"
-    t.string   "mobile"
-    t.string   "fax"
-    t.string   "homepage"
-    t.string   "contact_person"
-    t.jsonb    "accommodation_options"
-    t.jsonb    "application_options"
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
+    t.jsonb    "address",         default: {}
+    t.jsonb    "contact",         default: {}
+    t.jsonb    "housing",         default: {}
+    t.jsonb    "applying",        default: {}
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
   end
 
   add_index "internship_offers", ["organisation_id"], name: "index_internship_offers_on_organisation_id", using: :btree
@@ -99,20 +92,14 @@ ActiveRecord::Schema.define(version: 20151101010122) do
     t.integer  "internship_offer_id"
     t.integer  "education_subject_id"
     t.text     "description"
-    t.string   "street"
-    t.string   "zip"
-    t.string   "city"
-    t.string   "email"
-    t.string   "phone"
-    t.string   "mobile"
-    t.string   "fax"
-    t.string   "homepage"
-    t.string   "contact_person"
-    t.jsonb    "accommodation_options"
-    t.jsonb    "application_options"
     t.date     "start_date"
     t.date     "end_date"
-    t.integer  "number_of_positions",   default: 1
+    t.integer  "number_of_positions",  default: 1
+    t.jsonb    "address",              default: {}
+    t.jsonb    "contact",              default: {}
+    t.jsonb    "housing",              default: {}
+    t.jsonb    "applying",             default: {}
+    t.jsonb    "inherits",             default: {}
     t.datetime "created_at",                        null: false
     t.datetime "updated_at",                        null: false
   end
@@ -154,41 +141,29 @@ ActiveRecord::Schema.define(version: 20151101010122) do
   add_index "logins", ["reset_password_token"], name: "index_logins_on_reset_password_token", unique: true, using: :btree
 
   create_table "organisations", force: :cascade do |t|
-    t.string   "type",           default: "Organisation"
-    t.string   "name",                                    null: false
+    t.string   "type",       default: "Organisation"
+    t.string   "name",                                null: false
     t.string   "kind"
-    t.string   "contact_person"
     t.integer  "carrier_id"
-    t.string   "street"
-    t.string   "zip"
-    t.string   "city"
-    t.string   "email"
-    t.string   "phone"
-    t.string   "mobile"
-    t.string   "fax"
-    t.string   "homepage"
     t.text     "comments"
-    t.datetime "created_at",                              null: false
-    t.datetime "updated_at",                              null: false
+    t.jsonb    "address",    default: {}
+    t.jsonb    "contact",    default: {}
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
   end
 
   add_index "organisations", ["carrier_id"], name: "index_organisations_on_carrier_id", using: :btree
 
   create_table "people", force: :cascade do |t|
-    t.string   "first_name",     null: false
-    t.string   "last_name",      null: false
+    t.string   "first_name",                  null: false
+    t.string   "last_name",                   null: false
     t.string   "gender"
     t.date     "date_of_birth"
     t.string   "place_of_birth"
-    t.string   "street"
-    t.string   "zip"
-    t.string   "city"
-    t.string   "email"
-    t.string   "phone"
-    t.string   "mobile"
-    t.string   "fax"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.jsonb    "address",        default: {}
+    t.jsonb    "contact",        default: {}
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
   end
 
   create_table "roles", force: :cascade do |t|

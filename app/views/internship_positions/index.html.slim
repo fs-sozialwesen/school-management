@@ -1,5 +1,3 @@
-
-
 .row
   .col-md-3
     h3 Filter
@@ -13,15 +11,15 @@
         label.control-label Unterkunft
         br
         .btn-group data-toggle="buttons"
-          label.btn.btn-default class=('active' if params[:accommodation].blank?)
-            input type="radio" name="accommodation" autocomplete="off" value=""    checked=params[:accommodation].blank? alle
-          label.btn.btn-default class=('active' if params[:accommodation] == 'yes')
-            input type="radio" name="accommodation" autocomplete="off" value="yes" checked=(params[:accommodation]=='yes') mit
-          label.btn.btn-default class=('active' if params[:accommodation] == 'no')
-            input type="radio" name="accommodation" autocomplete="off" value="no"  checked=(params[:accommodation]=='no') ohne
+          label.btn.btn-default class=('active' if params[:housing].blank?)
+            input type="radio" name="housing" autocomplete="off" value=""    checked=params[:housing].blank? alle
+          label.btn.btn-default class=('active' if params[:housing] == 'yes')
+            input type="radio" name="housing" autocomplete="off" value="yes" checked=(params[:housing]=='yes') mit
+          label.btn.btn-default class=('active' if params[:housing] == 'no')
+            input type="radio" name="housing" autocomplete="off" value="no"  checked=(params[:housing]=='no') ohne
         /.checkbox
           label
-            input name="accommodation" type="checkbox" checked=params[:accommodation] Mit Unterkunft
+            input name="housing" type="checkbox" checked=params[:housing] Mit Unterkunft
       .form-group
         .checkbox
           label
@@ -42,7 +40,7 @@
           /th Arbeitsfeld
           th Träger
           th Einrichtung
-          th Beschreibung
+          th width="500" Beschreibung
           th Ort
           th Unterkunft
       tbody
@@ -54,6 +52,7 @@
             /td = internship_offer.work_area
             td = link_to organisation.name, internship_position
             td = link_to internship_offer.name, internship_position
-            td = internship_offer.description
-            td = internship_offer.city
-            td = bool_icon internship_offer.accommodation_options.possible
+            - description = truncate(internship_offer.description, length: 200)
+            td = description.gsub("\n", '<br>').html_safe if description.present?
+            td = internship_offer.address.city
+            td = bool_icon internship_offer.housing.provided

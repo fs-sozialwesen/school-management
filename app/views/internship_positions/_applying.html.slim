@@ -1,0 +1,16 @@
+.panel.panel-default
+  .panel-heading
+    .panel-title Bewerbung
+  table.table.table-condensed
+    tr
+      th telefonisch
+      td = bool_icon applying.by_phone
+    tr
+      th per Post
+      td = bool_icon applying.by_mail
+    tr
+      th per E-Mail
+      td = bool_icon applying.by_email
+    tr
+      th Erforderliche Dokumente
+      td = applying.documents

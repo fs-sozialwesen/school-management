@@ -23,7 +23,7 @@ class Role < ActiveRecord::Base
       list do
         # scopes [nil] + Course.course_scopes.keys.sort
         # field :organisation
-        field :school
+        # field :school
         field :person
         field :course
         field :education_subject

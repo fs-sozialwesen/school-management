@@ -13,27 +13,29 @@ module Importer
 
   def self.encrypt_string(string)
     return unless string.present?
-    Rails.env.production? ? string : 'GEBLOCKT'
+    Rails.env.production? ? string : "#{string[0..4]}_GEBLOCKT#{string[-3..-1]}"
   end
 
   def self.encrypt_email(email)
     return unless email.present?
     first, last = email.split '@'
     first = Digest::MD5.hexdigest first
-    [first, last].join '@'
+    [first[0..10], last].join '@'
   end
 
   def self.unquote(string)
-    string.gsub(/&\w+;/, '&quot;' => '"', '&amp;' => '&')
+    string.gsub(/&\w+;/, '&quot;' => '"', '&amp;' => '&') if string.present?
   end
 
   def self.import_schools
     puts 'import schools'
 
     LegacyDatum.where(old_table: 'schulen').order(:old_id).all.each do |legacy_datum|
-      data = legacy_datum.data
-      carrier_id = data['carrier_id'].to_i
-      common_options = data.slice('id', 'name', 'street', 'zip', 'city', 'phone', 'fax', 'email')
+      data                     = legacy_datum.data
+      carrier_id               = data['carrier_id'].to_i
+      common_options           = data.slice('id', 'name')
+      common_options[:contact] = data.slice('phone', 'fax', 'email')
+      common_options[:address] = data.slice('street', 'zip', 'city')
       if carrier_id > 0
         common_options[:carrier] = Organisation.find(carrier_id)
         Organisation::School.create!(common_options)
@@ -53,18 +55,14 @@ module Importer
     LegacyDatum.where(old_table: 'mitarbeiter').all.each do |legacy_datum|
       data = legacy_datum.data
 
-      manager            = Person.new
-      manager.first_name = data['vorname']
-      manager.last_name  = data['nachname']
-      manager.email      = data['email']
+      manager               = Person.new
+      manager.first_name    = data['vorname']
+      manager.last_name     = data['nachname']
+      manager.contact.email = data['email']
       manager.build_as_manager organisation: fs
       manager.save!
 
-      manager.create_login do |login|
-        login.email = data['email']
-        login.password = login.password_confirmation = (data['vorname'] + data['nachname']).downcase
-        login.confirm!
-      end
+      manager.generate_login! (data['vorname'] + data['nachname']).downcase
 
       ActiveRecord::Base.connection.reset_pk_sequence!(Person.table_name)
     end
@@ -101,11 +99,11 @@ module Importer
         teacher.build_as_teacher id: data['id'].to_i + 1000
         teacher.save!
       else
-        teacher            = Person.new
-        teacher.first_name = data['vorname']
-        teacher.last_name  = data['nachname']
-        teacher.gender     = data['geschlecht'].to_i == 1 ? 'f' : 'm'
-        teacher.email      = encrypt_email(data['email'])
+        teacher               = Person.new
+        teacher.first_name    = data['vorname']
+        teacher.last_name     = data['nachname']
+        teacher.gender        = data['geschlecht'].to_i == 1 ? 'f' : 'm'
+        teacher.contact.email = encrypt_email(data['email'])
         teacher.build_as_teacher id: data['id'].to_i + 1000
         teacher.save!
       end
@@ -151,21 +149,22 @@ module Importer
       begin
         course = Course.where(id: data['klasse']).first
         unless course
-          puts 'no course ', data['klasse'], data['vorname'] + data['nachname']
+          puts "no course, klassen id:(#{data['klasse']}) #{data['vorname']} #{data['nachname']}"
           next
         end
 
-        person            = Person.new
-        person.first_name = data['vorname']
-        person.last_name  = data['nachname']
-        person.gender     = data['geschlecht'].to_i == 1 ? 'f' : 'm'
-        person.email      = encrypt_email(data['email'])
-        street, number     = data['strasse'], data['hausnummer']
-        street             += (" #{number}") if number.present?
-        person.street     = encrypt_string street
-        person.zip        = data['plz']
-        person.city       = data['ort']
-        person.phone      = encrypt_string data['telefon']
+        person                = Person.new
+        person.first_name     = data['vorname']
+        person.last_name      = data['nachname']
+        person.gender         = data['geschlecht'].to_i == 1 ? 'f' : 'm'
+
+        person.contact.email  = encrypt_email(data['email'])
+        person.contact.phone  = encrypt_string data['telefon']
+
+        person.address.street = encrypt_string street(data)
+        person.address.zip    = data['plz']
+        person.address.city   = data['ort']
+
         person.build_as_student(
           organisation: course.education_subject.school,
           courses: [course]
@@ -197,20 +196,23 @@ module Importer
     puts 'import carriers'
     LegacyDatum.where(old_table: 'traeger').all.each do |legacy_datum|
       data = legacy_datum.data
-      carrier                = Organisation.new
-      carrier.id             = data['id'].to_i + 1000
-      carrier.name           = unquote data['name_1']
-      carrier.email          = encrypt_string data['email']
-      street, number         = data['strasse'], data['hausnummer']
-      street                 += (" #{number}") if number.present?
-      carrier.street         = encrypt_string street
-      carrier.zip            = data['plz']
-      carrier.city           = data['ort']
-      carrier.phone          = encrypt_string data['telefon']
-      carrier.fax            = encrypt_string data['telefax']
-      carrier.contact_person = encrypt_string "#{data['vorname']} #{data['nachname']}"
-      carrier.homepage       = data['homepage']
-      carrier.comments       = encrypt_string data['kurzbeschreibung']
+      carrier                  = Organisation.new
+      carrier.id               = data['id'].to_i + 1000
+      carrier.name             = unquote data['name_1']
+      carrier.comments         = unquote data['kurzbeschreibung']
+
+      carrier.address.street   = encrypt_string street(data)
+      carrier.address.zip      = data['plz']
+      carrier.address.city     = data['ort']
+
+      carrier.contact.email    = encrypt_string data['email']
+      carrier.contact.phone    = encrypt_string data['telefon']
+      carrier.contact.fax      = encrypt_string data['telefax']
+      carrier.contact.person   = encrypt_string "#{data['vorname']} #{data['nachname']}"
+      homepage                 = data['homepage']
+      homepage                 = 'http://' + homepage unless homepage.blank? or homepage.starts_with?('http')
+      carrier.contact.homepage = homepage
+
       carrier.save!
       # geschlecht: 1
     end
@@ -250,25 +252,28 @@ module Importer
         internship_offers.each do |name, internship_positions|
           internship_offer             = carrier.internship_offers.build
           internship_offer.name        = unquote name
-          internship_offer.email       = encrypt_string first_present(internship_positions, 'email')
-          street                       =  first_present(internship_positions, 'strasse')
-          number                       =  first_present(internship_positions, 'hausnummer')
-          street                       += (" #{number}") if number.present?
-          internship_offer.street      = encrypt_string street
-          internship_offer.zip         = first_present(internship_positions, 'plz')
-          internship_offer.city        = first_present(internship_positions, 'ort')
-          internship_offer.phone       = encrypt_string first_present(internship_positions, 'telefon')
-          internship_offer.fax         = encrypt_string first_present(internship_positions, 'telefax')
-          internship_offer.homepage    = first_present(internship_positions, 'homepage')
-          internship_offer.description = first_present(internship_positions, 'kurzbeschreibung')
-          accommodation                = internship_offer.accommodation_options
-          accommodation.possible       = first_present(internship_positions, 'unterkunft').to_i == 1
-          accommodation.costs          = first_present(internship_positions, 'unterkunftkosten')
-          application                  = internship_offer.application_options
-          application.by_phone         = first_present(internship_positions, 'bewerbungtele')
-          application.by_email         = first_present(internship_positions, 'bewerbungmail')
-          application.by_mail          = first_present(internship_positions, 'bewerbungpost')
-          application.documents        = first_present(internship_positions, 'bewerbungsunterlagen')
+          internship_offer.description = unquote first_present(internship_positions, 'kurzbeschreibung')
+
+          street                          = first_present(internship_positions, 'strasse')
+          number                          = first_present(internship_positions, 'hausnummer')
+          internship_offer.address.street = encrypt_string [street, number].join(' ').strip
+          internship_offer.address.zip    = first_present(internship_positions, 'plz')
+          internship_offer.address.city   = first_present(internship_positions, 'ort')
+
+          internship_offer.contact.email    = encrypt_string first_present(internship_positions, 'email')
+          internship_offer.contact.phone    = encrypt_string first_present(internship_positions, 'telefon')
+          internship_offer.contact.fax      = encrypt_string first_present(internship_positions, 'telefax')
+          homepage                          = first_present(internship_positions, 'homepage')
+          homepage                          = 'http://' + homepage unless homepage.blank? or homepage.starts_with?('http')
+          internship_offer.contact.homepage = homepage
+
+          internship_offer.housing.provided = first_present(internship_positions, 'unterkunft').to_i == 1
+          internship_offer.housing.costs    = first_present(internship_positions, 'unterkunftkosten')
+
+          internship_offer.applying.by_phone  = first_present(internship_positions, 'bewerbungtele')
+          internship_offer.applying.by_email  = first_present(internship_positions, 'bewerbungmail')
+          internship_offer.applying.by_mail   = first_present(internship_positions, 'bewerbungpost')
+          internship_offer.applying.documents = first_present(internship_positions, 'bewerbungsunterlagen')
           internship_offer.save!
 
           internship_positions.group_by { |i| i['art'].to_i }.each do |education_subject_id, array|
@@ -290,6 +295,10 @@ module Importer
 
   def self.first_present(array, attribute)
     array.map { |data| data[attribute] }.uniq.compact.first
+  end
+
+  def self.street(data_hash)
+    [data_hash['strasse'], data_hash['hausnummer']].join(' ').strip
   end
 
   def self.import_time_blocks

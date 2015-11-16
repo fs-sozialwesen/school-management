@@ -1,4 +1,4 @@
-class ApplicationOptions < JsonSerializer
+class Applying < JsonSerializer
 
   attribute :by_phone,  Boolean, default: false
   attribute :by_email,  Boolean, default: false

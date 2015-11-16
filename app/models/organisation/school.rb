@@ -4,6 +4,7 @@ class Organisation < ActiveRecord::Base
     has_many :students, class_name: 'Role::Student', inverse_of: :school
 
     rails_admin do
+      configure(:city) { pretty_value { bindings[:object].address.city } }
       list do
         field :name
         field :city

@@ -1,5 +1,8 @@
 class Organisation < ActiveRecord::Base
 
+  serialize :address, Address
+  serialize :contact, Contact
+
   belongs_to :carrier, class_name: 'Organisation'
 
   has_many :contracts_as_first_party,  as: :first_party,  class_name: 'Contract'
@@ -18,7 +21,7 @@ class Organisation < ActiveRecord::Base
     list do
       field(:type) { pretty_value { bindings[:object].class.model_name.human } }
       field :name
-      field :city
+      # field :city
       field :carrier
     end
   end

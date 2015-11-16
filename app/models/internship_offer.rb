@@ -3,17 +3,19 @@ class InternshipOffer < ActiveRecord::Base
   belongs_to :organisation, inverse_of: :internship_offers
   has_many :internship_positions, inverse_of: :internship_offer, dependent: :destroy
 
-  serialize :accommodation_options, AccommodationOptions
-  serialize :application_options, ApplicationOptions
+  serialize :address,  Address
+  serialize :contact,  Contact
+  serialize :housing,  Housing
+  serialize :applying, Applying
 
   # delegate :by_phone,  :by_email,  :by_mail,  :documents,  to: :application_options, prefix: :application
   # delegate :by_phone=, :by_email=, :by_mail=, :documents=, to: :application_options, prefix: :application
 
-  scope :by_mail,  -> { where('application_options @> ?', ApplicationOptions.by_mail) }
-  scope :by_email, -> { where('application_options @> ?', ApplicationOptions.by_email) }
-  scope :by_phone, -> { where('application_options @> ?', ApplicationOptions.by_phone) }
-  scope :with_accommodation,    -> { where('accommodation_options @> ?', AccommodationOptions.possible) }
-  scope :without_accommodation, -> { where('accommodation_options @> ?', AccommodationOptions.not_possible) }
+  scope :by_mail,         -> { where('applying @> ?', Applying.by_mail) }
+  scope :by_email,        -> { where('applying @> ?', Applying.by_email) }
+  scope :by_phone,        -> { where('applying @> ?', Applying.by_phone) }
+  scope :with_housing,    -> { where('housing @> ?',  Housing.provided) }
+  scope :without_housing, -> { where('housing @> ?',  Housing.not_provided) }
 
   # InternshipOffer.where("application_options ->>'documents' ILIKE '%leben%'" ).count
 
@@ -39,6 +41,7 @@ class InternshipOffer < ActiveRecord::Base
     # end
 
     list do
+      configure(:city) { pretty_value { bindings[:object].address.city } }
       sort_by :organisation
       # field :id
       field :name, :self_link

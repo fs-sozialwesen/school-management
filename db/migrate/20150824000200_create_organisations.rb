@@ -4,20 +4,12 @@ class CreateOrganisations < ActiveRecord::Migration
       t.string :type, default: 'Organisation'
       t.string :name, null: false
       t.string :kind
-      t.string :contact_person
       t.references :carrier, index: true
-
-      t.string :street
-      t.string :zip
-      t.string :city
-
-      t.string :email
-      t.string :phone
-      t.string :mobile
-      t.string :fax
-      t.string :homepage
-
       t.text :comments
+
+      t.jsonb :address, default: '{}'
+      t.jsonb :contact, default: '{}'
+
 
       t.timestamps null: false
     end
