@@ -1,16 +1,21 @@
 class InternshipOffer < ActiveRecord::Base
 
   belongs_to :organisation, inverse_of: :internship_offers
-  has_many :internship_positions, inverse_of: :internship_offer
+  has_many :internship_positions, inverse_of: :internship_offer, dependent: :destroy
 
-  # serialize :accommodation_details, Hash
-  # serialize :settings, HashSerializer
+  serialize :accommodation_options, AccommodationOptions
   serialize :application_options, ApplicationOptions
 
-  delegate :by_phone,  :by_email,  :by_mail,  :documents,  to: :application_options, prefix: :application
-  delegate :by_phone=, :by_email=, :by_mail=, :documents=, to: :application_options, prefix: :application
+  # delegate :by_phone,  :by_email,  :by_mail,  :documents,  to: :application_options, prefix: :application
+  # delegate :by_phone=, :by_email=, :by_mail=, :documents=, to: :application_options, prefix: :application
 
-  # default_scope -> { where type: nil }
+  scope :by_mail,  -> { where('application_options @> ?', ApplicationOptions.by_mail) }
+  scope :by_email, -> { where('application_options @> ?', ApplicationOptions.by_email) }
+  scope :by_phone, -> { where('application_options @> ?', ApplicationOptions.by_phone) }
+  scope :with_accommodation,    -> { where('accommodation_options @> ?', AccommodationOptions.possible) }
+  scope :without_accommodation, -> { where('accommodation_options @> ?', AccommodationOptions.not_possible) }
+
+  # InternshipOffer.where("application_options ->>'documents' ILIKE '%leben%'" ).count
 
   accepts_nested_attributes_for :internship_positions
 
@@ -25,13 +30,13 @@ class InternshipOffer < ActiveRecord::Base
   rails_admin do
     # parent Organisation
 
-    configure :application_by_phone, :boolean
-    configure :application_by_email, :boolean
-    configure :application_by_mail,  :boolean
-    configure(:application_documents) { formatted_value { bindings[:object].application_options.documents } }
-    configure :application_options do
-      formatted_value { bindings[:object].application_options.by_options.join(', ').html_safe }
-    end
+    # configure :application_by_phone, :boolean
+    # configure :application_by_email, :boolean
+    # configure :application_by_mail,  :boolean
+    # configure(:application_documents) { formatted_value { bindings[:object].application_options.documents } }
+    # configure :application_options do
+    #   formatted_value { bindings[:object].application_options.by_options.join(', ').html_safe }
+    # end
 
     list do
       sort_by :organisation
@@ -55,8 +60,8 @@ class InternshipOffer < ActiveRecord::Base
       field :education_subjects
       field :positions_sum
 
-      field :application_options
-      field :application_documents
+      # field :application_options
+      # field :application_documents
     end
 
     edit do
@@ -85,12 +90,12 @@ class InternshipOffer < ActiveRecord::Base
         field :zip
         field :city
       end
-      group :application do
-        field :application_by_phone
-        field :application_by_email
-        field :application_by_mail
-        field :application_documents
-      end
+      # group :application do
+      #   field :application_by_phone
+      #   field :application_by_email
+      #   field :application_by_mail
+      #   field :application_documents
+      # end
     end
   end
 
