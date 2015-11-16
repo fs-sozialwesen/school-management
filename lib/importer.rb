@@ -248,26 +248,27 @@ module Importer
       begin
         carrier = Organisation.find carrier_id
         internship_offers.each do |name, internship_positions|
-          internship_offer                       = carrier.internship_offers.build
-          internship_offer.name                  = unquote name
-          internship_offer.email                 = encrypt_string first_present(internship_positions, 'email')
-          street                                 =  first_present(internship_positions, 'strasse')
-          number                                 =  first_present(internship_positions, 'hausnummer')
-          street                                 += (" #{number}") if number.present?
-          internship_offer.street                = encrypt_string street
-          internship_offer.zip                   = first_present(internship_positions, 'plz')
-          internship_offer.city                  = first_present(internship_positions, 'ort')
-          internship_offer.phone                 = encrypt_string first_present(internship_positions, 'telefon')
-          internship_offer.fax                   = encrypt_string first_present(internship_positions, 'telefax')
-          internship_offer.homepage              = first_present(internship_positions, 'homepage')
-          internship_offer.description           = first_present(internship_positions, 'kurzbeschreibung')
-          # internship_offer.accommodation         = first_present(internship_positions, 'unterkunft').to_i == 1
-          # internship_offer.accommodation_details = first_present(internship_positions, 'unterkunft_kosten')
-          application = internship_offer.application_options
-          application.by_phone  = first_present(internship_positions, 'bewerbungtele')
-          application.by_email  = first_present(internship_positions, 'bewerbungmail')
-          application.by_mail   = first_present(internship_positions, 'bewerbungpost')
-          application.documents = first_present(internship_positions, 'bewerbungsunterlagen')
+          internship_offer             = carrier.internship_offers.build
+          internship_offer.name        = unquote name
+          internship_offer.email       = encrypt_string first_present(internship_positions, 'email')
+          street                       =  first_present(internship_positions, 'strasse')
+          number                       =  first_present(internship_positions, 'hausnummer')
+          street                       += (" #{number}") if number.present?
+          internship_offer.street      = encrypt_string street
+          internship_offer.zip         = first_present(internship_positions, 'plz')
+          internship_offer.city        = first_present(internship_positions, 'ort')
+          internship_offer.phone       = encrypt_string first_present(internship_positions, 'telefon')
+          internship_offer.fax         = encrypt_string first_present(internship_positions, 'telefax')
+          internship_offer.homepage    = first_present(internship_positions, 'homepage')
+          internship_offer.description = first_present(internship_positions, 'kurzbeschreibung')
+          accommodation                = internship_offer.accommodation_options
+          accommodation.possible       = first_present(internship_positions, 'unterkunft').to_i == 1
+          accommodation.costs          = first_present(internship_positions, 'unterkunftkosten')
+          application                  = internship_offer.application_options
+          application.by_phone         = first_present(internship_positions, 'bewerbungtele')
+          application.by_email         = first_present(internship_positions, 'bewerbungmail')
+          application.by_mail          = first_present(internship_positions, 'bewerbungpost')
+          application.documents        = first_present(internship_positions, 'bewerbungsunterlagen')
           internship_offer.save!
 
           internship_positions.group_by { |i| i['art'].to_i }.each do |education_subject_id, array|
