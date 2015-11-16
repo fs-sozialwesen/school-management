@@ -11,11 +11,11 @@ class InternshipOffer < ActiveRecord::Base
   # delegate :by_phone,  :by_email,  :by_mail,  :documents,  to: :application_options, prefix: :application
   # delegate :by_phone=, :by_email=, :by_mail=, :documents=, to: :application_options, prefix: :application
 
-  scope :by_mail,         -> { where('applying @> ?', Applying.by_mail) }
-  scope :by_email,        -> { where('applying @> ?', Applying.by_email) }
-  scope :by_phone,        -> { where('applying @> ?', Applying.by_phone) }
-  scope :with_housing,    -> { where('housing @> ?',  Housing.provided) }
-  scope :without_housing, -> { where('housing @> ?',  Housing.not_provided) }
+  scope :by_mail,  -> (yes_or_no = nil) { yes_or_no.in?([true, false]) ? where(*Applying.by_mail( yes_or_no)) : all }
+  scope :by_email, -> (yes_or_no = nil) { yes_or_no.in?([true, false]) ? where(*Applying.by_email(yes_or_no)) : all }
+  scope :by_phone, -> (yes_or_no = nil) { yes_or_no.in?([true, false]) ? where(*Applying.by_phone(yes_or_no)) : all }
+  scope :housing,  -> (housing = nil) { (housing.in? [true, false]) ? where(*Housing.provided(housing)) : all }
+  scope :by_city,  -> (city = nil) { city.blank? ? all : where('address @> ?', {city: city}.to_json) }
 
   # InternshipOffer.where("application_options ->>'documents' ILIKE '%leben%'" ).count
 

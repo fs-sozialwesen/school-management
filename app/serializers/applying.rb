@@ -5,8 +5,16 @@ class Applying < JsonSerializer
   attribute :by_mail,   Boolean, default: false
   attribute :documents, String
 
-  def self.by_mail;  { by_mail: true  }.to_json; end
-  def self.by_email; { by_email: true }.to_json; end
-  def self.by_phone; { by_phone: true }.to_json; end
+  def self.by_mail(yes_or_no)
+    ['applying @> ?', { by_mail: yes_or_no }.to_json ]
+  end
+
+  def self.by_email(yes_or_no)
+    ['applying @> ?', { by_email: yes_or_no }.to_json ]
+  end
+
+  def self.by_phone(yes_or_no)
+    ['applying @> ?', { by_phone: yes_or_no }.to_json ]
+  end
 
 end

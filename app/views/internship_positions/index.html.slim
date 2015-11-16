@@ -4,26 +4,23 @@
     form.form-horizontal action=internship_positions_url
       .form-group
         select.form-control name="city"
-          option selected=(params[:city].blank?) value='' Ort
+          option selected=(@search_form.city.blank?) value='' Ort
           - @cities.each do |city|
-            option selected=(city == params[:city]) value=city = city
+            option selected=(city == @search_form.city) value=city = city
       .form-group
         label.control-label Unterkunft
         br
         .btn-group data-toggle="buttons"
-          label.btn.btn-default class=('active' if params[:housing].blank?)
-            input type="radio" name="housing" autocomplete="off" value=""    checked=params[:housing].blank? alle
-          label.btn.btn-default class=('active' if params[:housing] == 'yes')
-            input type="radio" name="housing" autocomplete="off" value="yes" checked=(params[:housing]=='yes') mit
-          label.btn.btn-default class=('active' if params[:housing] == 'no')
-            input type="radio" name="housing" autocomplete="off" value="no"  checked=(params[:housing]=='no') ohne
-        /.checkbox
-          label
-            input name="housing" type="checkbox" checked=params[:housing] Mit Unterkunft
+          label.btn.btn-default class=('active' if @search_form.housing.nil?)
+            input type="radio" name="housing" autocomplete="off" value=""    checked=@search_form.housing.nil? alle
+          label.btn.btn-default class=('active' if @search_form.housing == true)
+            input type="radio" name="housing" autocomplete="off" value="yes" checked=(@search_form.housing==true) mit
+          label.btn.btn-default class=('active' if @search_form.housing == false)
+            input type="radio" name="housing" autocomplete="off" value="no"  checked=(@search_form.housing==false) ohne
       .form-group
         .checkbox
           label
-            input name="by_email" type="checkbox" checked=params[:by_email] Bewerbung per E-Mail
+            input name="by_email" type="checkbox" checked=@search_form.by_email Bewerbung per E-Mail
       .row
         .form-group
           .col-md-6

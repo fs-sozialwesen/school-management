@@ -17,8 +17,8 @@ nav.navbar.navbar-inverse.navbar-fixed-top role="navigation"
             li = link_to 'Stundenpläne', '#'
           - if current_user.student? or current_user.teacher?
             li = link_to  t(:timetable), timetables_path
-          - if current_user.student?
-            li = link_to 'Praktikumsplätze', internship_positions_url
+          /- if current_user.student?
+          li = link_to 'Praktikumsplätze', internship_positions_url
 
         ul.nav.navbar-nav.navbar-right
           li.dropdown

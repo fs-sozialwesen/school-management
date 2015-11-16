@@ -2,26 +2,11 @@ class InternshipPositionsController < ApplicationController
 
   def index
 
-    if params[:submit] == 'clear'
-      %i(city housing by_email).each { |filter| params.delete filter}
-    end
-
-    student = current_user.as_student
-
-    internship_offers = InternshipOffer
-    internship_offers = internship_offers.with_housing    if params[:housing] == 'yes'
-    internship_offers = internship_offers.without_housing if params[:housing] == 'no'
-    internship_offers = internship_offers.by_email if params[:by_email]
-    if params[:city].present?
-      internship_offers = internship_offers.where('address @> ?', {city: params[:city]}.to_json)
-    end
-    ids = internship_offers.pluck(:id)
-    # filter = { education_subject: student.education_subject, internship_offers: {id: ids}}
-    filter = { education_subject: EducationSubject.last, internship_offers: {id: ids}}
+    @search_form = SearchForm.new params, current_user
 
     @internship_positions = InternshipPosition.
       includes(internship_offer: :organisation).
-      where(filter).
+      where(@search_form.filter_criteria).
       order("internship_offers.address->>'city'").
       all
 
@@ -31,6 +16,35 @@ class InternshipPositionsController < ApplicationController
   def show
     @internship_position = InternshipPosition.find params[:id]
     @internship_offer = @internship_position.internship_offer
+  end
+
+  class SearchForm
+    attr_reader :params, :user, :filter_params, :housing, :by_email, :city
+
+    def initialize(params, user)
+      @params        = params
+      @user          = user
+      @filter_params = %i(city housing by_email)
+      filter_params.each { |filter| params.delete filter } if params[:submit] == 'clear'
+      @housing       = {'yes' => true, 'no' => false}[params[:housing]]
+      @by_email      = params[:by_email] == 'on' ? true : nil
+      @city          = params[:city]
+    end
+
+    def filter_criteria
+
+      criteria = {}
+
+      criteria[:internship_offers] = {id: internship_offers.pluck(:id)} unless params[:submit] == 'clear'
+      criteria[:education_subject] = user.as_student.education_subject  if user.student?
+
+      criteria
+    end
+
+    def internship_offers
+      InternshipOffer.by_city(city).housing(housing).by_email(by_email)
+    end
+
   end
 
 end
