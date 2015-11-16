@@ -4,7 +4,7 @@ class Housing < JsonSerializer
   attribute :costs,    String
 
   def self.provided(prov)
-    [ 'housing @> ?', { provided: prov  }.to_json ]
+    { provided: prov }.to_json
   end
 
 end

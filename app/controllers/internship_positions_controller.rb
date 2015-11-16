@@ -19,15 +19,16 @@ class InternshipPositionsController < ApplicationController
   end
 
   class SearchForm
-    attr_reader :params, :user, :filter_params, :housing, :by_email, :city
+    attr_reader :params, :user, :filter_params, :housing, :applying_by, :city
 
     def initialize(params, user)
       @params        = params
       @user          = user
-      @filter_params = %i(city housing by_email)
+      @filter_params = %i(city housing applying_by)
       filter_params.each { |filter| params.delete filter } if params[:submit] == 'clear'
       @housing       = {'yes' => true, 'no' => false}[params[:housing]]
-      @by_email      = params[:by_email] == 'on' ? true : nil
+      @applying_by   = params[:applying_by]
+      @applying_by   = applying_by.in?(%w(mail email phone)) ? ('by_' + applying_by).to_sym : nil
       @city          = params[:city]
     end
 
@@ -42,7 +43,7 @@ class InternshipPositionsController < ApplicationController
     end
 
     def internship_offers
-      InternshipOffer.by_city(city).housing(housing).by_email(by_email)
+      InternshipOffer.by_city(city).housing(housing).applying_by(applying_by)
     end
 
   end

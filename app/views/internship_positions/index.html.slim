@@ -1,6 +1,6 @@
 .row
   .col-md-3
-    h3 Filter
+    h3 Suche
     form.form-horizontal action=internship_positions_url
       .form-group
         select.form-control name="city"
@@ -18,9 +18,17 @@
           label.btn.btn-default class=('active' if @search_form.housing == false)
             input type="radio" name="housing" autocomplete="off" value="no"  checked=(@search_form.housing==false) ohne
       .form-group
-        .checkbox
-          label
-            input name="by_email" type="checkbox" checked=@search_form.by_email Bewerbung per E-Mail
+        label.control-label Bewerben per
+        br
+        .btn-group data-toggle="buttons"
+          label.btn.btn-default class=('active' if @search_form.applying_by.nil?)
+            input type="radio" name="applying_by" autocomplete="off" value=""      checked=@search_form.applying_by.nil? alle
+          label.btn.btn-default class=('active' if @search_form.applying_by == :by_mail)
+            input type="radio" name="applying_by" autocomplete="off" value="mail"  checked=(@search_form.applying_by == :by_mail) Post
+          label.btn.btn-default class=('active' if @search_form.applying_by == :by_email)
+            input type="radio" name="applying_by" autocomplete="off" value="email" checked=(@search_form.applying_by == :by_email) E-Mail
+          label.btn.btn-default class=('active' if @search_form.applying_by == :by_phone)
+            input type="radio" name="applying_by" autocomplete="off" value="phone" checked=(@search_form.applying_by == :by_phone) Telefon
       .row
         .form-group
           .col-md-6
@@ -34,17 +42,28 @@
     table.table.table-hover.table-striped.table-condensed
       thead
         tr
+          th
           /th Arbeitsfeld
           th Träger
           th Einrichtung
-          th width="500" Beschreibung
+          th Beschreibung
           th Ort
-          th Unterkunft
       tbody
         - @internship_positions.each do |internship_position|
           - internship_offer = internship_position.internship_offer
           - organisation = internship_offer.organisation
           tr
+            td
+              - if internship_offer.housing.provided
+                span.glyphicon.glyphicon-home> title=("Unterkunft (Kosten: #{internship_offer.housing.costs})")
+              - if internship_offer.applying.by_mail
+                span.glyphicon.glyphicon-file> title="Bewerbung per Post"
+              - if internship_offer.applying.by_email
+                span.glyphicon.glyphicon-envelope> title="Bewerbung per E-Mail"
+              - if internship_offer.applying.by_phone
+                span.glyphicon.glyphicon-earphone> title="Bewerbung per Telefon"
+              - if internship_offer.applying.documents.present?
+                span.glyphicon.glyphicon-paperclip> title=("Bewerbungsdokumente: " + internship_offer.applying.documents)
             /td = link_to internship_position.name, internship_position
             /td = internship_offer.work_area
             td = link_to organisation.name, internship_position
@@ -52,4 +71,3 @@
             - description = truncate(internship_offer.description, length: 200)
             td = description.gsub("\n", '<br>').html_safe if description.present?
             td = internship_offer.address.city
-            td = bool_icon internship_offer.housing.provided
