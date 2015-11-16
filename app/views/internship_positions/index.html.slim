@@ -1,38 +1,59 @@
 
 
-
-table.table.table-hover.table-striped.table-condensed
-  thead
-    tr
-      th Arbeitsfeld
-      th Träger
-      th Einrichtung
-      th Beschreibung
-      th Ort
-      /th Unterkunft
-    tr
-      form
-        td
-        td: input.form-control type="text" placeholder="Filter"
-        td: input.form-control type="text" placeholder="Filter"
-        td: input.form-control type="text" placeholder="Filter"
-        td: input.form-control type="text" placeholder="Filter"
-  tbody
-    - @internship_positions.each do |internship_position|
-      - internship_offer = internship_position.internship_offer
-      - organisation = internship_offer.organisation
-      tr
-        /td = link_to internship_position.name, internship_position
-        td = internship_offer.work_area
-        td
-          - if organisation.homepage.present?
-            = link_to organisation.name, "http://#{organisation.homepage}#", target: '_blank'
-          - else
-            = organisation.name
-        td
-          - if internship_offer.homepage.present?
-            = link_to internship_offer.name, "http://#{internship_offer.homepage}#", target: '_blank'
-          - else
-            = internship_offer.name
-        td = link_to internship_offer.description, internship_position
-        td = internship_offer.city
+.row
+  .col-md-3
+    h3 Filter
+    form.form-horizontal action=internship_positions_url
+      .form-group
+        select.form-control name="city"
+          option selected=(params[:city].blank?) value='' Ort
+          - @cities.each do |city|
+            option selected=(city == params[:city]) value=city = city
+      .form-group
+        label.control-label Unterkunft
+        br
+        .btn-group data-toggle="buttons"
+          label.btn.btn-default class=('active' if params[:accommodation].blank?)
+            input type="radio" name="accommodation" autocomplete="off" value=""    checked=params[:accommodation].blank? alle
+          label.btn.btn-default class=('active' if params[:accommodation] == 'yes')
+            input type="radio" name="accommodation" autocomplete="off" value="yes" checked=(params[:accommodation]=='yes') mit
+          label.btn.btn-default class=('active' if params[:accommodation] == 'no')
+            input type="radio" name="accommodation" autocomplete="off" value="no"  checked=(params[:accommodation]=='no') ohne
+        /.checkbox
+          label
+            input name="accommodation" type="checkbox" checked=params[:accommodation] Mit Unterkunft
+      .form-group
+        .checkbox
+          label
+            input name="by_email" type="checkbox" checked=params[:by_email] Bewerbung per E-Mail
+      .row
+        .form-group
+          .col-md-6
+            button.btn.btn-default.btn-block name="submit" value="clear" type="submit" Alle
+          .col-md-6
+            button.btn.btn-primary.btn-block name="submit" value="filter" type="submit" Suchen
+  .col-md-9
+    h3
+      => @internship_positions.size
+      'Praktikumsplätze gefunden
+    table.table.table-hover.table-striped.table-condensed
+      thead
+        tr
+          /th Arbeitsfeld
+          th Träger
+          th Einrichtung
+          th Beschreibung
+          th Ort
+          th Unterkunft
+      tbody
+        - @internship_positions.each do |internship_position|
+          - internship_offer = internship_position.internship_offer
+          - organisation = internship_offer.organisation
+          tr
+            /td = link_to internship_position.name, internship_position
+            /td = internship_offer.work_area
+            td = link_to organisation.name, internship_position
+            td = link_to internship_offer.name, internship_position
+            td = internship_offer.description
+            td = internship_offer.city
+            td = bool_icon internship_offer.accommodation_options.possible

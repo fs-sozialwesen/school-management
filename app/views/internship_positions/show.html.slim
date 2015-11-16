@@ -28,13 +28,13 @@
         - appli = @internship_offer.application_options
         tr
           th telefonisch
-          td = appli.by_phone ? '✓' : '-'
+          td = bool_icon appli.by_phone
         tr
           th per Post
-          td = appli.by_mail ? '✓' : '-'
+          td = bool_icon appli.by_mail
         tr
           th per E-Mail
-          td = appli.by_email ? '✓' : '-'
+          td = bool_icon appli.by_email
         tr
           th Erforderliche Dokumente
           td = appli.documents
@@ -74,8 +74,8 @@
       table.table.table-condensed
         tr
           th Verfügbar
-          td
+          td = bool_icon @internship_offer.accommodation_options.possible
         tr
           th Kosten
-          td
+          td = @internship_offer.accommodation_options.costs
 
