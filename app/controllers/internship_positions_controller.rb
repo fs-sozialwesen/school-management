@@ -1,10 +1,14 @@
 class InternshipPositionsController < ApplicationController
 
+  before_action :authenticate_login!
+  after_action :verify_authorized
+
   def index
+    authorize InternshipPosition
 
     @search_form = SearchForm.new params, current_user
 
-    @internship_positions = InternshipPosition.
+    @internship_positions = policy_scope(InternshipPosition).
       includes(internship_offer: :organisation).
       where(@search_form.filter_criteria).
       order("internship_offers.address->>'city'").
@@ -15,6 +19,7 @@ class InternshipPositionsController < ApplicationController
 
   def show
     @internship_position = InternshipPosition.find params[:id]
+    authorize @internship_position
     @internship_offer = @internship_position.internship_offer
   end
 
@@ -33,13 +38,8 @@ class InternshipPositionsController < ApplicationController
     end
 
     def filter_criteria
-
-      criteria = {}
-
-      criteria[:internship_offers] = {id: internship_offers.pluck(:id)} unless params[:submit] == 'clear'
-      criteria[:education_subject] = user.as_student.education_subject  if user.student?
-
-      criteria
+      return {} if params[:submit] == 'clear'
+      { internship_offers: { id: internship_offers.pluck(:id) } }
     end
 
     def internship_offers
