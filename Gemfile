@@ -23,6 +23,7 @@ group :development do
   gem 'spring'
   gem 'bootstrap-generators', '~> 3.3.4'
   gem 'capistrano3-puma'
+  gem 'meta_request'
 end
 
 gem 'bootstrap-sass'
