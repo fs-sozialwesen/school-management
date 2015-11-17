@@ -1,0 +1,36 @@
+.search-form
+  h3 Suche
+  form.form-horizontal action=internship_positions_url
+    .form-group
+      select.form-control name="city"
+        option selected=(search_form.city.blank?) value='' Ort
+        - cities.each do |city|
+          option selected=(city == search_form.city) value=city = city
+    .form-group
+      label.control-label Unterkunft
+      br
+      .btn-group data-toggle="buttons"
+        label.btn.btn-default class=('active' if search_form.housing.nil?)
+          input type="radio" name="housing" autocomplete="off" value=""    checked=search_form.housing.nil? alle
+        label.btn.btn-default class=('active' if search_form.housing == true)
+          input type="radio" name="housing" autocomplete="off" value="yes" checked=(search_form.housing==true) mit
+        label.btn.btn-default class=('active' if search_form.housing == false)
+          input type="radio" name="housing" autocomplete="off" value="no"  checked=(search_form.housing==false) ohne
+    .form-group
+      label.control-label Bewerben per
+      br
+      .btn-group data-toggle="buttons"
+        label.btn.btn-default class=('active' if search_form.applying_by.nil?)
+          input type="radio" name="applying_by" autocomplete="off" value=""      checked=search_form.applying_by.nil? alle
+        label.btn.btn-default class=('active' if search_form.applying_by == :by_mail)
+          input type="radio" name="applying_by" autocomplete="off" value="mail"  checked=(search_form.applying_by == :by_mail) Post
+        label.btn.btn-default class=('active' if search_form.applying_by == :by_email)
+          input type="radio" name="applying_by" autocomplete="off" value="email" checked=(search_form.applying_by == :by_email) E-Mail
+        label.btn.btn-default class=('active' if search_form.applying_by == :by_phone)
+          input type="radio" name="applying_by" autocomplete="off" value="phone" checked=(search_form.applying_by == :by_phone) Telefon
+    .row
+      .form-group
+        .col-md-6
+          button.btn.btn-default.btn-block name="submit" value="clear" type="submit" Alle
+        .col-md-6
+          button.btn.btn-primary.btn-block name="submit" value="filter" type="submit" Suchen

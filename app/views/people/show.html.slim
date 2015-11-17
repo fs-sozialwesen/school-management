@@ -1,0 +1,18 @@
+.page-header
+  = link_to people_path, class: 'btn btn-default' do 
+    span.glyphicon.glyphicon-list-alt
+    |  Back 
+  = link_to edit_person_path(@person), class: 'btn btn-primary' do 
+    span.glyphicon.glyphicon-pencil
+    |  Edit 
+  h1
+    | Show person
+dl.dl-horizontal
+  dt
+    | First name:
+  dd
+    = @person.first_name
+  dt
+    | Last name:
+  dd
+    = @person.last_name

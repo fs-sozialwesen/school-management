@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   root to: 'visitors#index'
   devise_for :logins
   resources :logins
+  resources :people
   resources :timetables, only: [:index, :show]
   resources :internship_positions, only: [:index, :show]
 

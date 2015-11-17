@@ -1,0 +1,72 @@
+- internship_offer = internship_position.internship_offer
+.panel.panel-default
+  .panel-heading
+    h3.panel-title
+      span
+      - if internship_offer.housing.provided
+        span.glyphicon.glyphicon-home> title=("Unterkunft (Kosten: #{internship_offer.housing.costs})")
+      - if internship_offer.applying.by_mail
+        span.glyphicon.glyphicon-file> title="Bewerbung per Post"
+      - if internship_offer.applying.by_email
+        span.glyphicon.glyphicon-envelope> title="Bewerbung per E-Mail"
+      - if internship_offer.applying.by_phone
+        span.glyphicon.glyphicon-earphone> title="Bewerbung per Telefon"
+      - if internship_offer.applying.documents.present?
+        span.glyphicon.glyphicon-paperclip> title=("Bewerbungsdokumente: " + internship_offer.applying.documents)
+
+      => link_to internship_offer.name, internship_position, title: 'Einrichtung'
+  .panel-body
+    .col-md-6
+      - homepage = internship_offer.organisation.contact.homepage
+      p = link_to_if homepage.present?, internship_offer.organisation.name, homepage, target: '_blank', title: 'Träger'
+      - if internship_offer.description.present?
+        p = internship_offer.description.gsub("\n", '<br>').html_safe
+    .col-md-3
+      p
+        - applying = internship_offer.applying
+        'Bewerbungen möglich
+        =< applying.by.map{ |by| t(".#{by}") }.to_sentence
+      - if applying.documents.present?
+        p
+          ul.list-unstyled
+            label.glyphicon.glyphicon-paperclip title="Dokumente"
+            - applying.documents.gsub('und', ',').split(',').each do |doc|
+              li = doc
+      - if internship_offer.housing.provided
+        p
+          span.glyphicon.glyphicon-home> title="Unterkunft"
+          = ['ja', internship_offer.housing.costs].select(&:present?).join(', ')
+    .col-md-3
+      .row
+        span.glyphicon.glyphicon-map-marker>
+        - address = internship_offer.address
+        = link_to address.gmaps_search_link, target: '_blank' do
+          = address.street
+          br
+          => address.zip
+          = address.city
+      - contact = internship_offer.contact
+      - if contact.person.present?
+        .row
+          span.glyphicon.glyphicon-user> title="Ansprechpartner"
+          = contact.person
+
+      - if contact.email.present?
+        .row
+          span.glyphicon.glyphicon-envelope> title="E-Mail-Adresse"
+          = link_to contact.email, 'mailto:' + contact.email
+
+      - if contact.phone.present?
+        .row
+          span.glyphicon.glyphicon-earphone> title="Telefon"
+          = link_to contact.phone, 'tel:' + contact.phone
+
+      - if contact.mobile.present?
+        .row
+          span.glyphicon.glyphicon-phone> title="Mobil"
+          = link_to contact.phone, 'tel:' + contact.mobile
+
+      - if contact.fax.present?
+        .row
+          span.glyphicon.glyphicon-print> title="Fax"
+          = contact.fax

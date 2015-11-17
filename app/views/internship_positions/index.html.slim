@@ -1,73 +1,8 @@
-.row
-  .col-md-3
-    h3 Suche
-    form.form-horizontal action=internship_positions_url
-      .form-group
-        select.form-control name="city"
-          option selected=(@search_form.city.blank?) value='' Ort
-          - @cities.each do |city|
-            option selected=(city == @search_form.city) value=city = city
-      .form-group
-        label.control-label Unterkunft
-        br
-        .btn-group data-toggle="buttons"
-          label.btn.btn-default class=('active' if @search_form.housing.nil?)
-            input type="radio" name="housing" autocomplete="off" value=""    checked=@search_form.housing.nil? alle
-          label.btn.btn-default class=('active' if @search_form.housing == true)
-            input type="radio" name="housing" autocomplete="off" value="yes" checked=(@search_form.housing==true) mit
-          label.btn.btn-default class=('active' if @search_form.housing == false)
-            input type="radio" name="housing" autocomplete="off" value="no"  checked=(@search_form.housing==false) ohne
-      .form-group
-        label.control-label Bewerben per
-        br
-        .btn-group data-toggle="buttons"
-          label.btn.btn-default class=('active' if @search_form.applying_by.nil?)
-            input type="radio" name="applying_by" autocomplete="off" value=""      checked=@search_form.applying_by.nil? alle
-          label.btn.btn-default class=('active' if @search_form.applying_by == :by_mail)
-            input type="radio" name="applying_by" autocomplete="off" value="mail"  checked=(@search_form.applying_by == :by_mail) Post
-          label.btn.btn-default class=('active' if @search_form.applying_by == :by_email)
-            input type="radio" name="applying_by" autocomplete="off" value="email" checked=(@search_form.applying_by == :by_email) E-Mail
-          label.btn.btn-default class=('active' if @search_form.applying_by == :by_phone)
-            input type="radio" name="applying_by" autocomplete="off" value="phone" checked=(@search_form.applying_by == :by_phone) Telefon
-      .row
-        .form-group
-          .col-md-6
-            button.btn.btn-default.btn-block name="submit" value="clear" type="submit" Alle
-          .col-md-6
-            button.btn.btn-primary.btn-block name="submit" value="filter" type="submit" Suchen
-  .col-md-9
-    h3
-      => @internship_positions.size
-      'Praktikumsplätze gefunden
-    table.table.table-hover.table-striped.table-condensed
-      thead
-        tr
-          th
-          /th Arbeitsfeld
-          th Träger
-          th Einrichtung
-          th Beschreibung
-          th Ort
-      tbody
-        - @internship_positions.each do |internship_position|
-          - internship_offer = internship_position.internship_offer
-          - organisation = internship_offer.organisation
-          tr
-            td
-              - if internship_offer.housing.provided
-                span.glyphicon.glyphicon-home> title=("Unterkunft (Kosten: #{internship_offer.housing.costs})")
-              - if internship_offer.applying.by_mail
-                span.glyphicon.glyphicon-file> title="Bewerbung per Post"
-              - if internship_offer.applying.by_email
-                span.glyphicon.glyphicon-envelope> title="Bewerbung per E-Mail"
-              - if internship_offer.applying.by_phone
-                span.glyphicon.glyphicon-earphone> title="Bewerbung per Telefon"
-              - if internship_offer.applying.documents.present?
-                span.glyphicon.glyphicon-paperclip> title=("Bewerbungsdokumente: " + internship_offer.applying.documents)
-            /td = link_to internship_position.name, internship_position
-            /td = internship_offer.work_area
-            td = link_to organisation.name, internship_position
-            td = link_to internship_offer.name, internship_position
-            - description = truncate(internship_offer.description, length: 200)
-            td = description.gsub("\n", '<br>').html_safe if description.present?
-            td = internship_offer.address.city
+.internship-positions
+  .row
+    .col-md-3 = render 'search_form', search_form: @search_form, cities: @cities
+    .col-md-9
+      h3
+        => @internship_positions.size
+        'Praktikumsplätze gefunden
+      = render @internship_positions

@@ -11,3 +11,8 @@ de:
       title_teacher_html: Stundenplan für %{teacher}
       title_room_html: "Raumplan: <strong>%{room}</strong>"
   student_cant_have_other_roles: "Ein Auszubildender kann keine weiteren Rollen haben."
+  internship_positions:
+    internship_position:
+      by_mail: per Post
+      by_email: per E-Mail
+      by_phone: telefonisch
