@@ -9,6 +9,7 @@ module Importer
     import_students
     import_carriers
     import_internship_offers
+    generate_student_logins
   end
 
   def self.encrypt_string(string)
@@ -299,6 +300,13 @@ module Importer
 
   def self.street(data_hash)
     [data_hash['strasse'], data_hash['hausnummer']].join(' ').strip
+  end
+
+  def self.generate_student_logins
+    EducationSubject.all.each do |education_subject|
+      student = Course.active.where(education_subject: education_subject).first.students.first.person
+      student.generate_login! '12341234'
+    end
   end
 
   def self.import_time_blocks
