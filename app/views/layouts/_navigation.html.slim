@@ -1,16 +1,17 @@
 / navigation styled for Bootstrap 3.0
 
-nav.navbar.navbar-inverse.navbar-fixed-top role="navigation"
-  .container
-    .navbar-header
-      button.navbar-toggle.collapsed type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar"
-        span.sr-only Toggle navigation
-        span.icon-bar
-        span.icon-bar
-        span.icon-bar
-      = link_to 'Home', root_path, class: 'navbar-brand'
-    #navbar.collapse.navbar-collapse
-      - if login_signed_in?
+- if login_signed_in?
+  nav.navbar.navbar-inverse.navbar-fixed-top role="navigation"
+    .container-fluid
+      .navbar-header
+        button.navbar-toggle.collapsed type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar"
+          span.sr-only Toggle navigation
+          span.icon-bar
+          span.icon-bar
+          span.icon-bar
+        /= link_to 'Home', root_path, class: 'navbar-brand'
+      #navbar.collapse.navbar-collapse
+
         ul.nav.navbar-nav
           /  li = link_to 'Stundenpläne', '#'
           /- if current_user.student? or current_user.teacher?
@@ -26,11 +27,11 @@ nav.navbar.navbar-inverse.navbar-fixed-top role="navigation"
               => current_user.name
               span.caret
             ul.dropdown-menu
-          li = link_to 'Profil', edit_person_path(current_user)
-          li = link_to 'Abmelden', destroy_login_session_path, method: 'delete'
+          /li = link_to 'Profil', edit_person_path(current_user), title: current_user.name
+          li = link_to 'Abmelden', destroy_login_session_path, method: 'delete', title: current_user.name
           /li.divider role="separator"
           /li: a href="#" Nachrichten
-      - else
-        ul.nav.navbar-nav
+      /- else
+        /ul.nav.navbar-nav
           li = link_to 'Anmelden', new_login_session_path
           /li = link_to 'Bewerben', new_user_registration_path
