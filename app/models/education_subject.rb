@@ -1,6 +1,6 @@
 class EducationSubject < ActiveRecord::Base
 
-  belongs_to :school, class_name: 'Organisation::School'
+  belongs_to :school, class_name: 'Organisation::School', inverse_of: :education_subjects
   validates :name, presence: true
 
   has_paper_trail
