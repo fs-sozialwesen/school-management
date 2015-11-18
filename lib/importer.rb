@@ -1,5 +1,17 @@
 module Importer
 
+  def self.load_from_csv
+    LegacyDatum.delete_all
+
+    Dir[Rails.root.join 'db/seeds/csv/*.csv'].each do |csv_file|
+      table_name = File.basename(csv_file).sub('.csv', '')
+      puts "Import #{table_name}"
+      CSV.read(csv_file, headers: true).each do |row|
+        LegacyDatum.create! old_table: table_name, old_id: row['id'], data: row.to_hash
+      end
+    end
+  end
+
   def self.import_all
     import_schools
     import_education_subjects
