@@ -6,8 +6,8 @@ class InternshipPositionsController < ApplicationController
   def index
     authorize InternshipPosition
 
-    @search_form          = SearchForm.new params
-    @internship_positions = @search_form.internship_positions.all
+    @internship_positions = filtered_internship_positions.all
+    @cities               = @internship_positions.all.map { |ip| ip.address.city }.compact.uniq.sort
   end
 
   def show
@@ -15,31 +15,24 @@ class InternshipPositionsController < ApplicationController
     authorize @internship_position
   end
 
-  class SearchForm
-    attr_reader :city, :housing, :applying_by
+  private
 
-    def initialize(params)
-      %i(city housing applying_by).each { |filter| params.delete filter } if params[:submit] == 'clear'
-      @city        = params[:city]
-      @housing     = {'yes' => true, 'no' => false}[params[:housing]]
-      @applying_by = params[:applying_by]
-      @applying_by = applying_by.in?(%w(mail email phone)) ? ('by_' + applying_by).to_sym : nil
-    end
+  def process_filter_params
+    %i(city housing applying_by).each { |filter| params.delete filter } if params[:submit] == 'clear'
+    @city        = params[:city]
+    @housing     = {'yes' => true, 'no' => false}[params[:housing]]
+    @applying_by = {'mail' => :by_mail, 'email' => :by_email, 'phone' => :by_phone}[params[:applying_by]]
+  end
 
-    def internship_positions
-      InternshipPosition.
-        by_city(city).
-        housing(housing).
-        applying_by(applying_by).
-        joins(:organisation).
-        includes(:organisation).
-        order("internship_positions.address->>'city'")
-    end
-
-    def cities
-      internship_positions.all.map { |ip| ip.address.city }.compact.uniq.sort
-    end
-
+  def filtered_internship_positions
+    process_filter_params
+    policy_scope(InternshipPosition).
+      by_city(@city).
+      housing(@housing).
+      applying_by(@applying_by).
+      joins(:organisation).
+      includes(:organisation).
+      order("internship_positions.address->>'city'")
   end
 
 end
