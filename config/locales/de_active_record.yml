@@ -18,8 +18,6 @@ de:
     end_date:             Ende
     first_name:           Vorname
     internships:          Praktika
-    internship_offer:     Praktikumsangebot
-    internship_offers:    Praktikumsangebote
     internship_position:  Praktikumsplatz
     internship_positions: Praktikumsplätze
     institution:          Einrichtung
@@ -54,9 +52,6 @@ de:
       internship:
         one:    Praktikum
         other:  Praktika
-      internship_offer:
-        one: Praktikumsangebot
-        other: Praktikumsangebote
       internship_position:
         one:    Praktikumsplatz
         other:  Praktikumsplätze
@@ -108,20 +103,9 @@ de:
         short_name: Kürzel
       internship:
         status:     Status
-      internship_offer:
-        accommodation: Unterkunft
-        accommodation_details: Unterkunft Details
-        application_by_email: Bewerbung per E-Mail
-        application_by_mail: Bewerbung per Post
-        application_by_phone: Bewerbung per Telefon
-        application_documents: Bewerbungsdokumente
-        application_options: Bewerbung per
-        name: Name der Einrichtung
-        positions_sum: Plätze gesamt
       internship_position:
-        number_of_positions: Anzahl Plätze
-      institution:
-        carrier_address: Gleiche Adresse wie Träger
+        name: Name der Einrichtung
+        positions_count: Anzahl Plätze
       lesson:
         timetable: Stundenplan
         teacher: Lehrer
@@ -138,7 +122,7 @@ de:
       time_block:
         name: Zeit
         position: Block
-      user:
+      login:
         login: "Handle"
         encrypted_password: Verschlüsseltes Passwort
         reset_password_token: Reset-Password-Token

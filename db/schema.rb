@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151101010122) do
+ActiveRecord::Schema.define(version: 20151101010022) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -72,40 +72,25 @@ ActiveRecord::Schema.define(version: 20151101010122) do
 
   add_index "education_subjects", ["school_id"], name: "index_education_subjects_on_school_id", using: :btree
 
-  create_table "internship_offers", force: :cascade do |t|
-    t.string   "name"
-    t.integer  "organisation_id"
-    t.text     "description"
-    t.string   "work_area"
-    t.jsonb    "address",         default: {}
-    t.jsonb    "contact",         default: {}
-    t.jsonb    "housing",         default: {}
-    t.jsonb    "applying",        default: {}
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
-  end
-
-  add_index "internship_offers", ["organisation_id"], name: "index_internship_offers_on_organisation_id", using: :btree
-
   create_table "internship_positions", force: :cascade do |t|
     t.string   "name"
-    t.integer  "internship_offer_id"
+    t.integer  "organisation_id"
     t.integer  "education_subject_id"
     t.text     "description"
+    t.string   "work_area"
     t.date     "start_date"
     t.date     "end_date"
-    t.integer  "number_of_positions",  default: 1
+    t.integer  "positions_count",      default: 1
     t.jsonb    "address",              default: {}
     t.jsonb    "contact",              default: {}
     t.jsonb    "housing",              default: {}
     t.jsonb    "applying",             default: {}
-    t.jsonb    "inherits",             default: {}
     t.datetime "created_at",                        null: false
     t.datetime "updated_at",                        null: false
   end
 
   add_index "internship_positions", ["education_subject_id"], name: "index_internship_positions_on_education_subject_id", using: :btree
-  add_index "internship_positions", ["internship_offer_id"], name: "index_internship_positions_on_internship_offer_id", using: :btree
+  add_index "internship_positions", ["organisation_id"], name: "index_internship_positions_on_organisation_id", using: :btree
 
   create_table "legacy_data", force: :cascade do |t|
     t.string   "old_table"
@@ -193,9 +178,8 @@ ActiveRecord::Schema.define(version: 20151101010122) do
   add_foreign_key "contracts", "roles"
   add_foreign_key "course_memberships", "courses"
   add_foreign_key "courses", "education_subjects"
-  add_foreign_key "internship_offers", "organisations"
   add_foreign_key "internship_positions", "education_subjects"
-  add_foreign_key "internship_positions", "internship_offers"
+  add_foreign_key "internship_positions", "organisations"
   add_foreign_key "logins", "people"
   add_foreign_key "roles", "organisations"
   add_foreign_key "roles", "people"

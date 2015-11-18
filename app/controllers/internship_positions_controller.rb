@@ -6,22 +6,13 @@ class InternshipPositionsController < ApplicationController
   def index
     authorize InternshipPosition
 
-    @search_form = SearchForm.new params
-
-    @internship_positions = policy_scope(InternshipPosition).
-      joins(internship_offer: :organisation).
-      includes(internship_offer: :organisation).
-      where(@search_form.filter_criteria).
-      order("internship_offers.address->>'city'").
-      all
-
-    @cities = @internship_positions.map{ |ip| ip.internship_offer.address.city }.compact.uniq.sort
+    @search_form          = SearchForm.new params
+    @internship_positions = @search_form.internship_positions.all
   end
 
   def show
     @internship_position = InternshipPosition.find params[:id]
     authorize @internship_position
-    @internship_offer    = @internship_position.internship_offer
   end
 
   class SearchForm
@@ -35,13 +26,18 @@ class InternshipPositionsController < ApplicationController
       @applying_by = applying_by.in?(%w(mail email phone)) ? ('by_' + applying_by).to_sym : nil
     end
 
-    def filter_criteria
-      return {} if [city, housing, applying_by].all?(&:blank?)
-      { internship_offers: { id: internship_offers.pluck(:id) } }
+    def internship_positions
+      InternshipPosition.
+        by_city(city).
+        housing(housing).
+        applying_by(applying_by).
+        joins(:organisation).
+        includes(:organisation).
+        order("internship_positions.address->>'city'")
     end
 
-    def internship_offers
-      InternshipOffer.by_city(city).housing(housing).applying_by(applying_by)
+    def cities
+      internship_positions.all.map { |ip| ip.address.city }.compact.uniq.sort
     end
 
   end

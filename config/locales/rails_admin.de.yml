@@ -112,17 +112,7 @@ de:
       new_model: "%{name} (neu)"
     help:
       internship_position:
-        take_from_offer: &from_offer 'frei lassen, um aus Angebot zu übernehmen'
-        name: *from_offer
-        description: *from_offer
-        contact_person: *from_offer
-        email: *from_offer
-        phone: *from_offer
-        fax: *from_offer
-        homepage: *from_offer
-        street: *from_offer
-        zip: *from_offer
-        city: *from_offer
+
     export:
       confirmation: "Exportiere nach %{name}"
       select: "Wählen Sie zu exportierende Spalten aus"

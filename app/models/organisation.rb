@@ -10,7 +10,7 @@ class Organisation < ActiveRecord::Base
 
   has_many :roles
 
-  has_many :internship_offers, inverse_of: :organisation
+  has_many :internship_positions, inverse_of: :organisation
 
 
   def contracts

@@ -4,7 +4,7 @@
     .form-group
       select.form-control name="city"
         option selected=(search_form.city.blank?) value='' Ort
-        - cities.each do |city|
+        - search_form.cities.each do |city|
           option selected=(city == search_form.city) value=city = city
     .form-group
       label.control-label Unterkunft

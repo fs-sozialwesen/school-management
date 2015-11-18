@@ -8,7 +8,7 @@ module Importer
     import_courses
     import_students
     import_carriers
-    import_internship_offers
+    import_internship_positions
     generate_student_logins
   end
 
@@ -222,8 +222,8 @@ module Importer
     ActiveRecord::Base.connection.reset_pk_sequence!(Organisation.table_name)
   end
 
-  def self.import_internship_offers
-    puts 'import internship offers'
+  def self.import_internship_positions
+    puts 'import internship positions'
     # {
     #   carrier_id_1 => {
     #     'Kita Blah' => [data1, data2],
@@ -247,41 +247,40 @@ module Importer
       mapping[carrier_id][data['name']] << data
     end
 
-    mapping.each do |carrier_id, internship_offers|
+    mapping.each do |carrier_id, carrier_internship_positions|
       begin
         carrier = Organisation.find carrier_id
-        internship_offers.each do |name, internship_positions|
-          internship_offer             = carrier.internship_offers.build
-          internship_offer.name        = unquote name
-          internship_offer.description = unquote first_present(internship_positions, 'kurzbeschreibung')
+        carrier_internship_positions.each do |name, internship_positions|
 
-          street                          = first_present(internship_positions, 'strasse')
-          number                          = first_present(internship_positions, 'hausnummer')
-          internship_offer.address.street = encrypt_string [street, number].join(' ').strip
-          internship_offer.address.zip    = first_present(internship_positions, 'plz')
-          internship_offer.address.city   = first_present(internship_positions, 'ort')
+          internship_positions.group_by { |i| i['art'].to_i }.each do |education_subject_id, edu_ips|
+            ip                      = carrier.internship_positions.build
+            ip.education_subject_id = education_subject_id
+            ip.name                 = unquote name
+            ip.positions_count      = edu_ips.size
+            ip.description          = unquote first_present(edu_ips, 'kurzbeschreibung')
 
-          internship_offer.contact.email    = encrypt_string first_present(internship_positions, 'email')
-          internship_offer.contact.phone    = encrypt_string first_present(internship_positions, 'telefon')
-          internship_offer.contact.fax      = encrypt_string first_present(internship_positions, 'telefax')
-          homepage                          = first_present(internship_positions, 'homepage')
-          homepage                          = 'http://' + homepage unless homepage.blank? or homepage.starts_with?('http')
-          internship_offer.contact.homepage = homepage
+            street                  = first_present(edu_ips, 'strasse')
+            number                  = first_present(edu_ips, 'hausnummer')
+            ip.address.street       = encrypt_string [street, number].join(' ').strip
+            ip.address.zip          = first_present(edu_ips, 'plz')
+            ip.address.city         = first_present(edu_ips, 'ort')
 
-          internship_offer.housing.provided = first_present(internship_positions, 'unterkunft').to_i == 1
-          internship_offer.housing.costs    = first_present(internship_positions, 'unterkunftkosten')
+            ip.contact.email        = encrypt_string first_present(edu_ips, 'email')
+            ip.contact.phone        = encrypt_string first_present(edu_ips, 'telefon')
+            ip.contact.fax          = encrypt_string first_present(edu_ips, 'telefax')
+            homepage                = first_present(edu_ips, 'homepage')
+            homepage                = 'http://' + homepage unless homepage.blank? or homepage.starts_with?('http')
+            ip.contact.homepage     = homepage
 
-          internship_offer.applying.by_phone  = first_present(internship_positions, 'bewerbungtele')
-          internship_offer.applying.by_email  = first_present(internship_positions, 'bewerbungmail')
-          internship_offer.applying.by_mail   = first_present(internship_positions, 'bewerbungpost')
-          internship_offer.applying.documents = first_present(internship_positions, 'bewerbungsunterlagen')
-          internship_offer.save!
+            ip.housing.provided     = first_present(edu_ips, 'unterkunft').to_i == 1
+            ip.housing.costs        = first_present(edu_ips, 'unterkunftkosten')
 
-          internship_positions.group_by { |i| i['art'].to_i }.each do |education_subject_id, array|
-            internship_offer.internship_positions.create!(
-              education_subject_id: education_subject_id,
-              number_of_positions: array.size
-            )
+            ip.applying.by_phone    = first_present(edu_ips, 'bewerbungtele')
+            ip.applying.by_email    = first_present(edu_ips, 'bewerbungmail')
+            ip.applying.by_mail     = first_present(edu_ips, 'bewerbungpost')
+            ip.applying.documents   = first_present(edu_ips, 'bewerbungsunterlagen')
+
+            ip.save!
           end
 
         end
@@ -291,7 +290,7 @@ module Importer
     end
 
 
-    ActiveRecord::Base.connection.reset_pk_sequence!(InternshipOffer.table_name)
+    ActiveRecord::Base.connection.reset_pk_sequence!(InternshipPosition.table_name)
   end
 
   def self.first_present(array, attribute)

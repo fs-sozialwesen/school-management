@@ -1,51 +1,55 @@
-- internship_offer = internship_position.internship_offer
+- ip = internship_position
 .panel.panel-default
   .panel-heading
     h3.panel-title
       span
-      - if internship_offer.housing.provided
-        span.glyphicon.glyphicon-home> title=("Unterkunft (Kosten: #{internship_offer.housing.costs})")
-      - if internship_offer.applying.by_mail
+      - if ip.housing.provided
+        span.glyphicon.glyphicon-home> title=("Unterkunft (Kosten: #{ip.housing.costs})")
+      - if ip.applying.by_mail
         span.glyphicon.glyphicon-file> title="Bewerbung per Post"
-      - if internship_offer.applying.by_email
+      - if ip.applying.by_email
         span.glyphicon.glyphicon-envelope> title="Bewerbung per E-Mail"
-      - if internship_offer.applying.by_phone
+      - if ip.applying.by_phone
         span.glyphicon.glyphicon-earphone> title="Bewerbung per Telefon"
-      - if internship_offer.applying.documents.present?
-        span.glyphicon.glyphicon-paperclip> title=("Bewerbungsdokumente: " + internship_offer.applying.documents)
+      - if ip.applying.documents.present?
+        span.glyphicon.glyphicon-paperclip> title=("Bewerbungsdokumente: " + ip.applying.documents)
 
-      => link_to internship_offer.name, internship_position, title: 'Einrichtung'
+      => link_to ip.name, ip, title: 'Einrichtung'
   .panel-body
     .col-md-6
-      - homepage = internship_offer.organisation.contact.homepage
-      p = link_to_if homepage.present?, internship_offer.organisation.name, homepage, target: '_blank', title: 'Träger'
-      - if internship_offer.description.present?
-        p = internship_offer.description.gsub("\n", '<br>').html_safe
-    .col-md-3
+      p.carrier
+        - homepage = ip.organisation.contact.homepage
+        'Träger:
+        = link_to_if homepage.present?, ip.organisation.name, homepage, target: '_blank', title: 'Träger'
+      /- if ip.description.present?
+        p = ip.description.gsub("\n", '<br>').html_safe
       p
-        - applying = internship_offer.applying
-        'Bewerbungen möglich
-        =< applying.by.map{ |by| t(".#{by}") }.to_sentence
-      - if applying.documents.present?
-        p
-          ul.list-unstyled
-            label.glyphicon.glyphicon-paperclip title="Dokumente"
-            - applying.documents.gsub('und', ',').split(',').each do |doc|
-              li = doc
-      - if internship_offer.housing.provided
-        p
-          span.glyphicon.glyphicon-home> title="Unterkunft"
-          = ['ja', internship_offer.housing.costs].select(&:present?).join(', ')
-    .col-md-3
-      .row
-        span.glyphicon.glyphicon-map-marker>
-        - address = internship_offer.address
+        /span.glyphicon.glyphicon-map-marker>
+        - address = ip.address
         = link_to address.gmaps_search_link, target: '_blank' do
+          = ip.name
+          br
           = address.street
           br
           => address.zip
           = address.city
-      - contact = internship_offer.contact
+      p.education_subject: small = ip.education_subject.name
+    .col-md-3
+      p
+        'Bewerbungen möglich per
+        =< ip.applying.by.map{ |by| t(".#{by}") }.to_sentence
+      - if ip.applying.documents.present?
+        p
+          ul.list-unstyled
+            label.glyphicon.glyphicon-paperclip title="Dokumente"
+            - ip.applying.documents.gsub('und', ',').split(',').each do |doc|
+              li = doc
+      - if ip.housing.provided
+        p
+          span.glyphicon.glyphicon-home> title="Unterkunft"
+          = ['ja', ip.housing.costs].select(&:present?).join(', ')
+    .col-md-3
+      - contact = ip.contact
       - if contact.person.present?
         .row
           span.glyphicon.glyphicon-user> title="Ansprechpartner"

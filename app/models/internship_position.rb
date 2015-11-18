@@ -1,90 +1,112 @@
-class InternshipPosition < ActiveRecord::Base
+class InternshipOffer < ActiveRecord::Base
+
+  belongs_to :organisation, inverse_of: :internship_offers
+  has_many :internship_positions, inverse_of: :internship_offer, dependent: :destroy
 
   serialize :address,  Address
   serialize :contact,  Contact
   serialize :housing,  Housing
   serialize :applying, Applying
-  serialize :inherits, Inherits
+  serialize :positions, Positions
 
-  belongs_to :education_subject, required: true
-  belongs_to :internship_offer, inverse_of: :internship_positions, required: true
-  has_one :organisation, through: :internship_offer
-  # has_many :internships, inverse_of: :internship_position
+  # delegate :by_phone,  :by_email,  :by_mail,  :documents,  to: :application_options, prefix: :application
+  # delegate :by_phone=, :by_email=, :by_mail=, :documents=, to: :application_options, prefix: :application
 
-  # validates :education_subject, presence: true
-  # validates :internship_offer, presence: true
-  validates :number_of_positions, presence: true
+  scope :applying_by, -> (via = nil)     { via.present? ? where('applying @> ?', Applying.by(via)) : all }
+  scope :housing,     -> (housing = nil) { (housing.in? [true, false]) ? where('housing @> ?', Housing.provided(housing)) : all }
+  scope :by_city,     -> (city) do
+    main_city  = { city: city }.to_json
+    other_city = [ { address: { city: city } } ].to_json
+    where('((address @> ?) OR (positions @> ?))', main_city, other_city)
+  end
+  # scope :by_pos_city, -> (city = nil)    { city.blank? ? all : where('positions @> ?', [{address:{city: city}}].to_json) } # positions @> '[{"address":{"city": "Magdeburg"}}]'
 
-  has_paper_trail
+  # InternshipOffer.where('positions ? :education_subject_id', education_subject_id: '2').count
+  # InternshipOffer.where('positions ?& array[:keys]', keys: ['2']).count
 
-  def display_name
-    # [education_subject.short_name, internship_offer.name[0..10]].join(' - ')
-    education_subject.short_name
+  # InternshipOffer.where("application_options ->>'documents' ILIKE '%leben%'" ).count
+
+  accepts_nested_attributes_for :internship_positions
+
+  def positions_sum
+    internship_positions.sum :number_of_positions
   end
 
-  def education_subject_count
-    [education_subject.short_name, number_of_positions].join(': ')
+  def education_subjects
+    internship_positions.map(&:education_subject_count).join(', ')
   end
 
   rails_admin do
-    parent InternshipOffer
+    # parent Organisation
 
-    # configure :work_area, :enum do
-    #   enum { ['Kindertagesstätten', 'Hort', 'Heim', 'Tagesgruppe', 'offene Kinder- und Jugendarbeit', 'Psychiatrie', 'Schule'] }
+    # configure :application_by_phone, :boolean
+    # configure :application_by_email, :boolean
+    # configure :application_by_mail,  :boolean
+    # configure(:application_documents) { formatted_value { bindings[:object].application_options.documents } }
+    # configure :application_options do
+    #   formatted_value { bindings[:object].application_options.by_options.join(', ').html_safe }
     # end
-    #
+
     list do
-      sort_by :name
+      configure(:city) { pretty_value { bindings[:object].address.city } }
+      sort_by :organisation
+      # field :id
+      field :name, :self_link
       field :organisation
-      field :internship_offer
-      field :education_subject
-      field :number_of_positions
+      # field :application_options
+      # field :application_documents
+      field :city
+      field :description
+      # field :accommodation
+      field :education_subjects
+      field :positions_sum
     end
 
     show do
       field :organisation
-      field :internship_offer
-      field :education_subject
-      field :number_of_positions
+      field :name
+      field :city
+      field :description
+      field :education_subjects
+      field :positions_sum
+
+      # field :application_options
+      # field :application_documents
     end
 
     edit do
       group :default do
         field :name
         field :description
-        # field :internship_offer do
-        #   inline_add false
-        #   inline_edit false
-        # end
-        field :education_subject do
+        field :internship_positions
+      end
+      group :contact do
+        label 'Kontakt'
+        field :contact_person
+        field :email
+        field :phone
+        field :fax
+        field :homepage
+      end
+      group :organisation do
+        field :organisation do
           inline_add false
           inline_edit false
         end
-        field :number_of_positions
       end
-      # group :contact do
-      #   label 'Kontakt'
-      #   field :contact_person
-      #   field :email
-      #   field :phone
-      #   field :fax
-      #   field :homepage
-      # end
       group :address do
         label 'Adresse'
         field :street
         field :zip
         field :city
       end
+      # group :application do
+      #   field :application_by_phone
+      #   field :application_by_email
+      #   field :application_by_mail
+      #   field :application_documents
+      # end
     end
-
-    # show do
-    #   field :name
-    #   field :education_subject
-    #   field :institution
-    #   field :comments
-    #   field :accommodation
-    # end
-
   end
+
 end

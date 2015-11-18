@@ -1,17 +1,17 @@
 .page-header
   h1
-    - homepage = @internship_offer.contact.homepage
-    = link_to_if homepage.present?, @internship_offer.name, homepage, target: '_blank'
+    - homepage = @internship_position.contact.homepage
+    = link_to_if homepage.present?, @internship_position.name, homepage, target: '_blank'
     br
     small
-      - homepage = @internship_offer.organisation.contact.homepage
-      = link_to_if homepage.present?, @internship_offer.organisation.name, homepage, target: '_blank'
+      - homepage = @internship_position.organisation.contact.homepage
+      = link_to_if homepage.present?, @internship_position.organisation.name, homepage, target: '_blank'
 
 .row
-  .col-md-12: .panel.panel-default: .panel-body = @internship_offer.description
+  .col-md-12: .panel.panel-default: .panel-body = @internship_position.description
 .row
-  .col-md-3 = render 'applying', applying: @internship_offer.applying
-  .col-md-3 = render 'address',  address:  @internship_offer.address
-  .col-md-3 = render 'contact',  contact:  @internship_offer.contact
-  .col-md-3 = render 'housing',  housing:  @internship_offer.housing
+  .col-md-3 = render 'applying', applying: @internship_position.applying
+  .col-md-3 = render 'address',  address:  @internship_position.address
+  .col-md-3 = render 'contact',  contact:  @internship_position.contact
+  .col-md-3 = render 'housing',  housing:  @internship_position.housing
 

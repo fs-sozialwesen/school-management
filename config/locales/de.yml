@@ -13,6 +13,6 @@ de:
   student_cant_have_other_roles: "Ein Auszubildender kann keine weiteren Rollen haben."
   internship_positions:
     internship_position:
-      by_mail: per Post
-      by_email: per E-Mail
-      by_phone: telefonisch
+      by_mail: Post
+      by_email: E-Mail
+      by_phone: Telefon
