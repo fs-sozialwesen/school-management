@@ -1,13 +1,13 @@
-describe User do
+describe Login do
 
-  before(:each) { @user = User.new(email: 'user@example.com') }
+  before(:each) { @login = Login.new(email: 'user@example.com') }
 
-  subject { @user }
+  subject { @login }
 
   it { should respond_to(:email) }
 
   it "#email returns a string" do
-    expect(@user.email).to match 'user@example.com'
+    expect(@login.email).to match 'user@example.com'
   end
 
 end

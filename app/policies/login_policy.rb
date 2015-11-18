@@ -11,16 +11,16 @@ class LoginPolicy
   end
 
   def show?
-    @current_user.manager? or @current_user.login == @login
+    @current_user.admin? or @current_user.manager? or @current_user.login == @login
   end
 
   def update?
-    @current_user.manager?
+    @current_user.admin? or @current_user.manager?
   end
 
   def destroy?
     return false if @current_user.login == @login
-    @current_user.manager?
+    @current_user.admin? or @current_user.manager?
   end
 
 end

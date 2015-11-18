@@ -17,10 +17,10 @@ feature 'Login edit', :devise do
   #   Then I see an account updated message
   scenario 'user changes email address' do
     login = FactoryGirl.create(:login)
-    login_as(login, :scope => :user)
-    visit edit_user_registration_path(login)
-    fill_in 'Email', :with => 'newemail@example.com'
-    fill_in 'Current password', :with => login.password
+    login_as(login, scope: :login)
+    visit edit_login_registration_path(login)
+    fill_in Login.human_attribute_name(:email), :with => 'newemail@example.com'
+    fill_in 'Current password', with: login.password
     click_button 'Update'
     txts = [I18n.t( 'devise.registrations.updated'), I18n.t( 'devise.registrations.update_needs_confirmation')]
     expect(page).to have_content(/.*#{txts[0]}.*|.*#{txts[1]}.*/)
@@ -33,10 +33,10 @@ feature 'Login edit', :devise do
   scenario "user cannot cannot edit another user's profile", :me do
     me = FactoryGirl.create(:login)
     other = FactoryGirl.create(:login, email: 'other@example.com')
-    login_as(me, :scope => :user)
-    visit edit_user_registration_path(other)
-    expect(page).to have_content 'Edit User'
-    expect(page).to have_field('Email', with: me.email)
+    login_as(me, scope: :login)
+    visit edit_login_registration_path(other)
+    expect(page).to have_content I18n.t('devise.registrations.edit.title')
+    expect(page).to have_field(Login.human_attribute_name(:email), with: me.email)
   end
 
 end

@@ -124,6 +124,8 @@ de:
         position: Block
       login:
         login: "Handle"
+        email: E-Mail
+        password: Passwort
         encrypted_password: Verschlüsseltes Passwort
         reset_password_token: Reset-Password-Token
         reset_password_sent_at: Passwort zurück gesetzt am
@@ -136,4 +138,3 @@ de:
         confirmed_at: Bestätigt am
         confirmation_sent_at: Bestätigung gesendet am
         unconfirmed_email: Unbestätigte Email
-        role: Rolle
