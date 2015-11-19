@@ -25,6 +25,9 @@ class Person < ActiveRecord::Base
   %w[admin manager teacher student mentor].each do |role|
     define_method("#{role}?") { as(role).present? && as(role).persisted? }
   end
+  accepts_nested_attributes_for :as_manager
+  accepts_nested_attributes_for :as_teacher
+  accepts_nested_attributes_for :as_student
 
   def as(role)
     send "as_#{role}"
@@ -38,7 +41,7 @@ class Person < ActiveRecord::Base
     create_login do |login|
       login.email    = contact.email
       login.password = login.password_confirmation = pw
-      login.confirm!
+      login.confirm
     end
   end
 

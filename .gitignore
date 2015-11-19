@@ -33,6 +33,7 @@ db/*.sqlite3
 /coverage/
 /db/*.javadb/
 /db/*.sqlite3
+/db/private_seeds.rb
 /db/seeds/csv/
 /db/seeds/*.sql*
 /doc/api/

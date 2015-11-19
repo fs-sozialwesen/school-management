@@ -1,6 +1,9 @@
 RSpec.configure do |config|
   config.before(:suite) do
+    # DatabaseCleaner.clean_with(:truncation)
+    DatabaseCleaner.strategy = :transaction
     DatabaseCleaner.clean_with(:truncation)
+    Rails.application.load_seed # loading seeds
   end
 
   config.before(:each) do

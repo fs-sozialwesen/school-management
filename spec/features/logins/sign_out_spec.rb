@@ -9,7 +9,7 @@ feature 'Sign out', :devise do
   #   When I sign out
   #   Then I see a signed out message
   scenario 'user signs out successfully' do
-    login = FactoryGirl.create(:login)
+    login = FactoryGirl.create(:person).login
     signin(login.email, login.password)
     expect(page).to have_content I18n.t 'devise.sessions.signed_in'
     click_link 'Abmelden'

@@ -1,18 +1,20 @@
 # require_relative 'people'
 
 FactoryGirl.define do
+
+  sequence(:email) { |n| "person#{n}@example.com" }
+
   factory :login do
     confirmed_at Time.now
-    # name "Test User"
-    email 'test@example.com'
+    email
     password 'please123'
 
-    person
+    # person
 
-    trait :admin do
-      # role 'admin'
-      association :person #, FactoryGirl.build_stubbed(:person, :admin)
-    end
+    # trait :admin do
+    #   # role 'admin'
+    #   association :person #, FactoryGirl.build_stubbed(:person, :admin)
+    # end
 
   end
 end

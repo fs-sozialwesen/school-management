@@ -5,20 +5,18 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-user = CreateAdminService.new.call delete_all: true
-# puts 'CREATED ADMIN USER: ' << user.email
 # Environment variables (ENV['...']) can be set in the file .env file.
 
-unless Rails.env.production?
-  # Student.delete_all
-
-  # generate 6 to 32 students for each class
-  # Course.all.each do |course|
-  #   students_count = (6..32).to_a.sample
-  #   FactoryGirl.create_list :student,
-  #     students_count,
-  #     course: course,
-  #     year: course.start_date.year,
-  #     education_subject: course.education_subject
-  # end
+if Rails.env.test?
+  puts 'loading test seeds'
+  require_relative 'test_seeds'
+else
+  begin
+    puts 'loading private seeds'
+    require_relative 'private_seeds'
+  rescue LoadError
+    puts 'no private seeds found'
+  end
 end
+
+
