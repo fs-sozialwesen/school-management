@@ -305,6 +305,24 @@ module Importer
     ActiveRecord::Base.connection.reset_pk_sequence!(InternshipPosition.table_name)
   end
 
+  def self.set_work_area_on_internship_positions
+    work_areas = InternshipPosition.work_areas
+    InternshipPosition.all.each do |ip|
+      name = ip.name.downcase
+      work_area = nil
+      work_areas.each { |wa| work_area = wa if name.include? wa.downcase }
+      ['kita', 'kindertag', 'kindergart', 'kinderhaus', 'kt '].each do |pattern|
+        work_area = 'Kindertagesstätten' if name.include?(pattern)
+      end
+      %w(jugend kjh jfz).each do |pattern|
+        work_area = 'offene Kinder- und Jugendarbeit' if name.include?(pattern)
+      end
+      work_area = 'Psychiatrie' if name.include?('psych')
+      ip.work_area = work_area
+      ip.save
+    end
+  end
+
   def self.first_present(array, attribute)
     array.map { |data| data[attribute] }.uniq.compact.first
   end

@@ -23,6 +23,9 @@
         = link_to_if homepage.present?, ip.organisation.name, homepage, target: '_blank', title: 'Träger'
       /- if ip.description.present?
         p = ip.description.gsub("\n", '<br>').html_safe
+      p.work_area
+        'Arbeitsfeld:
+        =< ip.work_area
       p
         /span.glyphicon.glyphicon-map-marker>
         - address = ip.address

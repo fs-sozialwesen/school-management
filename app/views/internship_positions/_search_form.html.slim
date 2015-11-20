@@ -7,6 +7,11 @@
         - @cities.each do |city|
           option selected=(city == @city) value=city = city
     .form-group
+      select.form-control name="work_area"
+        option selected=(@work_area.blank?) value='' Arbeitsfeld
+        - @work_areas.each do |work_area|
+          option selected=(work_area == @work_area) value=work_area = work_area
+    .form-group
       label.control-label Unterkunft
       br
       .btn-group data-toggle="buttons"

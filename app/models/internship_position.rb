@@ -25,17 +25,11 @@ class InternshipPosition < ActiveRecord::Base
   # where('positions ? :education_subject_id', education_subject_id: '2').count
   # where('positions ?& array[:keys]', keys: ['2']).count
 
-  # where("application_options ->>'documents' ILIKE '%leben%'" ).count
+  # where("applying ->>'documents' ILIKE '%leben%'" ).count
 
-  # accepts_nested_attributes_for :internship_positions
-
-  # def positions_sum
-  #   internship_positions.sum :number_of_positions
-  # end
-  #
-  # def education_subjects
-  #   internship_positions.map(&:education_subject_count).join(', ')
-  # end
+  def self.work_areas
+    ['Kindertagesstätten', 'Hort', 'Heim', 'Tagesgruppe', 'offene Kinder- und Jugendarbeit', 'Psychiatrie', 'Schule']
+  end
 
   rails_admin do
     # parent Organisation
@@ -48,20 +42,18 @@ class InternshipPosition < ActiveRecord::Base
     #   formatted_value { bindings[:object].application_options.by_options.join(', ').html_safe }
     # end
     configure :work_area, :enum do
-      enum { ['Kindertagesstätten', 'Hort', 'Heim', 'Tagesgruppe', 'offene Kinder- und Jugendarbeit', 'Psychiatrie', 'Schule'] }
+      enum { InternshipPosition.work_areas }
     end
     # configure(:city) { pretty_value { bindings[:object].address.city } }
     list do
       sort_by :organisation
       # field :id
+      field :work_area
       field :education_subject
       field :name, :self_link
       field :organisation
-      # field :application_options
-      # field :application_documents
       # field :city
       # field :description
-      # field :accommodation
       field :positions_count
     end
 
