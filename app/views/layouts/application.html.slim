@@ -14,7 +14,7 @@ html
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
   body
-    div style="padding: 0 50px;"
+    .page-wrapper
       = render 'layouts/navigation'
       .container-fluid
         = render 'layouts/messages'
