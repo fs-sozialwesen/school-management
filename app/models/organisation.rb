@@ -1,7 +1,7 @@
 class Organisation < ActiveRecord::Base
 
-  serialize :address, Address
-  serialize :contact, Contact
+  acts_as_addressable
+  acts_as_contactable
 
   belongs_to :carrier, class_name: 'Organisation'
 
@@ -18,11 +18,24 @@ class Organisation < ActiveRecord::Base
   end
 
   rails_admin do
+
+    Address. attribute_set.each { |attr| configure(attr.name) { group :address } }
+    Contact. attribute_set.each { |attr| configure(attr.name) { group :contact } }
+
     list do
       field(:type) { pretty_value { bindings[:object].class.model_name.human } }
-      field :name
-      # field :city
-      field :carrier
+      field :name, :self_link
+      fields :city, :carrier
+    end
+    show do
+      fields :name, :carrier, :comments
+      fields :street, :zip, :city
+      fields :person, :email, :mobile, :phone, :fax, :homepage
+    end
+    edit do
+      fields :name, :carrier, :comments
+      fields :street, :zip, :city
+      fields :person, :email, :mobile, :phone, :fax, :homepage
     end
   end
 

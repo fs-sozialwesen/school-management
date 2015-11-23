@@ -2,7 +2,8 @@ class Role < ActiveRecord::Base
   belongs_to :person
   belongs_to :organisation
 
-  # delegate :first_name, :last_name, :name, to: :person
+  delegate :first_name, :last_name, :name, to: :person
+
   def name
     # person.name if person
     self.class.model_name.human
@@ -14,5 +15,10 @@ class Role < ActiveRecord::Base
       field(:type) { pretty_value { bindings[:object].class.model_name.human } }
       field :organisation
     end
+
+    show do
+      field :person
+    end
+
   end
 end

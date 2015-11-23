@@ -3,7 +3,6 @@ class Address < JsonSerializer
   attribute :street,    String
   attribute :zip,       String
   attribute :city,      String
-  attribute :city,      String
 
   attribute :location, GeoLocation
 
@@ -17,4 +16,25 @@ class Address < JsonSerializer
   def gmaps_search_link
     ['https://maps.google.de?q=', street, zip, city].join(' ')
   end
+
+  module ActsAsAddressable
+    extend ActiveSupport::Concern
+
+    included do
+    end
+
+    module ClassMethods
+
+      def acts_as_addressable(options = {})
+        serialize :address, ::Address
+
+        ::Address.attribute_set.each do |attribute|
+          delegate attribute.name, to: :address
+          delegate "#{attribute.name}=", to: :address
+        end
+      end
+    end
+  end
+
 end
+

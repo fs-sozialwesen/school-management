@@ -2,20 +2,35 @@ class Role < ActiveRecord::Base
   class Teacher < Role
 
     has_many :courses
+    belongs_to :school, class_name: 'Organisation::School', foreign_key: :organisation_id, inverse_of: :teachers
+
     # has_many :lessons, inverse_of: :teacher
 
+    def display_name
+      person.name
+    end
+
     rails_admin do
-      list do
-        field :organisation
-        field :person
-        field :courses do
-          formatted_value do
-            value.map{ |course| course.education_subject.school.name }.uniq.join(', ')
-          end
-          pretty_value do
-            value.map{ |course| course.education_subject.school.name }.uniq.join(', ')
-          end
+      configure :school do
+        formatted_value do
+          value.name if value
         end
+      end
+      list do
+        field :first_name, :self_link
+        field :last_name, :self_link
+        field :school
+        field :courses
+      end
+      show do
+        field :person
+        field :school
+        field :courses
+      end
+      edit do
+        field :person
+        field :school
+        field :courses
       end
     end
 

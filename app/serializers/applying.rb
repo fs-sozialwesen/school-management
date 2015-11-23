@@ -16,4 +16,22 @@ class Applying < JsonSerializer
     { via => true }.to_json
   end
 
+  module ActsAsApplyable
+    extend ActiveSupport::Concern
+
+    included do
+    end
+
+    module ClassMethods
+
+      def acts_as_applyable(options = {})
+        serialize :applying, ::Applying
+
+        ::Applying.attribute_set.each do |attribute|
+          delegate attribute.name,       to: :applying, prefix: :applying
+          delegate "#{attribute.name}=", to: :applying, prefix: :applying
+        end
+      end
+    end
+  end
 end

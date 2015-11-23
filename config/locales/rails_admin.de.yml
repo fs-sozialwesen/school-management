@@ -141,7 +141,12 @@ de:
         _all: Alle
         active: Aktuell
         inactive: Archiv
-      student:
+      person:
         _all: Alle
+        admins: Admins
+        managers: Manager
+        mentors: Praxisanleiter
+        students: Auszubildende
+        teachers: Lehrer
 
 

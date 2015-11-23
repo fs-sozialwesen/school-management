@@ -1,14 +1,17 @@
 class Person < ActiveRecord::Base
 
-  serialize :address, Address
-  serialize :contact, Contact
+  ROLES = %w[admin manager teacher student mentor].freeze
+  AS_ROLES = ROLES.map { |role| "as_#{role}".to_sym }.freeze
+
+  acts_as_addressable
+  acts_as_contactable
 
   has_one :login, inverse_of: :person, dependent: :destroy
   has_many :roles, dependent: :destroy
   has_many :contracts, as: :first_party
 
   validates :first_name, :last_name, presence: true
-  validate :student_has_no_other_roles
+  # validate :student_has_no_other_roles
 
   has_one :as_admin,   class_name: 'Role::Admin'
   has_one :as_manager, class_name: 'Role::Manager'
@@ -22,12 +25,8 @@ class Person < ActiveRecord::Base
   scope :students, -> { joins(:as_student)}
   scope :mentors,  -> { joins(:as_mentor)}
 
-  %w[admin manager teacher student mentor].each do |role|
-    define_method("#{role}?") { as(role).present? && as(role).persisted? }
-  end
-  accepts_nested_attributes_for :as_manager
-  accepts_nested_attributes_for :as_teacher
-  accepts_nested_attributes_for :as_student
+  ROLES.each { |role| define_method("#{role}?") { as(role).present? && as(role).persisted? } }
+  AS_ROLES.each { |role| accepts_nested_attributes_for role }
 
   def as(role)
     send "as_#{role}"
@@ -47,14 +46,41 @@ class Person < ActiveRecord::Base
 
   rails_admin do
     # hide
-    # navigation_label I18n.t(:basic_data)
+    # label I18n.t(:people_index)
+
+    Address. attribute_set.each { |attr| configure(attr.name) { group :address } }
+    # Contact. attribute_set.each { |attr| configure(attr.name) { group :contact } }
+
+    configure(:email)  { group :contact }
+    configure(:mobile) { group :contact }
+    configure(:phone)  { group :contact }
+    configure(:fax)    { group :contact }
+
+    configure(:roles)      { group :roles }
+    AS_ROLES.each { |role| configure(role) { group :roles } }
 
     list do
-      field :first_name
-      field :last_name
-      # field :city
-      # field :email
-      field :roles
+      scopes [:students, :teachers, :managers, :mentors, :admins, nil]
+
+      field :first_name, :self_link
+      field :last_name, :self_link
+      field :city
+      field :email, :email
+      field :phone
+      # field :roles
+    end
+    show do
+      fields :first_name, :last_name, :gender, :date_of_birth, :place_of_birth
+      fields :street, :zip, :city
+      fields :email, :mobile, :phone, :fax
+      fields :roles, :as_admin, :as_manager, :as_teacher, :as_mentor, :as_student
+    end
+    edit do
+      fields :first_name, :last_name, :gender, :date_of_birth, :place_of_birth
+      fields :street, :zip, :city
+      fields :email, :mobile, :phone, :fax
+      # field :roles
+      fields :as_admin, :as_manager, :as_teacher, :as_mentor, :as_student
     end
   end
 

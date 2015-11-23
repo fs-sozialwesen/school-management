@@ -5,12 +5,12 @@ de:
     carrier:              Träger
     city:                 Ort
     comments:             Bemerkungen
+    contact:              Kontaktdaten
     contact_person:       Ansprechpartner
     course:               Klasse
     course_teacher:       Klassenlehrer
     created_at:           Angelegt
     date:                 Datum
-    date_of_birth:        Geburtsdatum
     description:          Beschreibung
     education_subject:    Fachrichtung
     education_subjects:   Fachrichtungen
@@ -20,14 +20,12 @@ de:
     internships:          Praktika
     internship_position:  Praktikumsplatz
     internship_positions: Praktikumsplätze
-    institution:          Einrichtung
-    institutions:         Einrichtungen
     last_name:            Nachname
     mentor:               Praxisanleiter
     mentors:              Praxisanleiter
+    mobile:               Mobil
     organisation:         Organisation
     phone:                Telefon
-    place_of_birth:       Geburtsort
     school:               Schule
     start_date:           Beginn
     street:               Straße/Nr
@@ -55,14 +53,10 @@ de:
       internship_position:
         one:    Praktikumsplatz
         other:  Praktikumsplätze
-      institution:
-        one:    Einrichtung
-        other:  Einrichtungen
       legacy_datum: Importierte Daten
       lesson:
         one: Stunde
         other: Stunden
-      login: Login
       organisation:
         one: Organisation
         other: Organisationen
@@ -71,7 +65,7 @@ de:
         other: Schulen
       person:
         one: Person
-        other: Personen
+        other: Personenverzeichnis
       role:
         one: Rolle
         other: Rollen
@@ -104,7 +98,17 @@ de:
       internship:
         status:     Status
       internship_position:
+        applying: Bewerbung
+        applying_by_mail: per Post
+        applying_by_email: per E-Mail
+        applying_by_phone: per Telefon
+        applying_documents: Dokumente
+        housing: Unterkunft
+        housing_costs: Kosten
+        housing_provided: bereitgestellt
         name: Name der Einrichtung
+        organisation: Träger
+        person: Ansprechpartner
         positions_count: Anzahl Plätze
       lesson:
         timetable: Stundenplan
@@ -113,10 +117,25 @@ de:
         room: Raum
         start_time: Start
         end_time: Ende
+      person:
+        as_admin: Admin
+        as_manager: Manager
+        as_teacher: Lehrer
+        as_mentor: Praxisanleiter
+        as_student: Auszubildende(r)
+        date_of_birth: Geburtsdatum
+        gender: Geschlecht
+        place_of_birth: Geburtsort
+        roles: Rollen
+      role:
+        person: Personendaten
+        organisation: Organisation
       role/student:
         organisation: Schule
-        person: Name
         year: Jahrgang
+      role/teacher:
+        courses: Klassen
+        organisation: Schule
       teacher:
         courses: Klassenlehrer von
       time_block:

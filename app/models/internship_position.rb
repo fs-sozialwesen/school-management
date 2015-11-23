@@ -3,11 +3,13 @@ class InternshipPosition < ActiveRecord::Base
   belongs_to :organisation, inverse_of: :internship_positions
   belongs_to :education_subject, required: true
 
-  serialize :address,  Address
-  serialize :contact,  Contact
-  serialize :housing,  Housing
-  serialize :applying, Applying
-  # serialize :positions, Positions
+  acts_as_addressable
+  acts_as_contactable
+  acts_as_housable
+  acts_as_applyable
+
+  # serialize :housing,  Housing
+  # serialize :applying, Applying
 
   # delegate :by_phone,  :by_email,  :by_mail,  :documents,  to: :application_options, prefix: :application
   # delegate :by_phone=, :by_email=, :by_mail=, :documents=, to: :application_options, prefix: :application
@@ -33,75 +35,43 @@ class InternshipPosition < ActiveRecord::Base
 
   rails_admin do
     # parent Organisation
+    Address. attribute_set.each { |attr| configure(attr.name) { group :address } }
+    Contact. attribute_set.each { |attr| configure(attr.name) { group :contact } }
 
-    # configure :application_by_phone, :boolean
-    # configure :application_by_email, :boolean
-    # configure :application_by_mail,  :boolean
-    # configure(:application_documents) { formatted_value { bindings[:object].application_options.documents } }
-    # configure :application_options do
-    #   formatted_value { bindings[:object].application_options.by_options.join(', ').html_safe }
-    # end
-    configure :work_area, :enum do
-      enum { InternshipPosition.work_areas }
-    end
-    # configure(:city) { pretty_value { bindings[:object].address.city } }
+    configure(:housing_provided, :boolean) { group :housing }
+    configure(:housing_costs)    { group :housing }
+
+    configure(:applying_by_mail,   :boolean) { group :applying }
+    configure(:applying_by_email,  :boolean) { group :applying }
+    configure(:applying_by_phone,  :boolean) { group :applying }
+    configure(:applying_documents)           { group :applying }
+
+    configure(:work_area, :enum) { enum { InternshipPosition.work_areas } }
+
     list do
       sort_by :organisation
-      # field :id
-      field :work_area
-      field :education_subject
+
+      fields :work_area, :education_subject
       field :name, :self_link
-      field :organisation
-      # field :city
-      # field :description
-      field :positions_count
+      fields :organisation, :city, :positions_count
+      field :housing_provided
+    end
+    show do
+      fields :name, :organisation
+      fields :street, :zip, :city
+      fields :person, :email, :mobile, :phone, :fax, :homepage
+      fields :housing_provided, :housing_costs
+      fields :applying_by_mail, :applying_by_email, :applying_by_phone, :applying_documents
+    end
+    edit do
+      fields :name, :organisation, :description
+      fields :street, :zip, :city
+      fields :person, :email, :mobile, :phone, :fax, :homepage
+      fields :housing_provided, :housing_costs
+      fields :applying_by_mail, :applying_by_email, :applying_by_phone, :applying_documents
     end
 
-    # show do
-    #   field :organisation
-    #   field :name
-    #   field :city
-    #   field :description
-    #   field :education_subjects
-    #   field :positions_sum
-    #
-    #   # field :application_options
-    #   # field :application_documents
-    # end
-    #
-    # edit do
-    #   group :default do
-    #     field :name
-    #     field :description
-    #     field :internship_positions
-    #   end
-    #   group :contact do
-    #     label 'Kontakt'
-    #     field :contact_person
-    #     field :email
-    #     field :phone
-    #     field :fax
-    #     field :homepage
-    #   end
-    #   group :organisation do
-    #     field :organisation do
-    #       inline_add false
-    #       inline_edit false
-    #     end
-    #   end
-    #   group :address do
-    #     label 'Adresse'
-    #     field :street
-    #     field :zip
-    #     field :city
-    #   end
-    #   # group :application do
-    #   #   field :application_by_phone
-    #   #   field :application_by_email
-    #   #   field :application_by_mail
-    #   #   field :application_documents
-    #   # end
-    # end
+
   end
 
 end
