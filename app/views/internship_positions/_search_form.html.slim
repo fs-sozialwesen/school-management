@@ -6,6 +6,12 @@
         option selected=(@city.blank?) value='' Ort
         - @cities.each do |city|
           option selected=(city == @city) value=city = city
+    - if current_user.manager?
+      .form-group
+        select.form-control name="education_subject_id"
+          option selected=(@education_subject_id.blank?) value='' Fachrichtung
+          - @education_subjects.each do |education_subject|
+            option selected=(education_subject.id == @education_subject_id.to_i) value=education_subject.id = education_subject.name
     .form-group
       select.form-control name="work_area"
         option selected=(@work_area.blank?) value='' Arbeitsfeld

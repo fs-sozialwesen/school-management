@@ -9,6 +9,7 @@ class InternshipPositionsController < ApplicationController
     @internship_positions = filtered_internship_positions.all
     @cities               = @internship_positions.all.map { |ip| ip.address.city }.compact.uniq.sort
     @work_areas           = InternshipPosition.work_areas
+    @education_subjects   = EducationSubject.all
   end
 
   def show
@@ -19,11 +20,12 @@ class InternshipPositionsController < ApplicationController
   private
 
   def process_filter_params
-    %i(city housing applying_by work_area).each { |filter| params.delete filter } if params[:submit] == 'clear'
-    @city        = params[:city]
-    @housing     = {'yes' => true, 'no' => false}[params[:housing]]
-    @applying_by = {'mail' => :by_mail, 'email' => :by_email, 'phone' => :by_phone}[params[:applying_by]]
-    @work_area   = params[:work_area]
+    %i(education_subject_id city housing applying_by work_area).each { |filter| params.delete filter } if params[:submit] == 'clear'
+    @education_subject_id = params[:education_subject_id]
+    @city                 = params[:city]
+    @housing              = {'yes' => true, 'no' => false}[params[:housing]]
+    @applying_by          = {'mail' => :by_mail, 'email' => :by_email, 'phone' => :by_phone}[params[:applying_by]]
+    @work_area            = params[:work_area]
   end
 
   def filtered_internship_positions
@@ -36,6 +38,7 @@ class InternshipPositionsController < ApplicationController
       includes(:organisation).
       order("internship_positions.address->>'city'")
     ips = ips.where(work_area: @work_area) if @work_area.present?
+    ips = ips.where(education_subject_id: @education_subject_id) if @education_subject_id.present?
     ips
   end
 
