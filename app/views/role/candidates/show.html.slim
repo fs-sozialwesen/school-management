@@ -68,16 +68,20 @@ dl.dl-horizontal
   dt Ausbildungsvertrag
   dd
     strong gesendet:
-    =< l @candidate.education_contract_sent
+    - if @candidate.education_contract_sent.present?
+      =< l @candidate.education_contract_sent
     br
     strong zurück:
-    =< l @candidate.education_contract_received
+    - if @candidate.education_contract_received.present?
+      =< l @candidate.education_contract_received
 
   dt Praktikumsvertrag
   dd
     strong gesendet:
-    =< l @candidate.internship_contract_sent
+    - if @candidate.internship_contract_sent.present?
+      =< l @candidate.internship_contract_sent
     br
     strong zurück:
-    =< l @candidate.internship_contract_received
+    - if @candidate.internship_contract_received.present?
+      =< l @candidate.internship_contract_received
 
