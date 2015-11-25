@@ -39,6 +39,10 @@ de:
         password: 'No special characters, please.'
     placeholders:
       role_candidate:
+        options:
+          education_graduate:
+            name: Arbeitgeber / Institution
+            address: Adresse
         person:
           address:
             city: Ort
@@ -54,9 +58,6 @@ de:
           place_of_birth: Geburtsort
         profession_graduate:
 #          comments: Sonstiges
-        education_graduate:
-          name: Arbeitgeber / Institution
-          address: Adresse
 #        school_graduate:
 #          name: Schulform
 #          graduate: Abschluss
