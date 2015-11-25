@@ -72,6 +72,9 @@ de:
       role/admin:
         one: Administrator
         other: Administratoren
+      role/candidate:
+        one: Bewerber(in)
+        other: Bewerber
       role/manager: Manager
       role/mentor: Praxisanleiter
       role/student:
@@ -118,7 +121,10 @@ de:
         start_time: Start
         end_time: Ende
       person:
+        address:
+          street: Strasse
         as_admin: Admin
+        as_candidate: Bewerber(in)
         as_manager: Manager
         as_teacher: Lehrer
         as_mentor: Praxisanleiter

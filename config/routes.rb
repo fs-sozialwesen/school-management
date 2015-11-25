@@ -8,5 +8,8 @@ Rails.application.routes.draw do
   resources :people
   resources :timetables, only: [:index, :show]
   resources :internship_positions, only: [:index, :show]
+  namespace :role, path: '' do
+    resources :candidates
+  end
 
 end

@@ -1,0 +1,83 @@
+.page-header
+  = link_to @candidate, class: 'btn btn-danger', method: :delete, data: { confirm: 'Wirklich?' } do
+    span.glyphicon.glyphicon-remove
+    |  Löschen
+  = link_to edit_role_candidate_path(@candidate), class: 'btn btn-primary' do
+    span.glyphicon.glyphicon-pencil
+    |  Bearbeiten
+  = link_to role_candidates_path, class: 'btn btn-default' do
+    span.glyphicon.glyphicon-list-alt
+    |  Zur Liste
+  h1
+    | Bewerber:
+    =< @candidate.person.name
+dl.dl-horizontal
+
+  dt Fachrichtung:
+  dd = @candidate.education_subject
+
+  dt Jahr:
+  dd = @candidate.year
+
+  dt Geburtstag:
+  dd = l @candidate.person.date_of_birth
+
+  dt Geburtsort:
+  dd = @candidate.person.place_of_birth
+
+  dt Adresse:
+  dd
+    = @candidate.person.address.street
+    br
+    => @candidate.person.address.zip
+    = @candidate.person.address.city
+
+  dt Kontakt:
+  dd
+    - contact = @candidate.person.contact
+    = [contact.email, contact.phone, contact.mobile].select(&:present?).join('<br>').html_safe
+
+  dt Schulausbildung
+  dd
+    = bool_icon(@candidate.school_graduate.proved, 'bestätigt', 'offen')
+    =< @candidate.school_graduate.graduate
+
+  dt Berufsausbildung
+  dd
+    - graduate = @candidate.profession_graduate
+    = bool_icon(@candidate.options.profession_graduate?, 'bestätigt', 'offen')
+    - if graduate.graduate.present?
+      =< graduate.graduate
+      - if graduate.comments.present?
+        |  (#{graduate.comments})
+  dt title="Erzieherausbildung / Heilerziehungspflege, berufsbegleitend und Heilerziehungspfleger" Erzieherausbildung ...
+  dd
+    - graduate = @candidate.education_graduate
+    = bool_icon(@candidate.options.profession_graduate?, 'bestätigt', 'offen')
+    - if graduate.name.present?
+      =< graduate.name
+      br
+      = graduate.address
+
+  dt Nachweis Praktikum
+  dd = bool_icon @candidate.internship_proved
+
+  dt Führungszeugnis
+  dd = bool_icon @candidate.police_certificate
+
+  dt Ausbildungsvertrag
+  dd
+    strong gesendet:
+    =< l @candidate.education_contract_sent
+    br
+    strong zurück:
+    =< l @candidate.education_contract_received
+
+  dt Praktikumsvertrag
+  dd
+    strong gesendet:
+    =< l @candidate.internship_contract_sent
+    br
+    strong zurück:
+    =< l @candidate.internship_contract_received
+

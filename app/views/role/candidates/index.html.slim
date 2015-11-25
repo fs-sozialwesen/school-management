@@ -1,0 +1,44 @@
+.page-header
+  = link_to new_role_candidate_path, class: 'btn btn-primary' do 
+    span.glyphicon.glyphicon-plus
+    |  Neu
+  h1 Bewerber
+
+.row
+  .col-md-3
+
+  .col-md-9
+
+    .table-responsive
+      table.table.table-striped.table-bordered.table-hover
+        thead
+          tr
+            th Vorname
+            th Nachname
+            th Jahr
+            th Fachrichtung
+            th Schulausbildung
+            th Berufsausbildung
+            th Erzieher / HP
+            th
+        tbody
+          - @candidates.each do | candidate |
+            tr class=(candidate.acceptable? ? 'success' : 'warning')
+              td = link_to candidate.first_name, candidate
+              td = link_to candidate.last_name, candidate
+              td = candidate.year
+              td = candidate.education_subject
+              td
+                => bool_icon(candidate.options.school_graduate?, 'bestätigt', 'offen')
+                = candidate.school_graduate.graduate
+              td
+                => bool_icon(candidate.options.profession_graduate?, 'bestätigt', 'offen')
+                = candidate.profession_graduate.graduate
+              td
+                => bool_icon(candidate.options.education_graduate?, 'bestätigt', 'offen')
+                = candidate.education_graduate.name
+              /td = link_to 'Details', candidate
+              /td = link_to 'Bearbeiten', edit_role_candidate_path(candidate)
+              td = link_to edit_role_candidate_path(candidate), class: 'btn btn-primary btn-sm' do
+                  span.glyphicon.glyphicon-pencil
+              /td = link_to 'Destroy', candidate, method: :delete, data: { confirm: 'Are you sure?' }

@@ -39,7 +39,8 @@ class Role < ActiveRecord::Base
       end
 
       edit do
-        exclude_fields :course_memberships, :courses, :course_membership, :internships, :type, :organisation
+        # exclude_fields :course_memberships, :courses, :course_membership, :internships, :type, :organisation
+        field :organisation
       end
     end
 

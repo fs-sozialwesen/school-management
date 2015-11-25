@@ -19,7 +19,7 @@ group :development, :test do
 end
 
 group :development do
-  gem 'web-console', '~> 2.0'
+  # gem 'web-console', '~> 2.0' # makes simple_form extremely slow
   gem 'spring'
   gem 'bootstrap-generators', '~> 3.3.4'
   gem 'capistrano3-puma'
@@ -27,6 +27,7 @@ group :development do
 end
 
 gem 'bootstrap-sass'
+gem 'bootstrap-datepicker-rails'
 gem 'devise'
 gem 'devise-i18n'
 gem 'high_voltage'

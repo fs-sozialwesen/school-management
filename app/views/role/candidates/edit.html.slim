@@ -1,0 +1,14 @@
+.page-header
+  = link_to @candidate, class: 'btn btn-danger', method: :delete, data: { confirm: 'Wirklich?' } do
+    span.glyphicon.glyphicon-remove
+    |  Löschen
+  = link_to role_candidates_path, class: 'btn btn-default' do
+    span.glyphicon.glyphicon-list-alt
+    |  Zur Liste
+
+  = link_to 'Abbrechen', @candidate, class: 'btn btn-default'
+  h1
+    | Bewerber #{@candidate.person.name} bearbeiten
+
+= render 'form'
+

@@ -18,6 +18,8 @@
           /  li = link_to  t(:timetable), timetables_path
           - if policy(InternshipPosition).index?
             li = link_to 'Praktikumsplätze', internship_positions_url
+          - if policy(Role::Candidate).index?
+            li = link_to 'Bewerber', role_candidates_url
 
         ul.nav.navbar-nav.navbar-right
           - if current_user.admin? or current_user.manager?
