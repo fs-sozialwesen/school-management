@@ -13,11 +13,11 @@ module Importer
   end
 
   def self.import_all
-    import_schools
-    import_education_subjects
-    import_managers
-    import_teachers
-    import_courses
+    # import_schools
+    # import_education_subjects
+    # import_managers
+    # import_teachers
+    # import_courses
     import_students
     import_carriers
     import_internship_positions
