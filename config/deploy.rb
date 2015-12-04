@@ -41,6 +41,8 @@ set :puma_bind, "tcp://0.0.0.0:9292"    #accept array for multi-bind
 # set :puma_init_active_record, false
 # set :puma_preload_app, true
 # set :nginx_use_ssl, false
+set :nginx_sites_available_path, "/etc/nginx/conf.d/sites-available"
+set :nginx_sites_enabled_path, "/etc/nginx/conf.d/sites-enabled"
 
 
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
