@@ -18,8 +18,7 @@ class CandidateOptions < JsonSerializer
   end
 
   def contracts_ok?
-    [education_contract_sent, education_contract_received,
-      internship_contract_sent, internship_contract_received].all?(&:present?)
+    [education_contract_received, internship_contract_received].all?(&:present?)
   end
 
   def school_graduate?

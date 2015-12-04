@@ -88,6 +88,11 @@ class Person < ActiveRecord::Base
       # field :roles
       fields :as_admin, :as_manager, :as_teacher, :as_mentor, :as_student, :as_candidate
     end
+    export do
+      fields :first_name, :last_name, :gender, :date_of_birth, :place_of_birth
+      fields :street, :zip, :city
+      fields :email, :mobile, :phone, :fax
+    end
   end
 
   private

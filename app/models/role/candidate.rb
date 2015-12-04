@@ -21,5 +21,10 @@ class Role::Candidate < Role
       field(:year, :enum) { enum (Date.today.year..(Date.today.year + 2)).to_a }
       field :attachments
     end
+    export do
+      fields :first_name, :last_name, :gender, :date_of_birth, :place_of_birth
+      fields :street, :zip, :city
+      fields :email, :mobile, :phone, :fax
+    end
   end
 end
