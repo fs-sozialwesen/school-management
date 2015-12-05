@@ -48,8 +48,8 @@ set :nginx_conf, -> { "#{shared_path}/nginx_#{fetch(:nginx_config_name)}.conf" }
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
 # set :keep_releases, 5
 
-namespace :puma do
-  namespace :nginx_config do
+namespace :nginx do
+  namespace :config do
     desc 'Upload nginx configuration'
     task :upload do
       on roles(fetch(:puma_nginx, :web)) do |role|
@@ -65,6 +65,15 @@ namespace :puma do
         puma_switch_user(role) do
           sudo :ln, '-fs', fetch(:nginx_conf), fetch(:nginx_sites_enabled_path)
         end
+      end
+    end
+  end
+
+  desc 'nginx restart'
+  task :restart do
+    on roles(fetch(:puma_nginx, :web)) do |role|
+      puma_switch_user(role) do
+        sudo :service, :nginx, :restart
       end
     end
   end
