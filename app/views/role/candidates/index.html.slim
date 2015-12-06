@@ -1,5 +1,8 @@
 .page-header
-  = link_to new_role_candidate_path, class: 'btn btn-primary' do 
+  = link_to role_candidates_path(format: :csv), class: 'btn btn-default' do
+    span.glyphicon.glyphicon-export
+    |  Exportieren
+  = link_to new_role_candidate_path, class: 'btn btn-primary' do
     span.glyphicon.glyphicon-plus
     |  Neu
   h1 Bewerber
@@ -13,6 +16,7 @@
       table.table.table-striped.table-bordered.table-hover
         thead
           tr
+            th Eingang
             th Vorname
             th Nachname
             th Jahr
@@ -24,6 +28,7 @@
         tbody
           - @candidates.each do | candidate |
             tr class=(candidate.acceptable? ? 'success' : 'warning')
+              td = l(candidate.created_at, format: :short)
               td = link_to candidate.first_name, candidate
               td = link_to candidate.last_name, candidate
               td = candidate.year
