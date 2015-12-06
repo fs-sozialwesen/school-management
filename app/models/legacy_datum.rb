@@ -3,6 +3,8 @@ class LegacyDatum < ActiveRecord::Base
 
   rails_admin do
 
+    hide
+
     navigation_label I18n.t(:basic_data)
 
     configure(:old_table) do
