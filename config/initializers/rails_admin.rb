@@ -25,8 +25,10 @@ RailsAdmin.config do |config|
 
   config.actions do
     # root actions:
-    dashboard                     # mandatory
-
+    # dashboard                     # mandatory
+    dashboard do
+      statistics false
+    end
     # collection actions:
     index                         # mandatory
     new           { except ['LegacyDatum'] }
@@ -46,5 +48,5 @@ end
 
 RailsAdmin::Config::Fields::Types::register(:self_link, RailsAdmin::FieldType::SelfLinkField)
 RailsAdmin::Config::Fields::Types::register(:email, RailsAdmin::FieldType::EmailField)
-RailsAdmin::Config::Fields::Types::register(:address, RailsAdmin::FieldType::AddressField)
-RailsAdmin::Config::Fields::Types::register(:metadata, RailsAdmin::FieldType::AddressField)
+# RailsAdmin::Config::Fields::Types::register(:address, RailsAdmin::FieldType::AddressField)
+# RailsAdmin::Config::Fields::Types::register(:metadata, RailsAdmin::FieldType::AddressField)
