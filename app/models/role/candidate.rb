@@ -16,15 +16,19 @@ class Role::Candidate < Role
 
 
   rails_admin do
+    list do
+      field :person
+      field :created_at
+      field :year
+      field :education_subject
+      field(:school_graduate)     { pretty_value { value.graduate } }
+      field(:profession_graduate) { pretty_value { value.graduate } }
+    end
+
     edit do
       field(:education_subject, :enum) { enum EducationSubject.pluck(:name) }
       field(:year, :enum) { enum (Date.today.year..(Date.today.year + 2)).to_a }
       field :attachments
-    end
-    export do
-      fields :first_name, :last_name, :gender, :date_of_birth, :place_of_birth
-      fields :street, :zip, :city
-      fields :email, :mobile, :phone, :fax
     end
   end
 end

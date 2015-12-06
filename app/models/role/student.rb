@@ -42,6 +42,13 @@ class Role < ActiveRecord::Base
         # exclude_fields :course_memberships, :courses, :course_membership, :internships, :type, :organisation
         field :organisation
       end
+
+      export do
+        field :id
+        field :created_at
+        field :person
+        field :school
+      end
     end
 
   end
