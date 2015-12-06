@@ -48,12 +48,12 @@
     h3 Ausbildung
     = options.simple_fields_for :school_graduate, options.object.school_graduate do |s|
       .row
-        .col-md-6 = s.input :graduate, collection: Graduate.school_graduates, label: 'Schulabschluss:', include_blank: false
+        .col-md-6 = s.input :graduate, collection: Enum.school_graduates, label: 'Schulabschluss:', include_blank: false
         .col-md-3 = s.input :proved, as: :boolean, label: 'Beglaubigte Kopie liegt vor'
 
     = options.simple_fields_for :profession_graduate, options.object.profession_graduate do |pr|
       .row
-        .col-md-3 = pr.input :graduate, collection: Graduate.profession_graduates, label: 'Berufsausbildung:', include_blank: 'kein', required: false
+        .col-md-3 = pr.input :graduate, collection: Enum.profession_graduates, label: 'Berufsausbildung:', include_blank: 'kein', required: false
         .col-md-3 = pr.input :comments, label: 'Sonstiges', required: false
         .col-md-3 = pr.input :proved, as: :boolean, label: 'Beglaubigte Kopie liegt vor'
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151124061814) do
+ActiveRecord::Schema.define(version: 20151206194721) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -71,6 +71,13 @@ ActiveRecord::Schema.define(version: 20151124061814) do
   end
 
   add_index "education_subjects", ["school_id"], name: "index_education_subjects_on_school_id", using: :btree
+
+  create_table "enums", force: :cascade do |t|
+    t.string "name",  null: false
+    t.string "value"
+  end
+
+  add_index "enums", ["name"], name: "index_enums_on_name", using: :btree
 
   create_table "internship_positions", force: :cascade do |t|
     t.string   "name"
