@@ -16,6 +16,7 @@ class EducationSubject < ActiveRecord::Base
     list do
       field :name
       field :short_name
+      field :school
     end
   end
 end

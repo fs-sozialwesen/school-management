@@ -10,6 +10,8 @@ class Role < ActiveRecord::Base
   end
 
   rails_admin do
+    navigation_label I18n.t(:basic_data)
+
     list do
       field :person
       field(:type) { pretty_value { bindings[:object].class.model_name.human } }

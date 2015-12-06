@@ -18,6 +18,7 @@ class Organisation < ActiveRecord::Base
   end
 
   rails_admin do
+    navigation_label I18n.t(:basic_data)
 
     Address. attribute_set.each { |attr| configure(attr.name) { group :address } }
     Contact. attribute_set.each { |attr| configure(attr.name) { group :contact } }
