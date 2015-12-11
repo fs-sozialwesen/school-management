@@ -9,8 +9,8 @@ CSV.generate do |csv|
     profession_graduate = candidate.profession_graduate.graduate
     profession_graduate = "(#{profession_graduate})" unless candidate.options.profession_graduate?
     csv << [
-      '',
-      l(candidate.created_at, format: :short),
+      candidate.aasm.human_state,
+      l(candidate.options.date, format: :short),
       candidate.person.first_name,
       candidate.person.last_name,
       candidate.year,

@@ -1,0 +1,14 @@
+.page-header
+  = link_to invite_role_candidate_path(@candidate), method: :patch, class: 'btn btn-primary' do
+    span.glyphicon.glyphicon-step-forward
+    |  Einladen
+
+  = link_to edit_role_candidate_path(@candidate), class: 'btn btn-default' do
+    span.glyphicon.glyphicon-pencil
+    |  Bearbeiten
+  = link_to role_candidates_path, class: 'btn btn-default' do
+    span.glyphicon.glyphicon-list-alt
+    |  Zur Liste
+  h1
+    | Bewerber:
+    =< @candidate.person.name

@@ -1,4 +1,6 @@
 class CandidateOptions < JsonSerializer
+  attribute :date,                Date
+  attribute :notes,               String
   attribute :education_subject,   String
   attribute :year,                Integer
   attribute :school_graduate,     Graduate

@@ -1,6 +1,6 @@
-= simple_form_for(@candidate, defaults: { label: false }) do |f|
+= simple_form_for(@candidate, class: 'form-horizontal', defaults: { required: false, include_blank: false }) do |f|
   - if @candidate.errors.any?
-    .alert.alert-danger.alert-dismissable role="alert"
+    .alert.alert-danger.alert-dismissable@alert
       button.close type="button" data-dismiss="alert"
         span aria-hidden="true"
           | &times;
@@ -11,89 +11,39 @@
       /ul
         - @candidate.errors.full_messages.each do |msg|
           li= msg
-  = f.simple_fields_for :options, f.object.options do |options|
-    .row
-      .col-md-6
-        = options.input :education_subject, as: :select, collection: EducationSubject.pluck(:name), prompt: 'Fachrichtung:'
-    .row
-      - year = Date.current.year
-      .col-md-2 = options.input :year, as: :select, collection: (year..(year + 2)).to_a, include_blank: 'Jahr:'
+  .row
+    .col-md-9
+      ul.nav.nav-tabs@tablist style="margin-bottom: 20px;"
+        li@presentation.active: a@tab data-toggle="tab" href="#general"    Allgemein
+        li@presentation:        a@tab data-toggle="tab" href="#person"     Personendaten
+        li@presentation:        a@tab data-toggle="tab" href="#education"  Ausbildung
+        li@presentation:        a@tab data-toggle="tab" href="#contracts"  Verträge
 
-  h3 Personendaten
-  = f.simple_fields_for :person do |p|
-    .row
-      .col-md-3 = p.input :first_name
-      .col-md-3 = p.input :last_name
-      .col-md-3 = p.input :date_of_birth, as: :string, input_html:{ class: :date }
-      .col-md-3 = p.input :place_of_birth
-    .row
-      .col-md-6
-        = p.simple_fields_for :address, p.object.address do |a|
-          h3 Adresse
-          .row
-            .col-md-12 = a.input :street
-          .row
-            .col-md-4 = a.input :zip
-            .col-md-8 = a.input :city
-      .col-md-6
-        = p.simple_fields_for :contact, p.object.contact do |c|
-          h3 Kontakt
-          .row
-            .col-md-12 = c.input :email
-          .row
-            .col-md-6 = c.input :phone
-            .col-md-6 = c.input :mobile
-  = f.simple_fields_for :options, f.object.options do |options|
-
-    h3 Ausbildung
-    = options.simple_fields_for :school_graduate, options.object.school_graduate do |s|
-      .row
-        .col-md-6 = s.input :graduate, collection: Enum.school_graduates, label: 'Schulabschluss:', include_blank: false
-        .col-md-3 = s.input :proved, as: :boolean, label: 'Beglaubigte Kopie liegt vor'
-
-    = options.simple_fields_for :profession_graduate, options.object.profession_graduate do |pr|
-      .row
-        .col-md-3 = pr.input :graduate, collection: Enum.profession_graduates, label: 'Berufsausbildung:', include_blank: 'kein', required: false
-        .col-md-3 = pr.input :comments, label: 'Sonstiges', required: false
-        .col-md-3 = pr.input :proved, as: :boolean, label: 'Beglaubigte Kopie liegt vor'
-
-    h4 Erzieherausbildung / Heilerziehungspflege, berufsbegleitend und Heilerziehungspfleger
-    = options.simple_fields_for :education_graduate, options.object.education_graduate do |eg|
-      .row
-        .col-md-6 = eg.input :name
-        .col-md-3 = eg.input :proved, as: :boolean, label: 'Beglaubigte Kopie liegt vor'
-      .row
-        .col-md-6 = eg.input :address
-    h4 Zulassungsvoraussetzungen
-    .row
-      .col-md-3 = options.input :internship_proved,  as: :boolean, label: 'Nachweis Praktikum'
-      .col-md-3 = options.input :police_certificate, as: :boolean, label: 'Führungszeugnis'
-      /# - Beglaubigte Kopie Schulabschluss
-      /# - Beglaubigte Kopie Berufsabschluss
-      /# - Nachweis Praktikum
-      /# - Führungszeugnis
-    h4 Ausbildungsvertrag
-    .row
-      .col-md-3 = options.input :education_contract_sent,     as: :string, placeholder: 'gesendet', input_html:{ class: :date }
-      .col-md-3 = options.input :education_contract_received, as: :string, placeholder: 'zurück',   input_html:{ class: :date }
-    h4 Praktikumsvertrag
-    .row
-      .col-md-3 = options.input :internship_contract_sent,     as: :string, placeholder: 'gesendet', input_html:{ class: :date }
-      .col-md-3 = options.input :internship_contract_received, as: :string, placeholder: 'zurück',   input_html:{ class: :date }
-      /# - Ausbildungsvertrag (Ausgabedatum, Rücklaufdatum)
-      /# - Praktikumsvertrag (Ausgabedatum, Rücklaufdatum)
-
+      .tab-content
+        @tabpanel.tab-pane.fade#general.active.in = render 'form_general',   f: f
+        @tabpanel.tab-pane.fade#person            = render 'form_person',    f: f
+        @tabpanel.tab-pane.fade#education         = render 'form_education', f: f
+        @tabpanel.tab-pane.fade#contracts         = render 'form_contracts', f: f
 
   .row
-    .col-md-4.col-md-offset-8
-      = f.submit class: "btn btn-primary btn-block"
+    .col-md-9
+      = f.submit class: "btn btn-primary"
 
 coffee:
   $ ->
-    $('input.date').datepicker
-      format: 'dd.mm.yyyy'
-      startView: 2
-      endDate: '0d'
+    $('input.date').each (i, input) ->
+      $input = $(input)
+      date = $input.val()
+      if date isnt ''
+        [year, month, day] = date.split('-')
+        $input.val [day, month, year].join('.')
+
+      startView = $input.data().startView or 0
+      $input.datepicker
+        format: 'dd.mm.yyyy'
+        startView: startView
+        language: "de"
+        endDate: '0d'
 
 sass:
   .datepicker

@@ -6,7 +6,10 @@ class Role::CandidatesController < ApplicationController
 
   def index
     authorize Role::Candidate
-    @candidates = Role::Candidate.includes(:person).all
+    @statuses           = Role::Candidate.aasm.states
+    @education_subjects = EducationSubject.pluck :name
+    @years              = (1.year.ago.year..2.year.from_now.year).to_a
+    @candidates         = filtered_candidates.all
   end
 
   def show
@@ -16,6 +19,7 @@ class Role::CandidatesController < ApplicationController
   def new
     authorize Role::Candidate
     @candidate = Role::Candidate.new
+    @candidate.options.date = Date.current
     @candidate.build_person
   end
 
@@ -60,37 +64,95 @@ class Role::CandidatesController < ApplicationController
     end
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_candidate
-      @candidate = Role::Candidate.includes(:person).find(params[:id])
-    end
+  def init
+    authorize Role::Candidate
+    candidate = Role::Candidate.find(params[:id])
+    candidate.init!
+    redirect_to candidate, notice: "Bewerber zurückgesetzt!"
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def candidate_params
-      params.require(:role_candidate).
-        permit(
-          person_attributes:   [
-             :first_name, :last_name, :date_of_birth, :place_of_birth,
-             address: %i[street zip city],
-             contact: %i[email phone mobile]
-           ],
-          options: [
-             :education_subject,
-             :year,
-             :school_graduate,
-             :internship_proved,
-             :police_certificate,
-             :education_contract_sent,
-             :education_contract_received,
-             :internship_contract_sent,
-             :internship_contract_received,
-             school_graduate:     %i[graduate proved],
-             profession_graduate: %i[graduate proved comments],
-             education_graduate:  %i[name proved address],
-          ]
-      )
+  def approve
+    authorize Role::Candidate
+    candidate = Role::Candidate.find(params[:id])
+    candidate.approve!
+    redirect_to candidate, notice: "Bewerber zugelassen!"
+  end
+
+  def invite
+    authorize Role::Candidate
+    @candidate = Role::Candidate.find(params[:id])
+    if request.patch?
+      @candidate.invite!
+      redirect_to @candidate, notice: "Bewerber eingeladen!"
     end
+  end
+
+  def accept
+    authorize Role::Candidate
+    candidate = Role::Candidate.find(params[:id])
+    candidate.accept!
+    redirect_to candidate, notice: "Bewerber angenommen!"
+  end
+
+  def reject
+    authorize Role::Candidate
+    candidate = Role::Candidate.find(params[:id])
+    candidate.reject!
+    redirect_to candidate, notice: "Bewerber abgelehnt!"
+  end
+
+  private
+  # Use callbacks to share common setup or constraints between actions.
+  def set_candidate
+    @candidate = Role::Candidate.includes(:person).find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def candidate_params
+    params.require(:role_candidate).
+      permit(
+        person_attributes:   [
+           :first_name, :last_name, :date_of_birth, :place_of_birth,
+           address: %i[street zip city],
+           contact: %i[email phone mobile]
+         ],
+        options: [
+           :date,
+           :notes,
+           :education_subject,
+           :year,
+           :school_graduate,
+           :internship_proved,
+           :police_certificate,
+           :education_contract_sent,
+           :education_contract_received,
+           :internship_contract_sent,
+           :internship_contract_received,
+           school_graduate:     %i[graduate proved],
+           profession_graduate: %i[graduate proved comments],
+           education_graduate:  %i[name proved address],
+        ]
+    )
+  end
+
+  def process_filter_params
+    @education_subject = params[:education_subject].in?(@education_subjects) ? params[:education_subject] : nil
+    @year              = params[:year].to_i.in?(@years) ? params[:year].to_i : nil
+    @status            = params[:status]
+  end
+
+  def filtered_candidates
+    process_filter_params
+    candidates = Role::Candidate.order(:status).includes(:person)
+    status     = params[:status].to_s.to_sym
+    # binding.pry
+    candidates = candidates.send status if status.in?(@statuses.map(&:name))
+    if @education_subject
+      candidates = candidates.where('options @> ?', {education_subject: @education_subject}.to_json)
+    end
+    candidates = candidates.where('options @> ?', {year: @year}.to_json) if @year
+    candidates
+  end
 end
 
 

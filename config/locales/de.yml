@@ -31,18 +31,18 @@ de:
   simple_form:
     labels:
       role_candidate:
-        username: 'User name'
-        password: 'Password'
-    hints:
-      user:
-        username: 'User name to sign in.'
-        password: 'No special characters, please.'
-    placeholders:
-      role_candidate:
         options:
-          education_graduate:
-            name: Arbeitgeber / Institution
-            address: Adresse
+          date: Eingangsdatum
+          education_subject: Fachrichtung
+          notes: Notizen
+          year: Jahr
+          school_graduate:
+            graduate: Schulabschluss
+            proved: Beglaubigte Kopie liegt vor
+          profession_graduate:
+            graduate: Berufsausbildung
+            comments: Sonstiges
+            proved: Beglaubigte Kopie liegt vor
         person:
           address:
             city: Ort
@@ -56,11 +56,21 @@ de:
           first_name: Vorname
           last_name: Nachname
           place_of_birth: Geburtsort
-        profession_graduate:
-#          comments: Sonstiges
-#        school_graduate:
-#          name: Schulform
-#          graduate: Abschluss
+    hints:
+      user:
+        username: 'User name to sign in.'
+        password: 'No special characters, please.'
+    placeholders:
+      role_candidate:
+        options:
+          education_graduate:
+            name: Arbeitgeber / Institution
+            address: Adresse
+          profession_graduate:
+            comments: Berufsbezeichnung
+          school_graduate:
+            name: Schulform
+            graduate: Abschluss
 
     include_blanks:
       role_candidate:

@@ -1,0 +1,28 @@
+= f.simple_fields_for :options, f.object.options do |options|
+
+  = options.simple_fields_for :school_graduate, options.object.school_graduate do |s|
+    .row
+      .col-md-6 = s.input :graduate, collection: Enum.school_graduates
+      .col-md-6 = s.input :proved, as: :boolean
+
+  = options.simple_fields_for :profession_graduate, options.object.profession_graduate do |pr|
+    .row
+      .col-md-3 = pr.input :graduate, collection: Enum.profession_graduates, include_blank: 'kein'
+      .col-md-3 = pr.input :comments
+      .col-md-6 = pr.input :proved, as: :boolean
+
+  /h4 Erzieherausbildung / Heilerziehungspflege, berufsbegleitend und Heilerziehungspfleger
+  /= options.simple_fields_for :education_graduate, options.object.education_graduate do |eg|
+    .row
+      .col-md-6 = eg.input :name
+      .col-md-3 = eg.input :proved, as: :boolean, label: 'Beglaubigte Kopie liegt vor'
+    .row
+      .col-md-6 = eg.input :address
+  h4 Zulassungsvoraussetzungen
+  .row
+    .col-md-3 = options.input :internship_proved,  as: :boolean, label: 'Nachweis Praktikum'
+    .col-md-3 = options.input :police_certificate, as: :boolean, label: 'Führungszeugnis'
+    /# - Beglaubigte Kopie Schulabschluss
+    /# - Beglaubigte Kopie Berufsabschluss
+    /# - Nachweis Praktikum
+    /# - Führungszeugnis

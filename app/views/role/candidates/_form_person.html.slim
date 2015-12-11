@@ -1,0 +1,20 @@
+= f.simple_fields_for :person do |p|
+  .row
+    .col-md-6 = p.input :first_name, required: true
+    .col-md-6 = p.input :last_name, required: true
+  .row
+    .col-md-6 = p.input :date_of_birth, as: :string, input_html:{ class: :date, data: { start_view: 2 } }
+    .col-md-6 = p.input :place_of_birth
+  .row
+    .col-md-6 = p.simple_fields_for :address, p.object.address do |a|
+      h3 Adresse
+      .row: .col-md-12 = a.input :street
+      .row
+        .col-md-4 = a.input :zip
+        .col-md-8 = a.input :city
+    .col-md-6 = p.simple_fields_for :contact, p.object.contact do |c|
+      h3 Kontakt
+      .row: .col-md-12 = c.input :email
+      .row
+        .col-md-6 = c.input :phone
+        .col-md-6 = c.input :mobile
