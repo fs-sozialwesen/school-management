@@ -35,6 +35,7 @@ de:
     time_block:           Zeit
     updated_at:           Bearbeitet
     work_area:            Arbeitsfeld
+    year:                 Jahr
     zip:                  PLZ
   activerecord:
     models:
@@ -136,6 +137,13 @@ de:
       role:
         person: Personendaten
         organisation: Organisation
+      role/candidate:
+        status: Status
+        status/accepted: angenommen
+        status/approved: zugelassen
+        status/created: angelegt
+        status/invited: eingeladen
+        status/rejected: abgelehnt
       role/student:
         organisation: Schule
         year: Jahrgang

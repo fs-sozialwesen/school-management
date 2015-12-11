@@ -10,6 +10,22 @@ class Role::Candidate < Role
 
   accepts_nested_attributes_for :person
 
+  include AASM
+
+  aasm column: 'status' do
+    state :created, initial: true
+    state :approved
+    state :invited
+    state :accepted
+    state :rejected
+
+    event(:init)    { transitions to: :created }
+    event(:approve) { transitions from: :created,  to: :approved }
+    event(:invite)  { transitions from: :approved, to: :invited }
+    event(:accept)  { transitions from: :invited,  to: :accepted }
+    event(:reject)  { transitions to: :rejected }
+  end
+
   def display_name
     person.name
   end
@@ -20,6 +36,7 @@ class Role::Candidate < Role
       field :person
       field :created_at
       field :year
+      field(:status) { pretty_value { bindings[:object].aasm.human_state } }
       field :education_subject
       field(:school_graduate)     { pretty_value { value.graduate } }
       field(:profession_graduate) { pretty_value { value.graduate } }

@@ -20,6 +20,27 @@ class Role::CandidatePolicy < ApplicationPolicy
     index?
   end
 
+  def init?
+    index?
+  end
+
+  def approve?
+    index?
+  end
+
+  def invite?
+    index?
+  end
+
+  def accept?
+    index?
+  end
+
+  def reject?
+    index?
+  end
+
+
   class Scope < Scope
     def resolve
       scope
