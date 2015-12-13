@@ -48,6 +48,7 @@ CREATE EXTENSION adminpack;
 
 # update postgres to 9.4
 # https://wiki.postgresql.org/wiki/Apt#Quickstart
+sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
 sudo apt-get install wget ca-certificates
 wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
 sudo apt-get update
