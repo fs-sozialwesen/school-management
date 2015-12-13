@@ -18,7 +18,6 @@
           tr
             th Eingang
             th Status
-            th
             /th
             /th Ablehnen
             /th Vorname
@@ -28,6 +27,7 @@
             th Fachrichtung
             th Schulausb.
             th Berufsausb.
+            th
             /th Erzieher / HP
             /th
         tbody
@@ -44,9 +44,6 @@
                   - else
                     - width = {created: 25, approved: 50, invited: 75}[candidate.status.to_sym]
                     .progress-bar.progress-bar-warning style=("width: #{width}%;") title=candidate.aasm.human_state
-              td
-                = link_to edit_role_candidate_path(candidate), class: 'btn btn-primary btn-sm', title: 'Bearbeiten' do
-                  span.glyphicon.glyphicon-pencil
               /td
               /  - if candidate.may_approve?
               /    = link_to 'Zulassen', edit_role_candidate_path(candidate), class: 'btn btn-primary btn-sm'
@@ -71,6 +68,9 @@
               td
                 => bool_icon(candidate.options.profession_graduate?, 'bestätigt', 'offen')
                 /= candidate.profession_graduate.graduate
+              td
+                = link_to edit_role_candidate_path(candidate), class: 'btn btn-primary btn-sm', title: 'Bearbeiten' do
+                  span.glyphicon.glyphicon-pencil
               /td
                 => bool_icon(candidate.options.education_graduate?, 'bestätigt', 'offen')
                 = candidate.education_graduate.name
