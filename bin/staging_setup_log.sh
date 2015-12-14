@@ -8,16 +8,21 @@ sudo apt-get install git nodejs npm postgresql postgresql-contrib postgresql-ser
 
 # Add user
 sudo adduser school_deploy
+#sudo adduser deploy
 sudo usermod -a -G sudo school_deploy
+#sudo usermod -a -G sudo deploy
 
 # app dir
 sudo mkdir /var/www/school-management
+#sudo mkdir /var/www/school
 
 # and give new user access
 sudo chown school_deploy:school_deploy /var/www/school-management
+#sudo chown deploy:deploy /var/www/school
 
 # install ruby-install
 # https://github.com/postmodern/ruby-install#readme
+cd
 wget -O ruby-install-0.5.0.tar.gz https://github.com/postmodern/ruby-install/archive/v0.5.0.tar.gz
 tar -xzvf ruby-install-0.5.0.tar.gz
 cd ruby-install-0.5.0/
@@ -28,6 +33,7 @@ ruby-install ruby 2.2.3
 
 # install chruby
 # https://github.com/postmodern/chruby
+cd
 wget -O chruby-0.3.9.tar.gz https://github.com/postmodern/chruby/archive/v0.3.9.tar.gz
 tar -xzvf chruby-0.3.9.tar.gz
 cd chruby-0.3.9/
@@ -35,6 +41,7 @@ sudo make install
 
 #sudo ./scripts/setup.sh
 
+# in .bashrc and .profile
 source /usr/local/share/chruby/chruby.sh
 
 
@@ -72,3 +79,15 @@ sudo /etc/init.d/postgresql start 9.4
 # Apache stoppen und Autostart deaktivieren
 /etc/init.d/apache2 stop
 update-rc.d -f apache2 remove
+
+# install nginx
+# https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-14-04-lts
+sudo apt-get update
+sudo apt-get install nginx
+
+#sudo service nginx start
+#sudo service nginx stop
+#sudo service nginx restart
+
+#We can make sure that our web server will restart automatically when the server is rebooted by typing:
+sudo update-rc.d nginx defaults
