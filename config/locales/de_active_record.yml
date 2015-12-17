@@ -48,6 +48,9 @@ de:
       education_subject:
         one:    Fachrichtung
         other:  Fachrichtungen
+      enum:
+        one:   Aufzählung
+        other: Aufzählungen
       internship:
         one:    Praktikum
         other:  Praktika
@@ -99,6 +102,8 @@ de:
         teacher: Klassenlehrer
       education_subject:
         short_name: Kürzel
+      enum:
+        value: Name
       internship:
         status:     Status
       internship_position:

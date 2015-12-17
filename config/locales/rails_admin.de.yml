@@ -137,6 +137,9 @@ de:
         _all: Alle
         active: Aktuell
         inactive: Archiv
+      enum:
+        school_graduate: Schulabschlüsse
+        profession_graduate: Berufsausbildungen
       time_block:
         _all: Alle
         active: Aktuell
