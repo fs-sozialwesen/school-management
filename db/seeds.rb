@@ -13,7 +13,7 @@ if Rails.env.test?
 else
   begin
     puts 'loading private seeds'
-    require_relative 'private_seeds'
+    require_relative 'seeds/private_seeds'
   rescue LoadError
     puts 'no private seeds found'
   end
