@@ -91,3 +91,9 @@ sudo apt-get install nginx
 
 #We can make sure that our web server will restart automatically when the server is rebooted by typing:
 sudo update-rc.d nginx defaults
+
+# generating SSL certificate
+# https://letsencrypt.readthedocs.org
+sudo service nginx stop
+./letsencrypt-auto certonly --standalone --standalone-supported-challenges http-01 -d www.fs-sozialwesen.de -d fs-sozialwesen.de
+sudo service nginx start
