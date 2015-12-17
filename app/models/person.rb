@@ -11,7 +11,7 @@ class Person < ActiveRecord::Base
   has_many :contracts, as: :first_party
 
   validates :first_name, :last_name, presence: true
-  validates :date_of_birth, :place_of_birth, presence: true#, if: :candidate?
+  # validates :date_of_birth, :place_of_birth, presence: true#, if: :candidate?
   # validate :student_has_no_other_roles
 
   has_one :as_admin,     class_name: 'Role::Admin'
