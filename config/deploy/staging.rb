@@ -6,9 +6,9 @@ set :stage, :staging
 # server in each group is considered to be the first
 # unless any hosts have the primary property set.
 
-role :app, %w{school_deploy@qua.as}
-role :web, %w{school_deploy@qua.as}
-role :db,  %w{school_deploy@qua.as}
+# role :app, %w{school_deploy@qua.as}
+# role :web, %w{school_deploy@qua.as}
+# role :db,  %w{school_deploy@qua.as}
 
 # Extended Server Syntax
 # ======================
@@ -18,6 +18,9 @@ role :db,  %w{school_deploy@qua.as}
 # extended properties on the server.
 # server 'example.com', user: 'deploy', roles: %w{web app}, my_property: :my_value
 # server 'qua.as', :app, :web, :db, primary: true
+server 'qua.as', user: 'school_deploy', roles: %w{web app db}
+
+set :nginx_server_name, -> { "#{fetch(:nginx_config_name)}.qua.as" }
 
 # you can set custom ssh options
 # it's possible to pass any option but you need to keep in mind that net/ssh understand limited list of options
@@ -42,3 +45,7 @@ role :db,  %w{school_deploy@qua.as}
 # setting per server overrides global ssh_options
 
 # fetch(:default_env).merge!(rails_env: :staging)
+
+
+set :deploy_to, '/var/www/school-management'
+# set :user, 'school_deploy'
