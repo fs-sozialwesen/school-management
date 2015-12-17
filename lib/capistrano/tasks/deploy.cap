@@ -9,4 +9,59 @@ namespace :deploy do
       end
     end
   end
+
+  desc 'Runs rake db:drop'
+  task :drop => [:set_rails_env] do
+    on primary fetch(:migration_role) do
+      within release_path do
+        with rails_env: fetch(:rails_env) do
+          execute :rake, 'db:drop'
+        end
+      end
+    end
+  end
+
+  desc 'Runs rake db:setup'
+  task :setup => [:set_rails_env] do
+    on primary fetch(:migration_role) do
+      within release_path do
+        with rails_env: fetch(:rails_env) do
+          execute :rake, 'db:setup'
+        end
+      end
+    end
+  end
+
+  desc 'Upload private seeds'
+  task :upload_private_seeds => [:set_rails_env] do
+    on primary fetch(:migration_role) do
+      within release_path do
+        with rails_env: fetch(:rails_env) do
+          upload! 'db/seeds/private_seeds.rb', shared_path.join('db', 'seeds', 'private_seeds.rb')
+        end
+      end
+    end
+  end
+
+  desc 'load imports'
+  task :load_imports => [:set_rails_env] do
+    on primary fetch(:migration_role) do
+      within release_path do
+        with rails_env: fetch(:rails_env) do
+          execute :rake, 'legacy_data:load'
+        end
+      end
+    end
+  end
+
+  desc 'import'
+  task :import => [:set_rails_env] do
+    on primary fetch(:migration_role) do
+      within release_path do
+        with rails_env: fetch(:rails_env) do
+          execute :rake, 'legacy_data:import'
+        end
+      end
+    end
+  end
 end
