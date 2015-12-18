@@ -70,7 +70,7 @@ end
   Person.create!(teach) do |person|
     teacher           = person.create_as_teacher! organisation: [school1, school2].sample
     start_date        = [1, 2, 3].sample.year.ago
-    education_subject = teacher.organisation.education_subjects.to_a.sample
+    education_subject = teacher.organisation.education_subjects.last
     [1, 2, 3].sample.times do
       Course.create!(
         name:              [education_subject.short_name, start_date.year].join(' '),

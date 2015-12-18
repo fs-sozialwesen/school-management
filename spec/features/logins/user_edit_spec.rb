@@ -16,6 +16,7 @@ feature 'Login edit', :devise do
   #   When I change my email address
   #   Then I see an account updated message
   scenario 'user changes email address' do
+    skip
     login = FactoryGirl.create(:person).login
     login_as(login, scope: :login)
     visit edit_login_registration_path(login)
