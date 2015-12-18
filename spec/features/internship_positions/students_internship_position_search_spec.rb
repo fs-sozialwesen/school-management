@@ -11,8 +11,11 @@ feature 'Internship positions search', :devise do
   scenario 'student sees all internship positions of his education subject' do
     education_subject       = EducationSubject.last
     other_education_subject = EducationSubject.first
-    student = FactoryGirl.create(:person, :student).as_student
-    allow(student).to receive(:education_subject).and_return(education_subject)
+    expect(education_subject.courses.count).to be > 0
+    course  = education_subject.courses.first
+    user = FactoryGirl.create(:person)
+    student = user.create_as_student!(courses: [course])
+    student.course_memberships.last.update(active: true)
 
     ip1 = FactoryGirl.create(:internship_position, name: 'Institution1', education_subject: education_subject)
     ip2 = FactoryGirl.create(:internship_position, name: 'Institution2', education_subject: other_education_subject)
@@ -21,12 +24,7 @@ feature 'Internship positions search', :devise do
     # login.confirm
     # login.save
     signin(login.email, '12341234')
-    # binding.pry
-
-    save_and_open_page
-
     visit internship_positions_path
-    # save_and_open_page
     expect(page).to have_content ip1.name
   end
 
