@@ -51,16 +51,15 @@ class Person < ActiveRecord::Base
     # hide
     # label I18n.t(:people_index)
 
+    configure(:gender, :enum) do
+      enum { {I18n.t(:female) => 'f', I18n.t(:male) => 'm'} }
+    end
+
     Address.attribute_set.each { |attr| configure(attr.name) { group :address } }
     Contact.attribute_set.each do |attr|
       next if attr.name.in?(%i(person homepage))
       configure(attr.name) { group :contact }
     end
-
-    # configure(:email)  { group :contact }
-    # configure(:mobile) { group :contact }
-    # configure(:phone)  { group :contact }
-    # configure(:fax)    { group :contact }
 
     configure(:roles)      { group :roles }
     AS_ROLES.each { |role| configure(role) { group :roles } }

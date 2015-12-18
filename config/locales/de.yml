@@ -1,7 +1,9 @@
 de:
   basic_data: Stammdaten
   course: Klasse
+  female: weiblich
   internship: Praktikum
+  male: männlich
   role:
     candidates:
       create:
