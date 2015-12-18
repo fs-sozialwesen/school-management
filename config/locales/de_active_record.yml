@@ -127,8 +127,6 @@ de:
         start_time: Start
         end_time: Ende
       person:
-        address:
-          street: Strasse
         as_admin: Admin
         as_candidate: Bewerber(in)
         as_manager: Manager
