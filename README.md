@@ -50,5 +50,5 @@ License
 Code Status
 -----------
 
-[![Build Status](https://travis-ci.org/fs-sozialwesen/school-management.svg)](https://travis-ci.org/fs-sozialwesen/school-management.svg)
+[![Build Status](https://travis-ci.org/fs-sozialwesen/school-management)](https://travis-ci.org/fs-sozialwesen/school-management.svg)
 
