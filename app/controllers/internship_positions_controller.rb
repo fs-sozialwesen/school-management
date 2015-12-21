@@ -1,7 +1,8 @@
+# InternshipPositionsController
 class InternshipPositionsController < ApplicationController
-
   before_action :authenticate_login!
   after_action :verify_authorized
+  before_action :process_filter_params, only: :index
 
   def index
     authorize InternshipPosition
@@ -20,26 +21,30 @@ class InternshipPositionsController < ApplicationController
   private
 
   def process_filter_params
-    %i(education_subject_id city housing applying_by work_area).each { |filter| params.delete filter } if params[:submit] == 'clear'
+    filter_params = %i(education_subject_id city housing applying_by work_area)
+    filter_params.each { |filter| params.delete filter } if params[:submit] == 'clear'
     @education_subject_id = params[:education_subject_id]
     @city                 = params[:city]
-    @housing              = {'yes' => true, 'no' => false}[params[:housing]]
-    @applying_by          = {'mail' => :by_mail, 'email' => :by_email, 'phone' => :by_phone}[params[:applying_by]]
     @work_area            = params[:work_area]
   end
 
+  def housing
+    @housing ||= { 'yes' => true, 'no' => false }[params[:housing]]
+  end
+
+  def applying_by
+    apply_mapping = { mail: :by_mail, email: :by_email, phone: :by_phone }.stringify_keys
+    @applying_by ||= apply_mapping[params[:applying_by]]
+  end
+
   def filtered_internship_positions
-    process_filter_params
-    ips = policy_scope(InternshipPosition).
-      by_city(@city).
-      housing(@housing).
-      applying_by(@applying_by).
-      joins(:organisation).
-      includes(:organisation).
-      order("internship_positions.address->>'city'")
+    ips = policy_scope(InternshipPosition)
+          .by_city(@city).housing(housing).applying_by(applying_by)
+          .joins(:organisation)
+          .includes(:organisation)
+          .order("internship_positions.address->>'city'")
     ips = ips.where(work_area: @work_area) if @work_area.present?
     ips = ips.where(education_subject_id: @education_subject_id) if @education_subject_id.present?
     ips
   end
-
 end
