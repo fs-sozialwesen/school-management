@@ -7,6 +7,7 @@ AllCops:
    - 'bin/*'
    - 'db/seeds.rb'
    - 'db/schema.rb'
+   - 'db/migrate/**/*'
    - 'vendor/bundle/**/*'
    - 'lib/importer.rb'
 Metrics/LineLength:
