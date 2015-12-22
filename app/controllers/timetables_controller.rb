@@ -1,23 +1,36 @@
+# TimetablesController
 class TimetablesController < ApplicationController
   def index
-    redirect_to action: :show, id: Date.today
+    redirect_to action: :show, id: Date.current
   end
 
   def show
-    @this_week = Date.today
-    @last_week = @this_week - 7
-    @next_week = @this_week + 7
+    @date      = Date.parse params[:id]
+    @timetable = Timetable.new something_with_lessons, @date
+  end
 
-    @date = Date.parse params[:id]
-    has_lessons = if params[:room_name].present?
-      Room.find_by(name: params[:room_name])
-    else
-      case current_user.person
-      when Student then current_user.person.course
-      when Teacher then current_user.person
-      end
+  private
+
+  def something_with_lessons
+    params[:room_name].present? ? Room.find_by(name: params[:room_name]) : person_timetable
+  end
+
+  def person_timetable
+    case current_user.person
+    when Student then current_user.person.course
+    when Teacher then current_user.person
     end
+  end
 
-    @timetable = Timetable.new has_lessons, @date
+  def this_week
+    Date.current
+  end
+
+  def last_week
+    this_week - 7
+  end
+
+  def next_week
+    this_week + 7
   end
 end
