@@ -52,3 +52,5 @@ Code Status
 
 [![Build Status](https://travis-ci.org/fs-sozialwesen/school-management.svg)](https://travis-ci.org/fs-sozialwesen/school-management)
 
+[![Code Climate](https://codeclimate.com/github/fs-sozialwesen/school-management/badges/gpa.svg)](https://codeclimate.com/github/fs-sozialwesen/school-management)
+
