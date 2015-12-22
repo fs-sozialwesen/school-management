@@ -1,3 +1,4 @@
+# class CandidateOptions
 class CandidateOptions < JsonSerializer
   attribute :date,                Date
   attribute :notes,               String
@@ -16,7 +17,7 @@ class CandidateOptions < JsonSerializer
 
   def acceptable?
     [school_graduate?, profession_graduate?, education_graduate?,
-      internship_proved, police_certificate, contracts_ok?].compact.all? { |v| v }
+     internship_proved, police_certificate, contracts_ok?].compact.all? { |v| v }
   end
 
   def contracts_ok?
@@ -34,65 +35,4 @@ class CandidateOptions < JsonSerializer
   def education_graduate?
     education_graduate.name.blank? ? nil : education_graduate.proved
   end
-
 end
-
-# Zulassungsvoraussetzungen:
-
-# Schulabschluss
-# ============
-# - Hauptschulabschluss
-# - Realschulabschluss
-# - Erweiterter Realschulabschluss
-# - Allgem. Hochschulreife
-# - Fachhochschulreife FOS Soziales
-# - Fachhochschulreife FOS andere Fachrichtung
-# - Fachhochschulreife FGym
-# - Fachhochschulreife Gym
-#
-# Bemerkungen: [Textfeld]
-#
-# Berufsabschluss
-# ==============
-# - kein
-# - Kinderpflege (2)1
-# - Sozialassistenz (2)1
-# - sozialpflegerische Berufe (2)2: [Textfeld]
-# - Fremdberuf (2)3: [Textfeld]
-# - Lehramt (3)1
-# - Gesundheits- und Kinderkrankenpflege (3)2
-# - Hauswirtschaft- und Familienpflege (3)3
-# - sonstiges [Textfeld]
-#
-# Praktische Tätigkeit
-# ===============
-# (wenn kein Beruf und Schulabschluss nicht FOS Soz ODER Beruf fachfremd)
-#
-# - mind. 600h
-# - 1jhr.
-#  - BFD
-#  - FSJ
-#  - FÖJ
-#  - sonstiges
-# - 4j einschlägige Tätigkeit
-
-# Dokumente:
-
-# Zulassungsvoraussetzungen [checkboxes]
-# ======================
-# - Beglaubigte Kopie Schulabschluss
-# - Beglaubigte Kopie Berufsabschluss
-# - Nachweis Praktikum
-# - Führungszeugnis
-#
-# Verträge [jeweils mit Datumsfeld]
-# ======================
-# - Ausbildungsvertrag (Ausgabedatum, Rücklaufdatum)
-# - Praktikumsvertrag (Ausgabedatum, Rücklaufdatum)
-#
-# optional
-# ===========
-# SEPA
-# BaföG
-# Schulgeldantrag
-#

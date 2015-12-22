@@ -1,6 +1,7 @@
 class Role < ActiveRecord::Base
+  # class Role::Student implements the role Student a Person can have.
+  # If a person is a student, it got an persisted instance of this class.
   class Student < Role
-
     has_many :course_memberships, dependent: :delete_all
     has_many :courses, through: :course_memberships
     has_one :course_membership, -> { where active: true }
@@ -16,12 +17,15 @@ class Role < ActiveRecord::Base
       parent Course
 
       Course.course_scopes.each do |course_sym, course_name|
-        I18n.backend.store_translations :de, {admin: {scopes: {'role~student' => {course_sym => course_name}}}}
-        Role::Student.scope course_sym, -> do
-          Role::Student.includes(:course_memberships, :courses).
-            where(course_memberships: {active: true}).
-            where(courses: {name: course_name})
-        end
+        I18n.backend.store_translations :de, admin:
+          { scopes: { 'role~student' => { course_sym => course_name } } }
+
+        Role::Student.scope course_sym,
+                            lambda do
+                              Role::Student.includes(:course_memberships, :courses)
+                                .where(course_memberships: { active: true })
+                                .where(courses: { name: course_name })
+                            end
       end
 
       configure :person do
@@ -39,7 +43,6 @@ class Role < ActiveRecord::Base
       end
 
       edit do
-        # exclude_fields :course_memberships, :courses, :course_membership, :internships, :type, :organisation
         field :organisation
       end
 
@@ -50,6 +53,5 @@ class Role < ActiveRecord::Base
         field :school
       end
     end
-
   end
 end

@@ -1,6 +1,6 @@
+# class Person
 class Person < ActiveRecord::Base
-
-  ROLES = %w[admin manager teacher student mentor candidate].freeze
+  ROLES = %w(admin manager teacher student mentor candidate).freeze
   AS_ROLES = ROLES.map { |role| "as_#{role}".to_sym }.freeze
 
   acts_as_addressable
@@ -21,12 +21,12 @@ class Person < ActiveRecord::Base
   has_one :as_mentor,    class_name: 'Role::Mentor'
   has_one :as_candidate, class_name: 'Role::Candidate'
 
-  scope :admins,     -> { joins(:as_admin).    includes(:as_admin)}
-  scope :managers,   -> { joins(:as_manager).  includes(:as_manager)}
-  scope :teachers,   -> { joins(:as_teacher).  includes(:as_teacher)}
-  scope :students,   -> { joins(:as_student).  includes(:as_student)}
-  scope :mentors,    -> { joins(:as_mentor).   includes(:as_mentor)}
-  scope :candidates, -> { joins(:as_candidate).includes(:as_candidate)}
+  scope :admins,     -> { joins(:as_admin).    includes(:as_admin) }
+  scope :managers,   -> { joins(:as_manager).  includes(:as_manager) }
+  scope :teachers,   -> { joins(:as_teacher).  includes(:as_teacher) }
+  scope :students,   -> { joins(:as_student).  includes(:as_student) }
+  scope :mentors,    -> { joins(:as_mentor).   includes(:as_mentor) }
+  scope :candidates, -> { joins(:as_candidate).includes(:as_candidate) }
 
   ROLES.each { |role| define_method("#{role}?") { as(role).present? } }
   AS_ROLES.each { |role| accepts_nested_attributes_for role }
@@ -51,9 +51,7 @@ class Person < ActiveRecord::Base
     # hide
     # label I18n.t(:people_index)
 
-    configure(:gender, :enum) do
-      enum { {I18n.t(:female) => 'f', I18n.t(:male) => 'm'} }
-    end
+    configure(:gender, :enum) { enum { { I18n.t(:female) => 'f', I18n.t(:male) => 'm' } } }
 
     Address.attribute_set.each { |attr| configure(attr.name) { group :address } }
     Contact.attribute_set.each do |attr|
@@ -99,5 +97,4 @@ class Person < ActiveRecord::Base
   def student_has_no_other_roles
     errors.add :base, I18n.t(:student_cant_have_other_roles) if student? && roles.count > 0
   end
-
 end
