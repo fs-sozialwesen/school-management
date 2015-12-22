@@ -1,5 +1,5 @@
+# class Course
 class Course < ActiveRecord::Base
-
   belongs_to :teacher, required: true, class_name: 'Role::Teacher'
   belongs_to :education_subject, required: true, inverse_of: :courses
 
@@ -13,8 +13,8 @@ class Course < ActiveRecord::Base
 
   has_paper_trail
 
-  scope :active,   -> { where('end_date > ?',  Date.today) }
-  scope :inactive, -> { where('end_date <= ?', Date.today) }
+  scope :active,   -> { where('end_date > ?',  Date.current) }
+  scope :inactive, -> { where('end_date <= ?', Date.current) }
 
   validates :name, :start_date, :end_date, presence: true
 
@@ -25,25 +25,24 @@ class Course < ActiveRecord::Base
   end
 
   def underscore_name
-    name.downcase.gsub(' ', '_').to_sym
+    name.downcase.tr(' ', '_').to_sym
   end
 
   rails_admin do
-
-    weight -2
+    weight(-2)
 
     configure :students do
-        pretty_value do
-          course      = bindings[:object]
-          url_options = { model_name: 'role~student', scope: course.underscore_name }
-          url         = bindings[:view].rails_admin.index_path url_options
-          bindings[:view].link_to "#{course.students.count} #{I18n.t('attributes.students')}", url
-        end
-      # children_fields [:first_name, :phone] # will be used for searching/filtering, first field will be used for sorting
+      pretty_value do
+        course      = bindings[:object]
+        url_options = { model_name: 'role~student', scope: course.underscore_name }
+        url         = bindings[:view].rails_admin.index_path url_options
+        bindings[:view].link_to "#{course.students.count} #{I18n.t('attributes.students')}", url
+      end
+      # children_fields [:first_name, :phone] # will be used for searching/filtering,
+      # first field will be used for sorting
       # read_only true # won't be editable in forms (alternatively, hide it in edit section)
       group :students
     end
-
 
     list do
       scopes [:active, :inactive, nil]
