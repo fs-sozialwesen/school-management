@@ -1,6 +1,6 @@
 class Enum < ActiveRecord::Base
 
-  TYPES = %w(school_graduate profession_graduate)
+  TYPES = %w(school_graduate profession_graduate work_area)
 
   TYPES.each do |type|
     scope type, -> { where(name: type) }

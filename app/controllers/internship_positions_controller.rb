@@ -7,9 +7,9 @@ class InternshipPositionsController < ApplicationController
   def index
     authorize InternshipPosition
 
-    @internship_positions = filtered_internship_positions.all
+    @internship_positions = filter(internship_positions)
     @cities               = @internship_positions.all.map { |ip| ip.address.city }.compact.uniq.sort
-    @work_areas           = InternshipPosition.work_areas
+    @work_areas           = Enum.work_areas
     @education_subjects   = EducationSubject.all
   end
 
@@ -37,14 +37,17 @@ class InternshipPositionsController < ApplicationController
     @applying_by ||= apply_mapping[params[:applying_by]]
   end
 
-  def filtered_internship_positions
-    ips = policy_scope(InternshipPosition)
-          .by_city(@city).housing(housing).applying_by(applying_by)
-          .joins(:organisation)
-          .includes(:organisation)
-          .order("internship_positions.address->>'city'")
-    ips = ips.where(work_area: @work_area) if @work_area.present?
+  def internship_positions
+    policy_scope(InternshipPosition).joins(:organisation).includes(:organisation)
+      .order("internship_positions.address->>'city'")
+  end
+
+  def filter(ips)
+    ips = ips.by_city(@city)                                     if @city.present?
     ips = ips.where(education_subject_id: @education_subject_id) if @education_subject_id.present?
+    ips = ips.where(work_area: @work_area)                       if @work_area.present?
+    ips = ips.housing(housing)                                   if housing.present?
+    ips = ips.applying_by(applying_by)                           if applying_by.present?
     ips
   end
 end

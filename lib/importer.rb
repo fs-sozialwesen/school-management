@@ -306,11 +306,10 @@ module Importer
   end
 
   def self.set_work_area_on_internship_positions
-    work_areas = InternshipPosition.work_areas
     InternshipPosition.all.each do |ip|
       name = ip.name.downcase
       work_area = nil
-      work_areas.each { |wa| work_area = wa if name.include? wa.downcase }
+      Enum.work_areas.each { |wa| work_area = wa if name.include? wa.downcase }
       ['kita', 'kindertag', 'kindergart', 'kinderhaus', 'kt '].each do |pattern|
         work_area = 'Kindertagesstätten' if name.include?(pattern)
       end

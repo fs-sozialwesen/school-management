@@ -1,5 +1,5 @@
+# class InternshipPosition
 class InternshipPosition < ActiveRecord::Base
-
   belongs_to :organisation, inverse_of: :internship_positions
   belongs_to :education_subject, required: true
 
@@ -8,30 +8,21 @@ class InternshipPosition < ActiveRecord::Base
   acts_as_housable
   acts_as_applyable
 
-  # serialize :housing,  Housing
-  # serialize :applying, Applying
-
-  # delegate :by_phone,  :by_email,  :by_mail,  :documents,  to: :application_options, prefix: :application
-  # delegate :by_phone=, :by_email=, :by_mail=, :documents=, to: :application_options, prefix: :application
-
-  scope :applying_by, -> (via = nil)     { via.present? ? where('applying @> ?', Applying.by(via)) : all }
-  scope :housing,     -> (housing = nil) { (housing.in? [true, false]) ? where('housing @> ?', Housing.provided(housing)) : all }
-  scope :by_city,     -> (city = nil)    { city.blank? ? all : where('internship_positions.address @> ?', {city: city}.to_json) }
+  scope :applying_by, -> (via) { where('applying @> ?', Applying.by(via)) }
+  scope :housing, -> (housing) { where('housing @> ?', Housing.provided(housing)) }
+  scope :by_city, -> (city) { where('internship_positions.address @> ?', { city: city }.to_json) }
   # scope :by_city,     -> (city) do
   #   main_city  = { city: city }.to_json
   #   other_city = [ { address: { city: city } } ].to_json
   #   where('((address @> ?) OR (positions @> ?))', main_city, other_city)
   # end
-  # scope :by_pos_city, -> (city = nil)    { city.blank? ? all : where('positions @> ?', [{address:{city: city}}].to_json) } # positions @> '[{"address":{"city": "Magdeburg"}}]'
+  # scope :by_pos_city, -> (city = nil)    { city.blank? ? all : where('positions @> ?',
+  # [{address:{city: city}}].to_json) } # positions @> '[{"address":{"city": "Magdeburg"}}]'
 
   # where('positions ? :education_subject_id', education_subject_id: '2').count
   # where('positions ?& array[:keys]', keys: ['2']).count
 
   # where("applying ->>'documents' ILIKE '%leben%'" ).count
-
-  def self.work_areas
-    ['Kindertagesstätten', 'Hort', 'Heim', 'Tagesgruppe', 'offene Kinder- und Jugendarbeit', 'Psychiatrie', 'Schule']
-  end
 
   rails_admin do
     # parent Organisation
@@ -46,7 +37,7 @@ class InternshipPosition < ActiveRecord::Base
     configure(:applying_by_phone,  :boolean) { group :applying }
     configure(:applying_documents)           { group :applying }
 
-    configure(:work_area, :enum) { enum { InternshipPosition.work_areas } }
+    configure(:work_area, :enum) { enum { Enum.work_areas } }
 
     list do
       sort_by :organisation
@@ -64,14 +55,11 @@ class InternshipPosition < ActiveRecord::Base
       fields :applying_by_mail, :applying_by_email, :applying_by_phone, :applying_documents
     end
     edit do
-      fields :name, :organisation, :description
+      fields :name, :organisation, :description, :work_area
       fields :street, :zip, :city
       fields :person, :email, :mobile, :phone, :fax, :homepage
       fields :housing_provided, :housing_costs
       fields :applying_by_mail, :applying_by_email, :applying_by_phone, :applying_documents
     end
-
-
   end
-
 end
