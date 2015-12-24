@@ -92,9 +92,9 @@ class Person < ActiveRecord::Base
     end
   end
 
-  private
-
-  def student_has_no_other_roles
-    errors.add :base, I18n.t(:student_cant_have_other_roles) if student? && roles.count > 0
-  end
+  # private
+  #
+  # def student_has_no_other_roles
+  #   errors.add :base, I18n.t(:student_cant_have_other_roles) if student? && roles.count > 0
+  # end
 end

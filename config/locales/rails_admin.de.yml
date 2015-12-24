@@ -147,6 +147,7 @@ de:
       person:
         _all: Alle
         admins: Admins
+        candidates: Bewerber
         managers: Manager
         mentors: Praxisanleiter
         students: Auszubildende

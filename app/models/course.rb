@@ -28,6 +28,10 @@ class Course < ActiveRecord::Base
     name.downcase.tr(' ', '_').to_sym
   end
 
+  def add_student!(student)
+    course_memberships.find_or_create_by! student: student
+  end
+
   rails_admin do
     weight(-2)
 

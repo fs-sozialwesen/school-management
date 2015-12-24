@@ -5,6 +5,18 @@ class Organisation < ActiveRecord::Base
     has_many :teachers, class_name: 'Role::Teacher', inverse_of: :school, foreign_key: :organisation_id
     has_many :education_subjects, inverse_of: :school
 
+    def add_manager!(person)
+      person.create_as_manager! organisation: self
+    end
+
+    def add_teacher!(person)
+      person.create_as_teacher! organisation: self
+    end
+
+    def add_student!(person)
+      person.create_as_student! organisation: self
+    end
+
     rails_admin do
 
       Address. attribute_set.each { |attr| configure(attr.name) { group :address } }

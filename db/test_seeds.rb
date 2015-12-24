@@ -39,49 +39,39 @@ school2 = Organisation::School.create!(
   contact: { email: 'edu@edu.edu' }
 )
 
-EducationSubject.create!(school: school1, name: 'Gardening',  short_name: 'GA')
-EducationSubject.create!(school: school2, name: 'Plumbing',   short_name: 'PL')
-EducationSubject.create!(school: school2, name: 'Touristing', short_name: 'TO')
+ga = school1.education_subjects.create!(name: 'Gardening',  short_name: 'GA')
+pl = school2.education_subjects.create!(name: 'Plumbing',   short_name: 'PL')
+to = school2.education_subjects.create!(name: 'Touristing', short_name: 'TO')
 
 # John is manager and teacher on School1
-john = { first_name: 'John', last_name: 'Maker', contact: { email: 'john@bak.er' } }
-Person.create!(john) do |person|
-  person.create_as_manager! organisation: school1
-  person.create_as_teacher! organisation: school1
-  person.generate_login!((person.first_name + person.last_name).downcase)
-end
+john = Person.create!(first_name: 'John', last_name: 'Maker', contact: { email: 'john@bak.er' })
+john.generate_login! 'johnmaker'
+school1.add_manager! john
+school1.add_teacher! john
 
 # Sofia is manager on School1
-sofia = { first_name: 'Sofia', last_name: 'Gentle', contact: { email: 'sofia@gent.le' } }
-Person.create!(sofia) do |person|
-  person.create_as_manager! organisation: school1
-  person.generate_login!((person.first_name + person.last_name).downcase)
-end
+{ first_name: 'Sofia', last_name: 'Gentle', contact: { email: 'sofia@gent.le' } }
+sofia = Person.create!(first_name: 'Sofia', last_name: 'Gentle', contact: { email: 'sofia@gent.le' })
+sofia.generate_login! 'sofiagentle'
+school1.add_manager! sofia
 
-# # Fred is teacher on School1
-# fred = { first_name: 'Fred', last_name: 'Mecky', contact: {email: 'meck@mail.com'} }
-# Person.create!(fred) do |person|
-#   person.create_as_teacher! organisation: school1
-#   person.generate_login! (person.first_name + person.last_name).downcase
-# end
-
-[
-  { first_name: 'Maria', last_name: 'Silver', contact: { email: 'm@silver.com' } },
-  { first_name: 'Jack',  last_name: 'Gold',   contact: { email: 'j@gold.com' } },
+# Other teachers
+teachers = [
+  { first_name: 'Maria', last_name: 'Silver', contact: { email: 'm@silver.com'    } },
+  { first_name: 'Jack',  last_name: 'Gold',   contact: { email: 'j@gold.com'      } },
   { first_name: 'Tom',   last_name: 'Meyers', contact: { email: 'meyers@mail.com' } }
-].map do |teach|
-  Person.create!(teach) do |person|
-    teacher           = person.create_as_teacher! organisation: [school1, school2].sample
-    start_date        = [1, 2, 3].sample.year.ago
-    education_subject = teacher.organisation.education_subjects.last
-    [1, 2, 3].sample.times do
-      Course.create!(
-        name:              [education_subject.short_name, start_date.year].join(' '),
-        education_subject: education_subject,
-        teacher:           teacher,
-        start_date:        start_date,
-        end_date:          start_date + [2, 3].sample.years
-      )
-    end
+]
+teachers = Person.create! teachers
+teachers.each do |person|
+  education_subject = [ga, pl, to].sample
+  teacher           = education_subject.school.add_teacher! person
+  [1, 2, 3].sample.times do
+    start_date = [1, 2].sample.year.ago
+    education_subject.courses.create!(
+      name:       [education_subject.short_name, start_date.year].join(' '),
+      teacher:    teacher,
+      start_date: start_date,
+      end_date:   start_date + [2, 3, 4].sample.years
+    )
   end
 end

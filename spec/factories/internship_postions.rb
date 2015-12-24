@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :internship_position do
-    name { |n| "Institution #{[]}" }
+    name { |n| "Institution #{n}" }
     organisation
     # work_area 'MyString'
     # description 'MyText'

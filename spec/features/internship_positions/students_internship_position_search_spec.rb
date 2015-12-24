@@ -9,56 +9,25 @@ feature 'Internship positions search', :devise do
   #   When I go to the internship positions list
   #   Then I see a list of all i p having the same education subject I have
   scenario 'student sees all internship positions of his education subject' do
-    education_subject       = EducationSubject.last
-    other_education_subject = EducationSubject.first
+    education_subject = EducationSubject
+      .joins(:courses)
+      .group('education_subjects.id')
+      .having('count(courses.id) > 0')
+      .first
+    other_education_subject = EducationSubject.where.not(id: education_subject.id).first
+
     expect(education_subject.courses.count).to be > 0
-    course  = education_subject.courses.first
-    user = FactoryGirl.create(:person)
-    student = user.create_as_student!(courses: [course])
-    student.course_memberships.last.update(active: true)
+    course  = education_subject.courses.active.first
+    person  = FactoryGirl.create(:person)
+    student = education_subject.school.add_student! person
+    course.add_student! student
 
-    ip1 = FactoryGirl.create(:internship_position, name: 'Institution1', education_subject: education_subject)
-    ip2 = FactoryGirl.create(:internship_position, name: 'Institution2', education_subject: other_education_subject)
+    ip1 = FactoryGirl.create(:internship_position, education_subject: education_subject)
+    ip2 = FactoryGirl.create(:internship_position, education_subject: other_education_subject)
 
-    login = student.person.login
-    # login.confirm
-    # login.save
-    signin(login.email, '12341234')
+    signin(person.login.email, '12341234')
     visit internship_positions_path
-    expect(page).to have_content ip1.name
+    expect(page).to     have_content ip1.name
+    expect(page).not_to have_content ip2.name
   end
-
-  # # Scenario: User can sign in with valid credentials
-  # #   Given I exist as a user
-  # #   And I am not signed in
-  # #   When I sign in with valid credentials
-  # #   Then I see a success message
-  # scenario 'user can sign in with valid credentials' do
-  #   login = FactoryGirl.create(:login)
-  #   signin(login.email, login.password)
-  #   expect(page).to have_content I18n.t 'devise.sessions.signed_in'
-  # end
-  #
-  # # Scenario: User cannot sign in with wrong email
-  # #   Given I exist as a user
-  # #   And I am not signed in
-  # #   When I sign in with a wrong email
-  # #   Then I see an invalid email message
-  # scenario 'user cannot sign in with wrong email' do
-  #   login = FactoryGirl.create(:login)
-  #   signin('invalid@email.com', login.password)
-  #   expect(page).to have_content I18n.t 'devise.failure.not_found_in_database', authentication_keys: 'email'
-  # end
-  #
-  # # Scenario: User cannot sign in with wrong password
-  # #   Given I exist as a user
-  # #   And I am not signed in
-  # #   When I sign in with a wrong password
-  # #   Then I see an invalid password message
-  # scenario 'user cannot sign in with wrong password' do
-  #   login = FactoryGirl.create(:login)
-  #   signin(login.email, 'invalidpass')
-  #   expect(page).to have_content I18n.t 'devise.failure.invalid', authentication_keys: 'email'
-  # end
-
 end

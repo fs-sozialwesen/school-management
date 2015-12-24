@@ -20,12 +20,19 @@ class Role < ActiveRecord::Base
         I18n.backend.store_translations :de, admin:
           { scopes: { 'role~student' => { course_sym => course_name } } }
 
-        Role::Student.scope course_sym,
-                            lambda do
-                              Role::Student.includes(:course_memberships, :courses)
-                                .where(course_memberships: { active: true })
-                                .where(courses: { name: course_name })
-                            end
+        # Role::Student.scope course_sym,
+        #                     lambda do
+        #                       Role::Student.includes(:course_memberships, :courses)
+        #                         .where(course_memberships: { active: true })
+        #                         .where(courses: { name: course_name })
+        # end
+
+
+        Role::Student.scope course_sym, -> do
+          Role::Student.includes(:course_memberships, :courses).
+            where(course_memberships: {active: true}).
+            where(courses: {name: course_name})
+        end
       end
 
       configure :person do

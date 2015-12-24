@@ -75,4 +75,6 @@ group :test do
   gem 'database_cleaner'
   gem 'launchy'
   gem 'selenium-webdriver'
+  # gem "codeclimate-test-reporter", require: nil
+  gem 'simplecov', require: false
 end
