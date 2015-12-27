@@ -13,6 +13,7 @@ gem 'rails_admin'
 gem 'paper_trail', '~> 3.0'
 gem 'virtus'
 gem 'aasm'
+gem 'acts-as-taggable-on', '~> 3.4'
 
 group :development, :test do
   gem 'byebug'
