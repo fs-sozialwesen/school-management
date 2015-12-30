@@ -1,4 +1,4 @@
-class Role::CandidatePolicy < ApplicationPolicy
+class CandidatePolicy < ApplicationPolicy
 
   def index?
     user.manager?

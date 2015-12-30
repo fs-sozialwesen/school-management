@@ -1,12 +1,12 @@
 .search-form
   /h3 Suche
-  form action=role_candidates_url
+  form action=candidates_url
     .form-group
       select.form-control name="year"
         option selected=(@year.blank?) value='' Jahr
         - @years.each do |year|
           option selected=(year == @year) value=year = year
-    .form-group
+    /.form-group
       select.form-control name="education_subject"
         option selected=(@education_subject.blank?) value='' Fachrichtung
         - @education_subjects.each do |education_subject|
@@ -17,5 +17,5 @@
         - @statuses.each do |status|
           option selected=(status.name.to_s == @status) value=status.name = status.human_name
     .form-group
-      => link_to 'Alle', role_candidates_path, class: 'btn btn-info'
+      => link_to 'Alle', candidates_path, class: 'btn btn-info'
       input.btn.btn-primary type="submit" value="Suchen"

@@ -12,9 +12,13 @@
         - @candidate.errors.full_messages.each do |msg|
           li= msg
   .row
+    = f.simple_fields_for :person do |p|
+      .col-md-4 = p.input :first_name, required: true
+      .col-md-4 = p.input :last_name, required: true
+  .row
     .col-md-9
       ul.nav.nav-tabs@tablist style="margin-bottom: 20px;"
-        li@presentation.active: a@tab data-toggle="tab" href="#general"    Allgemein
+        li@presentation.active: a@tab data-toggle="tab" href="#general"    Bewerbung
         li@presentation:        a@tab data-toggle="tab" href="#person"     Personendaten
         li@presentation:        a@tab data-toggle="tab" href="#education"  Ausbildung
         li@presentation:        a@tab data-toggle="tab" href="#contracts"  Verträge

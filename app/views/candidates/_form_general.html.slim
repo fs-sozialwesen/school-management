@@ -5,7 +5,7 @@
     - education_subjects = EducationSubject.pluck(:name).sort
     /= options.input :education_subject, collection: education_subjects, wrapper_html: {class: 'col-md-4'}
 
-    = options.input :education_subject,
+    /= options.input :education_subject,
       collection: education_subjects,
       wrapper_html: { class: 'col-md-4' },
       input_html:   { class: 'select2', multiple: true, data: {tags: true} }
