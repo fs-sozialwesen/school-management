@@ -5,10 +5,10 @@ class Organisation < ActiveRecord::Base
 
   belongs_to :carrier, class_name: 'Organisation'
 
-  has_many :contracts_as_first_party,  as: :first_party,  class_name: 'Contract'
-  has_many :contracts_as_second_party, as: :second_party, class_name: 'Contract'
+  # has_many :contracts_as_first_party,  as: :first_party,  class_name: 'Contract'
+  # has_many :contracts_as_second_party, as: :second_party, class_name: 'Contract'
 
-  has_many :roles
+  # has_many :roles
 
   has_many :internship_positions, inverse_of: :organisation
 
@@ -24,7 +24,6 @@ class Organisation < ActiveRecord::Base
     Contact. attribute_set.each { |attr| configure(attr.name) { group :contact } }
 
     list do
-      field(:type) { pretty_value { bindings[:object].class.model_name.human } }
       field :name, :self_link
       fields :city, :carrier
     end

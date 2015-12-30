@@ -140,6 +140,7 @@ de:
       enum:
         school_graduate: Schulabschlüsse
         profession_graduate: Berufsausbildungen
+        work_area: Arbeitsfeld
       time_block:
         _all: Alle
         active: Aktuell

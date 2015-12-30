@@ -6,7 +6,7 @@
         option selected=(@city.blank?) value='' Ort
         - @cities.each do |city|
           option selected=(city == @city) value=city = city
-    - if current_user.manager?
+    /- if current_user.manager?
       .form-group
         select.form-control name="education_subject_id"
           option selected=(@education_subject_id.blank?) value='' Fachrichtung

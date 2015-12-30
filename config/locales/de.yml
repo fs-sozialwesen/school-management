@@ -4,16 +4,15 @@ de:
   female: weiblich
   internship: Praktikum
   male: männlich
-  role:
-    candidates:
-      create:
-        success: Bewerber(in) gespeichert.
-      update:
-        success: Bewerber(in) gespeichert.
-      destroy:
-        success: Bewerber(in) gelöscht.
-      form:
-        error: Bewerber konnte nicht gespeichert werden.
+  candidates:
+    create:
+      success: Bewerber(in) gespeichert.
+    update:
+      success: Bewerber(in) gespeichert.
+    destroy:
+      success: Bewerber(in) gelöscht.
+    form:
+      error: Bewerber konnte nicht gespeichert werden.
   room_plan: Raumplan
   teacher: LehrerIn
   timetable: Stundenplan
@@ -32,7 +31,7 @@ de:
 
   simple_form:
     labels:
-      role_candidate:
+      candidate:
         options:
           date: Eingangsdatum
           education_subject: Fachrichtung
@@ -63,7 +62,7 @@ de:
         username: 'User name to sign in.'
         password: 'No special characters, please.'
     placeholders:
-      role_candidate:
+      candidate:
         options:
           education_graduate:
             name: Arbeitgeber / Institution
@@ -75,8 +74,8 @@ de:
             graduate: Abschluss
 
     include_blanks:
-      role_candidate:
+      candidate:
         year: 'Rather not say'
     prompts:
-      role_candidate:
+      candidate:
         year: 'Select your gender'

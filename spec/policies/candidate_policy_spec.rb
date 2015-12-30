@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe PersonPolicy do
+describe CandidatePolicy do
 
   let(:user) { User.new }
 

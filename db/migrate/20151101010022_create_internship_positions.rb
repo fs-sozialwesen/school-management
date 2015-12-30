@@ -2,8 +2,7 @@ class CreateInternshipPositions < ActiveRecord::Migration
   def change
     create_table :internship_positions do |t|
       t.string :name
-      t.references :organisation,      index: true, foreign_key: true
-      t.references :education_subject, index: true, foreign_key: true
+      t.references :organisation, index: true, foreign_key: true
 
       t.text :description
       t.string :work_area

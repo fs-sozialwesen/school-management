@@ -1,14 +1,13 @@
-class Role::Candidate < Role
+class Candidate < ActiveRecord::Base
+  belongs_to :person, validate: true, inverse_of: :as_candidate
 
   serialize :options, CandidateOptions
   delegate *CandidateOptions.attribute_set.map(&:name), to: :options
   delegate :acceptable?, to: :options
-  # delegate :education_subject, :year, to: :options
-  # delegate :education_subject=, :year=, :add_attachment, to: :options
-  # delegate :school_graduate,  :profession_graduate,  :education_graduate,  to: :options
-  # delegate :school_graduate=, :profession_graduate=, :education_graduate=, to: :options
 
   accepts_nested_attributes_for :person
+
+  # acts_as_taggable_on :status
 
   include AASM
 

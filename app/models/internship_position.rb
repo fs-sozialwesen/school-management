@@ -1,7 +1,7 @@
 # class InternshipPosition
 class InternshipPosition < ActiveRecord::Base
   belongs_to :organisation, inverse_of: :internship_positions
-  belongs_to :education_subject, required: true
+  # belongs_to :education_subject, required: true
 
   acts_as_addressable
   acts_as_contactable
@@ -42,7 +42,7 @@ class InternshipPosition < ActiveRecord::Base
     list do
       sort_by :organisation
 
-      fields :work_area, :education_subject
+      field :work_area#, :education_subject
       field :name, :self_link
       fields :organisation, :city, :positions_count
       field :housing_provided

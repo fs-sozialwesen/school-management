@@ -1,5 +1,5 @@
 class CourseMembership < ActiveRecord::Base
-  belongs_to :student, required: true, class_name: 'Role::Student'
+  belongs_to :student, required: true
   belongs_to :course, required: true
 
   before_create :set_defaults

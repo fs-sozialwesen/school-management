@@ -10,7 +10,7 @@ class InternshipPositionsController < ApplicationController
     @internship_positions = filter(internship_positions)
     @cities               = @internship_positions.all.map { |ip| ip.address.city }.compact.uniq.sort
     @work_areas           = Enum.work_areas
-    @education_subjects   = EducationSubject.all
+    # @education_subjects   = EducationSubject.all
   end
 
   def show
@@ -21,9 +21,10 @@ class InternshipPositionsController < ApplicationController
   private
 
   def process_filter_params
-    filter_params = %i(education_subject_id city housing applying_by work_area)
+    # filter_params = %i(education_subject_id city housing applying_by work_area)
+    filter_params = %i(city housing applying_by work_area)
     filter_params.each { |filter| params.delete filter } if params[:submit] == 'clear'
-    @education_subject_id = params[:education_subject_id]
+    # @education_subject_id = params[:education_subject_id]
     @city                 = params[:city]
     @work_area            = params[:work_area]
   end
@@ -44,7 +45,7 @@ class InternshipPositionsController < ApplicationController
 
   def filter(ips)
     ips = ips.by_city(@city)                                     if @city.present?
-    ips = ips.where(education_subject_id: @education_subject_id) if @education_subject_id.present?
+    # ips = ips.where(education_subject_id: @education_subject_id) if @education_subject_id.present?
     ips = ips.where(work_area: @work_area)                       if @work_area.present?
     ips = ips.housing(housing)                                   if housing.present?
     ips = ips.applying_by(applying_by)                           if applying_by.present?

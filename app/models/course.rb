@@ -1,14 +1,14 @@
 # class Course
 class Course < ActiveRecord::Base
-  belongs_to :teacher, required: true, class_name: 'Role::Teacher'
-  belongs_to :education_subject, required: true, inverse_of: :courses
+  belongs_to :teacher, required: true, inverse_of: :courses
+  # belongs_to :education_subject, required: true, inverse_of: :courses
 
   # has_one :leadership
   # has_one :course_teacher, through: :leadership
 
   has_many :course_memberships
   has_many :active_course_memberships, -> { where active: true }, class_name: 'CourseMembership'
-  has_many :students, through: :active_course_memberships
+  has_many :students, inverse_of: :course #, through: :active_course_memberships
   # has_many :lessons, inverse_of: :course
 
   has_paper_trail
@@ -30,6 +30,7 @@ class Course < ActiveRecord::Base
 
   def add_student!(student)
     course_memberships.find_or_create_by! student: student
+    student.course = self
   end
 
   rails_admin do
@@ -38,7 +39,7 @@ class Course < ActiveRecord::Base
     configure :students do
       pretty_value do
         course      = bindings[:object]
-        url_options = { model_name: 'role~student', scope: course.underscore_name }
+        url_options = { model_name: 'student', scope: course.underscore_name }
         url         = bindings[:view].rails_admin.index_path url_options
         bindings[:view].link_to "#{course.students.count} #{I18n.t('attributes.students')}", url
       end
@@ -50,21 +51,24 @@ class Course < ActiveRecord::Base
 
     list do
       scopes [:active, :inactive, nil]
-      sort_by :education_subject
+      # sort_by :education_subject
 
       field :name, :self_link
-      fields :education_subject, :teacher, :students
+      # fields :education_subject, :teacher, :students
+      fields :teacher, :students
       field(:start_date) { formatted_value { "#{value.month}/#{value.year}" } }
       field(:end_date) { formatted_value { "#{value.month}/#{value.year}" } }
     end
 
     show do
-      fields :name, :education_subject, :teacher, :start_date, :end_date
+      # fields :name, :education_subject, :teacher, :start_date, :end_date
+      fields :name, :teacher, :start_date, :end_date
       field :students
     end
 
     edit do
-      fields :name, :education_subject, :teacher, :start_date, :end_date
+      # fields :name, :education_subject, :teacher, :start_date, :end_date
+      fields :name, :teacher, :start_date, :end_date
       field :students
     end
   end

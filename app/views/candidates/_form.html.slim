@@ -45,6 +45,11 @@ coffee:
         language: "de"
         endDate: '0d'
 
+    $('select.select2').each (i, input) ->
+      $input = $(input)
+      $input.select2
+        theme: "bootstrap"
+
 sass:
   .datepicker
     z-index: 1151 !important

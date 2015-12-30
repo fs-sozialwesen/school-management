@@ -21,7 +21,8 @@ module Importer
     import_students
     import_carriers
     import_internship_positions
-    generate_student_logins
+    set_work_area_on_internship_positions
+    # generate_student_logins
   end
 
   def self.encrypt_string(string)
@@ -40,125 +41,126 @@ module Importer
     string.gsub(/&\w+;/, '&quot;' => '"', '&amp;' => '&') if string.present?
   end
 
-  def self.import_schools
-    puts 'import schools'
+  # def self.import_schools
+  #   puts 'import schools'
+  #
+  #   LegacyDatum.where(old_table: 'schulen').order(:old_id).all.each do |legacy_datum|
+  #     data                     = legacy_datum.data
+  #     carrier_id               = data['carrier_id'].to_i
+  #     common_options           = data.slice('id', 'name')
+  #     common_options[:contact] = data.slice('phone', 'fax', 'email')
+  #     common_options[:address] = data.slice('street', 'zip', 'city')
+  #     if carrier_id > 0
+  #       common_options[:carrier] = Organisation.find(carrier_id)
+  #       Organisation::School.create!(common_options)
+  #     else
+  #       Organisation.create!(common_options)
+  #     end
+  #
+  #     ActiveRecord::Base.connection.reset_pk_sequence!(Organisation.table_name)
+  #   end
+  # end
 
-    LegacyDatum.where(old_table: 'schulen').order(:old_id).all.each do |legacy_datum|
-      data                     = legacy_datum.data
-      carrier_id               = data['carrier_id'].to_i
-      common_options           = data.slice('id', 'name')
-      common_options[:contact] = data.slice('phone', 'fax', 'email')
-      common_options[:address] = data.slice('street', 'zip', 'city')
-      if carrier_id > 0
-        common_options[:carrier] = Organisation.find(carrier_id)
-        Organisation::School.create!(common_options)
-      else
-        Organisation.create!(common_options)
-      end
+  # def self.import_managers
+  #   puts 'import managers'
+  #
+  #   fs = Organisation.find 2
+  #
+  #   LegacyDatum.where(old_table: 'mitarbeiter').all.each do |legacy_datum|
+  #     data = legacy_datum.data
+  #
+  #     manager               = Person.new
+  #     manager.first_name    = data['vorname']
+  #     manager.last_name     = data['nachname']
+  #     manager.contact.email = data['email']
+  #     manager.build_as_manager organisation: fs
+  #     manager.save!
+  #
+  #     manager.generate_login! (data['vorname'] + data['nachname']).downcase
+  #
+  #     ActiveRecord::Base.connection.reset_pk_sequence!(Person.table_name)
+  #   end
+  #
+  # end
 
-      ActiveRecord::Base.connection.reset_pk_sequence!(Organisation.table_name)
-    end
-  end
+  # def self.import_education_subjects
+  #   puts 'import education_subjects'
+  #   LegacyDatum.where(old_table: 'ausbildungsart').all.each do |legacy_datum|
+  #     data = legacy_datum.data
+  #
+  #     education_subject            = EducationSubject.new
+  #     education_subject.id         = data['id']
+  #     education_subject.school_id  = data['school_id']
+  #     education_subject.name       = data['name']
+  #     education_subject.short_name = data['shortname']
+  #
+  #     education_subject.save!
+  #   end
+  #
+  #   ActiveRecord::Base.connection.reset_pk_sequence!(EducationSubject.table_name)
+  #
+  # end
 
-  def self.import_managers
-    puts 'import managers'
+  # def self.import_teachers
+  #   puts 'import teachers'
+  #
+  #   # fs = Organisation.find 2
+  #   LegacyDatum.where(old_table: 'lehrer').all.each do |legacy_datum|
+  #     data = legacy_datum.data
+  #
+  #     if data['nachname'].in? %w(Quaas Hinne)
+  #       teacher = Person.find_by first_name: data['vorname'], last_name: data['nachname']
+  #       teacher.build_as_teacher id: data['id'].to_i + 1000
+  #       teacher.save!
+  #     else
+  #       teacher               = Person.new
+  #       teacher.first_name    = data['vorname']
+  #       teacher.last_name     = data['nachname']
+  #       teacher.gender        = data['geschlecht'].to_i == 1 ? 'f' : 'm'
+  #       teacher.contact.email = encrypt_email(data['email'])
+  #       teacher.build_as_teacher id: data['id'].to_i + 1000
+  #       teacher.save!
+  #     end
+  #
+  #   end
+  #
+  #   ActiveRecord::Base.connection.reset_pk_sequence!(Person.table_name)
+  #   ActiveRecord::Base.connection.reset_pk_sequence!(Role.table_name)
+  # end
 
-    fs = Organisation.find 2
-
-    LegacyDatum.where(old_table: 'mitarbeiter').all.each do |legacy_datum|
-      data = legacy_datum.data
-
-      manager               = Person.new
-      manager.first_name    = data['vorname']
-      manager.last_name     = data['nachname']
-      manager.contact.email = data['email']
-      manager.build_as_manager organisation: fs
-      manager.save!
-
-      manager.generate_login! (data['vorname'] + data['nachname']).downcase
-
-      ActiveRecord::Base.connection.reset_pk_sequence!(Person.table_name)
-    end
-
-  end
-
-  def self.import_education_subjects
-    puts 'import education_subjects'
-    LegacyDatum.where(old_table: 'ausbildungsart').all.each do |legacy_datum|
-      data = legacy_datum.data
-
-      education_subject            = EducationSubject.new
-      education_subject.id         = data['id']
-      education_subject.school_id  = data['school_id']
-      education_subject.name       = data['name']
-      education_subject.short_name = data['shortname']
-
-      education_subject.save!
-    end
-
-    ActiveRecord::Base.connection.reset_pk_sequence!(EducationSubject.table_name)
-
-  end
-
-  def self.import_teachers
-    puts 'import teachers'
-
-    # fs = Organisation.find 2
-    LegacyDatum.where(old_table: 'lehrer').all.each do |legacy_datum|
-      data = legacy_datum.data
-
-      if data['nachname'].in? %w(Quaas Hinne)
-        teacher = Person.find_by first_name: data['vorname'], last_name: data['nachname']
-        teacher.build_as_teacher id: data['id'].to_i + 1000
-        teacher.save!
-      else
-        teacher               = Person.new
-        teacher.first_name    = data['vorname']
-        teacher.last_name     = data['nachname']
-        teacher.gender        = data['geschlecht'].to_i == 1 ? 'f' : 'm'
-        teacher.contact.email = encrypt_email(data['email'])
-        teacher.build_as_teacher id: data['id'].to_i + 1000
-        teacher.save!
-      end
-
-    end
-
-    ActiveRecord::Base.connection.reset_pk_sequence!(Person.table_name)
-    ActiveRecord::Base.connection.reset_pk_sequence!(Role.table_name)
-  end
-
-  def self.import_courses
-    puts 'import courses'
-    LegacyDatum.where(old_table: 'klassen').all.each do |legacy_datum|
-      data = legacy_datum.data
-      # lehrer = LegacyDatum.find_by(old_table: 'lehrer', old_id: data['lehrer_id'])
-      # puts lehrer.data
-      # teacher = Role::Teacher.
-      #   joins(:person).
-      #   where(people: {first_name: lehrer.data['vorname'], last_name: lehrer.data['nachname']}).
-      #   last
-      teacher = Role::Teacher.where(id: data['lehrer_id'].to_i + 1000).last
-      # puts data, lehrer.data unless teacher
-      course                      = Course.new
-      course.id                   = data['id']
-      course.education_subject_id = data['ausbildungsart_id']
-      course.name                 = data['name']
-      course.teacher              = teacher
-      course.start_date           = data['start_date']
-      course.end_date             = data['end_date']
-      course.save!
-
-      course.reload
-      teacher.update organisation: course.education_subject.school
-    end
-
-    ActiveRecord::Base.connection.reset_pk_sequence!(Course.table_name)
-  end
+  # def self.import_courses
+  #   puts 'import courses'
+  #   LegacyDatum.where(old_table: 'klassen').all.each do |legacy_datum|
+  #     data = legacy_datum.data
+  #     # lehrer = LegacyDatum.find_by(old_table: 'lehrer', old_id: data['lehrer_id'])
+  #     # puts lehrer.data
+  #     # teacher = Role::Teacher.
+  #     #   joins(:person).
+  #     #   where(people: {first_name: lehrer.data['vorname'], last_name: lehrer.data['nachname']}).
+  #     #   last
+  #     teacher = Role::Teacher.where(id: data['lehrer_id'].to_i + 1000).last
+  #     # puts data, lehrer.data unless teacher
+  #     course                      = Course.new
+  #     course.id                   = data['id']
+  #     course.education_subject_id = data['ausbildungsart_id']
+  #     course.name                 = data['name']
+  #     course.teacher              = teacher
+  #     course.start_date           = data['start_date']
+  #     course.end_date             = data['end_date']
+  #     course.save!
+  #
+  #     course.reload
+  #     teacher.update organisation: course.education_subject.school
+  #   end
+  #
+  #   ActiveRecord::Base.connection.reset_pk_sequence!(Course.table_name)
+  # end
 
   def self.import_students
     puts 'import students'
     LegacyDatum.where(old_table: 'azubi').all.each do |legacy_datum|
       data = legacy_datum.data
+      next unless data['ausbildungsart_id'].to_i == 3
       begin
         course = Course.where(id: data['klasse']).first
         unless course
@@ -179,8 +181,9 @@ module Importer
         person.address.city   = data['ort']
 
         person.build_as_student(
-          organisation: course.education_subject.school,
-          courses: [course]
+          # organisation: course.education_subject.school,
+          # courses: [course]
+          course: course
         )
         person.save!
 
@@ -265,8 +268,9 @@ module Importer
         carrier_internship_positions.each do |name, internship_positions|
 
           internship_positions.group_by { |i| i['art'].to_i }.each do |education_subject_id, edu_ips|
+            next unless education_subject_id == 3
             ip                      = carrier.internship_positions.build
-            ip.education_subject_id = education_subject_id
+            # ip.education_subject_id = education_subject_id
             ip.name                 = unquote name
             ip.positions_count      = edu_ips.size
             ip.description          = unquote first_present(edu_ips, 'kurzbeschreibung')

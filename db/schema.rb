@@ -11,30 +11,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151206211714) do
+ActiveRecord::Schema.define(version: 20151206194721) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "contracts", force: :cascade do |t|
-    t.string   "type"
-    t.integer  "role_id"
-    t.integer  "first_party_id"
-    t.string   "first_party_type"
-    t.integer  "second_party_id"
-    t.string   "second_party_type"
-    t.date     "start_date"
-    t.date     "end_date"
-    t.text     "text"
-    t.text     "comments"
-    t.string   "state"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+  create_table "admins", force: :cascade do |t|
+    t.integer  "person_id"
+    t.boolean  "active",     default: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
   end
 
-  add_index "contracts", ["first_party_type", "first_party_id"], name: "index_contracts_on_first_party_type_and_first_party_id", using: :btree
-  add_index "contracts", ["role_id"], name: "index_contracts_on_role_id", using: :btree
-  add_index "contracts", ["second_party_type", "second_party_id"], name: "index_contracts_on_second_party_type_and_second_party_id", using: :btree
+  add_index "admins", ["person_id"], name: "index_admins_on_person_id", using: :btree
+
+  create_table "candidates", force: :cascade do |t|
+    t.integer  "person_id"
+    t.boolean  "active"
+    t.jsonb    "options",    default: {}
+    t.string   "status"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  add_index "candidates", ["person_id"], name: "index_candidates_on_person_id", using: :btree
 
   create_table "course_memberships", force: :cascade do |t|
     t.integer  "student_id"
@@ -50,27 +50,22 @@ ActiveRecord::Schema.define(version: 20151206211714) do
   add_index "course_memberships", ["student_id"], name: "index_course_memberships_on_student_id", using: :btree
 
   create_table "courses", force: :cascade do |t|
-    t.string   "name",                 null: false
-    t.integer  "education_subject_id"
+    t.string   "name",       null: false
     t.integer  "teacher_id"
     t.date     "start_date"
     t.date     "end_date"
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  add_index "courses", ["education_subject_id"], name: "index_courses_on_education_subject_id", using: :btree
   add_index "courses", ["teacher_id"], name: "index_courses_on_teacher_id", using: :btree
 
   create_table "education_subjects", force: :cascade do |t|
-    t.integer  "school_id"
     t.string   "name"
     t.string   "short_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
-
-  add_index "education_subjects", ["school_id"], name: "index_education_subjects_on_school_id", using: :btree
 
   create_table "enums", force: :cascade do |t|
     t.string "name",  null: false
@@ -82,21 +77,19 @@ ActiveRecord::Schema.define(version: 20151206211714) do
   create_table "internship_positions", force: :cascade do |t|
     t.string   "name"
     t.integer  "organisation_id"
-    t.integer  "education_subject_id"
     t.text     "description"
     t.string   "work_area"
     t.date     "start_date"
     t.date     "end_date"
-    t.integer  "positions_count",      default: 1
-    t.jsonb    "address",              default: {}
-    t.jsonb    "contact",              default: {}
-    t.jsonb    "housing",              default: {}
-    t.jsonb    "applying",             default: {}
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
+    t.integer  "positions_count", default: 1
+    t.jsonb    "address",         default: {}
+    t.jsonb    "contact",         default: {}
+    t.jsonb    "housing",         default: {}
+    t.jsonb    "applying",        default: {}
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
   end
 
-  add_index "internship_positions", ["education_subject_id"], name: "index_internship_positions_on_education_subject_id", using: :btree
   add_index "internship_positions", ["organisation_id"], name: "index_internship_positions_on_organisation_id", using: :btree
 
   create_table "legacy_data", force: :cascade do |t|
@@ -132,16 +125,24 @@ ActiveRecord::Schema.define(version: 20151206211714) do
   add_index "logins", ["person_id"], name: "index_logins_on_person_id", using: :btree
   add_index "logins", ["reset_password_token"], name: "index_logins_on_reset_password_token", unique: true, using: :btree
 
+  create_table "managers", force: :cascade do |t|
+    t.integer  "person_id"
+    t.boolean  "active"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "managers", ["person_id"], name: "index_managers_on_person_id", using: :btree
+
   create_table "organisations", force: :cascade do |t|
-    t.string   "type",       default: "Organisation"
-    t.string   "name",                                null: false
+    t.string   "name",                    null: false
     t.string   "kind"
     t.integer  "carrier_id"
     t.text     "comments"
     t.jsonb    "address",    default: {}
     t.jsonb    "contact",    default: {}
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
 
   add_index "organisations", ["carrier_id"], name: "index_organisations_on_carrier_id", using: :btree
@@ -158,19 +159,25 @@ ActiveRecord::Schema.define(version: 20151206211714) do
     t.datetime "updated_at",                  null: false
   end
 
-  create_table "roles", force: :cascade do |t|
-    t.integer  "organisation_id"
+  create_table "students", force: :cascade do |t|
     t.integer  "person_id"
-    t.string   "type"
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
-    t.jsonb    "options",         default: {}
-    t.string   "status"
+    t.integer  "course_id"
+    t.boolean  "active"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  add_index "roles", ["organisation_id"], name: "index_roles_on_organisation_id", using: :btree
-  add_index "roles", ["person_id"], name: "index_roles_on_person_id", using: :btree
-  add_index "roles", ["type"], name: "index_roles_on_type", using: :btree
+  add_index "students", ["course_id"], name: "index_students_on_course_id", using: :btree
+  add_index "students", ["person_id"], name: "index_students_on_person_id", using: :btree
+
+  create_table "teachers", force: :cascade do |t|
+    t.integer  "person_id"
+    t.boolean  "active"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "teachers", ["person_id"], name: "index_teachers_on_person_id", using: :btree
 
   create_table "versions", force: :cascade do |t|
     t.string   "item_type",      null: false
@@ -184,12 +191,14 @@ ActiveRecord::Schema.define(version: 20151206211714) do
 
   add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
 
-  add_foreign_key "contracts", "roles"
+  add_foreign_key "admins", "people"
+  add_foreign_key "candidates", "people"
   add_foreign_key "course_memberships", "courses"
-  add_foreign_key "courses", "education_subjects"
-  add_foreign_key "internship_positions", "education_subjects"
+  add_foreign_key "courses", "teachers"
   add_foreign_key "internship_positions", "organisations"
   add_foreign_key "logins", "people"
-  add_foreign_key "roles", "organisations"
-  add_foreign_key "roles", "people"
+  add_foreign_key "managers", "people"
+  add_foreign_key "students", "courses"
+  add_foreign_key "students", "people"
+  add_foreign_key "teachers", "people"
 end

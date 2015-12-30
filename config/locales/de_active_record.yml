@@ -64,27 +64,24 @@ de:
       organisation:
         one: Organisation
         other: Organisationen
-      organisation/school:
-        one: Schule
-        other: Schulen
       person:
         one: Person
         other: Personenverzeichnis
       role:
         one: Rolle
         other: Rollen
-      role/admin:
+      admin:
         one: Administrator
         other: Administratoren
-      role/candidate:
+      candidate:
         one: Bewerber(in)
         other: Bewerber
-      role/manager: Manager
-      role/mentor: Praxisanleiter
-      role/student:
+      manager: Manager
+      mentor: Praxisanleiter
+      student:
         one:    Auszubildende(r)
         other:  Auszubildende
-      role/teacher:  Lehrer
+      teacher:  Lehrer
       room:
         one: Raum
         other: Räume
