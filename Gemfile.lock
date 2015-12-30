@@ -207,9 +207,10 @@ GEM
       nenv (~> 0.1)
       shellany (~> 0.0)
     orm_adapter (0.5.0)
-    paper_trail (3.0.8)
-      activerecord (>= 3.0, < 5.0)
-      activesupport (>= 3.0, < 5.0)
+    paper_trail (4.0.1)
+      activerecord (>= 3.0, < 6.0)
+      activesupport (>= 3.0, < 6.0)
+      request_store (~> 1.1)
     parser (2.2.2.6)
       ast (>= 1.1, < 3.0)
     pg (0.18.2)
@@ -284,6 +285,7 @@ GEM
     rb-inotify (0.9.5)
       ffi (>= 0.5.0)
     remotipart (1.2.1)
+    request_store (1.2.1)
     responders (2.1.0)
       railties (>= 4.2.0, < 5)
     rspec (3.3.0)
@@ -417,7 +419,7 @@ DEPENDENCIES
   jquery-rails
   launchy
   meta_request
-  paper_trail (~> 3.0)
+  paper_trail (~> 4.0.0)
   pg
   pry-rails
   pry-rescue
