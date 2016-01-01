@@ -12,6 +12,7 @@ class Course < ActiveRecord::Base
   # has_many :lessons, inverse_of: :course
 
   has_paper_trail
+  acts_as_taggable_on :education_subjects
 
   scope :active,   -> { where('end_date > ?',  Date.current) }
   scope :inactive, -> { where('end_date <= ?', Date.current) }
