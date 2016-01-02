@@ -67,9 +67,6 @@ de:
       person:
         one: Person
         other: Personenverzeichnis
-      role:
-        one: Rolle
-        other: Rollen
       admin:
         one: Administrator
         other: Administratoren
@@ -134,22 +131,15 @@ de:
         gender: Geschlecht
         place_of_birth: Geburtsort
         roles: Rollen
-      role:
-        person: Personendaten
-        organisation: Organisation
-      role/candidate:
+      candidate:
         status: Status
         status/accepted: angenommen
         status/approved: zugelassen
         status/created: angelegt
         status/invited: eingeladen
         status/rejected: abgelehnt
-      role/student:
-        organisation: Schule
+      student:
         year: Jahrgang
-      role/teacher:
-        courses: Klassen
-        organisation: Schule
       teacher:
         courses: Klassenlehrer von
       time_block:
