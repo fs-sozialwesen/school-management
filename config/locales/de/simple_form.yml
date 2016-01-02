@@ -1,0 +1,61 @@
+de:
+  simple_form:
+    "yes": 'Ja'
+    "no": 'Nein'
+    required:
+      text: 'erforderlich'
+      mark: '*'
+      # You can uncomment the line below if you need to overwrite the whole required html.
+      # When using html, text and mark won't be used.
+      # html: '<abbr title="required">*</abbr>'
+    error_notification:
+      default_message: "Bitte überprüfen Sie folgende Fehler:"
+    labels:
+      candidate:
+        options:
+          date: Eingangsdatum
+          education_subject: Fachrichtung
+          notes: Notizen
+          year: Jahr
+          school_graduate:
+            graduate: Schulabschluss
+            proved: Beglaubigte Kopie liegt vor
+          profession_graduate:
+            graduate: Berufsausbildung
+            comments: Sonstiges
+            proved: Beglaubigte Kopie liegt vor
+        person:
+          address:
+            city: Ort
+            street: Straße/Nr
+            zip: PLZ
+          contact:
+            email: E-Mail-Adresse
+            mobile: Mobiltelefon
+            phone: Telefon
+          date_of_birth: Geburtsdatum
+          first_name: Vorname
+          last_name: Nachname
+          place_of_birth: Geburtsort
+    hints:
+      user:
+        username: 'User name to sign in.'
+        password: 'No special characters, please.'
+    placeholders:
+      candidate:
+        options:
+          education_graduate:
+            name: Arbeitgeber / Institution
+            address: Adresse
+          profession_graduate:
+            comments: Berufsbezeichnung
+          school_graduate:
+            name: Schulform
+            graduate: Abschluss
+
+    include_blanks:
+      candidate:
+        year: 'Rather not say'
+    prompts:
+      candidate:
+        year: 'Select your gender'
