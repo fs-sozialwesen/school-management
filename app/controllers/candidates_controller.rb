@@ -6,7 +6,7 @@ class CandidatesController < ApplicationController
 
   def index
     authorize Candidate
-    @statuses           = Candidate.aasm.states
+    @statuses           = %i(rejected created approved invited accepted)
     # @education_subjects = EducationSubject.pluck :name
     @years              = (1.year.ago.year..2.year.from_now.year).to_a
     @candidates         = filtered_candidates.all
@@ -124,13 +124,13 @@ class CandidatesController < ApplicationController
     # education_subject  = params[:education_subject]
     # @education_subject = education_subject.in?(@education_subjects) ? education_subject : nil
     @year              = params[:year].to_i.in?(@years) ? params[:year].to_i : nil
-    @status            = params[:status]
+    @status            = params[:status].to_s.to_sym
   end
 
   def filtered_candidates
     process_filter_params
     candidates = Candidate.order(:status).includes(:person)
-    candidates = candidates.send status if status.in?(@statuses.map(&:name))
+    # candidates = candidates.send status if status.in?(@statuses.map(&:name))
     # condition  = { education_subject: @education_subject }.to_json
     # candidates = candidates.where('options @> ?', condition) if @education_subject
     candidates = candidates.where('options @> ?', { year: @year }.to_json) if @year

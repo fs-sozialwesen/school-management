@@ -15,7 +15,7 @@
       select.form-control name="status"
         option selected=(@status.blank?) value='' Status
         - @statuses.each do |status|
-          option selected=(status.name.to_s == @status) value=status.name = status.human_name
+          option selected=(status == @status) value=status = human_status_name(status)
     .form-group
       => link_to 'Alle', candidates_path, class: 'btn btn-info'
       input.btn.btn-primary type="submit" value="Suchen"

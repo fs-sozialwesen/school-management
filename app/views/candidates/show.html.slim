@@ -1,24 +1,23 @@
 .page-header
-  - unless @candidate.rejected?
+  - unless @candidate.rejected
     = link_to reject_candidate_path(@candidate), method: :patch, class: 'btn btn-danger' do
       span.glyphicon.glyphicon-thumbs-down
       |  Ablehnen
-  - if @candidate.may_approve?
-    = link_to approve_candidate_path(@candidate), method: :patch, class: 'btn btn-primary' do
-      span.glyphicon.glyphicon-step-forward
-      |  Zulassen
-  - if @candidate.may_invite?
-    = link_to invite_candidate_path(@candidate), class: 'btn btn-primary' do
-      span.glyphicon.glyphicon-step-forward
-      |  Einladen
-  - if @candidate.may_accept?
+  - if @candidate.invited
     = link_to accept_candidate_path(@candidate), method: :patch, class: 'btn btn-primary' do
       span.glyphicon.glyphicon-step-forward
       |  Aufnehmen
-  - unless @candidate.created?
-    = link_to init_candidate_path(@candidate), method: :patch, class: 'btn btn-default' do
-      span.glyphicon.glyphicon-fast-backward
-      |  Zurücksetzen
+  - elsif @candidate.approved
+    = link_to invite_candidate_path(@candidate), class: 'btn btn-primary' do
+      span.glyphicon.glyphicon-step-forward
+      |  Einladen
+  - else
+    = link_to approve_candidate_path(@candidate), method: :patch, class: 'btn btn-primary' do
+      span.glyphicon.glyphicon-step-forward
+      |  Zulassen
+  = link_to init_candidate_path(@candidate), method: :patch, class: 'btn btn-default' do
+    span.glyphicon.glyphicon-fast-backward
+    |  Zurücksetzen
 
   = link_to @candidate, class: 'btn btn-danger', method: :delete, data: { confirm: 'Wirklich?' } do
     span.glyphicon.glyphicon-remove
@@ -32,10 +31,19 @@
   h1
     | Bewerber:
     =< @candidate.person.name
+
+ul.list-inline
+  /li: span.label class = (@candidate.rejected ? 'label-danger' : 'label-default') abgelehnt
+  - %i(rejected approved invited accepted).each do |state|
+    - label = t("activerecord.attributes.candidate.status/#{state}")
+    - label_class = @candidate.send(state) ? 'label-success' : 'label-default'
+    - label_class = 'label-danger' if state == :rejected and @candidate.rejected
+    li: span.label class = label_class = label
+
 dl.dl-horizontal
 
   dt Status
-  dd = @candidate.aasm.human_state
+  /dd = @candidate.aasm.human_state
 
   dt Jahr:
   dd = @candidate.year

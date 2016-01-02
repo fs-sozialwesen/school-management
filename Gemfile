@@ -12,7 +12,6 @@ gem 'jbuilder', '~> 2.0'
 gem 'rails_admin'
 gem 'paper_trail', '~> 4.0.0'
 gem 'virtus'
-gem 'aasm'
 gem 'select2-rails'
 gem 'acts-as-taggable-on', '~> 3.4'
 

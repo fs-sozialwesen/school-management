@@ -7,35 +7,35 @@ class Candidate < ActiveRecord::Base
 
   accepts_nested_attributes_for :person
 
-  # acts_as_taggable_on :status
-
-  include AASM
-
-  aasm column: 'status' do
-    state :created, initial: true
-    state :approved
-    state :invited
-    state :accepted
-    state :rejected
-
-    event(:init)    { transitions to: :created }
-    event(:approve) { transitions from: :created,  to: :approved }
-    event(:invite)  { transitions from: :approved, to: :invited }
-    event(:accept)  { transitions from: :invited,  to: :accepted }
-    event(:reject)  { transitions to: :rejected }
-  end
-
   def display_name
     person.name
   end
 
+  def progress
+    return -1 if rejected
+    return  3 if accepted
+    return  2 if invited
+    return  1 if approved
+    0
+  end
+
+  def highest_status
+    { -1 => :rejected, 0 => :created, 1 => :approved, 2 => :invited, 3 => :accepted }[progress]
+  end
+
+  %i(init approve invite accept reject).each do |action|
+    define_method("#{action}!") do
+      options.send action
+      save
+    end
+  end
 
   rails_admin do
     list do
       field :person
       field :created_at
       field :year
-      field(:status) { pretty_value { bindings[:object].aasm.human_state } }
+      # field(:status) { pretty_value { bindings[:object].aasm.human_state } }
       field :education_subject
       field(:school_graduate)     { pretty_value { value.graduate } }
       field(:profession_graduate) { pretty_value { value.graduate } }

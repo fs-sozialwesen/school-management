@@ -1,5 +1,9 @@
 # class CandidateOptions
 class CandidateOptions < JsonSerializer
+  attribute :approved,            Boolean, default: false
+  attribute :invited,             Boolean, default: false
+  attribute :accepted,            Boolean, default: false
+  attribute :rejected,            Boolean, default: false
   attribute :date,                Date
   attribute :notes,               String
   attribute :education_subject,   String
@@ -15,6 +19,27 @@ class CandidateOptions < JsonSerializer
   attribute :internship_contract_sent,     Date
   attribute :internship_contract_received, Date
 
+  def init
+    self.approved = self.invited = self.accepted = self.rejected = false
+  end
+
+  def approve
+    self.approved = true
+  end
+
+  def invite
+    self.invited = true
+  end
+
+  def accept
+    self.accepted = true
+  end
+
+  def reject
+    init
+    self.rejected = true
+  end
+  
   def acceptable?
     [school_graduate?, profession_graduate?, education_graduate?,
      internship_proved, police_certificate, contracts_ok?].compact.all? { |v| v }

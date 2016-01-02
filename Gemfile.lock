@@ -1,7 +1,6 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    aasm (4.5.0)
     actionmailer (4.2.4)
       actionpack (= 4.2.4)
       actionview (= 4.2.4)
@@ -392,7 +391,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  aasm
   acts-as-taggable-on (~> 3.4)
   better_errors
   bootstrap-datepicker-rails
