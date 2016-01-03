@@ -17,6 +17,15 @@ de:
           education_subject: Fachrichtung
           notes: Notizen
           year: Jahr
+          police_certificate: Beglaubigte Kopie liegt vor
+          internship1:
+            institution: Einrichtung
+            months: Monate (Anzahl)
+            proved: Beglaubigte Kopie liegt vor
+          internship2:
+            institution: Einrichtung
+            months: Monate (Anzahl)
+            proved: Beglaubigte Kopie liegt vor
           school_graduate:
             graduate: Schulabschluss
             proved: Beglaubigte Kopie liegt vor

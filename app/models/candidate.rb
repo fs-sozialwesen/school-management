@@ -1,9 +1,10 @@
 class Candidate < ActiveRecord::Base
+  enum status: { rejected: -1, created: 0, approved: 1, invited: 2, accepted: 3 }
   belongs_to :person, validate: true, inverse_of: :as_candidate
 
   serialize :options, CandidateOptions
   delegate *CandidateOptions.attribute_set.map(&:name), to: :options
-  delegate :acceptable?, to: :options
+  # delegate :acceptable?, to: :options
 
   accepts_nested_attributes_for :person
 
@@ -12,22 +13,7 @@ class Candidate < ActiveRecord::Base
   end
 
   def progress
-    return -1 if rejected
-    return  3 if accepted
-    return  2 if invited
-    return  1 if approved
-    0
-  end
-
-  def highest_status
-    { -1 => :rejected, 0 => :created, 1 => :approved, 2 => :invited, 3 => :accepted }[progress]
-  end
-
-  %i(init approve invite accept reject).each do |action|
-    define_method("#{action}!") do
-      options.send action
-      save
-    end
+    self[:status]
   end
 
   rails_admin do

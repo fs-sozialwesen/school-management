@@ -1,17 +1,11 @@
-= f.simple_fields_for :options, f.object.options do |options|
-  .row
-    = options.input :date, input_html:{ class: :date }, wrapper_html: {class: 'col-md-4'}, required: true
+.panel.panel-default
+  .panel-heading Bewerbung
+  .panel-body
+    = f.simple_fields_for :options, f.object.options do |options|
+      = options.input :date, input_html:{ class: :date }, required: true
 
-    - education_subjects = EducationSubject.pluck(:name).sort
-    /= options.input :education_subject, collection: education_subjects, wrapper_html: {class: 'col-md-4'}
+      /- education_subjects = EducationSubject.pluck(:name).sort
+      /= options.input :education_subject, collection: education_subjects, wrapper_html: {class: 'col-md-4'}
 
-    /= options.input :education_subject,
-      collection: education_subjects,
-      wrapper_html: { class: 'col-md-4' },
-      input_html:   { class: 'select2', multiple: true, data: {tags: true} }
-
-    - year = Date.current.year
-    = options.input :year, collection: (year..(year + 2)).to_a, wrapper_html: {class: 'col-md-4'}
-
-  .row
-    = options.input :notes, as: :text, wrapper_html: {class: 'col-md-12'}
+      - year = Date.current.year
+      = options.input :year, collection: (year..(year + 2)).to_a

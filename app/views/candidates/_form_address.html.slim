@@ -1,0 +1,8 @@
+.panel.panel-default
+  .panel-heading Adresse
+  .panel-body
+    = f.simple_fields_for :person do |p|
+      = p.simple_fields_for :address, p.object.address do |a|
+        = a.input :street
+        = a.input :zip
+        = a.input :city

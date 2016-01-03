@@ -1,0 +1,8 @@
+.panel.panel-default
+  .panel-heading Kontaktdaten
+  .panel-body
+    = f.simple_fields_for :person do |p|
+      = p.simple_fields_for :contact, p.object.contact do |c|
+        = c.input :email
+        = c.input :phone
+        = c.input :mobile

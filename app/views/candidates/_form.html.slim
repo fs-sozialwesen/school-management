@@ -12,26 +12,18 @@
         - @candidate.errors.full_messages.each do |msg|
           li= msg
   .row
-    = f.simple_fields_for :person do |p|
-      .col-md-4 = p.input :first_name, required: true
-      .col-md-4 = p.input :last_name, required: true
+    .col-md-2 = render 'form_general', f: f
+    .col-md-4 = render 'form_person',  f: f
+    .col-md-3 = render 'form_address', f: f
+    .col-md-3 = render 'form_contact', f: f
   .row
-    .col-md-9
-      ul.nav.nav-tabs@tablist style="margin-bottom: 20px;"
-        li@presentation.active: a@tab data-toggle="tab" href="#general"    Bewerbung
-        li@presentation:        a@tab data-toggle="tab" href="#person"     Personendaten
-        li@presentation:        a@tab data-toggle="tab" href="#education"  Ausbildung
-        li@presentation:        a@tab data-toggle="tab" href="#contracts"  Verträge
-
-      .tab-content
-        @tabpanel.tab-pane.fade#general.active.in = render 'form_general',   f: f
-        @tabpanel.tab-pane.fade#person            = render 'form_person',    f: f
-        @tabpanel.tab-pane.fade#education         = render 'form_education', f: f
-        @tabpanel.tab-pane.fade#contracts         = render 'form_contracts', f: f
+    .col-md-12 = render 'form_approval_conditions', f: f
+  .row
+    .col-md-12 = render 'form_notes', f: f
 
   .row
     .col-md-9
-      = f.submit class: "btn btn-primary"
+      = f.submit class: 'btn btn-primary'
 
 coffee:
   $ ->

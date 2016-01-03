@@ -1,20 +1,20 @@
 .page-header
-  - unless @candidate.rejected
+  - unless @candidate.rejected?
     = link_to reject_candidate_path(@candidate), method: :patch, class: 'btn btn-danger' do
       span.glyphicon.glyphicon-thumbs-down
       |  Ablehnen
-  - if @candidate.invited
-    = link_to accept_candidate_path(@candidate), method: :patch, class: 'btn btn-primary' do
-      span.glyphicon.glyphicon-step-forward
-      |  Aufnehmen
-  - elsif @candidate.approved
-    = link_to invite_candidate_path(@candidate), class: 'btn btn-primary' do
-      span.glyphicon.glyphicon-step-forward
-      |  Einladen
-  - else
+  - if @candidate.created?
     = link_to approve_candidate_path(@candidate), method: :patch, class: 'btn btn-primary' do
       span.glyphicon.glyphicon-step-forward
       |  Zulassen
+  - if @candidate.approved?
+    = link_to invite_candidate_path(@candidate), class: 'btn btn-primary' do
+      span.glyphicon.glyphicon-step-forward
+      |  Einladen
+  - if @candidate.invited?
+    = link_to accept_candidate_path(@candidate), method: :patch, class: 'btn btn-primary' do
+      span.glyphicon.glyphicon-step-forward
+      |  Aufnehmen
   = link_to init_candidate_path(@candidate), method: :patch, class: 'btn btn-default' do
     span.glyphicon.glyphicon-fast-backward
     |  Zurücksetzen
@@ -28,22 +28,24 @@
   = link_to candidates_path, class: 'btn btn-default' do
     span.glyphicon.glyphicon-list-alt
     |  Zur Liste
-  h1
-    | Bewerber:
-    =< @candidate.person.name
+  h2 =< @candidate.person.name
 
+ul.list-inline.pull-right
+  - label_class = @candidate.rejected? ? 'danger' : 'default'
+  li: button.btn class = ('btn-' + label_class) = human_status_name :rejected
 ul.list-inline
-  /li: span.label class = (@candidate.rejected ? 'label-danger' : 'label-default') abgelehnt
-  - %i(rejected approved invited accepted).each do |state|
-    - label = t("activerecord.attributes.candidate.status/#{state}")
-    - label_class = @candidate.send(state) ? 'label-success' : 'label-default'
-    - label_class = 'label-danger' if state == :rejected and @candidate.rejected
-    li: span.label class = label_class = label
+  - Candidate.statuses.each do |status, val|
+    - next if status == 'rejected'
+    - status_reached = @candidate.progress >= val
+    li: button.btn class = (status_reached ? 'btn-success' : 'btn-default')
+      - if status_reached
+        span.badge ✓
+      =< human_status_name status
 
 dl.dl-horizontal
 
   dt Status
-  /dd = @candidate.aasm.human_state
+  dd = human_status_name @candidate.status
 
   dt Jahr:
   dd = @candidate.year
@@ -88,29 +90,29 @@ dl.dl-horizontal
       br
       = graduate.address
 
-  dt Nachweis Praktikum
-  dd = bool_icon @candidate.internship_proved
+  /dt Nachweis Praktikum
+  /dd = bool_icon @candidate.internship_proved
 
   dt Führungszeugnis
   dd = bool_icon @candidate.police_certificate
 
-  dt Ausbildungsvertrag
-  dd
-    strong gesendet:
-    - if @candidate.education_contract_sent.present?
-      =< l @candidate.education_contract_sent
-    br
-    strong zurück:
-    - if @candidate.education_contract_received.present?
-      =< l @candidate.education_contract_received
-
-  dt Praktikumsvertrag
-  dd
-    strong gesendet:
-    - if @candidate.internship_contract_sent.present?
-      =< l @candidate.internship_contract_sent
-    br
-    strong zurück:
-    - if @candidate.internship_contract_received.present?
-      =< l @candidate.internship_contract_received
+  /dt Ausbildungsvertrag
+  /dd
+  /  strong gesendet:
+  /  - if @candidate.education_contract_sent.present?
+  /    =< l @candidate.education_contract_sent
+  /  br
+  /  strong zurück:
+  /  - if @candidate.education_contract_received.present?
+  /    =< l @candidate.education_contract_received
+  /
+  /dt Praktikumsvertrag
+  /dd
+  /  strong gesendet:
+  /  - if @candidate.internship_contract_sent.present?
+  /    =< l @candidate.internship_contract_sent
+  /  br
+  /  strong zurück:
+  /  - if @candidate.internship_contract_received.present?
+  /    =< l @candidate.internship_contract_received
 
