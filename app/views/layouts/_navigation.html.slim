@@ -17,9 +17,11 @@
           /- if current_user.student? or current_user.teacher?
           /  li = link_to  t(:timetable), timetables_path
           - if policy(InternshipPosition).index?
-            li = link_to 'Praktikumsplätze', internship_positions_url
+            li class = ('active' if params[:controller] == 'internship_positions')
+              = link_to 'Praktikumsplätze', internship_positions_url
           - if policy(Candidate).index?
-            li = link_to 'Bewerber', candidates_url
+            li class = ('active' if params[:controller] == 'candidates')
+              = link_to 'Bewerber', candidates_url
 
         ul.nav.navbar-nav.navbar-right
           - if current_user.admin? or current_user.manager?
