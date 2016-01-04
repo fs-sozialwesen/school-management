@@ -1,45 +1,57 @@
 .page-header
-  - unless @candidate.rejected?
-    = link_to reject_candidate_path(@candidate), method: :patch, class: 'btn btn-danger' do
-      span.glyphicon.glyphicon-thumbs-down
-      |  Ablehnen
-  - if @candidate.created?
-    = link_to approve_candidate_path(@candidate), method: :patch, class: 'btn btn-primary' do
-      span.glyphicon.glyphicon-step-forward
-      |  Zulassen
-  - if @candidate.approved?
-    = link_to invite_candidate_path(@candidate), class: 'btn btn-primary' do
-      span.glyphicon.glyphicon-step-forward
-      |  Einladen
-  - if @candidate.invited?
-    = link_to accept_candidate_path(@candidate), method: :patch, class: 'btn btn-primary' do
-      span.glyphicon.glyphicon-step-forward
-      |  Aufnehmen
-  = link_to init_candidate_path(@candidate), method: :patch, class: 'btn btn-default' do
-    span.glyphicon.glyphicon-fast-backward
-    |  Zurücksetzen
+  h2
+    |  Bewerber(in)
+    =< @candidate.person.name
 
-  = link_to @candidate, class: 'btn btn-danger', method: :delete, data: { confirm: 'Wirklich?' } do
-    span.glyphicon.glyphicon-remove
-    |  Löschen
-  = link_to edit_candidate_path(@candidate), class: 'btn btn-default' do
-    span.glyphicon.glyphicon-pencil
-    |  Bearbeiten
-  = link_to candidates_path, class: 'btn btn-default' do
-    span.glyphicon.glyphicon-list-alt
-    |  Zur Liste
-  h2 =< @candidate.person.name
+nav.navbar.navbar-default
+  .navbar-header
+    button.navbar-toggle.collapsed aria-expanded="false" data-target="#candidate-subnav" data-toggle="collapse" type="button"
+      span.sr-only Toggle navigation
+      span.icon-bar
+      span.icon-bar
+      span.icon-bar
+  #candidate-subnav.collapse.navbar-collapse
+    ul.nav.navbar-nav
+      - unless @candidate.rejected?
+        li = link_to reject_candidate_path(@candidate), method: :patch do
+          span.glyphicon.glyphicon-thumbs-down
+          |  Ablehnen
+      - if @candidate.created?
+        li = link_to approve_candidate_path(@candidate), method: :patch do
+          span.glyphicon.glyphicon-step-forward
+          |  Zulassen
+      - if @candidate.approved?
+        li = link_to invite_candidate_path(@candidate) do
+          span.glyphicon.glyphicon-step-forward
+          |  Einladen
+      - if @candidate.invited?
+        li = link_to accept_candidate_path(@candidate), method: :patch do
+          span.glyphicon.glyphicon-step-forward
+          |  Aufnehmen
+      - unless @candidate.created?
+        li = link_to init_candidate_path(@candidate), method: :patch do
+          span.glyphicon.glyphicon-fast-backward
+          |  Zurücksetzen
+      li = link_to @candidate, method: :delete, data: { confirm: 'Wirklich?' } do
+        span.glyphicon.glyphicon-remove
+        |  Löschen
+      li = link_to edit_candidate_path(@candidate) do
+        span.glyphicon.glyphicon-pencil
+        |  Bearbeiten
+      li = link_to candidates_path do
+        span.glyphicon.glyphicon-list-alt
+        |  Zur Liste
 
 ul.list-inline.pull-right
   - label_class = @candidate.rejected? ? 'danger' : 'default'
-  li: button.btn class = ('btn-' + label_class) = human_status_name :rejected
+  li: h4: span.label class = ('label-' + label_class) = human_status_name :rejected
 ul.list-inline
   - Candidate.statuses.each do |status, val|
     - next if status == 'rejected'
     - status_reached = @candidate.progress >= val
-    li: button.btn class = (status_reached ? 'btn-success' : 'btn-default')
+    li: h4: span.label class = (status_reached ? 'label-success' : 'label-default')
       - if status_reached
-        span.badge ✓
+        |  ✓
       =< human_status_name status
 
 .row
@@ -68,6 +80,10 @@ ul.list-inline
           - if @candidate.person.date_of_birth.present?
             =< l @candidate.person.date_of_birth
           =< @candidate.person.place_of_birth
+        p
+          label Status
+          =< human_status_name @candidate.status
+
 
   .col-md-3
     .panel.panel-default
