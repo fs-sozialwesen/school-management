@@ -51,7 +51,9 @@ dl.dl-horizontal
   dd = @candidate.year
 
   dt Geburtstag:
-  dd = l @candidate.person.date_of_birth
+  dd
+    - if @candidate.person.date_of_birth.present?
+      = l @candidate.person.date_of_birth
 
   dt Geburtsort:
   dd = @candidate.person.place_of_birth
