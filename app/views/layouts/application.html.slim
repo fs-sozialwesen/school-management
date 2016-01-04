@@ -20,3 +20,6 @@ html
       .container
         = render 'layouts/messages'
         = yield
+    coffee:
+      $ ->
+        $('.dropdown-toggle').dropdown()
