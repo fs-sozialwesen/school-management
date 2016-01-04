@@ -42,79 +42,101 @@ ul.list-inline
         span.badge ✓
       =< human_status_name status
 
-dl.dl-horizontal
+.row
+  .col-md-2
+    .panel.panel-default
+      .panel-heading Bewerbung
+      .panel-body
+        p
+          label Eingangsdatum
+          - if @candidate.date.present?
+            =< l @candidate.date
+        p
+          label Jahr
+          =< @candidate.year
 
-  dt Status
-  dd = human_status_name @candidate.status
+  .col-md-4
+    .panel.panel-default
+      .panel-heading Bewerber
+      .panel-body
+        p
+          => { 'f' => 'Frau', 'm' => 'Herr' }[@candidate.person.gender]
+          => @candidate.person.first_name
+          = @candidate.person.last_name
+        p
+          label geb.
+          - if @candidate.person.date_of_birth.present?
+            =< l @candidate.person.date_of_birth
+          =< @candidate.person.place_of_birth
 
-  dt Jahr:
-  dd = @candidate.year
+  .col-md-3
+    .panel.panel-default
+      .panel-heading Adresse
+      .panel-body
+        p = @candidate.person.address.street
+        p
+          => @candidate.person.address.zip
+          = @candidate.person.address.city
 
-  dt Geburtstag:
-  dd
-    - if @candidate.person.date_of_birth.present?
-      = l @candidate.person.date_of_birth
+  .col-md-3
+    .panel.panel-default
+      .panel-heading Kontaktdaten
+      .panel-body
+        p
+          label
+            span.glyphicon.glyphicon-envelope
+          - email = @candidate.person.contact.email
+          =< link_to email, "mailto:#{email}"
+        p
+          label
+            span.glyphicon.glyphicon-earphone
+          =< @candidate.person.contact.phone
+        p
+          label
+            span.glyphicon.glyphicon-phone
+          =< @candidate.person.contact.mobile
 
-  dt Geburtsort:
-  dd = @candidate.person.place_of_birth
+.row
+  .col-md-12
+    .panel.panel-default
+      .panel-heading Zulassungsvoraussetzungen
+      .panel-body
+        .row
+          .col-md-4
+            p
+              label Schulausbildung
+              br
+              = bool_icon(@candidate.school_graduate.proved, 'bestätigt', 'offen')
+              =< @candidate.school_graduate.graduate
+            p
+              label Berufsausbildung
+              br
+              = bool_icon(@candidate.profession_graduate.proved, 'bestätigt', 'offen')
+              =< @candidate.profession_graduate.graduate
+            - if @candidate.profession_graduate.comments.present?
+              p
+                =< @candidate.profession_graduate.comments
 
-  dt Adresse:
-  dd
-    = @candidate.person.address.street
-    br
-    => @candidate.person.address.zip
-    = @candidate.person.address.city
+          .col-md-4
+            label Praktika
+            p
+              = bool_icon(@candidate.internship1.proved, 'bestätigt', 'offen')
+              =< @candidate.internship1.months
+              |  Monate bei
+              =< @candidate.internship1.institution
+            p
+              = bool_icon(@candidate.internship2.proved, 'bestätigt', 'offen')
+              =< @candidate.internship2.months
+              |  Monate bei
+              =< @candidate.internship2.institution
+          .col-md-4
+            label Führungszeugnis
+            p
+              = bool_icon @candidate.police_certificate, 'beglaubigte Kopie liegt vor', 'offen'
+.row
+  .col-md-12
+    .panel.panel-default
+      .panel-heading Notizen
+      .panel-body = @candidate.notes
 
-  dt Kontakt:
-  dd
-    - contact = @candidate.person.contact
-    = [contact.email, contact.phone, contact.mobile].select(&:present?).join('<br>').html_safe
-
-  dt Schulausbildung
-  dd
-    = bool_icon(@candidate.school_graduate.proved, 'bestätigt', 'offen')
-    =< @candidate.school_graduate.graduate
-
-  dt Berufsausbildung
-  dd
-    - graduate = @candidate.profession_graduate
-    = bool_icon(@candidate.options.profession_graduate?, 'bestätigt', 'offen')
-    - if graduate.graduate.present?
-      =< graduate.graduate
-      - if graduate.comments.present?
-        |  (#{graduate.comments})
-  /dt title="Erzieherausbildung / Heilerziehungspflege, berufsbegleitend und Heilerziehungspfleger" Erzieherausbildung ...
-  /dd
-    - graduate = @candidate.education_graduate
-    = bool_icon(@candidate.options.profession_graduate?, 'bestätigt', 'offen')
-    - if graduate.name.present?
-      =< graduate.name
-      br
-      = graduate.address
-
-  /dt Nachweis Praktikum
-  /dd = bool_icon @candidate.internship_proved
-
-  dt Führungszeugnis
-  dd = bool_icon @candidate.police_certificate
-
-  /dt Ausbildungsvertrag
-  /dd
-  /  strong gesendet:
-  /  - if @candidate.education_contract_sent.present?
-  /    =< l @candidate.education_contract_sent
-  /  br
-  /  strong zurück:
-  /  - if @candidate.education_contract_received.present?
-  /    =< l @candidate.education_contract_received
-  /
-  /dt Praktikumsvertrag
-  /dd
-  /  strong gesendet:
-  /  - if @candidate.internship_contract_sent.present?
-  /    =< l @candidate.internship_contract_sent
-  /  br
-  /  strong zurück:
-  /  - if @candidate.internship_contract_received.present?
-  /    =< l @candidate.internship_contract_received
 

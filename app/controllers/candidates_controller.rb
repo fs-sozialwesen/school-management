@@ -99,7 +99,7 @@ class CandidatesController < ApplicationController
   def candidate_params
     params.require(:candidate)
       .permit(
-        person_attributes: %i(first_name last_name date_of_birth place_of_birth) +
+        person_attributes: %i(first_name last_name gender date_of_birth place_of_birth) +
                              [
                                address: %i(street zip city),
                                contact: %i(email phone mobile)
