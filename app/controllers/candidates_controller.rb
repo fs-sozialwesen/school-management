@@ -4,6 +4,8 @@ class CandidatesController < ApplicationController
   after_action :verify_authorized
   before_action :set_candidate, only: [:show, :edit, :update, :destroy]
 
+
+  
   def index
     authorize Candidate
     @statuses   = Candidate.statuses
