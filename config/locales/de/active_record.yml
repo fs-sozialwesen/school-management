@@ -137,7 +137,7 @@ de:
         status/approved: zugelassen
         status/created: angelegt
         status/invited: eingeladen
-        status/assessment: KLT
+        status/interview: KLT
         status/contracts_back: Vertäge
         status/student: Student
         status/rejected: abgelehnt

@@ -60,9 +60,9 @@ ul.list-inline.pull-right
   - label_class = @candidate.canceled? ? 'danger' : 'default'
   li: h4: span.label class = ('label-' + label_class) = human_status_name :canceled
 ul.list-inline
-  - Candidate.statuses.each do |status, val|
-    - next if status == 'rejected'
-    - status_reached = @candidate.progress >= val
+  - Candidate.statuses.each do |status, status_code|
+    - next if status_code < 0
+    - status_reached = @candidate.progress >= status_code
     li: h4: span.label class = (status_reached ? 'label-success' : 'label-default')
       - if status_reached
         |  ✓
