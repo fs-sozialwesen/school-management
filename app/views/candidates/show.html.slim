@@ -13,26 +13,38 @@ nav.navbar.navbar-default
   #candidate-subnav.collapse.navbar-collapse
     ul.nav.navbar-nav
       - unless @candidate.rejected?
-        li = link_to reject_candidate_path(@candidate), method: :patch do
+        li = link_to reject_candidate_path(@candidate) do
           span.glyphicon.glyphicon-thumbs-down
           |  Ablehnen
+      - unless @candidate.canceled?
+        li = link_to cancel_candidate_path(@candidate) do
+          span.glyphicon.glyphicon-thumbs-down
+          |  Absage
       - if @candidate.created?
-        li = link_to approve_candidate_path(@candidate), method: :patch do
+        li = link_to approve_candidate_path(@candidate) do
           span.glyphicon.glyphicon-step-forward
           |  Zulassen
-      - if @candidate.approved?
-        li = link_to invite_candidate_path(@candidate) do
+      - if @candidate.approved? or @candidate.interview?
+        li = link_to interview_candidate_path(@candidate) do
           span.glyphicon.glyphicon-step-forward
-          |  Einladen
-      - if @candidate.invited?
-        li = link_to accept_candidate_path(@candidate), method: :patch do
+          |  KLT
+      - if @candidate.interview? and @candidate.interviews.last.try! :executed
+        li = link_to accept_candidate_path(@candidate) do
           span.glyphicon.glyphicon-step-forward
           |  Aufnehmen
+      /- if @candidate.assessment?
+        li = link_to accept_candidate_path(@candidate) do
+          span.glyphicon.glyphicon-step-forward
+          |  Aufnehmen
+      - if @candidate.accepted?
+        li = link_to contract_candidate_path(@candidate) do
+          span.glyphicon.glyphicon-step-forward
+          |  Verträge
       - unless @candidate.created?
-        li = link_to init_candidate_path(@candidate), method: :patch do
+        li = link_to init_candidate_path(@candidate), data: { confirm: t('.confirm_init') } do
           span.glyphicon.glyphicon-fast-backward
           |  Zurücksetzen
-      li = link_to @candidate, method: :delete, data: { confirm: 'Wirklich?' } do
+      li = link_to @candidate, method: :delete, data: { confirm: t('.confirm_delete') } do
         span.glyphicon.glyphicon-remove
         |  Löschen
       li = link_to edit_candidate_path(@candidate) do
@@ -45,6 +57,8 @@ nav.navbar.navbar-default
 ul.list-inline.pull-right
   - label_class = @candidate.rejected? ? 'danger' : 'default'
   li: h4: span.label class = ('label-' + label_class) = human_status_name :rejected
+  - label_class = @candidate.canceled? ? 'danger' : 'default'
+  li: h4: span.label class = ('label-' + label_class) = human_status_name :canceled
 ul.list-inline
   - Candidate.statuses.each do |status, val|
     - next if status == 'rejected'

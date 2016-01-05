@@ -1,14 +1,11 @@
 .page-header
-  = link_to invite_candidate_path(@candidate), method: :patch, class: 'btn btn-primary' do
-    span.glyphicon.glyphicon-step-forward
-    |  Einladen
+  h2 Bewerber(in) #{@candidate.person.name} einladen
 
-  = link_to edit_candidate_path(@candidate), class: 'btn btn-default' do
-    span.glyphicon.glyphicon-pencil
-    |  Bearbeiten
-  = link_to candidates_path, class: 'btn btn-default' do
-    span.glyphicon.glyphicon-list-alt
-    |  Zur Liste
-  h1
-    | Bewerber:
-    =< @candidate.person.name
+= render 'subnav'
+
+.well.well-lg
+  p.text-warning Wurde der Bewerber zu einem Kennlerntreffen eingeladen?
+
+= link_to invite_candidate_path(@candidate), method: :patch, class: 'btn btn-primary' do
+  span.glyphicon.glyphicon-exclamation-sign
+  |  Ja, einladen

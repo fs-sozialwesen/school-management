@@ -32,11 +32,19 @@ class CandidatePolicy < ApplicationPolicy
     index?
   end
 
+  def interview?
+    index?
+  end
+
   def accept?
     index?
   end
 
   def reject?
+    index?
+  end
+
+  def cancel?
     index?
   end
 

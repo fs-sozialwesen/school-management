@@ -1,0 +1,11 @@
+.page-header
+  h2 Bewerber(in) #{@candidate.person.name} hat abgesagt
+
+= render 'subnav'
+
+/.well.well-lg
+  p.text-warning Sind alle Zulassungsvoraussetzungen erfüllt?
+
+= link_to cancel_candidate_path(@candidate), method: :patch, class: 'btn btn-primary' do
+  span.glyphicon.glyphicon-exclamation-sign
+  |  Absage

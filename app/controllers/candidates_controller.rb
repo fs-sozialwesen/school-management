@@ -2,10 +2,8 @@
 class CandidatesController < ApplicationController
   before_action :authenticate_login!
   after_action :verify_authorized
-  before_action :set_candidate, only: [:show, :edit, :update, :destroy]
+  before_action :set_candidate, except: [:index, :new, :create]
 
-
-  
   def index
     authorize Candidate
     @statuses   = Candidate.statuses
@@ -14,7 +12,6 @@ class CandidatesController < ApplicationController
   end
 
   def show
-    authorize Candidate
   end
 
   def new
@@ -25,7 +22,6 @@ class CandidatesController < ApplicationController
   end
 
   def edit
-    authorize Candidate
   end
 
   def create
@@ -40,7 +36,6 @@ class CandidatesController < ApplicationController
   end
 
   def update
-    authorize Candidate
     if @candidate.update(candidate_params)
       redirect_to @candidate, notice: t('.success')
     else
@@ -49,45 +44,61 @@ class CandidatesController < ApplicationController
   end
 
   def destroy
-    authorize Candidate
     @candidate.destroy
     redirect_to role_candidates_url, notice: t('.success')
   end
 
   def init
-    authorize Candidate
-    candidate = Candidate.find(params[:id])
-    candidate.created!
-    redirect_to candidate, notice: 'Bewerber zurückgesetzt!'
+    @candidate.created!
+    redirect_to @candidate, notice: 'Bewerber zurückgesetzt!'
   end
 
   def approve
-    authorize Candidate
-    candidate = Candidate.find(params[:id])
-    candidate.approved!
-    redirect_to candidate, notice: 'Bewerber zugelassen!'
+    return unless request.patch?
+    @candidate.approved!
+    redirect_to @candidate, notice: 'Bewerber zugelassen!'
   end
 
-  def invite
-    authorize Candidate
-    @candidate = Candidate.find(params[:id])
+  def interview
     return unless request.patch?
-    @candidate.invited!
-    redirect_to @candidate, notice: 'Bewerber eingeladen!'
+    @candidate.interview!
+    redirect_to @candidate, notice: 'Bewerber zugelassen!'
   end
+
+  # def invite
+  #   return unless request.patch?
+  #   @candidate.invited!
+  #   redirect_to @candidate, notice: 'Bewerber eingeladen!'
+  # end
 
   def accept
-    authorize Candidate
-    candidate = Candidate.find(params[:id])
-    candidate.accepted!
-    redirect_to candidate, notice: 'Bewerber angenommen!'
+    return unless request.patch?
+    @candidate.accepted!
+    redirect_to @candidate, notice: 'Bewerber angenommen!'
+  end
+
+  def contract
+    return unless request.patch?
+    @candidate.contracts_back!
+    redirect_to @candidate, notice: 'Bewerber angenommen!'
+  end
+
+  def student
+    return unless request.patch?
+    @candidate.student!
+    redirect_to @candidate, notice: 'Bewerber angenommen!'
   end
 
   def reject
-    authorize Candidate
-    candidate = Candidate.find(params[:id])
-    candidate.rejected!
-    redirect_to candidate, notice: 'Bewerber abgelehnt!'
+    return unless request.patch?
+    @candidate.rejected!
+    redirect_to @candidate, notice: 'Bewerber abgelehnt!'
+  end
+
+  def cancel
+    return unless request.patch?
+    @candidate.canceled!
+    redirect_to @candidate, notice: 'Bewerber abgelehnt!'
   end
 
   private
@@ -95,6 +106,7 @@ class CandidatesController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_candidate
     @candidate = Candidate.includes(:person).find(params[:id])
+    authorize @candidate
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

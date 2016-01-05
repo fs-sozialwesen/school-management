@@ -10,11 +10,15 @@ Rails.application.routes.draw do
   resources :internship_positions, only: [:index, :show]
   resources :candidates do
     member do
-      patch :init
-      patch :approve
-      match :invite, via: [:get, :patch]
-      patch :accept
-      patch :reject
+      match :init,      via: [:get, :patch]
+      match :approve,   via: [:get, :patch]
+      match :interview, via: [:get, :patch]
+      match :accept,    via: [:get, :patch]
+      match :contract,  via: [:get, :patch]
+      match :student,   via: [:get, :patch]
+
+      match :reject,    via: [:get, :patch]
+      match :cancel,    via: [:get, :patch]
     end
   end
 

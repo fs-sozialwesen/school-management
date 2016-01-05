@@ -1,5 +1,15 @@
 class Candidate < ActiveRecord::Base
-  enum status: { rejected: -1, created: 0, approved: 1, invited: 2, accepted: 3 }
+  enum status: {
+    rejected:       -1,
+    canceled:       -2,
+    created:        0,
+    approved:       1,
+    interview:      2,
+    accepted:       3,
+    contracts_back: 4,
+    student:        5,
+  }
+
   belongs_to :person, validate: true, inverse_of: :as_candidate
 
   serialize :options, CandidateOptions
