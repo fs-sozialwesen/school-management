@@ -13,6 +13,9 @@ de:
       success: Bewerber(in) gelöscht.
     form:
       error: Bewerber konnte nicht gespeichert werden.
+    show:
+      confirm_init: Soll der Status des Bewerbers wirklich zurückgesetzt werden?
+      confirm_delete: Soll der Berwerber wirklich gelöscht werden?
   room_plan: Raumplan
   teacher: LehrerIn
   timetable: Stundenplan
