@@ -12,3 +12,16 @@
       .panel.panel-default
         .panel-heading Notizen
         .panel-body = i.input :comments, as: :text, input_html: { rows: 4 }, label: false
+  .row
+    .col-md-4
+      .panel.panel-default
+        .panel-heading Einladung
+        .panel-body
+          = i.input :invited, as: :boolean
+          = i.input :answer, collection: interview_answer_options
+    .col-md-8
+      .panel.panel-default
+        .panel-heading Ergebnis
+        .panel-body
+          = i.input :result, collection: interview_result_options
+          = i.input :reason, as: :text

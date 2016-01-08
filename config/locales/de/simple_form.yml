@@ -30,6 +30,8 @@ de:
           date: Datum
           time: Uhrzeit
           place: Ort
+          invited: eingeladen
+          answer: Rückmeldung
           result: Ergebnis
           reason: Begründung
         person:

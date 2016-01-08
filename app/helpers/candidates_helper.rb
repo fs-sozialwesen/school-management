@@ -8,12 +8,20 @@ module CandidatesHelper
     t("activerecord.attributes.candidate.interview.result/#{result}")
   end
 
+  def human_answer_name(answer)
+    t("activerecord.attributes.candidate.interview.answer/#{answer}")
+  end
+
   def interview_result_options
-    options = {}
-    Interview::RESULTS.each do |result|
+    (Interview::RESULTS + ['repeat']).each_with_object({}) do |result, options|
       options[human_result_name(result)] = result
     end
-    options
+  end
+
+  def interview_answer_options
+    Interview::ANSWERS.each_with_object({}) do |answer, options|
+      options[human_answer_name(answer)] = answer
+    end
   end
 
   def progress_bar(candidate)

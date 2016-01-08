@@ -1,14 +1,16 @@
 class Interview < JsonSerializer
 
+  ANSWERS = %w(open accepted rejected).freeze
   RESULTS = %w(open accepted rejected).freeze
 
-  attribute :status,     String, default: 'planned'
   attribute :date,       Date
   attribute :time,       String
   attribute :place,      String
-  attribute :comments,   String, default: ''
-  attribute :result,     String, default: 'open'
-  attribute :reason,     String, default: ''
+  attribute :comments,   String,  default: ''
+  attribute :invited,    Boolean, default: false
+  attribute :answer,     String,  default: 'open'
+  attribute :result,     String,  default: 'open'
+  attribute :reason,     String,  default: ''
 
 
 

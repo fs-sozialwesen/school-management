@@ -143,9 +143,13 @@ de:
         status/rejected: abgelehnt
         status/canceled: abgesagt
         interview:
+          answer/open: offen
+          answer/accepted: Zusage
+          answer/rejected: Absage
           result/open: offen
-          result/accepted: angenommen
-          result/rejected: abgelehnt
+          result/accepted: Bewerber angenommen
+          result/rejected: Bewerber abgelehnt
+          result/repeat: Wiederholen
       student:
         year: Jahrgang
       teacher:

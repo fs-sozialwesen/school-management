@@ -102,7 +102,7 @@ class CandidatesController < ApplicationController
           [
             school_graduate:     %i(graduate proved),
             profession_graduate: %i(graduate proved comments),
-            interview:           %i(date time place comments result reason),
+            interview:           %i(date time place comments invited answer result reason),
             internship1:         %i(institution months proved),
             internship2:         %i(institution months proved),
             person_attributes: %i(first_name last_name gender date_of_birth place_of_birth) +
