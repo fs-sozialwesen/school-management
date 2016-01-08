@@ -45,7 +45,7 @@ class CandidatesController < ApplicationController
 
   def destroy
     @candidate.destroy
-    redirect_to role_candidates_url, notice: t('.success')
+    redirect_to candidates_url, notice: t('.success')
   end
 
   def init
