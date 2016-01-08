@@ -33,18 +33,18 @@ module CandidatesHelper
   end
 
   def progress_bar_class(candidate)
-    return 'danger'  if candidate.rejected?
+    return 'danger'  if candidate.rejected? or candidate.canceled?
     return 'success' if candidate.accepted?
     'warning'
   end
 
   def progress_bar_width(progress)
     case progress
+    when -2 then 100
     when -1 then 100
     when  0 then  10
-    when  1 then  40
-    when  2 then  70
-    when  3 then 100
+    when  1 then  50
+    when  2 then  100
     end
   end
 end

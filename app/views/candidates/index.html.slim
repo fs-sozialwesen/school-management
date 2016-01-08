@@ -22,9 +22,10 @@
               th Eingang
               th Status
               th Name
-              th Jahr
-              th Schulausb.
-              th Berufsausb.
+              th KLT
+              th Eingeladen
+              th Rückmeldung
+              th Ergebnis KLT
               th
           tbody
             - @candidates.each do | candidate |
@@ -32,14 +33,12 @@
                 td = l(candidate.date, format: :short) if candidate.date.present?
                 td = progress_bar(candidate)
                 td = link_to "#{candidate.person.last_name}, #{candidate.person.first_name}", candidate
-                td = candidate.year
-                td title=candidate.school_graduate.graduate
-                  => bool_icon(candidate.school_graduate?, 'bestätigt', 'offen')
-                td
-                  => bool_icon(candidate.profession_graduate?, 'bestätigt', 'offen')
-                td
-                  = link_to edit_candidate_path(candidate), class: 'btn btn-primary btn-sm', title: 'Bearbeiten' do
-                    span.glyphicon.glyphicon-pencil
+                td = l(candidate.interview.date, format: :short) if candidate.interview.date.present?
+                td = bool_icon(candidate.interview.invited, 'eingeladen', 'offen')
+                td = human_answer_name candidate.interview.answer
+                td = human_result_name candidate.interview.result
+                td = link_to candidate_path(candidate), class: 'btn btn-primary btn-sm', title: 'Bearbeiten' do
+                  span.glyphicon.glyphicon-info-sign
 
 coffee:
   $ ->
