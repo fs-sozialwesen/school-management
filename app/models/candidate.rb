@@ -2,19 +2,17 @@ class Candidate < ActiveRecord::Base
   enum status: {
     rejected:       -1,
     canceled:       -2,
+
     created:        0,
-    approved:       1,
-    interview:      2,
-    accepted:       3,
-    contracts_back: 4,
-    student:        5,
+    accepted:       1,
+    approved:       2,
   }
 
   belongs_to :person, validate: true, inverse_of: :as_candidate
 
-  serialize :options, CandidateOptions
-  delegate *CandidateOptions.attribute_set.map(&:name), to: :options
-  # delegate :acceptable?, to: :options
+  serialize :school_graduate, Graduate
+  serialize :profession_graduate, Graduate
+  serialize :interview, Interview
 
   accepts_nested_attributes_for :person
 
@@ -26,19 +24,28 @@ class Candidate < ActiveRecord::Base
     self[:status]
   end
 
+  def documents_complete?
+    police_certificate and school_graduate.complete? and profession_graduate.complete? and internships_complete?
+  end
+
+  def internships_complete?
+    return true if internships.blank?
+    internships_proved
+  end
+
   rails_admin do
     list do
       field :person
       field :created_at
       field :year
       # field(:status) { pretty_value { bindings[:object].aasm.human_state } }
-      field :education_subject
+      # field :education_subject
       field(:school_graduate)     { pretty_value { value.graduate } }
       field(:profession_graduate) { pretty_value { value.graduate } }
     end
 
     edit do
-      field(:education_subject, :enum) { enum EducationSubject.pluck(:name) }
+      # field(:education_subject, :enum) { enum EducationSubject.pluck(:name) }
       field(:year, :enum) { enum (Date.today.year..(Date.today.year + 2)).to_a }
       field :attachments
     end

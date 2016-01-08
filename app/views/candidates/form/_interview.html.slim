@@ -1,0 +1,14 @@
+= f.simple_fields_for :interview, f.object.interview do |i|
+  .row
+    .col-md-6
+      .panel.panel-default
+        .panel-heading Ort und Zeit
+        .panel-body
+          .row
+            .col-md-6 = i.input :date, as: :string, label: false, input_html: { class: 'date' }
+            .col-md-6 = i.input :time, as: :string, label: false
+          = i.input :place, label: false
+    .col-md-6
+      .panel.panel-default
+        .panel-heading Notizen
+        .panel-body = i.input :comments, as: :text, input_html: { rows: 4 }, label: false

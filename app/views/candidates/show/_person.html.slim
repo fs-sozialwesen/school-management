@@ -1,0 +1,46 @@
+.panel.panel-default
+  .panel-heading
+    |  Bewerberdaten
+    ul.list-inline.pull-right
+      li: span.label.label-success ✓ angelegt
+      li = link_to edit_candidate_path(@candidate), class: 'btn btn-default btn-xs' do
+        span.glyphicon.glyphicon-cog>
+        | Bearbeiten
+  .panel-body
+    .row
+      .col-md-4
+        p
+          => { 'f' => 'Frau', 'm' => 'Herr' }[person.gender]
+          => person.first_name
+          = person.last_name
+        p
+          label geb.
+          - if person.date_of_birth.present?
+            =< l person.date_of_birth
+          =< person.place_of_birth
+
+
+      .col-md-4
+        - address = @candidate.person.address
+        p = address.street
+        p
+          => address.zip
+          = address.city
+
+      .col-md-4
+        p
+          label
+            span.glyphicon.glyphicon-envelope
+          - email = @candidate.person.contact.email
+          =< link_to email, "mailto:#{email}"
+        p
+          label
+            span.glyphicon.glyphicon-earphone
+          =< @candidate.person.contact.phone
+        p
+          label
+            span.glyphicon.glyphicon-phone
+          =< @candidate.person.contact.mobile
+
+    - if @candidate.notes.present?
+      .row: .col-md-12 = @candidate.notes

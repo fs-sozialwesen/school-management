@@ -17,7 +17,7 @@ class CandidatesController < ApplicationController
   def new
     authorize Candidate
     @candidate = Candidate.new
-    @candidate.options.date = Date.current
+    @candidate.date = Date.current
     @candidate.build_person
   end
 
@@ -53,40 +53,22 @@ class CandidatesController < ApplicationController
     redirect_to @candidate, notice: 'Bewerber zurückgesetzt!'
   end
 
-  def approve
-    return unless request.patch?
-    @candidate.approved!
-    redirect_to @candidate, notice: 'Bewerber zugelassen!'
+  def accept_interview
+    @candidate.interview.accept!
+    @candidate.save!
+    redirect_to @candidate, notice: 'KLT positiv durchgeführt!'
   end
 
-  def interview
-    return unless request.patch?
-    @candidate.interview!
-    redirect_to @candidate, notice: 'Bewerber zugelassen!'
+  def reject_interview
+    @candidate.interview.reject!
+    @candidate.save!
+    redirect_to @candidate, notice: 'KLT abgelehnt!'
   end
 
-  # def invite
-  #   return unless request.patch?
-  #   @candidate.invited!
-  #   redirect_to @candidate, notice: 'Bewerber eingeladen!'
-  # end
-
-  def accept
-    return unless request.patch?
-    @candidate.accepted!
-    redirect_to @candidate, notice: 'Bewerber angenommen!'
-  end
-
-  def contract
-    return unless request.patch?
-    @candidate.contracts_back!
-    redirect_to @candidate, notice: 'Bewerber angenommen!'
-  end
-
-  def student
-    return unless request.patch?
-    @candidate.student!
-    redirect_to @candidate, notice: 'Bewerber angenommen!'
+  def repeat_interview
+    @candidate.interview.repeat!
+    @candidate.save!
+    redirect_to edit_candidate_path(@candidate, part: 'interview'), notice: 'KLT zurückgesetzt'
   end
 
   def reject
@@ -113,26 +95,23 @@ class CandidatesController < ApplicationController
   def candidate_params
     params.require(:candidate)
       .permit(
-        person_attributes: %i(first_name last_name gender date_of_birth place_of_birth) +
-                             [
-                               address: %i(street zip city),
-                               contact: %i(email phone mobile)
-                             ],
-        options: options_params
-      )
-  end
 
-  def options_params
-    %i(date notes education_subject year school_graduate police_certificate
-       education_contract_sent education_contract_received internship_contract_sent
-       internship_contract_received) +
-      [
-        school_graduate:     %i(graduate proved),
-        profession_graduate: %i(graduate proved comments),
-        # education_graduate:  %i(name proved address),
-        internship1:         %i(institution months proved),
-        internship2:         %i(institution months proved)
-      ]
+        %i(date notes education_subject year police_certificate internships internships_proved
+           education_contract_sent education_contract_received internship_contract_sent
+           internship_contract_received) +
+          [
+            school_graduate:     %i(graduate proved),
+            profession_graduate: %i(graduate proved comments),
+            interview:           %i(date time place comments result reason),
+            internship1:         %i(institution months proved),
+            internship2:         %i(institution months proved),
+            person_attributes: %i(first_name last_name gender date_of_birth place_of_birth) +
+                                         [
+                                           address: %i(street zip city),
+                                           contact: %i(email phone mobile)
+                                         ],
+          ]
+      )
   end
 
   def process_filter_params

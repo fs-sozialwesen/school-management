@@ -1,0 +1,51 @@
+.panel.panel-default
+  .panel-heading
+    |  Bewerbung und Dokumente
+    /= render 'candidates/show/panel_heading', done: @candidate.progress >= 1, status: 'zugelassen',
+      part: 'documents'
+    ul.list-inline.pull-right
+      - if @candidate.documents_complete?
+        li: span.label.label-success ✓ vollständig
+      li = link_to edit_candidate_path(@candidate, part: 'documents'), class: 'btn btn-default btn-xs' do
+        span.glyphicon.glyphicon-cog>
+        | Bearbeiten
+  .panel-body
+    .row
+      .col-md-3
+        p
+          label Eingangsdatum
+          =< l @candidate.date if @candidate.date.present?
+        p
+          label Jahr
+          =< @candidate.year
+        p
+          label Status
+          =< human_status_name @candidate.status
+
+      .col-md-3
+        p
+          label Schulausbildung
+          br
+          = bool_icon(@candidate.school_graduate.proved, 'bestätigt', 'offen')
+          =< @candidate.school_graduate.graduate
+        p
+          - prof_grad = @candidate.profession_graduate
+          label Berufsausbildung
+          br
+          - proved = prof_grad.graduate.present? ? prof_grad.proved : nil
+          = bool_icon(proved, 'bestätigt', 'offen')
+          =< prof_grad.graduate
+        - if prof_grad.comments.present?
+          p
+            =< prof_grad.comments
+
+      .col-md-3
+        label Praktika
+        p
+          - proved = @candidate.internships.present? ? @candidate.internships_proved : nil
+          => bool_icon(proved, 'bestätigt', 'offen')
+          = @candidate.internships
+      .col-md-3
+        label Führungszeugnis
+        p
+          = bool_icon @candidate.police_certificate, 'beglaubigte Kopie liegt vor', 'offen'

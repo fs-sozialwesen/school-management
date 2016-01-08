@@ -1,7 +1,4 @@
-.page-header
-  h2
-    |  Bewerber(in)
-    =< @candidate.person.name
+.page-header: h2 Bewerber(in) #{@candidate.person.name}
 
 nav.navbar.navbar-default
   .navbar-header
@@ -20,26 +17,6 @@ nav.navbar.navbar-default
         li = link_to cancel_candidate_path(@candidate) do
           span.glyphicon.glyphicon-thumbs-down
           |  Absage
-      - if @candidate.created?
-        li = link_to approve_candidate_path(@candidate) do
-          span.glyphicon.glyphicon-step-forward
-          |  Zulassen
-      - if @candidate.approved? or @candidate.interview?
-        li = link_to interview_candidate_path(@candidate) do
-          span.glyphicon.glyphicon-step-forward
-          |  KLT
-      - if @candidate.interview? and @candidate.interviews.last.try! :executed
-        li = link_to accept_candidate_path(@candidate) do
-          span.glyphicon.glyphicon-step-forward
-          |  Aufnehmen
-      /- if @candidate.assessment?
-        li = link_to accept_candidate_path(@candidate) do
-          span.glyphicon.glyphicon-step-forward
-          |  Aufnehmen
-      - if @candidate.accepted?
-        li = link_to contract_candidate_path(@candidate) do
-          span.glyphicon.glyphicon-step-forward
-          |  Verträge
       - unless @candidate.created?
         li = link_to init_candidate_path(@candidate), data: { confirm: t('.confirm_init') } do
           span.glyphicon.glyphicon-fast-backward
@@ -47,126 +24,11 @@ nav.navbar.navbar-default
       li = link_to @candidate, method: :delete, data: { confirm: t('.confirm_delete') } do
         span.glyphicon.glyphicon-remove
         |  Löschen
-      li = link_to edit_candidate_path(@candidate) do
-        span.glyphicon.glyphicon-pencil
-        |  Bearbeiten
       li = link_to candidates_path do
         span.glyphicon.glyphicon-list-alt
         |  Zur Liste
 
-ul.list-inline.pull-right
-  - label_class = @candidate.rejected? ? 'danger' : 'default'
-  li: h4: span.label class = ('label-' + label_class) = human_status_name :rejected
-  - label_class = @candidate.canceled? ? 'danger' : 'default'
-  li: h4: span.label class = ('label-' + label_class) = human_status_name :canceled
-ul.list-inline
-  - Candidate.statuses.each do |status, status_code|
-    - next if status_code < 0
-    - status_reached = @candidate.progress >= status_code
-    li: h4: span.label class = (status_reached ? 'label-success' : 'label-default')
-      - if status_reached
-        |  ✓
-      =< human_status_name status
-
-.row
-  .col-md-2
-    .panel.panel-default
-      .panel-heading Bewerbung
-      .panel-body
-        p
-          label Eingangsdatum
-          - if @candidate.date.present?
-            =< l @candidate.date
-        p
-          label Jahr
-          =< @candidate.year
-
-  .col-md-4
-    .panel.panel-default
-      .panel-heading Bewerber
-      .panel-body
-        p
-          => { 'f' => 'Frau', 'm' => 'Herr' }[@candidate.person.gender]
-          => @candidate.person.first_name
-          = @candidate.person.last_name
-        p
-          label geb.
-          - if @candidate.person.date_of_birth.present?
-            =< l @candidate.person.date_of_birth
-          =< @candidate.person.place_of_birth
-        p
-          label Status
-          =< human_status_name @candidate.status
-
-
-  .col-md-3
-    .panel.panel-default
-      .panel-heading Adresse
-      .panel-body
-        p = @candidate.person.address.street
-        p
-          => @candidate.person.address.zip
-          = @candidate.person.address.city
-
-  .col-md-3
-    .panel.panel-default
-      .panel-heading Kontaktdaten
-      .panel-body
-        p
-          label
-            span.glyphicon.glyphicon-envelope
-          - email = @candidate.person.contact.email
-          =< link_to email, "mailto:#{email}"
-        p
-          label
-            span.glyphicon.glyphicon-earphone
-          =< @candidate.person.contact.phone
-        p
-          label
-            span.glyphicon.glyphicon-phone
-          =< @candidate.person.contact.mobile
-
-.row
-  .col-md-12
-    .panel.panel-default
-      .panel-heading Zulassungsvoraussetzungen
-      .panel-body
-        .row
-          .col-md-4
-            p
-              label Schulausbildung
-              br
-              = bool_icon(@candidate.school_graduate.proved, 'bestätigt', 'offen')
-              =< @candidate.school_graduate.graduate
-            p
-              label Berufsausbildung
-              br
-              = bool_icon(@candidate.profession_graduate.proved, 'bestätigt', 'offen')
-              =< @candidate.profession_graduate.graduate
-            - if @candidate.profession_graduate.comments.present?
-              p
-                =< @candidate.profession_graduate.comments
-
-          .col-md-4
-            label Praktika
-            p
-              = bool_icon(@candidate.internship1.proved, 'bestätigt', 'offen')
-              =< @candidate.internship1.months
-              |  Monate bei
-              =< @candidate.internship1.institution
-            p
-              = bool_icon(@candidate.internship2.proved, 'bestätigt', 'offen')
-              =< @candidate.internship2.months
-              |  Monate bei
-              =< @candidate.internship2.institution
-          .col-md-4
-            label Führungszeugnis
-            p
-              = bool_icon @candidate.police_certificate, 'beglaubigte Kopie liegt vor', 'offen'
-.row
-  .col-md-12
-    .panel.panel-default
-      .panel-heading Notizen
-      .panel-body = @candidate.notes
-
-
+= render 'candidates/show/person', person: @candidate.person
+= render 'candidates/show/documents'
+= render 'candidates/show/interview', interview: @candidate.interview
+= render 'candidates/show/contracts'

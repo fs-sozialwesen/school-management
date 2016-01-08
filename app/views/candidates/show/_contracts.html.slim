@@ -1,0 +1,31 @@
+.panel.panel-default
+  .panel-heading
+    |  Verträge
+    /= render 'candidates/show/panel_heading', done: @candidate.progress >= 3, status: 'ok',
+        part: 'contracts'
+    ul.list-inline.pull-right
+      - if @candidate.progress >= 3
+        li: span.label.label-success ✓ zugelassen
+      li = link_to edit_candidate_path(@candidate, part: 'contracts'), class: 'btn btn-default btn-xs' do
+        span.glyphicon.glyphicon-cog>
+        | Bearbeiten
+  .panel-body
+    .row
+      .col-md-3
+        h5 Ausbildungsvertrag
+        p
+          label Versand am
+          =< l @candidate.education_contract_sent if @candidate.education_contract_sent.present?
+        p
+          label zurück
+          =< l @candidate.education_contract_received if @candidate.education_contract_received.present?
+
+      .col-md-3
+        h5 Praktikumsvertrag
+        p
+          label Versand am
+          =< l @candidate.internship_contract_sent if @candidate.internship_contract_sent.present?
+        p
+          label zurück
+          =< l @candidate.internship_contract_received if @candidate.internship_contract_received.present?
+

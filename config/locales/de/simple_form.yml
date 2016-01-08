@@ -12,27 +12,26 @@ de:
       default_message: "Bitte überprüfen Sie folgende Fehler:"
     labels:
       candidate:
-        options:
-          date: Eingangsdatum
-          education_subject: Fachrichtung
-          notes: Notizen
-          year: Jahr
-          police_certificate: Beglaubigte Kopie liegt vor
-          internship1:
-            institution: Einrichtung
-            months: Monate (Anzahl)
-            proved: Beglaubigte Kopie liegt vor
-          internship2:
-            institution: Einrichtung
-            months: Monate (Anzahl)
-            proved: Beglaubigte Kopie liegt vor
-          school_graduate:
-            graduate: Schulabschluss
-            proved: Beglaubigte Kopie liegt vor
-          profession_graduate:
-            graduate: Berufsausbildung
-            comments: Sonstiges
-            proved: Beglaubigte Kopie liegt vor
+        date: Eingangsdatum
+        education_subject: Fachrichtung
+        notes: Notizen
+        year: Jahr
+        police_certificate: Beglaubigte Kopie liegt vor
+        internships: Praktika
+        internships_proved: Beglaubigte Kopien liegen vor
+        school_graduate:
+          graduate: Schulabschluss
+          proved: Beglaubigte Kopie liegt vor
+        profession_graduate:
+          graduate: Berufsausbildung
+          comments: Sonstiges
+          proved: Beglaubigte Kopie liegt vor
+        interview:
+          date: Datum
+          time: Uhrzeit
+          place: Ort
+          result: Ergebnis
+          reason: Begründung
         person:
           address:
             city: Ort
@@ -52,15 +51,18 @@ de:
         password: 'No special characters, please.'
     placeholders:
       candidate:
-        options:
-          education_graduate:
-            name: Arbeitgeber / Institution
-            address: Adresse
-          profession_graduate:
-            comments: Berufsbezeichnung
-          school_graduate:
-            name: Schulform
-            graduate: Abschluss
+        interview:
+          date: Datum
+          time: Zeit
+          place: 'Ort: z.B. FS Aschersleben Raum 15'
+        education_graduate:
+          name: Arbeitgeber / Institution
+          address: Adresse
+        profession_graduate:
+          comments: Berufsbezeichnung
+        school_graduate:
+          name: Schulform
+          graduate: Abschluss
 
     include_blanks:
       candidate:

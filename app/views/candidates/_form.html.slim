@@ -2,28 +2,20 @@
   - if @candidate.errors.any?
     .alert.alert-danger.alert-dismissable@alert
       button.close type="button" data-dismiss="alert"
-        span aria-hidden="true"
-          | &times;
-        span.sr-only
-          | Close
-      /h4= "#{pluralize(@candidate.errors.count,"error")} prohibited this role_candidate from being saved:"
+        span aria-hidden="true" &times;
+        span.sr-only Close
       h4 = t('.error')
-      /ul
-        - @candidate.errors.full_messages.each do |msg|
-          li= msg
-  .row
-    .col-md-2 = render 'form_general', f: f
-    .col-md-4 = render 'form_person',  f: f
-    .col-md-3 = render 'form_address', f: f
-    .col-md-3 = render 'form_contact', f: f
-  .row
-    .col-md-12 = render 'form_approval_conditions', f: f
-  .row
-    .col-md-12 = render 'form_notes', f: f
 
-  .row
-    .col-md-9
-      = f.submit class: 'btn btn-primary'
+  - if params[:part] == 'person' or params[:part].blank?
+    = render 'candidates/form/person', f: f
+  - if params[:part] == 'documents'
+    = render 'candidates/form/documents', f: f
+  - if params[:part] == 'interview'
+    = render 'candidates/form/interview', f: f
+  - if params[:part] == 'contracts'
+    = render 'candidates/form/contracts', f: f
+
+  .row: .col-md-9 = f.submit  'speichern', class: 'btn btn-primary'
 
 coffee:
   $ ->
@@ -39,7 +31,7 @@ coffee:
         format: 'dd.mm.yyyy'
         startView: startView
         language: "de"
-        endDate: '0d'
+        todayHighlight: true
 
     $('select.select2').each (i, input) ->
       $input = $(input)

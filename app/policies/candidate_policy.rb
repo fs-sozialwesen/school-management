@@ -28,11 +28,19 @@ class CandidatePolicy < ApplicationPolicy
     index?
   end
 
-  def invite?
+  def interview?
     index?
   end
 
-  def interview?
+  def accept_interview?
+    index?
+  end
+
+  def reject_interview?
+    index?
+  end
+
+  def repeat_interview?
     index?
   end
 

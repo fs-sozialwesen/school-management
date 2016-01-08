@@ -1,0 +1,6 @@
+ul.list-inline.pull-right
+  - if done
+    li: span.label.label-success ✓ #{status}
+  li = link_to edit_candidate_path(@candidate, part: part), class: 'btn btn-default btn-xs' do
+    span.glyphicon.glyphicon-cog>
+    | Bearbeiten

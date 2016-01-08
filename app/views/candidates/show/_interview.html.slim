@@ -1,0 +1,61 @@
+.panel.panel-default
+  .panel-heading
+    |  Kennlerntreffen
+    /= render 'candidates/show/panel_heading', done: @candidate.interview.ok?, status: 'Bewerber angenommen',
+      part: 'interview'
+    ul.list-inline.pull-right
+      li
+        - if interview.open?
+          span.label.label-default ✓ offen
+        - if interview.accepted?
+          span.label.label-success ✓ angenommen
+        - if interview.rejected?
+          span.label.label-danger abgelehnt
+      li.btn-group
+        = link_to edit_candidate_path(@candidate, part: 'interview'), class: 'btn btn-default btn-xs' do
+          span.glyphicon.glyphicon-cog>
+          | Bearbeiten
+        - if interview.open?
+          = link_to accept_interview_candidate_path(@candidate), method: :patch, class: 'btn btn-default btn-xs' do
+            span.glyphicon.glyphicon-ok>
+            | OK
+          = link_to reject_interview_candidate_path(@candidate), method: :patch, class: 'btn btn-danger btn-xs' do
+            span.glyphicon.glyphicon-thumbs-down>
+            | Ablehnen
+        - if interview.rejected?
+          = link_to repeat_interview_candidate_path(@candidate), method: :patch, class: 'btn btn-default btn-xs' do
+            span.glyphicon.glyphicon-repeat>
+            | Wiederholen
+        /- unless interview.accepted?
+          button.btn.btn-default.btn-xs.dropdown-toggle aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" type="button"
+            span.caret
+            span.sr-only Toggle Dropdown
+          ul.dropdown-menu
+            - if interview.open?
+              li = link_to accept_interview_candidate_path(@candidate), method: :patch do
+                i.glyphicon.glyphicon-ok
+                |  OK
+              li = link_to reject_interview_candidate_path(@candidate), method: :patch do
+                i.glyphicon.glyphicon-thumbs-down
+                |  Ablehnen
+            - if interview.rejected?
+              li = link_to repeat_interview_candidate_path(@candidate), method: :patch do
+                i.glyphicon.glyphicon-repeat>
+                |  Wiederholen
+
+  .panel-body
+    .row
+      .col-md-6
+        p
+          => l interview.date if interview.date.present?
+          = interview.time
+        p = interview.place
+      .col-md-6
+        /p
+          label> Ergebnis
+          => human_result_name interview.result
+        p = interview.reason
+
+        h5 Notizen
+        p = interview.comments
+

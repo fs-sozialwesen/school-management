@@ -1,14 +1,30 @@
 .page-header
-  = link_to @candidate, class: 'btn btn-danger', method: :delete, data: { confirm: 'Wirklich?' } do
-    span.glyphicon.glyphicon-remove
-    |  Löschen
-  = link_to candidates_path, class: 'btn btn-default' do
-    span.glyphicon.glyphicon-list-alt
-    |  Zur Liste
-
-  = link_to 'Abbrechen', @candidate, class: 'btn btn-default'
+  /= link_to @candidate, class: 'btn btn-danger', method: :delete, data: { confirm: 'Wirklich?' } do
+  /  span.glyphicon.glyphicon-remove
+  /  |  Löschen
+  /= link_to candidates_path, class: 'btn btn-default' do
+  /  span.glyphicon.glyphicon-list-alt
+  /  |  Zur Liste
+  /
+  /= link_to 'Abbrechen', @candidate, class: 'btn btn-default'
   h1
     | Bewerber #{@candidate.person.name} bearbeiten
+
+nav.navbar.navbar-default
+  .navbar-header
+    button.navbar-toggle.collapsed aria-expanded="false" data-target="#candidate-subnav" data-toggle="collapse" type="button"
+      span.sr-only Toggle navigation
+      span.icon-bar
+      span.icon-bar
+      span.icon-bar
+  #candidate-subnav.collapse.navbar-collapse
+    ul.nav.navbar-nav
+      li = link_to candidate_path(@candidate) do
+        span.glyphicon.glyphicon-triangle-left
+        |  Abbrechen
+      li = link_to candidates_path do
+        span.glyphicon.glyphicon-list-alt
+        |  Zur Liste
 
 = render 'form'
 

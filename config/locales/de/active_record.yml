@@ -142,6 +142,10 @@ de:
         status/student: Student
         status/rejected: abgelehnt
         status/canceled: abgesagt
+        interview:
+          result/open: offen
+          result/accepted: angenommen
+          result/rejected: abgelehnt
       student:
         year: Jahrgang
       teacher:

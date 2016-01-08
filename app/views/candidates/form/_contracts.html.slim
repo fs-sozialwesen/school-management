@@ -1,0 +1,13 @@
+.row
+  .col-md-6
+    .panel.panel-default
+      .panel-heading Ausbildungsvertrag
+      .panel-body
+        = f.input :education_contract_sent,     as: :string, label: 'Versand am', input_html:{ class: :date }
+        = f.input :education_contract_received, as: :string, label: 'zurück',   input_html:{ class: :date }
+  .col-md-6
+    .panel.panel-default
+      .panel-heading Praktikumsvertrag
+      .panel-body
+        = f.input :internship_contract_sent,     as: :string, label: 'Versand am', input_html:{ class: :date }
+        = f.input :internship_contract_received, as: :string, label: 'zurück',   input_html:{ class: :date }
