@@ -1,0 +1,14 @@
+- if @candidate.rejected? or @candidate.canceled?
+  .panel.panel-danger
+    .panel-heading Absage
+    .panel-body
+      .row
+        .col-md-3
+          label Datum
+          p = l @candidate.cancel_date if @candidate.cancel_date.present?
+        .col-md-3
+          label Absage durch
+          p = { 'rejected' => 'Schule', 'canceled' => 'Bewerber(in)' }[@candidate.status]
+        .col-md-6
+          label Begründung
+          p = @candidate.cancel_reason

@@ -19,6 +19,8 @@ de:
         police_certificate: Beglaubigte Kopie liegt vor
         internships: Praktika
         internships_proved: Beglaubigte Kopien liegen vor
+        cancel_date: Datum
+        cancel_reason: Begründung
         school_graduate:
           graduate: Schulabschluss
           proved: Beglaubigte Kopie liegt vor

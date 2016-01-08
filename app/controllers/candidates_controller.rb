@@ -53,34 +53,7 @@ class CandidatesController < ApplicationController
     redirect_to @candidate, notice: 'Bewerber zurückgesetzt!'
   end
 
-  def accept_interview
-    @candidate.interview.accept!
-    @candidate.save!
-    redirect_to @candidate, notice: 'KLT positiv durchgeführt!'
-  end
-
-  def reject_interview
-    @candidate.interview.reject!
-    @candidate.save!
-    redirect_to @candidate, notice: 'KLT abgelehnt!'
-  end
-
-  def repeat_interview
-    @candidate.interview.repeat!
-    @candidate.save!
-    redirect_to edit_candidate_path(@candidate, part: 'interview'), notice: 'KLT zurückgesetzt'
-  end
-
   def reject
-    return unless request.patch?
-    @candidate.rejected!
-    redirect_to @candidate, notice: 'Bewerber abgelehnt!'
-  end
-
-  def cancel
-    return unless request.patch?
-    @candidate.canceled!
-    redirect_to @candidate, notice: 'Bewerber abgelehnt!'
   end
 
   private
@@ -98,7 +71,7 @@ class CandidatesController < ApplicationController
 
         %i(date notes education_subject year police_certificate internships internships_proved
            education_contract_sent education_contract_received internship_contract_sent
-           internship_contract_received) +
+           internship_contract_received cancel_date cancel_reason status) +
           [
             school_graduate:     %i(graduate proved),
             profession_graduate: %i(graduate proved comments),

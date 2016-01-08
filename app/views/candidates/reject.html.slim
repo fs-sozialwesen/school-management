@@ -1,0 +1,62 @@
+.page-header: h1 Bewerber #{@candidate.person.name} absagen
+
+nav.navbar.navbar-default
+  .navbar-header
+    button.navbar-toggle.collapsed aria-expanded="false" data-target="#candidate-subnav" data-toggle="collapse" type="button"
+      span.sr-only Toggle navigation
+      span.icon-bar
+      span.icon-bar
+      span.icon-bar
+  #candidate-subnav.collapse.navbar-collapse
+    ul.nav.navbar-nav
+      li = link_to candidate_path(@candidate) do
+        span.glyphicon.glyphicon-triangle-left
+        |  Abbrechen
+      li = link_to candidates_path do
+        span.glyphicon.glyphicon-list-alt
+        |  Zur Liste
+
+= simple_form_for(@candidate, class: 'form-horizontal', defaults: { required: false, include_blank: false }) do |f|
+  - if @candidate.errors.any?
+    .alert.alert-danger.alert-dismissable@alert
+      button.close type="button" data-dismiss="alert"
+        span aria-hidden="true" &times;
+        span.sr-only Close
+      h4 = t('.error')
+
+  .panel.panel-default
+    .panel-heading Absage
+    .panel-body
+      .row
+        .col-md-4
+          = f.input :cancel_date, as: :string, input_html: { class: 'date' }
+          = f.input :status, collection: [%w(Schule rejected), %w(Bewerber canceled)], label: 'Absage durch'
+        .col-md-8
+          = f.input :cancel_reason, input_html: { rows: 5 }
+
+  .row: .col-md-9 = f.submit 'Absagen', class: 'btn btn-danger'
+
+coffee:
+  $ ->
+    $('input.date').each (i, input) ->
+      $input = $(input)
+      date = $input.val()
+      if date isnt ''
+        [year, month, day] = date.split('-')
+        $input.val [day, month, year].join('.')
+
+      startView = $input.data().startView or 0
+      $input.datepicker
+        format: 'dd.mm.yyyy'
+        startView: startView
+        language: "de"
+        todayHighlight: true
+
+    $('select.select2').each (i, input) ->
+      $input = $(input)
+      $input.select2
+        theme: "bootstrap"
+
+sass:
+  .datepicker
+    z-index: 1151 !important

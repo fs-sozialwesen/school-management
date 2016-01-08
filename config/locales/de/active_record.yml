@@ -140,8 +140,8 @@ de:
         status/interview: KLT
         status/contracts_back: Vertäge
         status/student: Student
-        status/rejected: abgelehnt
-        status/canceled: abgesagt
+        status/rejected: Schule abgesagt
+        status/canceled: Bewerber abgesagt
         interview:
           answer/open: offen
           answer/accepted: Zusage

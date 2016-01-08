@@ -2,23 +2,20 @@
 
 nav.navbar.navbar-default
   .navbar-header
-    button.navbar-toggle.collapsed aria-expanded="false" data-target="#candidate-subnav" data-toggle="collapse" type="button"
+    button.navbar-toggle.collapsed[aria-expanded="false" data-target="#candidate-subnav"
+      data-toggle="collapse" type="button"]
       span.sr-only Toggle navigation
       span.icon-bar
       span.icon-bar
       span.icon-bar
   #candidate-subnav.collapse.navbar-collapse
     ul.nav.navbar-nav
-      - unless @candidate.rejected?
+      - unless @candidate.rejected? or @candidate.canceled?
         li = link_to reject_candidate_path(@candidate) do
-          span.glyphicon.glyphicon-thumbs-down
-          |  Ablehnen
-      - unless @candidate.canceled?
-        li = link_to cancel_candidate_path(@candidate) do
           span.glyphicon.glyphicon-thumbs-down
           |  Absage
       - unless @candidate.created?
-        li = link_to init_candidate_path(@candidate), data: { confirm: t('.confirm_init') } do
+        li = link_to init_candidate_path(@candidate), method: :patch, data: { confirm: t('.confirm_init') } do
           span.glyphicon.glyphicon-fast-backward
           |  Zurücksetzen
       li = link_to @candidate, method: :delete, data: { confirm: t('.confirm_delete') } do
@@ -28,6 +25,8 @@ nav.navbar.navbar-default
         span.glyphicon.glyphicon-list-alt
         |  Zur Liste
 
+
+= render 'candidates/show/rejected'
 = render 'candidates/show/person', person: @candidate.person
 = render 'candidates/show/documents'
 = render 'candidates/show/interview', interview: @candidate.interview
