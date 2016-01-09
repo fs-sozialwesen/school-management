@@ -15,7 +15,12 @@
   - if params[:part] == 'contracts'
     = render 'candidates/form/contracts', f: f
 
-  .row: .col-md-9 = f.submit  'speichern', class: 'btn btn-primary'
+  .row
+    .col-md-12
+      .pull-right
+        - back_path = @candidate.new_record? ? candidates_path : candidate_path(@candidate)
+        => link_to 'Abbrechen', back_path, class: 'btn btn-default'
+        = f.submit 'Speichern', class: 'btn btn-primary'
 
 coffee:
   $ ->
