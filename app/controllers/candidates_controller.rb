@@ -37,6 +37,7 @@ class CandidatesController < ApplicationController
 
   def update
     if @candidate.update(candidate_params)
+      @candidate.approved! if @candidate.interview.accepted? and params[:source] == 'interview'
       redirect_to @candidate, notice: t('.success')
     else
       render :edit
@@ -51,6 +52,11 @@ class CandidatesController < ApplicationController
   def init
     @candidate.created!
     redirect_to @candidate, notice: 'Bewerber zurückgesetzt!'
+  end
+
+  def accept
+    @candidate.accepted!
+    redirect_to candidate_url(@candidate), notice: 'Bewerber aufgenommen!'
   end
 
   def reject

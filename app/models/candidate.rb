@@ -4,8 +4,8 @@ class Candidate < ActiveRecord::Base
     canceled:       -2,
 
     created:        0,
-    accepted:       1,
-    approved:       2,
+    approved:       1,
+    accepted:       2,
   }
 
   belongs_to :person, validate: true, inverse_of: :as_candidate

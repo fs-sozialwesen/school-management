@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   resources :candidates do
     member do
       patch :init
+      patch :accept
       match :reject, via: [:get, :patch]
     end
   end

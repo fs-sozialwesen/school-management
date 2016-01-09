@@ -20,7 +20,12 @@
           =< @candidate.year
         p
           label Status
-          =< human_status_name @candidate.status
+          =< progress_bar(@candidate)
+          - unless @candidate.created?
+            =< link_to init_candidate_path(@candidate), method: :patch,
+                data: { confirm: t('.confirm_init') }, class: 'btn btn-default btn-xs' do
+              span.glyphicon.glyphicon-fast-backward
+              |  Zurücksetzen
 
       .col-md-3
         p

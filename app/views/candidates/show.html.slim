@@ -1,33 +1,26 @@
-.page-header: h2 Bewerber(in) #{@candidate.person.name}
-
-nav.navbar.navbar-default
-  .navbar-header
-    button.navbar-toggle.collapsed[aria-expanded="false" data-target="#candidate-subnav"
-      data-toggle="collapse" type="button"]
-      span.sr-only Toggle navigation
-      span.icon-bar
-      span.icon-bar
-      span.icon-bar
-  #candidate-subnav.collapse.navbar-collapse
-    ul.nav.navbar-nav
-      - unless @candidate.rejected? or @candidate.canceled?
-        li = link_to reject_candidate_path(@candidate) do
-          span.glyphicon.glyphicon-thumbs-down
-          |  Absage
-      - unless @candidate.created?
-        li = link_to init_candidate_path(@candidate), method: :patch, data: { confirm: t('.confirm_init') } do
-          span.glyphicon.glyphicon-fast-backward
-          |  Zurücksetzen
-      li = link_to @candidate, method: :delete, data: { confirm: t('.confirm_delete') } do
-        span.glyphicon.glyphicon-remove
-        |  Löschen
-      li = link_to candidates_path do
-        span.glyphicon.glyphicon-list-alt
-        |  Zur Liste
-
+.page-header
+  = link_to candidates_path, class: 'btn btn-default' do
+    span.glyphicon.glyphicon-list-alt
+    |  Zur Liste
+  h2 Bewerber(in) #{@candidate.person.name}
 
 = render 'candidates/show/rejected'
 = render 'candidates/show/person', person: @candidate.person
 = render 'candidates/show/documents'
 = render 'candidates/show/interview', interview: @candidate.interview
 = render 'candidates/show/contracts'
+
+.row: .col-md-12
+  .pull-right
+    => link_to @candidate, method: :delete, data: { confirm: t('.confirm_delete') }, class: 'btn btn-danger' do
+      span.glyphicon.glyphicon-remove
+      |  Löschen
+    - disabled = @candidate.rejected? or @candidate.canceled?
+    => link_to reject_candidate_path(@candidate), class: "btn btn-danger #{'disabled' if disabled}" do
+      span.glyphicon.glyphicon-thumbs-down>
+      |  Absagen
+    - disabled = !@candidate.approved?
+    = link_to accept_candidate_path(@candidate), method: :patch, class: "btn btn-success #{'disabled' if disabled}",
+        data: { confirm: t('.confirm_accept') } do
+      span.glyphicon.glyphicon-thumbs-up>
+      |  Annehmen
