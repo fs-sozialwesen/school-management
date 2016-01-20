@@ -133,8 +133,7 @@ de:
         roles: Rollen
       candidate:
         status: Status
-        status/accepted: angenommen
-        status/approved: zugelassen
+        status/accepted: zugelassen
         status/created: angelegt
         status/invited: eingeladen
         status/interview: KLT

@@ -1,4 +1,8 @@
 = f.simple_fields_for :person do |p|
+  - if f.object.new_record?
+    .panel.panel-default
+      .panel-heading Bewerbung
+      .panel-body = f.input :date, as: :string, input_html:{ class: :date }
   .row
     .col-md-4
       .panel.panel-default

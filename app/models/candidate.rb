@@ -1,11 +1,10 @@
 class Candidate < ActiveRecord::Base
   enum status: {
-    rejected:       -1,
-    canceled:       -2,
+    rejected: -1,
+    canceled: -2,
 
-    created:        0,
-    approved:       1,
-    accepted:       2,
+    created:  0,
+    accepted: 1,
   }
 
   belongs_to :person, validate: true, inverse_of: :as_candidate
@@ -15,6 +14,8 @@ class Candidate < ActiveRecord::Base
   serialize :interview, Interview
 
   accepts_nested_attributes_for :person
+
+  validates :date, presence: true
 
   def display_name
     person.name
@@ -38,14 +39,11 @@ class Candidate < ActiveRecord::Base
       field :person
       field :created_at
       field :year
-      # field(:status) { pretty_value { bindings[:object].aasm.human_state } }
-      # field :education_subject
       field(:school_graduate)     { pretty_value { value.graduate } }
       field(:profession_graduate) { pretty_value { value.graduate } }
     end
 
     edit do
-      # field(:education_subject, :enum) { enum EducationSubject.pluck(:name) }
       field(:year, :enum) { enum (Date.today.year..(Date.today.year + 2)).to_a }
       field :attachments
     end

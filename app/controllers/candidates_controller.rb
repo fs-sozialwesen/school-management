@@ -38,7 +38,6 @@ class CandidatesController < ApplicationController
 
   def update
     if @candidate.update(candidate_params)
-      @candidate.approved! if @candidate.interview.accepted? and params[:source] == 'interview'
       redirect_to @candidate, notice: t('.success')
     else
       render :edit

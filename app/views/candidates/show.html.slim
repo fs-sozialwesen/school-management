@@ -19,8 +19,7 @@
     => link_to reject_candidate_path(@candidate), class: "btn btn-danger #{'disabled' if disabled}" do
       span.glyphicon.glyphicon-thumbs-down>
       |  Absagen
-    - disabled = !@candidate.approved?
-    = link_to accept_candidate_path(@candidate), method: :patch, class: "btn btn-success #{'disabled' if disabled}",
+    = link_to accept_candidate_path(@candidate), method: :patch, class: "btn btn-success",
         data: { confirm: t('.confirm_accept') } do
       span.glyphicon.glyphicon-thumbs-up>
-      |  Annehmen
+      |  Zulassen

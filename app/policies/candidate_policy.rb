@@ -24,26 +24,6 @@ class CandidatePolicy < ApplicationPolicy
     index?
   end
 
-  def approve?
-    index?
-  end
-
-  def interview?
-    index?
-  end
-
-  def accept_interview?
-    index?
-  end
-
-  def reject_interview?
-    index?
-  end
-
-  def repeat_interview?
-    index?
-  end
-
   def accept?
     index?
   end
@@ -51,11 +31,6 @@ class CandidatePolicy < ApplicationPolicy
   def reject?
     index?
   end
-
-  def cancel?
-    index?
-  end
-
 
   class Scope < Scope
     def resolve
