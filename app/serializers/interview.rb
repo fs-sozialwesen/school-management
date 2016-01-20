@@ -4,19 +4,11 @@ class Interview < JsonSerializer
   RESULTS = %w(open accepted rejected).freeze
 
   attribute :date,       Date
-  attribute :time,       String
-  attribute :place,      String
   attribute :comments,   String,  default: ''
   attribute :invited,    Boolean, default: false
   attribute :answer,     String,  default: 'open'
   attribute :result,     String,  default: 'open'
   attribute :reason,     String,  default: ''
-
-
-
-  # def persisted?
-  #   false
-  # end
 
   def open?
     result == 'open'

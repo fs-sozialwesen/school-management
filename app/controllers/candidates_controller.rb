@@ -9,6 +9,7 @@ class CandidatesController < ApplicationController
     @statuses   = Candidate.statuses
     @years      = (1.year.ago.year..2.year.from_now.year).to_a
     @candidates = filtered_candidates.all
+    @grouped = params[:view] == 'grouped'
   end
 
   def show

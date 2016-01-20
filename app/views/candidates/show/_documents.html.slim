@@ -1,8 +1,6 @@
 .panel.panel-default
   .panel-heading
     |  Bewerbung und Dokumente
-    /= render 'candidates/show/panel_heading', done: @candidate.progress >= 1, status: 'zugelassen',
-      part: 'documents'
     ul.list-inline.pull-right
       - if @candidate.documents_complete?
         li: span.label.label-success ✓ vollständig
@@ -18,14 +16,6 @@
         p
           label Jahr
           =< @candidate.year
-        p
-          label Status
-          =< progress_bar(@candidate)
-          - unless @candidate.created?
-            =< link_to init_candidate_path(@candidate), method: :patch,
-                data: { confirm: t('.confirm_init') }, class: 'btn btn-default btn-xs' do
-              span.glyphicon.glyphicon-fast-backward
-              |  Zurücksetzen
 
       .col-md-3
         p

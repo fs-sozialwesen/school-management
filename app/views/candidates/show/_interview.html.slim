@@ -16,11 +16,8 @@
   .panel-body
     .row
       .col-md-3
-        label Zeit / Ort
-        p
-          => l interview.date if interview.date.present?
-          = interview.time
-        p = interview.place
+        label Tag
+        p = l interview.date if interview.date.present?
       .col-md-3
         label Einladung
         p = interview.invited ? 'eingeladen' : 'noch nicht eingeladen'

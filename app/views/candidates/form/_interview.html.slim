@@ -3,12 +3,8 @@ input name="source" value="interview" type="hidden"
   .row
     .col-md-6
       .panel.panel-default
-        .panel-heading Ort und Zeit
-        .panel-body
-          .row
-            .col-md-6 = i.input :date, as: :string, label: false, input_html: { class: 'date' }
-            .col-md-6 = i.input :time, as: :string, label: false
-          = i.input :place, label: false
+        .panel-heading Tag
+        .panel-body = i.input :date, as: :string, label: false, input_html: { class: 'date' }
     .col-md-6
       .panel.panel-default
         .panel-heading Notizen

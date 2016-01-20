@@ -1,0 +1,24 @@
+- grouped_candidates = @candidates.to_a.group_by { |cand| cand.interview.date.nil? ? nil : ( cand.interview.date < Date.current ) }
+
+.row
+  .col-md-2
+    = link_to candidates_path, class: 'btn btn-default btn-block' do
+      span.glyphicon.glyphicon-list
+      |  Liste
+
+    hr
+
+    label Kennlerntag:
+
+    ul.nav.nav-pills.nav-stacked
+      li.active: a data-toggle="tab" href="#no-interview" ohne KLT
+      li: a data-toggle="tab" href="#interview-in-future" kommende
+      li: a data-toggle="tab" href="#interview-passed" vergangene
+  .col-md-10
+    .tab-content
+      #no-interview.tab-pane.active
+        = render 'candidates/index/no_interview', candidates: grouped_candidates[nil]
+      #interview-in-future.tab-pane
+        = render 'candidates/index/interview_in_future', candidates: grouped_candidates[false]
+      #interview-passed.tab-pane
+        = render 'candidates/index/interview_passed', candidates: grouped_candidates[true]
