@@ -102,7 +102,7 @@ class CandidatesController < ApplicationController
 
   def filtered_candidates
     process_filter_params
-    candidates = Candidate.order(:status).includes(:person)
+    candidates = Candidate.order(:date).includes(:person)
     candidates = candidates.send status if status.in?(@statuses.keys)
     candidates = candidates.where(status: @statuses[status]) if status.in?(@statuses.keys)
     # condition  = { education_subject: @education_subject }.to_json
