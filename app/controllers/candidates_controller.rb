@@ -101,7 +101,7 @@ class CandidatesController < ApplicationController
 
   def filtered_candidates
     process_filter_params
-    candidates = Candidate.order(:date).includes(:person)
+    candidates = Candidate.order(order_options).includes(:person)
     candidates = candidates.send status if status.in?(@statuses.keys)
     candidates = candidates.where(status: @statuses[status]) if status.in?(@statuses.keys)
     candidates = candidates.where('interview @> ?', { invited: @invited }.to_json) if @invited.in?([true, false])
@@ -112,5 +112,11 @@ class CandidatesController < ApplicationController
 
   def status
     params[:status].to_s
+  end
+
+  def order_options
+    return 'people.first_name, date' if params[:sort] == 'first_name'
+    return 'people.last_name, date'  if params[:sort] == 'last_name'
+    :date
   end
 end
