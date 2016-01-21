@@ -2,20 +2,25 @@
   /h3 Suche
   form action=candidates_url
     .form-group
-      select.form-control name="year"
-        option selected=(@year.blank?) value='' Jahr
-        - @years.each do |year|
-          option selected=(year == @year) value=year = year
-    /.form-group
-      select.form-control name="education_subject"
-        option selected=(@education_subject.blank?) value='' Fachrichtung
-        - @education_subjects.each do |education_subject|
-          option selected=(education_subject == @education_subject) value=education_subject = education_subject
-    .form-group
       select.form-control name="status"
         option selected=(@status.blank?) value='' Status
         - @statuses.each do |status, _|
           option selected=(status == @status) value=status = human_status_name(status)
+    .form-group
+      select.form-control name="interview_invited"
+        option selected=(@invited.nil?)     value=''    Eingeladung
+        option selected=(@invited == true)  value="yes" eingeladen
+        option selected=(@invited == false) value="no"  noch nicht eingeladen
+    .form-group
+      select.form-control name="interview_answer"
+        option selected=(@answer.blank?) value='' Rückmeldung
+        - Interview::ANSWERS.each do |answer|
+          option selected=(answer == @answer) value=answer = human_answer_name(answer)
+    .form-group
+      select.form-control name="interview_result"
+        option selected=(@result.blank?) value='' Ergebnis
+        - Interview::RESULTS.each do |result|
+          option selected=(result == @result) value=result = human_result_name(result)
     .form-group
       => link_to 'Alle', candidates_path, class: 'btn btn-info'
       input.btn.btn-primary type="submit" value="Suchen"

@@ -7,7 +7,6 @@ class CandidatesController < ApplicationController
   def index
     authorize Candidate
     @statuses   = Candidate.statuses
-    @years      = (1.year.ago.year..2.year.from_now.year).to_a
     @candidates = filtered_candidates.all
     @grouped = params[:view] == 'grouped'
   end
@@ -94,10 +93,10 @@ class CandidatesController < ApplicationController
   end
 
   def process_filter_params
-    # education_subject  = params[:education_subject]
-    # @education_subject = education_subject.in?(@education_subjects) ? education_subject : nil
-    @year   = params[:year].to_i.in?(@years) ? params[:year].to_i : nil
     @status = status
+    @invited = { 'yes' => true, 'no' => false }[params[:interview_invited]]
+    @answer = params[:interview_answer]
+    @result = params[:interview_result]
   end
 
   def filtered_candidates
@@ -105,9 +104,9 @@ class CandidatesController < ApplicationController
     candidates = Candidate.order(:date).includes(:person)
     candidates = candidates.send status if status.in?(@statuses.keys)
     candidates = candidates.where(status: @statuses[status]) if status.in?(@statuses.keys)
-    # condition  = { education_subject: @education_subject }.to_json
-    # candidates = candidates.where('options @> ?', condition) if @education_subject
-    candidates = candidates.where('options @> ?', { year: @year }.to_json) if @year
+    candidates = candidates.where('interview @> ?', { invited: @invited }.to_json) if @invited.in?([true, false])
+    candidates = candidates.where('interview @> ?', { answer: @answer }.to_json) if @answer.present?
+    candidates = candidates.where('interview @> ?', { result: @result }.to_json) if @result.present?
     candidates
   end
 
