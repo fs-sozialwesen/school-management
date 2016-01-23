@@ -9,6 +9,7 @@ class Student < ActiveRecord::Base
   # has_one :education_subject, through: :course
   # has_one :school, through: :education_subject
 
+  accepts_nested_attributes_for :person
   delegate :first_name, :last_name, :name, to: :person, allow_nil: true
 
   def display_name

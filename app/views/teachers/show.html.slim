@@ -9,8 +9,8 @@
     span.glyphicon.glyphicon-remove
     |  Löschen
   h1
-    => gt(:teacher, @teacher.person)
-    = @teacher.person.name
+    => @teacher.person.name
+    small = gt(:teacher, @teacher.person)
 
 = render @teacher.person
 .row

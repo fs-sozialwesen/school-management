@@ -1,0 +1,21 @@
+.page-header
+  = link_to students_path, class: 'btn btn-default' do 
+    span.glyphicon.glyphicon-list-alt
+    |  Liste
+  = link_to edit_student_path(@student), class: 'btn btn-primary' do 
+    span.glyphicon.glyphicon-pencil
+    |  Bearbeiten
+  = link_to @student, method: :delete, class: 'btn btn-danger', data: { confirm: t('.confirm_delete') } do
+    span.glyphicon.glyphicon-remove
+    |  Löschen
+  h1
+    => @student.name
+    small Auszubildende(r)
+
+= render @student.person
+.row
+  .col-md-6
+    .panel.panel-default
+      .panel-heading Klasse
+      .panel-body
+        = link_to @student.course.name, @student.course

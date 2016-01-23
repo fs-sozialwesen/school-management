@@ -46,6 +46,17 @@ de:
   teacher: Lehrer(in)
   teacher_f: Lehrerin
   teacher_m: Lehrer
+  students:
+    create:
+      success: Auszubildende(r) gespeichert.
+    update:
+      success: Auszubildende(r) gespeichert.
+    destroy:
+      success: Auszubildende(r) gelöscht.
+    form:
+      error: Auszubildende(r) konnte nicht gespeichert werden.
+    show:
+      confirm_delete: "Wirklich löschen?"
   teachers:
     create:
       success: Lehrer(in) gespeichert.

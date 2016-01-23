@@ -31,6 +31,9 @@
           - if policy(Course).index?
             li class = ('active' if params[:controller] == 'courses')
               = link_to 'Klassen', courses_url
+          - if policy(Student).index?
+            li class = ('active' if params[:controller] == 'students')
+              = link_to 'Auszubildende', students_url
 
         ul.nav.navbar-nav.navbar-right
           li.dropdown

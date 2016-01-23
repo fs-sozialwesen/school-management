@@ -1,0 +1,31 @@
+.page-header
+  a name='top'
+  = link_to new_student_path, class: 'btn btn-primary' do 
+    span.glyphicon.glyphicon-plus
+    |  Neu
+  h1 #{@students.count} Auszubildende
+
+- ('A'..'Z').each do | char |
+  a href="##{char}" = char
+
+- @students.to_a.group_by{ |student| student.person.last_name[0] }.each do | char, students |
+  h4
+    a name=char = char
+    span.pull-right
+      small: a href="#top" nach oben
+  .table-responsive
+    table.table.table-striped.table-bordered.table-hover.table-clickable
+      thead
+        tr
+          th Vorname
+          th Nachname
+          th Klasse
+      tbody
+        - current_char = ''
+        - students.each do | student |
+          tr data={ url: url_for(student) }
+            td = student.person.first_name
+            td = student.person.last_name
+            td = link_to student.course.name, student.course
+            /td
+              = link_to 'Destroy', student, method: :delete, data: { confirm: 'Are you sure?' }
