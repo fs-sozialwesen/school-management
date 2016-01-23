@@ -7,7 +7,12 @@
       h4 = t('.error')
 
   - if params[:part] == 'person' or params[:part].blank?
+    - if @candidate.new_record?
+      .panel.panel-default
+        .panel-heading Bewerbung
+        .panel-body = f.input :date, as: :string, input_html:{ class: :date }
     = render 'candidates/form/person', f: f
+    .row: .col-md-12 = f.input :notes, input_html: { rows: 5 }
   - if params[:part] == 'documents'
     = render 'candidates/form/documents', f: f
   - if params[:part] == 'interview'
@@ -21,28 +26,3 @@
         - back_path = @candidate.new_record? ? candidates_path : candidate_path(@candidate)
         => link_to 'Abbrechen', back_path, class: 'btn btn-default'
         = f.submit 'Speichern', class: 'btn btn-primary'
-
-coffee:
-  $ ->
-    $('input.date').each (i, input) ->
-      $input = $(input)
-      date = $input.val()
-      if date isnt ''
-        [year, month, day] = date.split('-')
-        $input.val [day, month, year].join('.')
-
-      startView = $input.data().startView or 0
-      $input.datepicker
-        format: 'dd.mm.yyyy'
-        startView: startView
-        language: "de"
-        todayHighlight: true
-
-    $('select.select2').each (i, input) ->
-      $input = $(input)
-      $input.select2
-        theme: "bootstrap"
-
-sass:
-  .datepicker
-    z-index: 1151 !important

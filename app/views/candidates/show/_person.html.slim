@@ -21,7 +21,7 @@
 
 
       .col-md-4
-        - address = @candidate.person.address
+        - address = person.address
         p = address.street
         p
           => address.zip
@@ -31,16 +31,16 @@
         p
           label
             span.glyphicon.glyphicon-envelope
-          - email = @candidate.person.contact.email
+          - email = person.contact.email
           =< link_to email, "mailto:#{email}"
         p
           label
             span.glyphicon.glyphicon-earphone
-          =< @candidate.person.contact.phone
+          =< person.contact.phone
         p
           label
             span.glyphicon.glyphicon-phone
-          =< @candidate.person.contact.mobile
+          =< person.contact.mobile
 
     - if @candidate.notes.present?
       .row: .col-md-12 = @candidate.notes
