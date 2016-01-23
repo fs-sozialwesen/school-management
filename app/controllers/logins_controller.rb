@@ -12,6 +12,10 @@ class LoginsController < ApplicationController
     authorize @login
   end
 
+  def edit
+
+  end
+
   def update
     @login = Login.find(params[:id])
     authorize @login
