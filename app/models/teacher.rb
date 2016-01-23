@@ -4,6 +4,8 @@ class Teacher < ActiveRecord::Base
 
   delegate :first_name, :last_name, :name, to: :person, allow_nil: true
 
+  accepts_nested_attributes_for :person
+
   # has_many :lessons, inverse_of: :teacher
 
   def display_name

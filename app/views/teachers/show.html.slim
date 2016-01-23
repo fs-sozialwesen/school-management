@@ -1,0 +1,36 @@
+.page-header
+  = link_to teachers_path, class: 'btn btn-default' do 
+    span.glyphicon.glyphicon-list-alt
+    |  Liste
+  /= link_to edit_teacher_path(@teacher), class: 'btn btn-primary' do
+    span.glyphicon.glyphicon-pencil
+    |  Bearbeiten
+  = link_to @teacher, method: :delete, data: { confirm: t('.confirm_delete') }, class: 'btn btn-danger' do
+    span.glyphicon.glyphicon-remove
+    |  Löschen
+  h1
+    => gt(:teacher, @teacher.person)
+    = @teacher.person.name
+
+= render @teacher.person
+.row
+  .col-md-6
+    .panel.panel-default
+      .panel-heading Klassenlehrer von folgenden Klassen
+      .panel-body
+        .row
+          .col-md-6
+            label Aktive
+            ul.list-unstyled
+              - @teacher.courses.active.order(:end_date).each do | course |
+                li = link_to course.name, course
+          .col-md-6
+            label Archiv
+            ul.list-unstyled
+              - @teacher.courses.inactive.order(:end_date).each do | course |
+                li = link_to course.name, course, class: 'text-muted'
+  .col-md-6
+    .panel.panel-default
+      .panel-heading
+        |  Fächer
+      .panel-body

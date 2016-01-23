@@ -1,0 +1,40 @@
+= simple_form_for(@teacher, html: { role: "form" }, defaults: { required: false, include_blank: false }) do |f|
+  - if @teacher.errors.any?
+    .alert.alert-danger.alert-dismissable@alert
+      button.close type="button" data-dismiss="alert"
+        span aria-hidden="true" &times;
+        span.sr-only Close
+      h4 = t('.error')
+
+  = f.simple_fields_for :person do |p|
+    .row
+      .col-md-6
+        .panel.panel-default
+          .panel-heading Personendaten
+          .panel-body
+            .row
+              .col-md-6 = p.input :gender, collection: [%w(Frau f), %w(Herr m)], label: 'Anrede'
+            .row
+              .col-md-6 = p.input :first_name, required: true
+              .col-md-6 = p.input :last_name, required: true
+              /.col-md-6 = p.input :date_of_birth, as: :string, input_html:{ class: :date, data: { start_view: 2 } }
+              /.col-md-6 = p.input :place_of_birth
+
+      .col-md-6
+        .panel.panel-default
+          .panel-heading Kontaktdaten
+          .panel-body
+            = p.simple_fields_for :contact, p.object.contact do |c|
+              = c.input :email
+              = c.input :phone
+  .row
+    .col-md-12
+      .pull-right
+        - back_path = @teacher.new_record? ? teachers_path : teacher_path(@teacher)
+        => link_to 'Abbrechen', back_path, class: 'btn btn-default'
+        = f.submit 'Speichern', class: 'btn btn-primary'
+
+
+
+
+

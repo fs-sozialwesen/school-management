@@ -1,0 +1,29 @@
+.page-header
+  = link_to new_teacher_path, class: 'btn btn-primary' do 
+    span.glyphicon.glyphicon-plus
+    |  Neu
+  h1 Lehrer
+
+.table-responsive
+  table.table.table-striped.table-bordered.table-hover.table-clickable
+    thead
+      tr
+        th Vorname
+        th Nachname
+        th E-Mail
+        th Telefon
+        th Klassen
+    tbody
+      - @teachers.each do | teacher |
+        tr data = {url: url_for(teacher)}
+          td = teacher.person.first_name
+          td = teacher.person.last_name
+          td
+            - email = teacher.person.contact.email
+            - if email.present?
+              =< link_to email, "mailto:#{email}"
+          td = teacher.person.contact.phone
+          td
+            - courses = teacher.courses.order(end_date: :desc).map do | course |
+              - link_to course.name, course, class: ('text-muted' unless course.active?)
+            = courses.join(', ').html_safe
