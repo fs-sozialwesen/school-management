@@ -19,6 +19,10 @@ class Course < ActiveRecord::Base
 
   validates :name, :start_date, :end_date, presence: true
 
+  def active?
+    end_date > Date.current
+  end
+
   def self.course_scopes
     active.all.each_with_object({}) do |course, hsh|
       hsh[course.underscore_name] = course.name

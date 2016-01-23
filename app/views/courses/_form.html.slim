@@ -1,0 +1,21 @@
+= simple_form_for(@course, html: { role: "form" }) do |f|
+  - if @course.errors.any?
+    .alert.alert-danger.alert-dismissable@alert
+      button.close type="button" data-dismiss="alert"
+        span aria-hidden="true" &times;
+        span.sr-only Close
+      h4 = t('.error')
+
+  .row
+    .col-md-6
+      = f.input :name
+      = f.association :teacher
+    .col-md-6
+      = f.input :start_date, as: :string, input_html: { class: 'date', data: { start_view: 2 } }
+      = f.input :end_date, as: :string, input_html: { class: 'date', data: { start_view: 2 } }
+  .row.action-buttons
+    .col-md-12
+      .pull-right
+        - back_path = @course.new_record? ? courses_path : @course
+        => link_to 'Abbrechen', back_path, class: 'btn btn-default'
+        = f.submit 'Speichern', class: 'btn btn-primary'
