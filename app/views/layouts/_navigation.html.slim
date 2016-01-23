@@ -22,6 +22,15 @@
           - if policy(Candidate).index?
             li class = ('active' if params[:controller] == 'candidates')
               = link_to 'Bewerber', candidates_url
+          - if policy(Teacher).index?
+            li class = ('active' if params[:controller] == 'teachers')
+              = link_to 'Lehrer', teachers_url
+          /- if policy(Person).index?
+            li class = ('active' if params[:controller] == 'people')
+              = link_to 'Personenverzeichnis', people_url
+          - if policy(Course).index?
+            li class = ('active' if params[:controller] == 'courses')
+              = link_to 'Klassen', courses_url
 
         ul.nav.navbar-nav.navbar-right
           - if current_user.admin? or current_user.manager?
