@@ -33,8 +33,6 @@
               = link_to 'Klassen', courses_url
 
         ul.nav.navbar-nav.navbar-right
-          - if current_user.admin? or current_user.manager?
-            li = link_to 'Administration', rails_admin_path
           li.dropdown
             a.dropdown-toggle href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
               => current_user.name
