@@ -1,0 +1,9 @@
+.panel.panel-default
+  .panel-heading
+    |  Login
+    ul.list-inline.pull-right
+      li = link_to edit_login_path(login), class: 'btn btn-default btn-xs' do
+        span.glyphicon.glyphicon-cog>
+        | Bearbeiten
+  .panel-body
+    p = login.email
