@@ -17,7 +17,7 @@ class Person < ActiveRecord::Base
 
   has_one :as_admin,     class_name: 'Admin'
   has_one :as_manager,   class_name: 'Manager'
-  has_one :as_teacher,   class_name: 'Teacher'
+  has_one :as_teacher,   class_name: 'Teacher', dependent: :destroy
   has_one :as_student,   class_name: 'Student'
   # has_one :as_mentor,    class_name: 'Mentor'
   has_one :as_candidate, class_name: 'Candidate'
@@ -46,6 +46,14 @@ class Person < ActiveRecord::Base
       login.password = login.password_confirmation = pw
       login.confirm
     end
+  end
+
+  def female?
+    gender == 'f'
+  end
+
+  def male?
+    gender == 'm'
   end
 
   rails_admin do
