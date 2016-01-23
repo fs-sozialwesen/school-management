@@ -1,9 +1,7 @@
 .page-header
-  = link_to people_path, class: 'btn btn-default' do 
+  /= link_to people_path, class: 'btn btn-default' do
     span.glyphicon.glyphicon-list-alt
     |  Back 
-  h1
-    | New 
-    | person
+  h1 Neue Person anlegen
 
-= render 'form'
+= render 'form', person: @person

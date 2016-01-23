@@ -6,6 +6,10 @@ Rails.application.routes.draw do
   devise_for :logins
   resources :logins
   resources :people
+  resources :employees
+  resources :teachers
+  resources :courses
+
   resources :timetables, only: [:index, :show]
   resources :internship_positions, only: [:index, :show]
   resources :candidates do

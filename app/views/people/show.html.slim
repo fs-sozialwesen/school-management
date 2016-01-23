@@ -1,18 +1,35 @@
 .page-header
   = link_to people_path, class: 'btn btn-default' do 
     span.glyphicon.glyphicon-list-alt
-    |  Back 
-  = link_to edit_person_path(@person), class: 'btn btn-primary' do 
+    |  Liste
+  /= link_to edit_person_path(@person), class: 'btn btn-primary' do
     span.glyphicon.glyphicon-pencil
-    |  Edit 
-  h1
-    | Show person
-dl.dl-horizontal
-  dt
-    | First name:
-  dd
-    = @person.first_name
-  dt
-    | Last name:
-  dd
-    = @person.last_name
+    |  Bearbeiten
+  /= link_to @person, method: :delete, class: 'btn btn-danger' do
+    span.glyphicon.glyphicon-remove
+    |  Löschen
+  => link_to @person, method: :delete, data: { confirm: t('.confirm_delete') }, class: 'btn btn-danger' do
+    span.glyphicon.glyphicon-remove
+    |  Löschen
+  h1 Personendaten für #{@person.name}
+
+= render @person
+.row
+  .col-md-6
+    - if @person.login
+      = render @person.login
+    - else
+      .panel.panel-default
+        .panel-heading Login
+        .panel-body = link_to 'Login erstellen', new_login_path(person_id: @person.id)
+
+  .col-md-6
+    .panel.panel-default
+      .panel-heading Funktionen
+      .panel-body
+        - if @person.manager?
+          |  Manager
+          /= link_to 'Manager', @person.as_manager
+        - if @person.teacher?
+          = link_to 'Lehrer', @person.as_teacher
+

@@ -18,8 +18,46 @@ de:
         confirm_init: Soll der Status des Bewerbers wirklich zurückgesetzt werden?
       confirm_delete: Soll der Berwerber wirklich gelöscht werden?
       confirm_accept: Erfüllt der Bewerber alle Zulassungsvoraussetzungen?
+  courses:
+    create:
+      success: Klasse gespeichert.
+    update:
+      success: KLasse gespeichert.
+    destroy:
+      success: KLasse gelöscht.
+    form:
+      error: Klasse konnte nicht gespeichert werden.
+    show:
+      confirm_delete: "Wirklich löschen?"
+  people:
+    create:
+      success: Person gespeichert.
+    update:
+      success: Person gespeichert.
+    destroy:
+      success: Person gelöscht.
+    form:
+      error: Personendaten konnten nicht gespeichert werden.
+    show:
+      confirm_delete: "Wirklich löschen?"
   room_plan: Raumplan
-  teacher: LehrerIn
+  salut_f: Frau
+  salut_m: Herr
+  teacher: Lehrer(in)
+  teacher_f: Lehrerin
+  teacher_m: Lehrer
+  teachers:
+    create:
+      success: Lehrer(in) gespeichert.
+    update:
+      success: Lehrer(in) gespeichert.
+    destroy:
+      success: Lehrer(in) gelöscht.
+    form:
+      error: Lehrer(in) konnte nicht gespeichert werden.
+    show:
+      confirm_delete: "Wirklich löschen?"
+
   timetable: Stundenplan
   timetables:
     show:

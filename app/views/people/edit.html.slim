@@ -1,12 +1,3 @@
-.page-header
-  = link_to people_path, class: 'btn btn-default' do
-    span.glyphicon.glyphicon-list-alt
-    |  Back 
-  = link_to @person, class: 'btn btn-primary' do
-    span.glyphicon.glyphicon-info-sign
-    |  Show 
-  h1
-    | Editing 
-    | person
+.page-header: h1 Personendaten bearbeiten
 
-= render 'form'
+= render 'form', person: @person

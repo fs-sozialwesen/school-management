@@ -1,31 +1,34 @@
 .page-header
   = link_to new_person_path, class: 'btn btn-primary' do 
     span.glyphicon.glyphicon-plus
-    |  New Person
-  h1
-    | Listing people
+    |  Neu
+  h1 Personenverzeichnis
 
 .table-responsive
-  table.table.table-striped.table-bordered.table-hover
+  table.table.table-striped.table-bordered.table-hover.table-clickable
     thead
       tr
-        th
-          | First name
-        th
-          | Last name
-        th
-        th
-        th
+        th Vorname
+        th Nachname
+        th E-Mail
+        th Telefon
+        th Funktionen
+
     tbody
       - @people.each do | person |
-        tr
+        tr data = {url: url_for(person)}
+          td = person.first_name
+          td = person.last_name
           td
-            = person.first_name
+            - email = person.contact.email
+            - if email.present?
+              =< link_to email, "mailto:#{email}"
+          td = person.contact.phone
           td
-            = person.last_name
-          td
-            = link_to 'Show', person
-          td
-            = link_to 'Edit', edit_person_path(person) 
-          td
-            = link_to 'Destroy', person, method: :delete, data: { confirm: 'Are you sure?' } 
+            - if person.manager?
+              | Manager
+            - if person.teacher?
+              | Lehrer
+            - if person.student?
+              | Schüler
+
