@@ -10,4 +10,14 @@ module ApplicationHelper
       content_tag :span, nil, class: 'glyphicon glyphicon-' + icon
     end
   end
+
+  def ldate(date)
+    return '' unless date.present?
+    l date
+  end
+
+  def gt(key, person, options = {})
+    return t(key, options) if person.gender.blank?
+    t "#{key}_#{person.gender}", options
+  end
 end
