@@ -8,6 +8,8 @@ class Teacher < ActiveRecord::Base
 
   # has_many :lessons, inverse_of: :teacher
 
+  has_paper_trail
+
   def display_name
     person.name
   end

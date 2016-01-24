@@ -24,4 +24,6 @@ class InternshipPosition < ActiveRecord::Base
 
   # where("applying ->>'documents' ILIKE '%leben%'" ).count
 
+  has_paper_trail
+
 end

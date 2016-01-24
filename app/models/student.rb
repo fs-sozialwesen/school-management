@@ -12,6 +12,8 @@ class Student < ActiveRecord::Base
   accepts_nested_attributes_for :person
   delegate :first_name, :last_name, :name, to: :person, allow_nil: true
 
+  has_paper_trail
+
   def display_name
     person.name
   end

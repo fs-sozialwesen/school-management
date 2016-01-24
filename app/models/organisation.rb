@@ -12,6 +12,7 @@ class Organisation < ActiveRecord::Base
 
   has_many :internship_positions, inverse_of: :organisation
 
+  has_paper_trail
 
   def contracts
     contracts_as_first_party + contracts_as_second_party

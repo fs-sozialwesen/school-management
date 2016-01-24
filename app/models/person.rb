@@ -29,6 +29,8 @@ class Person < ActiveRecord::Base
   # scope :mentors,    -> { joins(:as_mentor).   includes(:as_mentor) }
   scope :candidates, -> { joins(:as_candidate).includes(:as_candidate) }
 
+  has_paper_trail
+
   ROLES.each { |role| define_method("#{role}?") { as(role).present? } }
   AS_ROLES.each { |role| accepts_nested_attributes_for role }
 
