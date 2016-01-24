@@ -23,12 +23,4 @@ class Enum < ActiveRecord::Base
   validates :name, inclusion: {in: TYPES}
   validates :value, uniqueness: { scope: :name }
 
-  rails_admin do
-    navigation_label I18n.t(:basic_data)
-
-    list do
-      scopes TYPES
-      field :value
-    end
-  end
 end

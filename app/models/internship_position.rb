@@ -24,42 +24,4 @@ class InternshipPosition < ActiveRecord::Base
 
   # where("applying ->>'documents' ILIKE '%leben%'" ).count
 
-  rails_admin do
-    # parent Organisation
-    Address. attribute_set.each { |attr| configure(attr.name) { group :address } }
-    Contact. attribute_set.each { |attr| configure(attr.name) { group :contact } }
-
-    configure(:housing_provided, :boolean) { group :housing }
-    configure(:housing_costs)    { group :housing }
-
-    configure(:applying_by_mail,   :boolean) { group :applying }
-    configure(:applying_by_email,  :boolean) { group :applying }
-    configure(:applying_by_phone,  :boolean) { group :applying }
-    configure(:applying_documents)           { group :applying }
-
-    configure(:work_area, :enum) { enum { Enum.work_areas } }
-
-    list do
-      sort_by :organisation
-
-      field :work_area#, :education_subject
-      field :name, :self_link
-      fields :organisation, :city, :positions_count
-      field :housing_provided
-    end
-    show do
-      fields :name, :organisation
-      fields :street, :zip, :city
-      fields :person, :email, :mobile, :phone, :fax, :homepage
-      fields :housing_provided, :housing_costs
-      fields :applying_by_mail, :applying_by_email, :applying_by_phone, :applying_documents
-    end
-    edit do
-      fields :name, :organisation, :description, :work_area
-      fields :street, :zip, :city
-      fields :person, :email, :mobile, :phone, :fax, :homepage
-      fields :housing_provided, :housing_costs
-      fields :applying_by_mail, :applying_by_email, :applying_by_phone, :applying_documents
-    end
-  end
 end

@@ -5,8 +5,4 @@ class Internship < ActiveRecord::Base
 
   has_paper_trail
 
-  rails_admin do
-    parent Student
-
-  end
 end

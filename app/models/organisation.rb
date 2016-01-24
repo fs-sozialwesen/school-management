@@ -17,26 +17,4 @@ class Organisation < ActiveRecord::Base
     contracts_as_first_party + contracts_as_second_party
   end
 
-  rails_admin do
-    navigation_label I18n.t(:basic_data)
-
-    Address. attribute_set.each { |attr| configure(attr.name) { group :address } }
-    Contact. attribute_set.each { |attr| configure(attr.name) { group :contact } }
-
-    list do
-      field :name, :self_link
-      fields :city, :carrier
-    end
-    show do
-      fields :name, :carrier, :comments
-      fields :street, :zip, :city
-      fields :person, :email, :mobile, :phone, :fax, :homepage
-    end
-    edit do
-      fields :name, :carrier, :comments
-      fields :street, :zip, :city
-      fields :person, :email, :mobile, :phone, :fax, :homepage
-    end
-  end
-
 end

@@ -34,18 +34,4 @@ class Candidate < ActiveRecord::Base
     internships_proved
   end
 
-  rails_admin do
-    list do
-      field :person
-      field :created_at
-      field :year
-      field(:school_graduate)     { pretty_value { value.graduate } }
-      field(:profession_graduate) { pretty_value { value.graduate } }
-    end
-
-    edit do
-      field(:year, :enum) { enum (Date.today.year..(Date.today.year + 2)).to_a }
-      field :attachments
-    end
-  end
 end

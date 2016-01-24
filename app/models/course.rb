@@ -38,43 +38,4 @@ class Course < ActiveRecord::Base
     student.course = self
   end
 
-  rails_admin do
-    weight(-2)
-
-    configure :students do
-      pretty_value do
-        course      = bindings[:object]
-        url_options = { model_name: 'student', scope: course.underscore_name }
-        url         = bindings[:view].rails_admin.index_path url_options
-        bindings[:view].link_to "#{course.students.count} #{I18n.t('attributes.students')}", url
-      end
-      # children_fields [:first_name, :phone] # will be used for searching/filtering,
-      # first field will be used for sorting
-      # read_only true # won't be editable in forms (alternatively, hide it in edit section)
-      group :students
-    end
-
-    list do
-      scopes [:active, :inactive, nil]
-      # sort_by :education_subject
-
-      field :name, :self_link
-      # fields :education_subject, :teacher, :students
-      fields :teacher, :students
-      field(:start_date) { formatted_value { "#{value.month}/#{value.year}" } }
-      field(:end_date) { formatted_value { "#{value.month}/#{value.year}" } }
-    end
-
-    show do
-      # fields :name, :education_subject, :teacher, :start_date, :end_date
-      fields :name, :teacher, :start_date, :end_date
-      field :students
-    end
-
-    edit do
-      # fields :name, :education_subject, :teacher, :start_date, :end_date
-      fields :name, :teacher, :start_date, :end_date
-      field :students
-    end
-  end
 end

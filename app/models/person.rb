@@ -56,52 +56,6 @@ class Person < ActiveRecord::Base
     gender == 'm'
   end
 
-  rails_admin do
-    # hide
-    # label I18n.t(:people_index)
-
-    configure(:gender, :enum) { enum { { I18n.t(:female) => 'f', I18n.t(:male) => 'm' } } }
-
-    Address.attribute_set.each { |attr| configure(attr.name) { group :address } }
-    Contact.attribute_set.each do |attr|
-      next if attr.name.in?(%i(person homepage))
-      configure(attr.name) { group :contact }
-    end
-
-    configure(:roles)      { group :roles }
-    AS_ROLES.each { |role| configure(role) { group :roles } }
-
-    list do
-      scopes [:students, :teachers, :managers, :candidates, nil]
-
-      field :first_name, :self_link
-      field :last_name, :self_link
-      field :city
-      field :email, :email
-      field :phone
-      # field :roles
-    end
-    show do
-      fields :first_name, :last_name, :gender, :date_of_birth, :place_of_birth
-      fields :street, :zip, :city
-      fields :email, :mobile, :phone, :fax
-      # fields :roles, :as_admin, :as_manager, :as_teacher, :as_mentor, :as_student
-      fields :as_admin, :as_manager, :as_teacher, :as_student
-    end
-    edit do
-      fields :first_name, :last_name, :gender, :date_of_birth, :place_of_birth
-      fields :street, :zip, :city
-      fields :email, :mobile, :phone, :fax
-      # field :roles
-      # fields :as_admin, :as_manager, :as_teacher, :as_mentor, :as_student, :as_candidate
-      # fields :as_manager, :as_teacher, :as_student, :as_candidate
-    end
-    export do
-      fields :first_name, :last_name, :gender, :date_of_birth, :place_of_birth
-      fields :street, :zip, :city
-      fields :email, :mobile, :phone, :fax
-    end
-  end
 
   # private
   #

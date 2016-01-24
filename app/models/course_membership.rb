@@ -18,11 +18,6 @@ class CourseMembership < ActiveRecord::Base
     save
   end
 
-
-  rails_admin do
-    hide
-  end
-
   private
 
   def set_defaults
