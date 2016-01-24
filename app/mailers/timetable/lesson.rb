@@ -8,28 +8,4 @@ class Timetable::Lesson < ActiveRecord::Base
 
   validates :date, presence: true
 
-  rails_admin do
-    hide
-    navigation_label I18n.t(:timetable)
-
-    list do
-      field :date
-      field :time_block
-      field :course
-      field :subject
-      field :teacher
-      field :room
-    end
-
-    edit do
-      field :date
-      field :time_block
-      field :course
-      field :subject
-      field :teacher
-      field :room
-      field :comments
-    end
-  end
-
 end

@@ -35,25 +35,6 @@ class Timetable::TimeBlock < ActiveRecord::Base
     time
   end
 
-  rails_admin do
-    hide
-    navigation_label I18n.t(:timetable)
-
-    list do
-      sort_by :position
-      scopes [:active, :inactive, nil]
-      field :position
-      field :name
-    end
-
-    edit do
-      field :start_time
-      field :end_time
-      field :position
-      field :active
-    end
-  end
-
   private
 
   def format_time(hour, minute)
