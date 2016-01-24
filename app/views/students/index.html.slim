@@ -26,14 +26,11 @@
           th Nachname
           th Klasse
       tbody
-        - current_char = ''
         - students.each do | student |
           tr data={ url: url_for(student) }
             td = student.person.first_name
             td = student.person.last_name
             td = link_to student.course.name, student.course
-            /td
-              = link_to 'Destroy', student, method: :delete, data: { confirm: 'Are you sure?' }
 
 coffee:
   $ -> window.onhashchange = -> window.scrollTo(0, window.scrollY - 80 )
