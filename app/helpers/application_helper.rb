@@ -17,7 +17,7 @@ module ApplicationHelper
   end
 
   def gt(key, person, options = {})
-    return t(key, options) if person.gender.blank?
+    return '' if person.gender.blank?
     t "#{key}_#{person.gender}", options
   end
 end

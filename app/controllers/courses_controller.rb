@@ -5,8 +5,14 @@ class CoursesController < ApplicationController
 
   def index
     authorize Course
-    @courses = Course.active.includes(:students).order(:name).all
-    @inactive_courses = Course.inactive.includes(:students).order(:name).all
+    @courses = Course.includes(:students).order(:name)
+    respond_to do |format|
+      format.html do
+        @active_courses = @courses.active.all
+        @inactive_courses = @courses.inactive.all
+      end
+      format.csv  { @courses = @courses.all }
+    end
   end
 
   def show

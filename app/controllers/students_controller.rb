@@ -5,7 +5,11 @@ class StudentsController < ApplicationController
 
   def index
     authorize Student
-    @students = Student.includes(:person, :course).order('people.last_name').all
+    @students = Student.includes(:person, :course)
+    respond_to do |format|
+      format.html { @students = @students.order('people.last_name').all }
+      format.csv  { @students = @students.order('courses.name, people.last_name').all }
+    end
   end
 
   def show

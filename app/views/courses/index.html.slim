@@ -2,7 +2,10 @@
   = link_to new_course_path, class: 'btn btn-primary' do 
     span.glyphicon.glyphicon-plus
     |  Neu
-  h1 Klassen
+  = link_to courses_path(format: :csv), id: 'export-csv-button', class: 'btn btn-default' do
+    span.glyphicon.glyphicon-export
+    |  Exportieren
+  h1 #{@courses.count} Klassen
 
 .table-responsive
   table.table.table-striped.table-bordered.table-hover.table-clickable
@@ -17,7 +20,7 @@
         /th
         /th
     tbody
-      - @courses.each do | course |
+      - @active_courses.each do | course |
         tr data={ url: url_for(course) }
           td = course.name
           td = link_to course.teacher.person.name, course.teacher

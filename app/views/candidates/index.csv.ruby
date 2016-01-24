@@ -1,5 +1,6 @@
+require 'csv'
 
-response.headers['Content-Disposition'] = 'attachment; filename="bewerber.csv"'
+response.headers['Content-Disposition'] = %Q(attachment; filename="bewerber-#{Time.now}.csv")
 
 CSV.generate(encoding: 'UTF-8', col_sep: ';', force_quotes: true) do |csv|
   csv << %w(Status Eingangsdatum Jahr

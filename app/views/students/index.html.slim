@@ -3,6 +3,9 @@
   = link_to new_student_path, class: 'btn btn-primary' do 
     span.glyphicon.glyphicon-plus
     |  Neu
+  = link_to students_path(format: :csv), id: 'export-csv-button', class: 'btn btn-default' do
+    span.glyphicon.glyphicon-export
+    |  Exportieren
   h1 #{@students.count} Auszubildende
 
 - ('A'..'Z').each do | char |

@@ -2,6 +2,9 @@
   = link_to new_teacher_path, class: 'btn btn-primary' do 
     span.glyphicon.glyphicon-plus
     |  Neu
+  = link_to teachers_path(format: :csv), id: 'export-csv-button', class: 'btn btn-default' do
+    span.glyphicon.glyphicon-export
+    |  Exportieren
   h1 #{@teachers.count} Lehrer
 
 .table-responsive
