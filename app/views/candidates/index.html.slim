@@ -5,10 +5,10 @@
   = link_to candidates_path(format: :csv), id: 'export-csv-button', class: 'btn btn-default' do
     span.glyphicon.glyphicon-export
     |  Exportieren
-  h1
-    |  Bewerber
+  h2
+    |  #{@candidates.count} Bewerber
     - if @grouped
-      |  gruppiert
+      small< gruppiert
 
 - if @grouped
   = render 'candidates/index/grouped'
