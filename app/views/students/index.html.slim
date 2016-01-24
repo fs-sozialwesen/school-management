@@ -1,6 +1,5 @@
 .page-header
-  a name='top'
-  = link_to new_student_path, class: 'btn btn-primary' do 
+  = link_to new_student_path, class: 'btn btn-primary' do
     span.glyphicon.glyphicon-plus
     |  Neu
   = link_to students_path(format: :csv), id: 'export-csv-button', class: 'btn btn-default' do
@@ -8,14 +7,17 @@
     |  Exportieren
   h1 #{@students.count} Auszubildende
 
+- grouped_students = @students.to_a.group_by{ |student| student.person.last_name[0].upcase }
 - ('A'..'Z').each do | char |
-  a href="##{char}" = char
-
-- @students.to_a.group_by{ |student| student.person.last_name[0] }.each do | char, students |
+  - if char.in? grouped_students.keys
+    a href="##{char}" => char
+  - else
+    i => char
+- grouped_students.each do | char, students |
   h4
     a name=char = char
     span.pull-right
-      small: a href="#top" nach oben
+      small: a href="javascript: window.scrollTo(0, 0);" nach oben
   .table-responsive
     table.table.table-striped.table-bordered.table-hover.table-clickable
       thead
@@ -32,3 +34,6 @@
             td = link_to student.course.name, student.course
             /td
               = link_to 'Destroy', student, method: :delete, data: { confirm: 'Are you sure?' }
+
+coffee:
+  $ -> window.onhashchange = -> window.scrollTo(0, window.scrollY - 80 )
