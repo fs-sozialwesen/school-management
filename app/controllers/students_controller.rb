@@ -6,8 +6,10 @@ class StudentsController < ApplicationController
   def index
     authorize Student
     @students = Student.includes(:course, person: :login)
+    @archived = params[:archived].present?
+    courses   = @archived ? Course.inactive : Course.active
     respond_to do |format|
-      format.html { @students = @students.order('people.last_name').all }
+      format.html { @students = @students.where(course: courses).order('people.last_name').all }
       format.csv  { @students = @students.order('courses.name, people.last_name').all }
     end
   end

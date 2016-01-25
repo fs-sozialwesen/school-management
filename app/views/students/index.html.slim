@@ -5,7 +5,19 @@
   = link_to students_path(format: :csv), id: 'export-csv-button', class: 'btn btn-default' do
     span.glyphicon.glyphicon-export
     |  Exportieren
-  h1 #{@students.count} Auszubildende
+  - if @archived
+    = link_to students_path, class: 'btn btn-default' do
+      span.glyphicon.glyphicon-list
+      |  Aktuelle
+  - else
+    = link_to students_path(archived: 'yes'), class: 'btn btn-default' do
+      span.glyphicon.glyphicon-list
+      |  Archiv
+
+  h1
+    = @students.count
+    |  Auszubildende
+    small =< @archived ? 'Archiv' : 'Aktuelle'
 
 - grouped_students = @students.to_a.group_by{ |student| student.person.last_name[0].upcase }
 - ('A'..'Z').each do | char |
