@@ -36,4 +36,11 @@ class Candidate < ActiveRecord::Base
     internships_proved
   end
 
+  def contracts_complete?
+    %i(education_contract_sent education_contract_received
+       internship_contract_sent internship_contract_received ).all? do |contract|
+      send(contract).present?
+    end
+  end
+
 end

@@ -4,8 +4,8 @@
     /= render 'candidates/show/panel_heading', done: @candidate.progress >= 3, status: 'ok',
         part: 'contracts'
     ul.list-inline.pull-right
-      - if @candidate.progress >= 3
-        li: span.label.label-success ✓ zugelassen
+      - if @candidate.contracts_complete?
+        li: span.label.label-success ✓ vollständig
       li = link_to edit_candidate_path(@candidate, part: 'contracts'), class: 'btn btn-default btn-xs' do
         span.glyphicon.glyphicon-cog>
         | Bearbeiten

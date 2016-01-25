@@ -18,7 +18,7 @@
     => link_to @candidate, method: :delete, data: { confirm: t('.confirm_delete') }, class: 'btn btn-danger' do
       span.glyphicon.glyphicon-remove
       |  Löschen
-    - disabled = @candidate.rejected? or @candidate.canceled?
+    - disabled = (@candidate.rejected? or @candidate.canceled?)
     => link_to reject_candidate_path(@candidate), class: "btn btn-danger #{'disabled' if disabled}" do
       span.glyphicon.glyphicon-thumbs-down>
       |  Absagen
