@@ -13,14 +13,18 @@
     a href="##{char}" => char
   - else
     i => char
-- grouped_students.each do | char, students |
-  h4
-    a name=char = char
-    span.pull-right
-      small: a href="javascript: window.scrollTo(0, 0);" nach oben
-  .table-responsive
-    table.table.table-striped.table-bordered.table-hover.table-clickable
+.table-responsive
+  table.table.table-striped.table-bordered.table-hover.table-clickable
+
+    - grouped_students.each do | char, students |
       thead
+        tr
+          th colspan="3"
+            h4
+              a name=char = char
+              span.pull-right
+                small: a href="javascript: window.scrollTo(0, 0);" nach oben
+
         tr
           th Vorname
           th Nachname
