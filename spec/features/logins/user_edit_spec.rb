@@ -39,7 +39,9 @@ feature 'Login edit', :devise do
     visit edit_login_registration_path(other)
     # save_and_open_page
     # expect(page).to have_content I18n.t('devise.registrations.edit.title')
-    expect(page).to have_field(Login.human_attribute_name(:email), with: me.email)
+    expect(page).to have_field(:login_current_password)
+    expect(page).to have_field(:login_password)
+    expect(page).to have_field(:login_password_confirmation)
   end
 
 end
