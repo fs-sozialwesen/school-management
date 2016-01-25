@@ -1,5 +1,6 @@
 class LoginsController < ApplicationController
   before_action :authenticate_login!
+  before_action :set_teacher, except: :index
   after_action :verify_authorized
 
   def index
@@ -8,18 +9,33 @@ class LoginsController < ApplicationController
   end
 
   def show
-    @login = Login.find(params[:id])
+    @login = @person.login
     authorize @login
   end
 
-  def edit
+  def new
+    @login = @person.build_login email: @person.contact.email
+    authorize @login
+  end
 
+  def create
+    authorize Login
+    @login = @person.build_login login_params
+    if @login.save
+      redirect_to @teacher, notice: t('.success')
+    else
+      render 'new'
+    end
+  end
+
+  def edit
+    @login = @person.login
   end
 
   def update
     @login = Login.find(params[:id])
     authorize @login
-    if @login.update_attributes(secure_params)
+    if @login.update_attributes(login_params)
       redirect_to logins_path, :notice => "Login updated."
     else
       redirect_to logins_path, :alert => "Unable to update login."
@@ -27,16 +43,21 @@ class LoginsController < ApplicationController
   end
 
   def destroy
-    login = Login.find(params[:id])
+    login = @person.login
     authorize login
     login.destroy
-    redirect_to logins_path, :notice => "Login deleted."
+    redirect_to @teacher, :notice => "Login deleted."
   end
 
   private
 
-  def secure_params
-    params.require(:login).permit(:role)
+  def set_teacher
+    @teacher = Teacher.find params[:teacher_id]
+    @person = @teacher.person
+  end
+
+  def login_params
+    params.require(:login).permit(:email, :password, :password_confirmation)
   end
 
 end

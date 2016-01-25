@@ -7,16 +7,16 @@ class LoginPolicy
   end
 
   def index?
-    @current_user.admin?
+    @current_user.manager?
   end
 
   def show?
-    @current_user.admin? or @current_user.manager? or @current_user.login == @login
+    @current_user.manager? or @current_user.login == @login
   end
 
-  def update?
-    @current_user.admin? or @current_user.manager?
-  end
+  alias :update? :index?
+  alias :new? :index?
+  alias :create? :index?
 
   def destroy?
     return false if @current_user.login == @login

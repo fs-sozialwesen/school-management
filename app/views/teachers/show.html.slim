@@ -30,5 +30,14 @@
   .col-md-6
     .panel.panel-default
       .panel-heading
-        |  Fächer
+        |  Login
       .panel-body
+        - person = @teacher.person
+        - if person.login.present?
+          => link_to 'Login', teacher_login_path(@teacher)
+          = link_to teacher_login_path(@teacher), method: :delete, data: { confirm: t('.confirm_delete') }, class: 'btn btn-danger btn-xs' do
+            span.glyphicon.glyphicon-remove
+            |  Löschen
+        - else
+          = link_to 'erstellen', new_teacher_login_path(@teacher)
+

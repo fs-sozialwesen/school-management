@@ -16,17 +16,20 @@
         th E-Mail
         th Telefon
         th Klassen
+        th Login
     tbody
       - @teachers.each do | teacher |
+        - person = teacher.person
         tr data = {url: url_for(teacher)}
-          td = teacher.person.first_name
-          td = teacher.person.last_name
+          td = person.first_name
+          td = person.last_name
           td
-            - email = teacher.person.contact.email
+            - email = person.contact.email
             - if email.present?
               =< link_to email, "mailto:#{email}"
-          td = teacher.person.contact.phone
+          td = person.contact.phone
           td
-            - courses = teacher.courses.order(end_date: :desc).map do | course |
+            - courses = teacher.courses.order(:name).map do | course |
               - link_to course.name, course, class: ('text-muted' unless course.active?)
             = courses.join(', ').html_safe
+          td = person.login.present? ? 'ja' : 'nein'

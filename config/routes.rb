@@ -5,7 +5,9 @@ Rails.application.routes.draw do
   resources :logins
   resources :people
   resources :employees
-  resources :teachers
+  resources :teachers do
+    resource :login
+  end
   resources :students
   resources :courses
 

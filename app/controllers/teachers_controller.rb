@@ -5,7 +5,7 @@ class TeachersController < ApplicationController
 
   def index
     authorize Teacher
-    @teachers = Teacher.includes(:person, :courses).order('people.last_name').all
+    @teachers = Teacher.includes(:courses, person: :login).order('people.last_name').all
   end
 
   def show
