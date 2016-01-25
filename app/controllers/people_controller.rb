@@ -9,7 +9,6 @@ class PeopleController < ApplicationController
   end
 
   def show
-    session.delete(:redirect_to)
   end
 
   def new
@@ -33,8 +32,7 @@ class PeopleController < ApplicationController
 
   def update
     if @person.update(person_params)
-      path = session.delete(:redirect_to) || @person
-      redirect_to path, notice: t('.success')
+      redirect_to @person, notice: t('.success')
     else
       render :edit
     end

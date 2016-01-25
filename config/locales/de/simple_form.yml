@@ -36,19 +36,23 @@ de:
           answer: Rückmeldung
           result: Ergebnis
           reason: Begründung
-        person:
-          address:
-            city: Ort
-            street: Straße/Nr
-            zip: PLZ
-          contact:
-            email: E-Mail-Adresse
-            mobile: Mobiltelefon
-            phone: Telefon
-          date_of_birth: Geburtsdatum
-          first_name: Vorname
-          last_name: Nachname
-          place_of_birth: Geburtsort
+      person:
+        address:
+          city: Ort
+          street: Straße/Nr
+          zip: PLZ
+        contact:
+          email: E-Mail-Adresse
+          mobile: Mobiltelefon
+          phone: Telefon
+        date_of_birth: Geburtsdatum
+        first_name: Vorname
+        last_name: Nachname
+        place_of_birth: Geburtsort
+      login:
+        password: Neues Passwort
+        password_confirmation: Neues Passwort wiederholen
+        current_password: aktuelles Passwort
     hints:
       user:
         username: 'User name to sign in.'

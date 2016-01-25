@@ -9,7 +9,6 @@ class TeachersController < ApplicationController
   end
 
   def show
-    session[:redirect_to] = url_for @teacher
   end
 
   def new
@@ -55,7 +54,11 @@ class TeachersController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def teacher_params
       params.require(:teacher).permit(
-        person_attributes: %i(gender first_name last_name) + [ contact: %i(email phone mobile) ]
+        person_attributes: %i(first_name last_name gender date_of_birth place_of_birth) +
+                             [
+                               address: %i(street zip city),
+                               contact: %i(email phone mobile)
+                             ],
       )
     end
 end

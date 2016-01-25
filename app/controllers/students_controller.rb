@@ -13,11 +13,11 @@ class StudentsController < ApplicationController
   end
 
   def show
-    session[:redirect_to] = url_for @student
   end
 
   def new
     @student = Student.new
+    @student.build_person
     authorize @student
   end
 
@@ -57,10 +57,13 @@ class StudentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def student_params
-      params.require(:student).permit( :course_id,
-                                       person_attributes:
-                                         %i(gender first_name last_name) +
-                                           [ contact: %i(email phone mobile)]
+      params.require(:student).permit(
+        :course_id,
+        person_attributes: %i(first_name last_name gender date_of_birth place_of_birth) +
+                             [
+                               address: %i(street zip city),
+                               contact: %i(email phone mobile)
+                             ],
       )
     end
 end

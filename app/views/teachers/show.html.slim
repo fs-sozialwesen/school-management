@@ -2,9 +2,6 @@
   = link_to teachers_path, class: 'btn btn-default' do 
     span.glyphicon.glyphicon-list-alt
     |  Liste
-  /= link_to edit_teacher_path(@teacher), class: 'btn btn-primary' do
-    span.glyphicon.glyphicon-pencil
-    |  Bearbeiten
   = link_to @teacher, method: :delete, data: { confirm: t('.confirm_delete') }, class: 'btn btn-danger' do
     span.glyphicon.glyphicon-remove
     |  Löschen
@@ -12,7 +9,8 @@
     => @teacher.person.name
     small = gt(:teacher, @teacher.person)
 
-= render @teacher.person
+= render @teacher.person, edit_link: edit_teacher_path(@teacher, part: 'person')
+
 .row
   .col-md-6
     .panel.panel-default

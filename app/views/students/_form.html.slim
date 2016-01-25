@@ -6,45 +6,15 @@
         span.sr-only Close
       h4 = t('.error')
 
-  = f.simple_fields_for :person do |p|
+  - if params[:part] == 'person'
+    = f.simple_fields_for :person do |p|
+      = render 'people/form/person', f: p, person: @student.person
+  - else
     .row
       .col-md-6
-        .panel.panel-default
-          .panel-heading Personendaten
-          .panel-body
-            .row
-              .col-md-6 = p.input :gender, collection: [%w(Frau f), %w(Herr m)], label: 'Anrede'
-            .row
-              .col-md-6 = p.input :first_name, required: true
-              .col-md-6 = p.input :last_name, required: true
-              /.col-md-6 = p.input :date_of_birth, as: :string, input_html:{ class: :date, data: { start_view: 2 } }
-              /.col-md-6 = p.input :place_of_birth
-
-      .col-md-6
-        .panel.panel-default
-          .panel-heading Kontaktdaten
-          .panel-body
-            = p.simple_fields_for :contact, p.object.contact do |c|
-              = c.input :email
-              = c.input :phone
-  .row
-    .col-md-6
-      = f.association :course
+        = f.association :course
   .row
     .col-md-12
       .pull-right
-        - back_path = @student.new_record? ? students_path : @student
-        => link_to 'Abbrechen', back_path, class: 'btn btn-default'
+        => link_to 'Abbrechen', 'javascript: window.history.back();', class: 'btn btn-default'
         = f.submit 'Speichern', class: 'btn btn-primary'
-
-  /.form-group
-    = f.label :person, class: "col-sm-2 control-label"
-    .col-sm-10
-      = f.text_field :person, class: "form-control"
-  /.form-group
-    = f.label :course, class: "col-sm-2 control-label"
-    .col-sm-10
-      = f.text_field :course, class: "form-control"
-  /.form-group
-    .col-sm-offset-2.col-sm-10
-      = f.submit class: "btn btn-primary"

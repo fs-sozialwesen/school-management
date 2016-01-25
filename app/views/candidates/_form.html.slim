@@ -11,7 +11,10 @@
       .panel.panel-default
         .panel-heading Bewerbung
         .panel-body = f.input :date, as: :string, input_html:{ class: :date }
-    = render 'candidates/form/person', f: f
+
+    = f.simple_fields_for :person do |p|
+      = render 'people/form/person', f: p, person: @candidate.person
+    /= render 'candidates/form/person', f: f
     .row: .col-md-12 = f.input :notes, input_html: { rows: 5 }
   - if params[:part] == 'documents'
     = render 'candidates/form/documents', f: f
@@ -23,6 +26,5 @@
   .row
     .col-md-12
       .pull-right
-        - back_path = @candidate.new_record? ? candidates_path : candidate_path(@candidate)
-        => link_to 'Abbrechen', back_path, class: 'btn btn-default'
+        => link_to 'Abbrechen', 'javascript: window.history.back();', class: 'btn btn-default'
         = f.submit 'Speichern', class: 'btn btn-primary'

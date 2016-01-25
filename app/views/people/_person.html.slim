@@ -1,8 +1,9 @@
 .panel.panel-default
   .panel-heading
-    = link_to 'Personendaten', person
+    |  Personendaten
     ul.list-inline.pull-right
-      li = link_to edit_person_path(person), class: 'btn btn-default btn-xs' do
+      - edit_link ||= edit_person_path(person)
+      li = link_to edit_link, class: 'btn btn-default btn-xs' do
         span.glyphicon.glyphicon-cog>
         | Bearbeiten
       /li
@@ -30,7 +31,8 @@
           label
             span.glyphicon.glyphicon-envelope
           - email = person.contact.email
-          =< link_to email, "mailto:#{email}"
+          - if email.present?
+            =< link_to email, "mailto:#{email}"
         p
           label
             span.glyphicon.glyphicon-earphone
