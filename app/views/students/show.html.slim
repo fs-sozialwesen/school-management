@@ -20,4 +20,5 @@
             span.glyphicon.glyphicon-cog>
             | Bearbeiten
       .panel-body
-        = link_to @student.course.name, @student.course
+        - if @student.course.present?
+          = link_to @student.course.name, @student.course
