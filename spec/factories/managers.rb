@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :manager do
     person nil
-active false
+    active true
   end
 
 end
