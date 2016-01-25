@@ -103,7 +103,7 @@ RSpec.configure do |config|
 
   FactoryGirl.define do
 
-    sequence(:person) { 'John Mayer' }
+    # sequence(:person) { 'John Mayer' }
     sequence(:email) { | n | "john_#{n}@email.com" }
     sequence(:phone) { rand.to_s.sub('.', '')[0..7] }
     sequence(:fax) { rand.to_s.sub('.', '')[0..7] }

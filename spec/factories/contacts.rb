@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :contact do
-    person
+    person 'John Meier'
     email
     phone
     fax
