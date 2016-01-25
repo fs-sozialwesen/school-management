@@ -16,6 +16,5 @@
   .row.action-buttons
     .col-md-12
       .pull-right
-        - back_path = @course.new_record? ? courses_path : @course
-        => link_to 'Abbrechen', back_path, class: 'btn btn-default'
+        => link_to 'Abbrechen', 'javascript: window.history.back();', class: 'btn btn-default'
         = f.submit 'Speichern', class: 'btn btn-primary'
