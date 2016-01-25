@@ -11,7 +11,7 @@
       p Keine Bewerber in dieser Ansicht.
     - else
       .table-responsive
-        table.table.table-striped.table-bordered.table-hover
+        table.table.table-striped.table-bordered.table-hover.table-clickable
           thead
             tr
               th = link_to 'Eingang', candidates_path
@@ -23,11 +23,11 @@
               th Ergebnis KLT
           tbody
             - @candidates.each do | candidate |
-              /tr class=({accepted: :success, rejected: :danger}[candidate.status.to_sym]) class=candidate.status
-              tr class=candidate.status
+              tr class=({accepted: :success, rejected: :danger}[candidate.status.to_sym]) data={ url: url_for(candidate) }
+                /tr class=candidate.status
                 td = l(candidate.date, format: :short) if candidate.date.present?
-                td = link_to candidate.person.first_name, candidate
-                td = link_to candidate.person.last_name, candidate
+                td = candidate.person.first_name
+                td = candidate.person.last_name
                 td = l(candidate.interview.date, format: :short) if candidate.interview.date.present?
                 td = bool_icon(candidate.interview.invited, 'eingeladen', 'offen')
                 td = human_answer_name candidate.interview.answer
