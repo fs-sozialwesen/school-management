@@ -1,14 +1,17 @@
 FactoryGirl.define do
   factory :internship_position do
-    name { |n| "Institution #{n}" }
+    name { "Institution #{(rand * 1_000).to_i}" }
     organisation
-    # work_area 'MyString'
+    address FactoryGirl.build :address
+    contact FactoryGirl.build :contact
+    housing { Housing.new provided: [true, false].sample, costs: "#{(7..13).to_a.sample} EUR" }
+    applying do
+      Applying.new by_phone: [true, false].sample,
+        by_mail: [true, false].sample,
+        by_email: [true, false].sample,
+        documents: 'the usual ones'
+    end
     # description 'MyText'
-    # accommodation false
-    # kind_of_application 1
-    # year 2015
-    # application_documents 'MyString'
-    # contact_person 'MyString'
     # comments 'MyText'
   end
 end

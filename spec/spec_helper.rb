@@ -98,4 +98,16 @@ RSpec.configure do |config|
   # as the one that triggered the failure.
   Kernel.srand config.seed
 =end
+
+  require 'factory_girl'
+
+  FactoryGirl.define do
+
+    sequence(:person) { 'John Mayer' }
+    sequence(:email) { | n | "john_#{n}@email.com" }
+    sequence(:phone) { rand.to_s.sub('.', '')[0..7] }
+    sequence(:fax) { rand.to_s.sub('.', '')[0..7] }
+    sequence(:mobile) { rand.to_s.sub('.', '')[0..7] }
+  end
 end
+

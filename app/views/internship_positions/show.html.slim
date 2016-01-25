@@ -6,12 +6,15 @@
     small
       - homepage = @internship_position.organisation.contact.homepage
       = link_to_if homepage.present?, @internship_position.organisation.name, homepage, target: '_blank'
-
+- if @internship_position.description.present?
+  .row
+    .col-md-12
+      .panel.panel-default
+        .panel-body = @internship_position.description
 .row
-  .col-md-12: .panel.panel-default: .panel-body = @internship_position.description
+  .col-md-6 = render 'applying', applying: @internship_position.applying
+  .col-md-6 = render 'address',  address:  @internship_position.address
 .row
-  .col-md-3 = render 'applying', applying: @internship_position.applying
-  .col-md-3 = render 'address',  address:  @internship_position.address
-  .col-md-3 = render 'contact',  contact:  @internship_position.contact
-  .col-md-3 = render 'housing',  housing:  @internship_position.housing
+  .col-md-6 = render 'contact',  contact:  @internship_position.contact
+  .col-md-6 = render 'housing',  housing:  @internship_position.housing
 
