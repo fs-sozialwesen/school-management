@@ -8,7 +8,7 @@
           option selected=(status == @status) value=status = human_status_name(status)
     .form-group
       select.form-control name="interview_invited"
-        option selected=(@invited.nil?)     value=''    Eingeladung
+        option selected=(@invited.nil?)     value=''    Einladung
         option selected=(@invited == true)  value="yes" eingeladen
         option selected=(@invited == false) value="no"  noch nicht eingeladen
     .form-group
