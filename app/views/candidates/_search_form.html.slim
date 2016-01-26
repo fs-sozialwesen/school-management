@@ -3,24 +3,24 @@
   form action=candidates_url
     .form-group
       select.form-control name="status"
-        option selected=(@status.blank?) value='' Status
-        - @statuses.each do |status, _|
-          option selected=(status == @status) value=status = human_status_name(status)
+        option selected=(@filter.status.blank?) value='' Status
+        - @filter.statuses.each do |status, _|
+          option selected=(status == @filter.status) value=status = human_status_name(status)
     .form-group
       select.form-control name="interview_invited"
-        option selected=(@invited.nil?)     value=''    Einladung
-        option selected=(@invited == true)  value="yes" eingeladen
-        option selected=(@invited == false) value="no"  noch nicht eingeladen
+        option selected=(@filter.invited.nil?)     value=''    Einladung
+        option selected=(@filter.invited == true)  value="yes" eingeladen
+        option selected=(@filter.invited == false) value="no"  noch nicht eingeladen
     .form-group
       select.form-control name="interview_answer"
-        option selected=(@answer.blank?) value='' Rückmeldung
+        option selected=(@filter.answer.blank?) value='' Rückmeldung
         - Interview::ANSWERS.each do |answer|
-          option selected=(answer == @answer) value=answer = human_answer_name(answer)
+          option selected=(answer == @filter.answer) value=answer = human_answer_name(answer)
     .form-group
       select.form-control name="interview_result"
-        option selected=(@result.blank?) value='' Ergebnis
+        option selected=(@filter.result.blank?) value='' Ergebnis
         - Interview::RESULTS.each do |result|
-          option selected=(result == @result) value=result = human_result_name(result)
+          option selected=(result == @filter.result) value=result = human_result_name(result)
     .form-group
       => link_to 'Alle', candidates_path, class: 'btn btn-info'
       input.btn.btn-primary type="submit" value="Suchen"

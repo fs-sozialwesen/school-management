@@ -6,8 +6,8 @@ class CandidatesController < ApplicationController
 
   def index
     authorize Candidate
-    @statuses   = Candidate.statuses
-    @candidates = filtered_candidates.all
+    @filter = CandidatesFilter.new(params)
+    @candidates = @filter.perform.all
     @grouped = params[:view] == 'grouped'
   end
 
@@ -72,51 +72,14 @@ class CandidatesController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   def candidate_params
     params.require(:candidate)
-      .permit(
-
-        %i(date notes education_subject year police_certificate internships internships_proved
-           education_contract_sent education_contract_received internship_contract_sent
-           internship_contract_received cancel_date cancel_reason status) +
-          [
-            school_graduate:     %i(graduate proved),
-            profession_graduate: %i(graduate proved comments),
-            interview:           %i(date time place comments invited answer result reason),
-            internship1:         %i(institution months proved),
-            internship2:         %i(institution months proved),
-            person_attributes: %i(first_name last_name gender date_of_birth place_of_birth) +
-                                         [
-                                           address: %i(street zip city),
-                                           contact: %i(email phone mobile)
-                                         ],
-          ]
-      )
-  end
-
-  def process_filter_params
-    @status = status
-    @invited = { 'yes' => true, 'no' => false }[params[:interview_invited]]
-    @answer = params[:interview_answer]
-    @result = params[:interview_result]
-  end
-
-  def filtered_candidates
-    process_filter_params
-    candidates = Candidate.order(order_options).includes(:person)
-    candidates = candidates.send status if status.in?(@statuses.keys)
-    candidates = candidates.where(status: @statuses[status]) if status.in?(@statuses.keys)
-    candidates = candidates.where('interview @> ?', { invited: @invited }.to_json) if @invited.in?([true, false])
-    candidates = candidates.where('interview @> ?', { answer: @answer }.to_json) if @answer.present?
-    candidates = candidates.where('interview @> ?', { result: @result }.to_json) if @result.present?
-    candidates
-  end
-
-  def status
-    params[:status].to_s
-  end
-
-  def order_options
-    return 'people.first_name, date' if params[:sort] == 'first_name'
-    return 'people.last_name, date'  if params[:sort] == 'last_name'
-    :date
+      .permit(%i(date notes education_subject year police_certificate internships cancel_date
+                 internships_proved education_contract_sent education_contract_received
+                 internship_contract_sent internship_contract_received cancel_reason) +
+                [
+                  school_graduate:     %i(graduate proved),
+                  profession_graduate: %i(graduate proved comments),
+                  interview:           %i(date time place comments invited answer result reason),
+                  person_attributes:   person_params
+                ])
   end
 end

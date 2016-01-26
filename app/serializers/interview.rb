@@ -1,5 +1,5 @@
+# class Interview
 class Interview < JsonSerializer
-
   ANSWERS = %w(open accepted rejected).freeze
   RESULTS = %w(open accepted rejected).freeze
 
@@ -32,14 +32,19 @@ class Interview < JsonSerializer
 
   def repeat!
     self.result = 'open'
-    self.comments << "\n" unless comments.blank?
-    self.comments << "Vergangenes KLT:\n"
-    self.comments << "Datum: #{date.present? ? I18n.l(date) : ''}\n"
-    self.comments << "Zeit: #{time}\n"
-    self.comments << "Ort: #{place}\n"
-    self.comments << "Begründung: #{reason}\n"
-    self.date  = nil
-    self.time = self.place = self.reason = ''
+    comments << "\n" unless comments.blank?
+    comments << attributes_to_text
+    self.date = nil
+    self.reason = ''
   end
 
+  private
+
+  def attributes_to_text
+    "Vergangenes KLT:\n" \
+      "Datum: #{date.present? ? I18n.l(date) : ''}\n" \
+      "Eingeladen: #{invited ? 'ja' : 'nein'}\n" \
+      "Rückmeldung: #{answer}\n" \
+      "Begründung: #{reason}\n"
+  end
 end
