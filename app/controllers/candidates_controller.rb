@@ -9,6 +9,7 @@ class CandidatesController < ApplicationController
     @filter = CandidatesFilter.new(params)
     @candidates = @filter.perform.all
     @grouped = params[:view] == 'grouped'
+    @filename = "bewerber-#{Time.now}"
   end
 
   def show
