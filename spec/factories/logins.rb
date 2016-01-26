@@ -2,7 +2,8 @@ FactoryGirl.define do
 
   factory :login do
     confirmed_at Time.now
-    email
+    # email
+    sequence(:email) { |n| "person#{n}@example.com" }
     password 'please123'
 
     # person
