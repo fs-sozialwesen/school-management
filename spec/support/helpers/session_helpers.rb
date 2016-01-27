@@ -16,6 +16,12 @@ module Features
       click_button I18n.t('devise.sessions.new.sign_in')
     end
 
+    def sign_in_as_manager
+      manager = FactoryGirl.create(:person)
+      manager.create_as_manager!
+      signin(manager.login.email, '12341234')
+    end
+
     def signin_login(login)
       signin login.email, login.password
     end
