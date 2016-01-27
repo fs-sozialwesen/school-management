@@ -53,12 +53,6 @@ class TeachersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def teacher_params
-      params.require(:teacher).permit(
-        person_attributes: %i(first_name last_name gender date_of_birth place_of_birth) +
-                             [
-                               address: %i(street zip city),
-                               contact: %i(email phone mobile)
-                             ],
-      )
+      params.require(:teacher).permit(person_attributes: person_params)
     end
 end
