@@ -1,0 +1,7 @@
+.authform
+  = simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post, role: 'form'}) do |f|
+    h3 Passwort vergessen?
+    p Du erhälst eine E-Mail mit Informationen, wie du dein Passwort zurücksetzen kannst.
+    = devise_error_messages!
+    = f.input :email, input_html: { autofocus: true }
+    = f.submit 'Zurücksetzen', class: 'button right'

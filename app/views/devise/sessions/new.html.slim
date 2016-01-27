@@ -1,21 +1,9 @@
 .authform
-  = form_for(resource, as: resource_name, url: session_path(resource_name), html: { role: 'form'}) do |f|
-    /h3 = t('devise.sessions.new.sign_in')
+  = simple_form_for(resource, as: resource_name, url: session_path(resource_name), html: { role: 'form'}) do |f|
     h3 = t('devise.sessions.new.sign_in')
     = devise_error_messages!
-    .form-group
-      - if devise_mapping.registerable?
-        = link_to 'Registrieren', new_registration_path(resource_name), class: 'right'
-      = f.label :email
-      = f.email_field :email, autofocus: true, class: 'form-control'
-    .form-group
-      /- if devise_mapping.recoverable?
-        = link_to "Passwort vergessen?", new_password_path(resource_name), class: 'right'
-      = f.label :password
-      = f.password_field :password, class: 'form-control'
+    = f.input :email
+    = f.input :password
     = f.submit t('.sign_in'), class: 'button right'
-    /- if devise_mapping.rememberable?
-      .checkbox style="width:150px"
-        label
-          = f.check_box :remember_me do
-          'Remember me
+    - if devise_mapping.recoverable?
+      = link_to "Passwort vergessen?", new_password_path(resource_name)
