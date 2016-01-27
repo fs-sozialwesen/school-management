@@ -1,6 +1,6 @@
 # class CandidatesFilter
 class CandidatesFilter
-  attr_reader :params, :scope, :invited, :status, :answer, :result, :statuses
+  attr_reader :params, :scope, :invited, :status, :answer, :result, :statuses, :date
 
   def initialize(params, scope = Candidate)
     @params   = params
@@ -10,6 +10,7 @@ class CandidatesFilter
     @invited  = { 'yes' => true, 'no' => false }[params[:interview_invited]]
     @answer   = params[:interview_answer]
     @result   = params[:interview_result]
+    @date     = params[:interview_date]
   end
 
   def perform
@@ -17,6 +18,7 @@ class CandidatesFilter
     filter_invited
     filter_answer
     filter_result
+    filter_date
     @scope
   end
 
@@ -31,11 +33,15 @@ class CandidatesFilter
   end
 
   def filter_answer
-    @scope = filter_interview(answer: @answer) if answer.present?
+    @scope = filter_interview(answer: answer) if answer.present?
   end
 
   def filter_result
-    @scope = filter_interview(result: @result) if result.present?
+    @scope = filter_interview(result: result) if result.present?
+  end
+
+  def filter_date
+    @scope = filter_interview(date: date) if date.present?
   end
 
   def filter_interview(filter)
