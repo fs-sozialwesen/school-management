@@ -2,13 +2,19 @@
   = link_to new_candidate_path, class: 'btn btn-primary' do
     span.glyphicon.glyphicon-plus
     |  Neu
-  = link_to candidates_path(format: :xml), id: 'export-csv-button', class: 'btn btn-default' do
-    span.glyphicon.glyphicon-export
-    |  Exportieren
+  .btn-group.pull-right style="margin-right: 8px;"
+    a.btn.btn-default.dropdown-toggle aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" type="button"
+      span.glyphicon.glyphicon-export>
+      | Exportieren
+      span.caret<
+    ul.dropdown-menu.export-buttons
+      li = link_to 'XML', candidates_path(format: :xml)
+      li = link_to 'CSV', candidates_path(format: :csv)
   h2
     |  #{@candidates.count} Bewerber
     - if @grouped
       small< gruppiert
+
 
 - if @grouped
   = render 'candidates/index/grouped'
@@ -17,4 +23,6 @@
 
 coffee:
   $ ->
-    $('#export-csv-button').attr('href', $('#export-csv-button').attr('href') + window.location.search)
+    $('.export-buttons a').each (index, link) ->
+      $link = $(link)
+      $link.attr('href', $link.attr('href') + window.location.search)
