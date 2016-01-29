@@ -1,6 +1,6 @@
 class LoginsController < ApplicationController
   before_action :authenticate_login!
-  before_action :set_teacher, except: :index
+  before_action :set_person, except: :index
   after_action :verify_authorized
 
   def index
@@ -20,9 +20,11 @@ class LoginsController < ApplicationController
 
   def create
     authorize Login
-    @login = @person.build_login login_params
+    pw = generate_password
+    logger.info pw
+    @login = @person.build_login login_params.merge(password: pw, password_confirmation: pw)
     if @login.save
-      redirect_to @teacher, notice: t('.success')
+      redirect_to @role, notice: t('.success')
     else
       render 'new'
     end
@@ -36,9 +38,10 @@ class LoginsController < ApplicationController
     @login = Login.find(params[:id])
     authorize @login
     if @login.update_attributes(login_params)
-      redirect_to logins_path, :notice => "Login updated."
+      redirect_to @role, notice: t('.success')
     else
-      redirect_to logins_path, :alert => "Unable to update login."
+      render :edit
+      # redirect_to logins_path, :alert => "Unable to update login."
     end
   end
 
@@ -46,18 +49,30 @@ class LoginsController < ApplicationController
     login = @person.login
     authorize login
     login.destroy
-    redirect_to @teacher, :notice => "Login deleted."
+    redirect_to @role, notice: t('.success')
   end
 
   private
 
-  def set_teacher
-    @teacher = Teacher.find params[:teacher_id]
-    @person = @teacher.person
+  def set_person
+    @role = role
+    @person = @role.person
+  end
+
+  def role
+    if params[:teacher_id].present?
+      Teacher.find params[:teacher_id]
+    elsif params[:student_id].present?
+      Student.find params[:student_id]
+    end
   end
 
   def login_params
     params.require(:login).permit(:email, :password, :password_confirmation)
+  end
+
+  def generate_password
+    SecureRandom.hex(8)
   end
 
 end

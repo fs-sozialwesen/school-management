@@ -22,3 +22,10 @@
       .panel-body
         - if @student.course.present?
           = link_to @student.course.name, @student.course
+  .col-md-6
+    - if @student.login.present?
+      = render @student.login, role: @student
+    - else
+      .panel.panel-default
+        .panel-heading Login
+        .panel-body = link_to 'erstellen', new_student_login_path(@student)

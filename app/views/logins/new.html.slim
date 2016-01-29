@@ -1,15 +1,13 @@
-= simple_form_for @login, url: teacher_login_path do |f|
-  - if @login.errors.any?
-    .alert.alert-danger.alert-dismissable@alert
-      button.close type="button" data-dismiss="alert"
-        span aria-hidden="true" &times;
-        span.sr-only Close
-      h4 = t('.error')
-      ul
-        - @login.errors.each do |field, errors|
-          li #{field}: #{errors}
-  = f.input :email
-  = f.input :password
-  = f.input :password_confirmation
+.authform
+  h3 Login erstellen
+  = simple_form_for @login, url: [@role, :login] do |f|
+    - if @login.errors.any?
+      .alert.alert-danger.alert-dismissable@alert
+        button.close type="button" data-dismiss="alert"
+          span aria-hidden="true" &times;
+          span.sr-only Close
+        h4 = t('.error')
+    = f.input :email
+    p Es wird ein zufälliges Passwort generiert. Der Nutzer erhält eine E-Mail.
 
-  = f.submit
+    = f.submit 'Erstellen', class: 'button right'

@@ -27,6 +27,15 @@ de:
       success: KLasse gelöscht.
     form:
       error: Klasse konnte nicht gespeichert werden.
+  logins:
+    create:
+      success: Login gespeichert.
+    update:
+      success: Login gespeichert.
+    destroy:
+      success: Login gelöscht.
+    new:
+      error: Login konnte nicht gespeichert werden.
     show:
       confirm_delete: "Wirklich löschen?"
   people:

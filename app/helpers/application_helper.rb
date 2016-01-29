@@ -11,9 +11,9 @@ module ApplicationHelper
     end
   end
 
-  def ldate(date)
+  def ldate(date, options = nil)
     return '' unless date.present?
-    l date
+    l date, options
   end
 
   def gt(key, person, options = {})

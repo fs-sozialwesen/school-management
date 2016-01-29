@@ -1,9 +1,30 @@
+- if login.person.student?
+  /- edit_link = edit_student_login_path(login.person.as_student)
+- if login.person.teacher?
+  /- edit_link = edit_teacher_login_path(login.person.as_teacher)
+  - delete_link = teacher_login_path(login.person.as_teacher)
 .panel.panel-default
   .panel-heading
     |  Login
-    ul.list-inline.pull-right
-      li = link_to edit_login_path(login), class: 'btn btn-default btn-xs' do
+    /ul.list-inline.pull-right
+      /li = link_to edit_link, class: 'btn btn-default btn-xs' do
         span.glyphicon.glyphicon-cog>
-        | Bearbeiten
+        |
+      /li = link_to delete_link, method: :delete, data: { confirm: ('.confirm_delete') }, class: 'btn btn-danger btn-xs' do
+        span.glyphicon.glyphicon-remove
+        |  Sperren
   .panel-body
-    p = login.email
+    p
+      label> E-Mail:
+      = login.email
+    p
+      label aktiviert:
+      =< login.confirmed? ? ldate(login.confirmed_at) : 'nein'
+    - if Rails.env.development?
+      - if !login.confirmed?
+        p = link_to 'Account aktivieren', confirmation_url(login, confirmation_token: login.confirmation_token)
+      p
+        pre = login.as_json.to_yaml
+        pre = login.inspect
+
+

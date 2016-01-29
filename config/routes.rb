@@ -8,7 +8,9 @@ Rails.application.routes.draw do
   resources :teachers do
     resource :login
   end
-  resources :students
+  resources :students do
+    resource :login
+  end
   resources :courses
 
   resources :timetables, only: [:index, :show]
