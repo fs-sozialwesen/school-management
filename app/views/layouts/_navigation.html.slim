@@ -41,7 +41,7 @@
               => current_user.name
               span.caret
             ul.dropdown-menu
-              li = link_to 'Profil', current_user, title: current_user.name
+              /li = link_to 'Profil', current_user, title: current_user.name
               li = link_to 'Passwort ändern', edit_login_registration_url(current_user.login)
               li = link_to 'Abmelden', destroy_login_session_path, method: 'delete', title: current_user.name
           /li.divider role="separator"

@@ -3,16 +3,6 @@ class LoginsController < ApplicationController
   before_action :set_person, except: :index
   after_action :verify_authorized
 
-  def index
-    @logins = Login.all
-    authorize Login
-  end
-
-  def show
-    @login = @person.login
-    authorize @login
-  end
-
   def new
     @login = @person.build_login email: @person.contact.email
     authorize @login
