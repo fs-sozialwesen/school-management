@@ -1,5 +1,5 @@
-= simple_form_for(@teacher, html: { role: "form" }, defaults: { required: false, include_blank: false }) do |f|
-  - if @teacher.errors.any?
+= simple_form_for(@manager, html: { role: "form" }, defaults: { required: false, include_blank: false }) do |f|
+  - if @manager.errors.any?
     .alert.alert-danger.alert-dismissable@alert
       button.close type="button" data-dismiss="alert"
         span aria-hidden="true" &times;
@@ -7,7 +7,7 @@
       h4 = t('.error')
 
   = f.simple_fields_for :person do |p|
-    = render 'people/form/person', f: p, person: @teacher.person
+    = render 'people/form/person', f: p, person: @manager.person
 
   .row
     .col-md-12

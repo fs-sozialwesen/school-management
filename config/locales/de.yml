@@ -22,9 +22,9 @@ de:
     create:
       success: Klasse gespeichert.
     update:
-      success: KLasse gespeichert.
+      success: Klasse gespeichert.
     destroy:
-      success: KLasse gelöscht.
+      success: Klasse gelöscht.
     generate_logins:
       error: Es konnten nicht alle Logins für diese Klasse erstellt werden. %{messages}
       success: Logins für alle Auszubildenden dieser Klasse erstellt.
@@ -47,6 +47,17 @@ de:
       deactivated: Login deaktiviert.
     new:
       error: Login konnte nicht gespeichert werden.
+    show:
+      confirm_delete: "Wirklich löschen?"
+  managers:
+    create:
+      success: Manager gespeichert.
+    update:
+      success: Manager gespeichert.
+    destroy:
+      success: Manager gelöscht.
+    form:
+      error: Manager konnte nicht gespeichert werden.
     show:
       confirm_delete: "Wirklich löschen?"
   people:

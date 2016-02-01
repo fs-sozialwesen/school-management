@@ -7,6 +7,11 @@ Rails.application.routes.draw do
       patch :toggle
     end
   end
+  resources :managers do
+    resource :login, except: %i(index show) do
+      patch :toggle
+    end
+  end
   resources :students do
     resource :login, except: %i(index show) do
       patch :toggle

@@ -16,6 +16,9 @@
           - if policy(Course).index?
             li class = ('active' if params[:controller] == 'courses')
               = link_to 'Klassen', courses_url
+          - if policy(Manager).index?
+            li class = ('active' if params[:controller] == 'managers')
+              = link_to 'Manager', managers_url
           - if policy(Teacher).index?
             li class = ('active' if params[:controller] == 'teachers')
               = link_to 'Lehrer', teachers_url
