@@ -10,7 +10,7 @@ class LoginsController < ApplicationController
 
   def create
     authorize Login
-    @login = LoginGenerator.new(@person).call
+    @login = LoginGenerator.new(@person, email: login_params[:email]).call
 
     if @login.valid?
       redirect_to @role, notice: t('.success')
