@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
   end
 
   def user_not_authorized
-    flash[:alert] = "Access denied."
+    flash[:alert] = "Du bist nicht berechtigt, diese Seite zu sehen."
     redirect_to (request.referrer || root_path)
   end
 
@@ -25,7 +25,7 @@ class ApplicationController < ActionController::Base
   end
 
   def person_params
-    %i(first_name last_name gender date_of_birth place_of_birth) + contact_params
+    %i(id first_name last_name gender date_of_birth place_of_birth) + contact_params
   end
 
   def after_sign_in_path_for(login)
