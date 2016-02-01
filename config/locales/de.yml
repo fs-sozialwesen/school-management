@@ -31,12 +31,17 @@ de:
     create_password_email:
       subject: Passwort zu deinem Account
   logins:
+    login:
+      confirm_toggle: Sicher?
     create:
       success: Login gespeichert.
     update:
       success: Login gespeichert.
     destroy:
       success: Login gelöscht.
+    toggle:
+      activated: Login aktiviert.
+      deactivated: Login deaktiviert.
     new:
       error: Login konnte nicht gespeichert werden.
     show:

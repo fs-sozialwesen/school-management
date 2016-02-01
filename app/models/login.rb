@@ -19,4 +19,21 @@ class Login < ActiveRecord::Base
     false
   end
 
+  # activate and deactivate logins
+  def account_active?
+    blocked_at.nil?
+  end
+
+  def active_for_authentication?
+    super && account_active?
+  end
+
+  def inactive_message
+    account_active? ? super : :locked
+  end
+
+  def toggle!
+    update blocked_at: ( account_active? ? Time.current : nil )
+  end
+
 end

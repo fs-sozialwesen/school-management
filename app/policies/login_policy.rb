@@ -17,6 +17,7 @@ class LoginPolicy
   alias :update? :index?
   alias :new? :index?
   alias :create? :index?
+  alias :toggle? :index?
 
   def destroy?
     return false if @current_user.login == @login

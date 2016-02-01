@@ -44,6 +44,13 @@ class LoginsController < ApplicationController
     redirect_to @role, notice: t('.success')
   end
 
+  def toggle
+    login = @person.login
+    authorize login
+    login.toggle!
+    redirect_to @role, notice: ( login.account_active? ? t('.activated') : t('.deactivated') )
+  end
+
   private
 
   def set_person

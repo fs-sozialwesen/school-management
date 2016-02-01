@@ -1,15 +1,19 @@
 - if login.person.student?
-  /- edit_link = edit_student_login_path(login.person.as_student)
+  - toggle_link = toggle_student_login_path(login.person.as_student)
 - if login.person.teacher?
-  /- edit_link = edit_teacher_login_path(login.person.as_teacher)
-  - delete_link = teacher_login_path(login.person.as_teacher)
-.panel.panel-default
+  - toggle_link = toggle_teacher_login_path(login.person.as_teacher)
+  /- delete_link = teacher_login_path(login.person.as_teacher)
+.panel class=(login.account_active? ? 'panel-default' : 'panel-danger')
   .panel-heading
     |  Login
-    /ul.list-inline.pull-right
-      /li = link_to edit_link, class: 'btn btn-default btn-xs' do
-        span.glyphicon.glyphicon-cog>
-        |
+    ul.list-inline.pull-right
+      li = link_to toggle_link, method: :patch, data: { confirm: t('.confirm_toggle') }, class: 'btn btn-default btn-xs' do
+        - if login.account_active?
+          span.glyphicon.glyphicon-remove-sign>
+          |  Deaktivieren
+        - else
+          span.glyphicon.glyphicon-ok-sign>
+          |  Aktivieren
       /li = link_to delete_link, method: :delete, data: { confirm: ('.confirm_delete') }, class: 'btn btn-danger btn-xs' do
         span.glyphicon.glyphicon-remove
         |  Sperren
@@ -17,10 +21,13 @@
     p
       label> E-Mail:
       = login.email
-    p
-      label aktiviert:
-      =< login.confirmed? ? ldate(login.confirmed_at) : 'nein'
-    - if Rails.env.development?
+    - if login.account_active?
+      p: label aktiv
+    - else
+      p.text-danger
+        label deaktiviert am:
+        =< ldate(login.blocked_at)
+    /- if Rails.env.development?
       - if !login.confirmed?
         p = link_to 'Account aktivieren', confirmation_url(login, confirmation_token: login.confirmation_token)
       p
