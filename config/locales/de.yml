@@ -27,6 +27,9 @@ de:
       success: KLasse gelöscht.
     form:
       error: Klasse konnte nicht gespeichert werden.
+  login_mailer:
+    create_password_email:
+      subject: Passwort zu deinem Account
   logins:
     create:
       success: Login gespeichert.

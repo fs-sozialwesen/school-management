@@ -27,4 +27,9 @@ class ApplicationController < ActionController::Base
   def person_params
     %i(first_name last_name gender date_of_birth place_of_birth) + contact_params
   end
+
+  def after_sign_in_path_for(login)
+    return root_path if login.sign_in_count > 1
+    edit_login_registration_url(login)
+  end
 end

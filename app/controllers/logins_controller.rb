@@ -2,6 +2,7 @@ class LoginsController < ApplicationController
   before_action :authenticate_login!
   before_action :set_person, except: :index
   after_action :verify_authorized
+  after_action :send_password_email, only: :create
 
   def new
     @login = @person.build_login email: @person.contact.email
@@ -10,9 +11,10 @@ class LoginsController < ApplicationController
 
   def create
     authorize Login
-    pw = generate_password
-    logger.info pw
-    @login = @person.build_login login_params.merge(password: pw, password_confirmation: pw)
+    @password = generate_password
+    login_attributes = login_params.merge(password: @password, password_confirmation: @password)
+    @login = @person.build_login login_attributes
+
     if @login.save
       redirect_to @role, notice: t('.success')
     else
@@ -63,6 +65,13 @@ class LoginsController < ApplicationController
 
   def generate_password
     SecureRandom.hex(8)
+  end
+
+  def send_password_email
+    if @login.valid?
+      @login.confirm
+      LoginMailer.create_password_email(@login, @password).deliver_later
+    end
   end
 
 end
