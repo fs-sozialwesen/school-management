@@ -25,14 +25,14 @@
 
 # John is manager and teacher on School1
 john = Person.create!(first_name: 'John', last_name: 'Maker', contact: { email: 'john@bak.er' })
-john.generate_login! 'johnmaker'
+LoginGenerator.new(john, password: 'johnmaker').call(send_email: false)
 School.add_manager! john
 School.add_teacher! john
 
 # Sofia is manager on School1
 { first_name: 'Sofia', last_name: 'Gentle', contact: { email: 'sofia@gent.le' } }
 sofia = Person.create!(first_name: 'Sofia', last_name: 'Gentle', contact: { email: 'sofia@gent.le' })
-sofia.generate_login! 'sofiagentle'
+LoginGenerator.new(sofia, password: 'sofiagentle').call(send_email: false)
 School.add_manager! sofia
 
 # Other teachers

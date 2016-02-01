@@ -12,7 +12,11 @@ Rails.application.routes.draw do
       patch :toggle
     end
   end
-  resources :courses
+  resources :courses do
+    member do
+      match :generate_logins, via: [:get, :patch]
+    end
+  end
 
   resources :timetables, only: [:index, :show]
   resources :internship_positions, only: [:index, :show]

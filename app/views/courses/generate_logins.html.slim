@@ -1,0 +1,29 @@
+h1 Logins generieren für Klasse #{ @course.name }
+
+.row
+  .col-md-6
+    - if @students.empty?
+      |  Alle Auszubildenden dieser Klasse haben bereits ein Login.
+    - else
+      table.table.table-condensed.table-hover.table-striped.table-clickable
+        thead
+          th Name
+          th E-Mail
+          th
+        tbody
+          - @students.each do | student |
+            - has_email = student.person.contact.email.present?
+            - row_class = has_email ? 'success' : 'danger'
+            tr data={ url: url_for(student) } class=row_class
+              td = student.name
+              td = student.person.contact.email
+              td
+                - if has_email
+                  span.glyphicon.glyphicon-ok-sign
+                - else
+                  |  keine E-Mail-Adresse
+
+    .pull-right
+      => link_to 'Abbrechen', 'javascript: window.history.back();', class: 'btn btn-default'
+      - if @students.any?
+        => link_to 'Logins erstellen', generate_logins_course_path(@course), method: :patch, class: 'btn btn-primary'

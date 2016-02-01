@@ -1,7 +1,8 @@
 / Rails flash messages styled for Bootstrap 3.0
 - flash.each do |name, msg|
   - if msg.is_a?(String)
-    .alert.alert-dismissable class="alert-#{ name == :error ? "danger" : "success" }" role="alert"
+    - alert_class = { error: 'danger', notice: 'success', alert: 'warning' }[name.to_sym]
+    .alert.alert-dismissable class="alert-#{ alert_class }" role="alert"
       button.close[type="button" data-dismiss="alert" aria-hidden="true"]
         span aria-hidden="true" ×
         span.sr-only Close

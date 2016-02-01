@@ -1,7 +1,7 @@
 class CoursesController < ApplicationController
   before_action :authenticate_login!
   after_action :verify_authorized
-  before_action :set_course, only: [:show, :edit, :update, :destroy]
+  before_action :set_course, only: [:show, :edit, :update, :destroy, :generate_logins]
 
   def index
     authorize Course
@@ -50,15 +50,36 @@ class CoursesController < ApplicationController
     redirect_to courses_url, notice: t('.success')
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_course
-      @course = Course.find(params[:id])
-      authorize @course
+  def generate_logins
+    @students = @course.students_without_login
+    return if request.get?
+    errors = generate_logins_for(@students)
+    if errors.any?
+      messages = errors.map { |l| "#{l.person.name}: #{l.errors.full_messages.join('. ')}" }
+      redirect_to @course, alert: t('.error', messages: messages.join(' '))
+    else
+      redirect_to @course, notice: t('.success')
     end
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def course_params
-      params.require(:course).permit(:name, :teacher_id, :start_date, :end_date)
+  private
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_course
+    @course = Course.find(params[:id])
+    authorize @course
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def course_params
+    params.require(:course).permit(:name, :teacher_id, :start_date, :end_date)
+  end
+
+  def generate_logins_for(students)
+    students.each_with_object([]) do | student, errors |
+      login = LoginGenerator.new(student.person).call
+      errors << login unless login.valid?
     end
+  end
+
 end

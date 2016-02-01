@@ -25,6 +25,9 @@ de:
       success: KLasse gespeichert.
     destroy:
       success: KLasse gelöscht.
+    generate_logins:
+      error: Es konnten nicht alle Logins für diese Klasse erstellt werden. %{messages}
+      success: Logins für alle Auszubildenden dieser Klasse erstellt.
     form:
       error: Klasse konnte nicht gespeichert werden.
   login_mailer:

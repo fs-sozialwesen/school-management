@@ -42,14 +42,6 @@ class Person < ActiveRecord::Base
     "#{first_name} #{last_name}"
   end
 
-  def generate_login!(pw)
-    create_login do |login|
-      login.email    = contact.email
-      login.password = login.password_confirmation = pw
-      login.confirm
-    end
-  end
-
   def female?
     gender == 'f'
   end

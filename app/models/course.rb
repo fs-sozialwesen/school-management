@@ -38,4 +38,12 @@ class Course < ActiveRecord::Base
     student.course = self
   end
 
+  def students_without_login
+    students.includes(person: :login).order('people.last_name').where('logins.id' => nil)
+  end
+
+  def remove_all_logins
+    students.each { | student | student.login.destroy if student.login }
+  end
+
 end
