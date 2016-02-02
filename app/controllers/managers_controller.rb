@@ -12,8 +12,14 @@ class ManagersController < ApplicationController
   end
 
   def new
-    @manager = Manager.new
-    @manager.build_person
+    if params[:person_id]
+      @person_exists = true
+      @person = Person.find params[:person_id]
+      @manager = @person.build_as_manager
+    else
+      @manager = Manager.new
+      @manager.build_person
+    end
     authorize @manager
   end
 
@@ -21,7 +27,12 @@ class ManagersController < ApplicationController
   end
 
   def create
-    @manager = Manager.new(manager_params)
+    @manager = if params[:person_id]
+      @person = Person.find params[:person_id]
+      @person.build_as_manager
+    else
+      Manager.new(manager_params)
+    end
     authorize @manager
 
     if @manager.save

@@ -12,16 +12,28 @@ class TeachersController < ApplicationController
   end
 
   def new
-    @teacher = Teacher.new
+    if params[:person_id]
+      @person_exists = true
+      @person = Person.find params[:person_id]
+      @teacher = @person.build_as_teacher
+    else
+      @teacher = Teacher.new
+      @teacher.build_person
+    end
     authorize @teacher
-    @teacher.build_person
   end
 
   def edit
   end
 
   def create
-    @teacher = Teacher.new(teacher_params)
+    @teacher = if params[:person_id]
+      @person = Person.find params[:person_id]
+      @person.build_as_teacher
+    else
+      Teacher.new(teacher_params)
+    end
+
     authorize @teacher
 
     if @teacher.save

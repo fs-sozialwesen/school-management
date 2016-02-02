@@ -1,4 +1,9 @@
-.page-header
-  h1 Neuen Lehrer anlegen
+- if @person_exists
+  h1 #{@person.name} Managerrechte geben
+  p
+    = link_to 'Rechte erteilen', managers_path(person_id: @person.id), method: :post, class: 'btn btn-danger'
+- else
+  .page-header
+    h1 Neuen Lehrer anlegen
 
-= render 'form'
+  = render 'form'

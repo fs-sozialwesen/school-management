@@ -9,6 +9,9 @@
     => @teacher.person.name
     small = gt(:teacher, @teacher.person)
 
+-if @teacher.person == current_user
+  h3 Das bin ich
+
 = render @teacher.person, edit_link: edit_teacher_path(@teacher, part: 'person')
 
 .row
@@ -35,3 +38,12 @@
         .panel-heading Login
         .panel-body = link_to 'erstellen', new_teacher_login_path(@teacher)
 
+.row
+  .col-md-6
+    .panel.panel-default
+      .panel-heading Weitere Funktionen
+      .panel-body
+        - if @teacher.person.manager?
+          = link_to 'Managerprofil', @teacher.person.as_manager
+        - else
+          = link_to 'Managerrechte hinzufügen', new_manager_path(person_id: @teacher.person.id), class: 'btn btn-default'

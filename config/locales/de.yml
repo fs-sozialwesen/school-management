@@ -49,6 +49,8 @@ de:
       error: Login konnte nicht gespeichert werden.
     show:
       confirm_delete: "Wirklich löschen?"
+  manager_f: Managerin
+  manager_m: Manager
   managers:
     create:
       success: Manager gespeichert.
