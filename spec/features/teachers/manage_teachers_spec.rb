@@ -8,7 +8,7 @@ feature 'Manage teachers', :devise do
     sign_in_as_manager
 
     # When I go to the teachers list
-    visit teachers_path
+    visit teachers_people_path
 
     # And I click on 'New'
     expect(page).to have_content 'Neu'
@@ -23,7 +23,7 @@ feature 'Manage teachers', :devise do
     click_on 'Speichern'
 
     # Then I see the teacher
-    expect(page).to have_content 'Lehrer(in) gespeichert'
+    expect(page).to have_content 'Persondaten gespeichert'
     expect(page).to have_content 'John Meyer'
   end
 
