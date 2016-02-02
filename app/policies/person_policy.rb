@@ -1,18 +1,36 @@
 class PersonPolicy < ApplicationPolicy
 
-  def index?
-    user.manager?
+  def managers?
+    manager?
+  end
+
+  def teachers?
+    manager?
+  end
+
+  def students?
+    manager?
   end
 
   def show?
-    user.manager? or user == record
+    manager? or user == person
   end
 
   alias :edit? :show?
   alias :update? :show?
-  alias :new? :index?
-  alias :create? :index?
-  alias :destroy? :index?
+
+  def destroy?
+    if record.manager?
+      # don't let managers delete them self
+      manager? && user != person
+    else
+      manager?
+    end
+  end
+
+  def person
+    record
+  end
 
 
   class Scope < Scope

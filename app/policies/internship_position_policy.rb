@@ -1,11 +1,10 @@
 class InternshipPositionPolicy < ApplicationPolicy
 
   def index?
-    @user.manager? or user.student?
+    manager? or student?
   end
 
   def show?
-    # @user.manager? or (user.student? and user.as_student.education_subject == record.education_subject)
     index?
   end
 

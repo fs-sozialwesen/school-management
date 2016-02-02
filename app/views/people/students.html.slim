@@ -1,16 +1,16 @@
 .page-header
-  = link_to new_student_path, class: 'btn btn-primary' do
+  = link_to new_person_path(scope: :student), class: 'btn btn-primary' do
     span.glyphicon.glyphicon-plus
     |  Neu
-  = link_to students_path(format: :csv), id: 'export-csv-button', class: 'btn btn-default' do
+  = link_to students_people_path(format: :csv), id: 'export-csv-button', class: 'btn btn-default' do
     span.glyphicon.glyphicon-export
     |  Exportieren
   - if @archived
-    = link_to students_path, class: 'btn btn-default' do
+    = link_to students_people_path, class: 'btn btn-default' do
       span.glyphicon.glyphicon-list
       |  Aktuelle
   - else
-    = link_to students_path(archived: 'yes'), class: 'btn btn-default' do
+    = link_to students_people_path(archived: 'yes'), class: 'btn btn-default' do
       span.glyphicon.glyphicon-list
       |  Archiv
 
@@ -19,7 +19,7 @@
     |  Auszubildende
     small =< @archived ? 'Archiv' : 'Aktuelle'
 
-- grouped_students = @students.to_a.group_by{ |student| student.person.last_name[0].upcase }
+- grouped_students = @students.to_a.group_by{ |student| student.last_name[0].upcase }
 - ('A'..'Z').each do | char |
   - if char.in? grouped_students.keys
     a href="##{char}" => char
@@ -44,12 +44,11 @@
           th Login
       tbody
         - students.each do | student |
-          - person = student.person
           tr data={ url: url_for(student) }
-            td = person.first_name
-            td = person.last_name
-            td = link_to student.course.name, student.course
-            td = person.login.present? ? 'ja' : 'nein'
+            td = student.first_name
+            td = student.last_name
+            td = link_to student.as_student.course.name, student.as_student.course
+            td = student.login.present? ? 'ja' : 'nein'
 
 coffee:
   $ -> window.onhashchange = -> window.scrollTo(0, window.scrollY - 80 )

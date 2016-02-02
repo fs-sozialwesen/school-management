@@ -2,19 +2,14 @@ Rails.application.routes.draw do
 
   root to: 'visitors#index'
   devise_for :logins
-  resources :teachers do
+  resources :people, except: :index do
     resource :login, except: %i(index show) do
       patch :toggle
     end
-  end
-  resources :managers do
-    resource :login, except: %i(index show) do
-      patch :toggle
-    end
-  end
-  resources :students do
-    resource :login, except: %i(index show) do
-      patch :toggle
+    collection do
+      get :managers
+      get :teachers
+      get :students
     end
   end
   resources :courses do

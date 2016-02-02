@@ -7,15 +7,15 @@ class ApplicationPolicy
   end
 
   def index?
-    user.manager?
+    manager?
   end
 
   def show?
-    user.manager?
+    manager?
   end
 
   def create?
-    user.manager?
+    manager?
   end
 
   def new?
@@ -23,7 +23,7 @@ class ApplicationPolicy
   end
 
   def update?
-    user.manager?
+    manager?
   end
 
   def edit?
@@ -31,11 +31,27 @@ class ApplicationPolicy
   end
 
   def destroy?
-    user.manager?
+    manager?
   end
 
   def scope
     Pundit.policy_scope!(user, record.class)
+  end
+
+  def manager?
+    user.manager?
+  end
+
+  def teacher?
+    user.teacher?
+  end
+
+  def employee?
+    user.employee?
+  end
+
+  def student?
+    user.student?
   end
 
   class Scope

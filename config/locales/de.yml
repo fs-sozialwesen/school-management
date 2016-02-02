@@ -63,10 +63,17 @@ de:
     show:
       confirm_delete: "Wirklich löschen?"
   people:
+    employees:
+      manager: Manager
+      teacher: Lehrer
+    new:
+      title_manager: Neue(n) Manager(in) anlegen
+      title_teacher: Neue(n) Lehrer(in) anlegen
+      title_student: Neue(n) Auszubildende(n) anlegen
     create:
-      success: Person gespeichert.
+      success: Persondaten gespeichert.
     update:
-      success: Person gespeichert.
+      success: Persondaten gespeichert.
     destroy:
       success: Person gelöscht.
     form:
@@ -79,6 +86,8 @@ de:
   teacher: Lehrer(in)
   teacher_f: Lehrerin
   teacher_m: Lehrer
+  student_f: Auszubildende
+  student_m: Auszubildender
   students:
     create:
       success: Auszubildende(r) gespeichert.

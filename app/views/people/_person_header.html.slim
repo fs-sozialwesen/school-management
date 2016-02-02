@@ -1,0 +1,9 @@
+h1
+  => @person.name
+  - if @person.student?
+    small = gt(:student, @person)
+  - else
+    - if @person.teacher?
+      small => gt(:teacher, @person)
+    - if @person.manager?
+      small = gt(:manager, @person)

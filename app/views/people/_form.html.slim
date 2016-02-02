@@ -1,12 +1,50 @@
-= simple_form_for(person, html: { role: 'form' }, defaults: { required: false, include_blank: false }) do |f|
-  - if person.errors.any?
+= simple_form_for(@person, html: { role: 'form' }, defaults: { required: false, include_blank: false }) do |f|
+  input type="hidden" name="scope" value=@scope
+  - if @person.errors.any?
     .alert.alert-danger.alert-dismissable@alert
       button.close type="button" data-dismiss="alert"
         span aria-hidden="true" &times;
         span.sr-only Close
       h4 = t('.error')
 
-  = render 'people/form/person', f: f, person: person
+  .row
+    .col-md-4
+      .panel.panel-default
+        .panel-heading Personendaten
+        .panel-body
+          .row
+            .col-md-6 = f.input :gender, collection: [%w(Frau f), %w(Herr m)], label: 'Anrede'
+          .row
+            .col-md-6 = f.input :first_name, required: true
+            .col-md-6 = f.input :last_name, required: true
+            .col-md-6 = f.input :date_of_birth, as: :string, input_html:{ class: :date, data: { start_view: 2 } }
+            .col-md-6 = f.input :place_of_birth
+
+    .col-md-4
+      .panel.panel-default
+        .panel-heading Adresse
+        .panel-body
+          = f.simple_fields_for :address, @person.address do |a|
+            = a.input :street
+            = a.input :zip
+            = a.input :city
+
+    .col-md-4
+      .panel.panel-default
+        .panel-heading Kontaktdaten
+        .panel-body
+          = f.simple_fields_for :contact, @person.contact do |c|
+            = c.input :email
+            = c.input :phone
+            = c.input :mobile
+  - if @person.student?
+    .row
+      .col-md-6
+        .panel.panel-default
+          .panel-heading Klasse
+          .panel-body
+            = f.simple_fields_for :as_student do |s|
+              = s.association :course, label: false
 
   .row.action-buttons
     .col-md-12

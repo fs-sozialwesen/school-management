@@ -38,6 +38,10 @@ class Person < ActiveRecord::Base
     send "as_#{role}"
   end
 
+  def employee?
+    manager? or teacher?
+  end
+
   def name
     "#{first_name} #{last_name}"
   end
