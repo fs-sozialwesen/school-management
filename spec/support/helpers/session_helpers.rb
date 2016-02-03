@@ -37,5 +37,9 @@ module Features
     def click_on_any(text)
       page.find(:xpath, "//*[normalize-space()='#{text}']").click
     end
+
+    def find_table_row(text)
+      page.find(:xpath, "//td[normalize-space()='#{text}']/..")
+    end
   end
 end

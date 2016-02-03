@@ -51,12 +51,12 @@ feature 'Manage managers', :devise do
     click_on 'Speichern'
     expect(page).to have_content 'Personendaten gespeichert'
     expect(page).to have_content 'Rodriges Gonzales'
-
     click_on 'Liste'
+
     expect(page).to have_selector('tbody tr[data-url]', count: 4)
-    # save_and_open_page
-    visit page.find('tr[data-url]:nth-child(3)')['data-url']
+    visit find_table_row('Rodriges')['data-url']
     click_on 'Löschen'
+    expect(page).to have_content 'gelöscht'
     expect(page).to have_current_path(managers_people_path)
     expect(page).to have_selector('tbody tr[data-url]', count: 3)
   end
