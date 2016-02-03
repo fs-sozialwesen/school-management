@@ -44,7 +44,7 @@
           .panel-heading Klasse
           .panel-body
             = f.simple_fields_for :as_student do |s|
-              = s.association :course, label: false
+              = s.association :course, label: false, include_blank: true
 
   .row.action-buttons
     .col-md-12

@@ -5,19 +5,16 @@
   = link_to students_people_path(format: :csv), id: 'export-csv-button', class: 'btn btn-default' do
     span.glyphicon.glyphicon-export
     |  Exportieren
-  - if @archived
-    = link_to students_people_path, class: 'btn btn-default' do
-      span.glyphicon.glyphicon-list
-      |  Aktuelle
-  - else
-    = link_to students_people_path(archived: 'yes'), class: 'btn btn-default' do
-      span.glyphicon.glyphicon-list
-      |  Archiv
 
-  h1
-    = @students.count
-    |  Auszubildende
-    small =< @archived ? 'Archiv' : 'Aktuelle'
+  h1 #{@students.count} Auszubildende
+
+ul.nav.nav-tabs
+  li class=('active' if @course == :active)
+    = link_to 'Aktuelle', students_people_path
+  li class=('active' if @course == :archived)
+    = link_to 'Archiv', students_people_path(course: 'archived')
+  li class=('active' if @course == :no)
+    = link_to 'ohne Klasse', students_people_path(course: 'no')
 
 - grouped_students = @students.to_a.group_by{ |student| student.last_name[0].upcase }
 - ('A'..'Z').each do | char |
@@ -40,14 +37,16 @@
         tr
           th Vorname
           th Nachname
-          th Klasse
+          - if @course != :no
+            th Klasse
           th Login
       tbody
         - students.each do | student |
           tr data={ url: url_for(student) }
             td = student.first_name
             td = student.last_name
-            td = link_to student.as_student.course.name, student.as_student.course
+            - if @course != :no
+              td = link_to student.as_student.course.name, student.as_student.course
             td = student.login.present? ? 'ja' : 'nein'
 
 coffee:

@@ -3,6 +3,7 @@ class PeopleController < ApplicationController
   after_action :verify_authorized
   before_action :set_scope, only: [:new, :create]
   before_action :set_person, only: [:show, :edit, :update, :destroy]
+  before_action :set_course_filter, only: :students
 
   def managers
     authorize Person
@@ -17,10 +18,8 @@ class PeopleController < ApplicationController
   def students
     authorize Person
     @students = Person.students.includes(:login, as_student: :course).order(:last_name)
-    @archived = params[:archived].present?
-    courses   = @archived ? Course.inactive : Course.active
     respond_to do |format|
-      format.html { @students = @students.where('students.course_id' => courses).all }
+      format.html { @students = @students.where('students.course_id' => course_filter).all }
       format.csv  { @students = @students.order('courses.name, last_name').all }
     end
   end
@@ -33,7 +32,6 @@ class PeopleController < ApplicationController
 
   def create
     @person = Person.new(person_params)
-    @person.send "build_as_#{@scope}"
     authorize @person
 
     if @person.save
@@ -75,10 +73,20 @@ class PeopleController < ApplicationController
     authorize @person
   end
 
+  def set_course_filter
+    @course = params[:course].present? ? params[:course].to_sym : :active
+  end
+
+  def course_filter
+    return Course.active   if @course == :active
+    return Course.inactive if @course == :archived
+    nil
+  end
+
   # Never trust parameters from the scary internet, only allow the white list through.
   def person_params
     permit = %i(id first_name last_name gender date_of_birth place_of_birth) + contact_params
-    permit += [as_student_attributes: [:course_id]] if student?
+    permit += [as_student_attributes: [:id, :course_id]] #if student?
     params.require(:person).permit(permit)
   end
 
