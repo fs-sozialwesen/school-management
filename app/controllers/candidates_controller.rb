@@ -83,4 +83,12 @@ class CandidatesController < ApplicationController
                   person_attributes:   person_params
                 ])
   end
+
+  def person_params
+    %i(id first_name last_name gender date_of_birth place_of_birth) + contact_params
+  end
+
+  def contact_params
+    [ address: %i(street zip city), contact: %i(email phone mobile) ]
+  end
 end
