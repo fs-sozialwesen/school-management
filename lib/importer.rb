@@ -358,30 +358,31 @@ module Importer
     ActiveRecord::Base.connection.reset_pk_sequence!(TimeBlock.table_name)
   end
 
-  def self.repair_student_emails
-    errors = []
-
-    LegacyDatum.where(old_table: 'azubi').all.each do |legacy_datum|
-      data = legacy_datum.data
-      next unless data['ausbildungsart_id'].to_i == 3
-
-      first_name = data['vorname']
-      last_name  = data['nachname']
-
-      student = Person.students.where(first_name: first_name, last_name: last_name)
-
-      if student.count > 1
-        errors << [first_name, last_name]
-      else
-        student = student.first
-        next unless student
-        student.contact.email = encrypt_email(data['email'])
-        student.save
-      end
-
-    end
-    errors
-  end
+  # Job done
+  # def self.repair_student_emails
+  #   errors = []
+  #
+  #   LegacyDatum.where(old_table: 'azubi').all.each do |legacy_datum|
+  #     data = legacy_datum.data
+  #     next unless data['ausbildungsart_id'].to_i == 3
+  #
+  #     first_name = data['vorname']
+  #     last_name  = data['nachname']
+  #
+  #     student = Person.students.where(first_name: first_name, last_name: last_name)
+  #
+  #     if student.count > 1
+  #       errors << [first_name, last_name]
+  #     else
+  #       student = student.first
+  #       next unless student
+  #       student.contact.email = encrypt_email(data['email'])
+  #       student.save
+  #     end
+  #
+  #   end
+  #   errors
+  # end
 
 
 end
