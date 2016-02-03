@@ -33,6 +33,7 @@ class PeopleController < ApplicationController
 
   def create
     @person = Person.new(person_params)
+    @person.send "build_as_#{@scope}"
     authorize @person
 
     if @person.save
