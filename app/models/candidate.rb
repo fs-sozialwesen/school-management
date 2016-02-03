@@ -19,10 +19,6 @@ class Candidate < ActiveRecord::Base
 
   has_paper_trail
 
-  def display_name
-    person.name
-  end
-
   def progress
     self[:status]
   end
