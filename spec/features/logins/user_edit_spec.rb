@@ -11,22 +11,6 @@ feature 'Login edit', :devise do
     Warden.test_reset!
   end
 
-  # Scenario: User changes email address
-  #   Given I am signed in
-  #   When I change my email address
-  #   Then I see an account updated message
-  scenario 'user changes email address' do
-    skip
-    login = FactoryGirl.create(:person).login
-    login_as(login, scope: :login)
-    visit edit_login_registration_path(login)
-    fill_in Login.human_attribute_name(:email), :with => 'newemail@example.com'
-    fill_in 'Current password', with: login.password
-    click_button 'Update'
-    txts = [I18n.t( 'devise.registrations.updated'), I18n.t( 'devise.registrations.update_needs_confirmation')]
-    expect(page).to have_content(/.*#{txts[0]}.*|.*#{txts[1]}.*/)
-  end
-
   # Scenario: User cannot edit another user's profile
   #   Given I am signed in
   #   When I try to edit another user's profile
