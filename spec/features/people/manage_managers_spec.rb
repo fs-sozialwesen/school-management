@@ -6,10 +6,10 @@ feature 'Manage managers', :devise do
   scenario 'full roundtrip' do
     sign_in_as_manager
 
-    create_manager 'Vorname' => 'Frank', 'Nachname' => 'Meyer', 'Anrede' => 'Herr'
+    create_manager Vorname: 'Frank', Nachname: 'Meyer', Anrede: 'Herr'
 
     # edit created manager
-    click_table_row_with 'Frank'
+    click_row_with 'Frank'
     click_on 'Bearbeiten'
     select 'Herr',            from: 'Anrede'
     fill_in 'Vorname',        with: ''
@@ -29,7 +29,7 @@ feature 'Manage managers', :devise do
     # delete manager
     click_on 'Liste'
     expect do
-      click_table_row_with 'Rodriges'
+      click_row_with 'Rodriges'
       click_on 'Löschen'
     end.to change { page.all('tbody tr[data-url]').count }.by(-1)
     expect(page).to have_content 'gelöscht'
@@ -37,7 +37,7 @@ feature 'Manage managers', :devise do
 
   scenario 'create new manager' do
     sign_in_as_manager
-    create_manager 'Vorname' => 'Frank', 'Nachname' => 'Meyer', 'Anrede' => 'Herr'
+    create_manager Vorname: 'Frank', Nachname: 'Meyer', Anrede: 'Herr'
   end
 
   scenario 'edit manager' do
@@ -63,9 +63,9 @@ feature 'Manage managers', :devise do
 
   scenario 'delete other manager' do
     sign_in_as_manager
-    create_manager 'Vorname' => 'Frank', 'Nachname' => 'Meyer', 'Anrede' => 'Herr'
+    create_manager Vorname: 'Frank', Nachname: 'Meyer', Anrede: 'Herr'
     expect do
-      click_table_row_with 'Frank'
+      click_row_with 'Frank'
       click_on 'Löschen'
     end.to change { page.all('tbody tr[data-url]').count }.by(-1)
     expect(page).to have_content 'gelöscht'
@@ -74,7 +74,7 @@ feature 'Manage managers', :devise do
   scenario 'can not delete myself' do
     sign_in_as_manager
     click_on 'Manager'
-    click_table_row_with @current_user.last_name
+    click_row_with @current_user.last_name
     click_on 'Löschen'
     expect(page).to have_content('nicht berechtigt')
   end

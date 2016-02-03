@@ -6,10 +6,10 @@ feature 'Manage teachers', :devise do
   scenario 'full roundtrip' do
     sign_in_as_manager
 
-    create_teacher 'Vorname' => 'Frank', 'Nachname' => 'Meyer'
+    create_teacher Vorname: 'Frank', Nachname: 'Meyer', Anrede: 'Herr'
 
     # edit created teacher
-    click_table_row_with 'Frank'
+    click_row_with 'Frank'
     click_on 'Bearbeiten'
     select 'Herr',            from: 'Anrede'
     fill_in 'Vorname',        with: ''
@@ -29,7 +29,7 @@ feature 'Manage teachers', :devise do
     # delete teacher
     click_on 'Liste'
     expect do
-      click_table_row_with 'Rodriges'
+      click_row_with 'Rodriges'
       click_on 'Löschen'
     end.to change { page.all('tbody tr[data-url]').count }.by(-1)
     expect(page).to have_content 'gelöscht'
@@ -37,13 +37,15 @@ feature 'Manage teachers', :devise do
 
   scenario 'create new teacher' do
     sign_in_as_manager
-    create_teacher 'Vorname' => 'Frank', 'Nachname' => 'Meyer'
+    create_teacher Vorname: 'Frank', Nachname: 'Meyer', Anrede: 'Herr'
   end
 
   scenario 'edit teacher' do
     sign_in_as_manager
+    create_teacher Vorname: 'Frank', Nachname: 'Meyer', Anrede: 'Herr'
+
     click_on 'Lehrer'
-    click_on_first_row
+    click_row_with 'Frank'
     click_on 'Bearbeiten'
     select 'Herr',            from: 'Anrede'
     fill_in 'Vorname',        with: ''
@@ -63,9 +65,9 @@ feature 'Manage teachers', :devise do
 
   scenario 'delete teacher' do
     sign_in_as_manager
-    create_teacher 'Vorname' => 'Frank', 'Nachname' => 'Meyer'
+    create_teacher Vorname: 'Frank', Nachname: 'Meyer', Anrede: 'Herr'
     expect do
-      click_table_row_with 'Frank'
+      click_row_with 'Frank'
       click_on 'Löschen'
     end.to change { page.all('tbody tr[data-url]').count }.by(-1)
     expect(page).to have_content 'gelöscht'

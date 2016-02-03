@@ -6,10 +6,13 @@ feature 'Manage students', :devise do
   scenario 'full roundtrip' do
     sign_in_as_manager
 
-    create_student 'Vorname' => 'Frank', 'Nachname' => 'Meyer', 'Anrede' => 'Herr'
+    create_course Name: 'Active Course', Klassenlehrer: 'Frank Meyer',
+                  Beginn: '01.01.2014', Ende: '01.01.2017'
+
+    create_student Vorname: 'Frank', Nachname: 'Meyer', Anrede: 'Herr', Klasse: 'Active Course'
 
     # edit created student
-    click_table_row_with 'Frank'
+    click_row_with 'Frank'
     click_on 'Bearbeiten'
     select 'Herr',            from: 'Anrede'
     fill_in 'Vorname',        with: ''
@@ -29,7 +32,7 @@ feature 'Manage students', :devise do
     # delete student
     click_on 'Liste'
     expect do
-      click_table_row_with 'Rodriges'
+      click_row_with 'Rodriges'
       click_on 'Löschen'
     end.to change { page.all('tbody tr[data-url]').count }.by(-1)
     expect(page).to have_content 'gelöscht'
@@ -38,9 +41,12 @@ feature 'Manage students', :devise do
 
   scenario 'create new student' do
     sign_in_as_manager
+    create_course Name: 'Active Course', Klassenlehrer: 'Frank Meyer',
+                  Beginn: '01.01.2014', Ende: '01.01.2017'
+
     click_on 'Auszubildende'
     expect do
-      create_student 'Vorname' => 'Frank', 'Nachname' => 'Meyer', 'Anrede' => 'Herr'
+      create_student Vorname: 'Frank', Nachname: 'Meyer', Anrede: 'Herr', Klasse: 'Active Course'
     end.to change { page.all('tbody tr[data-url]').count }.by(1)
     expect(page).to have_content 'Frank'
     expect(page).to have_content 'Meyer'
@@ -48,8 +54,11 @@ feature 'Manage students', :devise do
 
   scenario 'edit student' do
     sign_in_as_manager
-    create_student 'Vorname' => 'Frank', 'Nachname' => 'Meyer', 'Anrede' => 'Herr'
-    click_table_row_with 'Frank'
+    create_course Name: 'Active Course', Klassenlehrer: 'Frank Meyer',
+                  Beginn: '01.01.2014', Ende: '01.01.2017'
+
+    create_student Vorname: 'Frank', Nachname: 'Meyer', Anrede: 'Herr', Klasse: 'Active Course'
+    click_row_with 'Frank'
     click_on 'Bearbeiten'
     select 'Herr',            from: 'Anrede'
     fill_in 'Vorname',        with: ''
@@ -69,10 +78,12 @@ feature 'Manage students', :devise do
 
   scenario 'delete student' do
     sign_in_as_manager
-    create_student 'Vorname' => 'Frank', 'Nachname' => 'Meyer', 'Anrede' => 'Herr'
-    click_on 'Auszubildende'
+    create_course Name: 'Active Course', Klassenlehrer: 'Frank Meyer',
+                  Beginn: '01.01.2014', Ende: '01.01.2017'
+
+    create_student Vorname: 'Frank', Nachname: 'Meyer', Anrede: 'Herr', Klasse: 'Active Course'
     expect do
-      click_table_row_with 'Frank'
+      click_row_with 'Frank'
       click_on 'Löschen'
     end.to change { page.all('tbody tr[data-url]').count }.by(-1)
     expect(page).to have_content 'gelöscht'
