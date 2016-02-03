@@ -13,7 +13,7 @@
         .panel-heading Personendaten
         .panel-body
           .row
-            .col-md-6 = f.input :gender, collection: [%w(Frau f), %w(Herr m)], label: 'Anrede'
+            .col-md-6 = f.input :gender, collection: [%w(Frau f), %w(Herr m)]
           .row
             .col-md-6 = f.input :first_name, required: true
             .col-md-6 = f.input :last_name, required: true
@@ -44,7 +44,12 @@
           .panel-heading Klasse
           .panel-body
             = f.simple_fields_for :as_student do |s|
-              = s.association :course, label: false, include_blank: true
+              = s.association :course, label: false, include_blank: 'keine',
+                as: :grouped_select,
+                collection: { 'Aktive' => Course.active, 'Archiv' => Course.inactive },
+                group_method: :last,
+                label_method: :name,
+                value_method: :id
 
   .row.action-buttons
     .col-md-12

@@ -11,6 +11,7 @@ feature 'Manage students', :devise do
 
     fill_in 'Vorname', with: 'Frank'
     fill_in 'Nachname', with: 'Meyer'
+    find('#person_as_student_attributes_course_id').find(:xpath, 'optgroup[1]/option[2]').select_option
 
     click_on 'Speichern'
     expect(page).to have_content 'Personendaten gespeichert'
@@ -18,7 +19,6 @@ feature 'Manage students', :devise do
 
     expect(page).to have_content 'Liste'
     click_on 'Liste'
-    # save_and_open_page
     expect(page).to have_content 'Frank'
     expect(page).to have_content 'Meyer'
 
