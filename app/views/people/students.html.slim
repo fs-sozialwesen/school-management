@@ -1,0 +1,53 @@
+.page-header
+  = link_to new_person_path(scope: :student), class: 'btn btn-primary' do
+    span.glyphicon.glyphicon-plus
+    |  Neu
+  = link_to students_people_path(format: :csv), id: 'export-csv-button', class: 'btn btn-default' do
+    span.glyphicon.glyphicon-export
+    |  Exportieren
+
+  h1 #{@students.count} Auszubildende
+
+ul.nav.nav-tabs
+  li class=('active' if @course == :active)
+    = link_to 'Aktuelle', students_people_path
+  li class=('active' if @course == :archived)
+    = link_to 'Archiv', students_people_path(course: 'archived')
+  li class=('active' if @course == :no)
+    = link_to 'ohne Klasse', students_people_path(course: 'no')
+
+- grouped_students = @students.to_a.group_by{ |student| student.last_name[0].upcase }
+- ('A'..'Z').each do | char |
+  - if char.in? grouped_students.keys
+    a href="##{char}" => char
+  - else
+    i => char
+.table-responsive
+  table.table.table-striped.table-bordered.table-hover.table-clickable
+
+    - grouped_students.each do | char, students |
+      thead
+        tr
+          th colspan="4"
+            h4
+              a name=char = char
+              span.pull-right
+                small: a href="javascript: window.scrollTo(0, 0);" nach oben
+
+        tr
+          th Vorname
+          th Nachname
+          - if @course != :no
+            th Klasse
+          th Login
+      tbody
+        - students.each do | student |
+          tr data={ url: url_for(student) }
+            td = student.first_name
+            td = student.last_name
+            - if @course != :no
+              td = link_to student.as_student.course.name, student.as_student.course
+            td = student.login.present? ? 'ja' : 'nein'
+
+coffee:
+  $ -> window.onhashchange = -> window.scrollTo(0, window.scrollY - 80 )

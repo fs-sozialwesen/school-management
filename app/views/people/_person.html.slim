@@ -1,15 +1,5 @@
 .panel.panel-default
-  .panel-heading
-    |  Personendaten
-    ul.list-inline.pull-right
-      - edit_link ||= edit_person_path(person)
-      li = link_to edit_link, class: 'btn btn-default btn-xs' do
-        span.glyphicon.glyphicon-cog>
-        | Bearbeiten
-      /li
-        button.btn.btn-default.btn-xs data-target="#myModal" data-toggle="modal" type="button"
-          span.glyphicon.glyphicon-cog>
-          | Bearbeiten
+  .panel-heading Personendaten
   .panel-body
     .row
       .col-md-4
@@ -41,24 +31,3 @@
           label
             span.glyphicon.glyphicon-phone
           =< person.contact.mobile
-
-/#myModal.modal.fade aria-labelledby="myModalLabel" role="dialog" tabindex="-1"
-  .modal-dialog.modal-lg role="document"
-    .modal-content
-      .modal-header
-        button.close aria-label="Close" data-dismiss="modal" type="button"
-          span aria-hidden="true"  &times;
-        h4#myModalLabel.modal-title Personendaten bearbeiten
-      .modal-body
-        = render 'people/form', person: person
-      .modal-footer
-        button.btn.btn-default data-dismiss="modal" type="button"  Abbrechen
-        button.btn.btn-primary type="button"  Speichern
-
-/#coffee:
-  $ ->
-    $('.modal button.btn-primary').click =>
-      debugger
-//sass:
-  .modal .action-buttons
-    display: none

@@ -16,18 +16,18 @@
           - if policy(Course).index?
             li class = ('active' if params[:controller] == 'courses')
               = link_to 'Klassen', courses_url
-          - if policy(Manager).index?
-            li class = ('active' if params[:controller] == 'managers')
-              = link_to 'Manager', managers_url
-          - if policy(Teacher).index?
-            li class = ('active' if params[:controller] == 'teachers')
-              = link_to 'Lehrer', teachers_url
+          - if policy(Person).managers?
+            li class = ('active' if (@person && @person.manager?) or params[:action] == 'managers' )
+              = link_to 'Manager', managers_people_url
+          - if policy(Person).teachers?
+            li class = ('active' if (@person && @person.teacher?) or params[:action] == 'teachers' )
+              = link_to 'Lehrer', teachers_people_url
+          - if policy(Person).students?
+            li class = ('active' if (@person && @person.student?) or params[:action] == 'students' )
+              = link_to 'Auszubildende', students_people_url
           - if policy(Candidate).index?
             li class = ('active' if params[:controller] == 'candidates')
               = link_to 'Bewerber', candidates_url
-          - if policy(Student).index?
-            li class = ('active' if params[:controller] == 'students')
-              = link_to 'Auszubildende', students_url
           - if policy(InternshipPosition).index?
             li class = ('active' if params[:controller] == 'internship_positions')
               = link_to 'Praktikumsplätze', internship_positions_url

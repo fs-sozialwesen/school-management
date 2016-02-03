@@ -49,6 +49,7 @@ de:
         first_name: Vorname
         last_name: Nachname
         place_of_birth: Geburtsort
+        gender: Anrede
       login:
         password: Neues Passwort
         password_confirmation: Neues Passwort wiederholen
@@ -57,6 +58,11 @@ de:
       user:
         username: 'User name to sign in.'
         password: 'No special characters, please.'
+    options:
+      person:
+        gender:
+          f: Frau
+          m: Herr
     placeholders:
       candidate:
         interview:

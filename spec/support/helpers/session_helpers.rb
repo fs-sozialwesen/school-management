@@ -1,5 +1,6 @@
 module Features
   module SessionHelpers
+
     def sign_up_with(email, password, confirmation)
       visit new_login_registration_path
       fill_in Login.human_attribute_name(:email),    with: email
@@ -17,7 +18,7 @@ module Features
     end
 
     def sign_in_as_manager
-      manager = FactoryGirl.create(:person)
+      @current_user = manager = FactoryGirl.create(:person)
       manager.create_as_manager!
       signin(manager.login.email, '12341234')
     end

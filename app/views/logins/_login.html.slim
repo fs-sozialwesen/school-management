@@ -1,7 +1,4 @@
-- if login.person.student?
-  - toggle_link = toggle_student_login_path(login.person.as_student)
-- if login.person.teacher?
-  - toggle_link = toggle_teacher_login_path(login.person.as_teacher)
+- toggle_link = toggle_person_login_path(login.person)
   /- delete_link = teacher_login_path(login.person.as_teacher)
 .panel class=(login.account_active? ? 'panel-default' : 'panel-danger')
   .panel-heading

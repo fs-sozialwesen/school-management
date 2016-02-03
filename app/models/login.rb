@@ -9,10 +9,6 @@ class Login < ActiveRecord::Base
 
   has_paper_trail
 
-  def display_name
-    email
-  end
-
   def confirmation_required?
     # !confirmed?
     # don't send confirmation mail

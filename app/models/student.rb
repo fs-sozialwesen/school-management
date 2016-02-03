@@ -15,8 +15,4 @@ class Student < ActiveRecord::Base
 
   has_paper_trail
 
-  def display_name
-    person.name
-  end
-
 end

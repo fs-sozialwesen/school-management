@@ -1,0 +1,40 @@
+.page-header
+  = link_to new_person_path(scope: scope), class: 'btn btn-primary' do
+    span.glyphicon.glyphicon-plus
+    |  Neu
+  - if scope == :teacher
+    = link_to teachers_people_path(format: :csv), id: 'export-csv-button', class: 'btn btn-default' do
+      span.glyphicon.glyphicon-export
+      |  Exportieren
+  h1
+    => people.count
+    => t(".#{scope}")
+
+.table-responsive
+  table.table.table-striped.table-bordered.table-hover.table-clickable
+    thead
+      tr
+        th Vorname
+        th Nachname
+        th E-Mail
+        th Telefon
+        - if scope == :teacher
+          th Klassen
+        th Login
+    tbody
+      - people.each do | person |
+        tr data = {url: url_for(person)}
+          td = person.first_name
+          td = person.last_name
+          td
+            - email = person.contact.email
+            - if email.present?
+              =< link_to email, "mailto:#{email}"
+          td = person.contact.phone
+          - if scope == :teacher
+            td
+              - courses = person.as_teacher.courses.order(:name).map do | course |
+                - link_to course.name, course, class: ('text-muted' unless course.active?)
+              = courses.join(', ').html_safe
+          td = person.login.present? ? 'ja' : 'nein'
+

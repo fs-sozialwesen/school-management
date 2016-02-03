@@ -1,0 +1,5 @@
+.panel.panel-default
+  .panel-heading Klasse
+  .panel-body
+    - if student.course.present?
+      = link_to student.course.name, student.course

@@ -16,11 +16,11 @@ class Person < ActiveRecord::Base
   # validate :student_has_no_other_roles
 
   has_one :as_admin,     class_name: 'Admin'
-  has_one :as_manager,   class_name: 'Manager'
+  has_one :as_manager,   class_name: 'Manager', dependent: :destroy
   has_one :as_teacher,   class_name: 'Teacher', dependent: :destroy
-  has_one :as_student,   class_name: 'Student'
+  has_one :as_student,   class_name: 'Student', dependent: :destroy
   # has_one :as_mentor,    class_name: 'Mentor'
-  has_one :as_candidate, class_name: 'Candidate'
+  has_one :as_candidate, class_name: 'Candidate', dependent: :destroy
 
   scope :admins,     -> { joins(:as_admin).    includes(:as_admin) }
   scope :managers,   -> { joins(:as_manager).  includes(:as_manager) }
@@ -36,6 +36,10 @@ class Person < ActiveRecord::Base
 
   def as(role)
     send "as_#{role}"
+  end
+
+  def employee?
+    manager? or teacher?
   end
 
   def name
