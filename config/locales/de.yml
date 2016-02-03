@@ -71,9 +71,9 @@ de:
       title_teacher: Neue(n) Lehrer(in) anlegen
       title_student: Neue(n) Auszubildende(n) anlegen
     create:
-      success: Persondaten gespeichert.
+      success: Personendaten gespeichert.
     update:
-      success: Persondaten gespeichert.
+      success: Personendaten gespeichert.
     destroy:
       success: Person gelöscht.
     form:

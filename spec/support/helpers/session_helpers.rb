@@ -33,5 +33,9 @@ module Features
     def signin_role(role)
       signin_login role.person.login
     end
+
+    def click_on_any(text)
+      page.find(:xpath, "//*[normalize-space()='#{text}']").click
+    end
   end
 end

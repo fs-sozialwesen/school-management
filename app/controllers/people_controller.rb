@@ -59,7 +59,7 @@ class PeopleController < ApplicationController
 
   def destroy
     @person.destroy
-    redirect_to people_url, notice: t('.success')
+    redirect_to view_context.index_path_for(@person), notice: t('.success')
   end
 
   private
