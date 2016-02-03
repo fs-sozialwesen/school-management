@@ -2,27 +2,27 @@ require 'rails_helper'
 
 describe CoursePolicy do
 
-  let(:user) { User.new }
+  let(:user) { Person.new }
+  let(:manager) { Person.new.tap { | p | p.build_as_manager } }
+  let(:teacher) { Person.new.tap { | p | p.build_as_teacher } }
+  let(:student) { Person.new.tap { | p | p.build_as_student } }
+  let(:course)  { Course.new }
 
   subject { described_class }
 
-  permissions ".scope" do
-    pending "add some examples to (or delete) #{__FILE__}"
+  permissions :generate_logins? do
+
+    it 'grants access for managers' do
+      expect(subject).to permit(manager, course)
+    end
+
+    it 'denies access for teachers' do
+      expect(subject).not_to permit(teacher, course)
+    end
+
+    it 'denies access for students' do
+      expect(subject).not_to permit(student, course)
+    end
   end
 
-  permissions :show? do
-    pending "add some examples to (or delete) #{__FILE__}"
-  end
-
-  permissions :create? do
-    pending "add some examples to (or delete) #{__FILE__}"
-  end
-
-  permissions :update? do
-    pending "add some examples to (or delete) #{__FILE__}"
-  end
-
-  permissions :destroy? do
-    pending "add some examples to (or delete) #{__FILE__}"
-  end
 end
