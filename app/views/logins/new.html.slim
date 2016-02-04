@@ -1,6 +1,6 @@
 .authform
   h3 Login erstellen
-  = simple_form_for @login, url: [@role, :login] do |f|
+  = simple_form_for @login, url: [@person, :login] do |f|
     - if @login.errors.any?
       .alert.alert-danger.alert-dismissable@alert
         button.close type="button" data-dismiss="alert"

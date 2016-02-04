@@ -49,10 +49,10 @@ class CandidatesController < ApplicationController
     redirect_to candidates_url, notice: t('.success')
   end
 
-  def init
-    @candidate.created!
-    redirect_to @candidate, notice: 'Bewerber zurückgesetzt!'
-  end
+  # def init
+  #   @candidate.created!
+  #   redirect_to @candidate, notice: 'Bewerber zurückgesetzt!'
+  # end
 
   def accept
     @candidate.accepted!

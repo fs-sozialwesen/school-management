@@ -45,10 +45,10 @@ class CoursesController < ApplicationController
     end
   end
 
-  def destroy
-    @course.destroy
-    redirect_to courses_url, notice: t('.success')
-  end
+  # def destroy
+  #   @course.destroy
+  #   redirect_to courses_url, notice: t('.success')
+  # end
 
   def generate_logins
     @students = @course.students_without_login

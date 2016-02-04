@@ -95,7 +95,7 @@ class PeopleController < ApplicationController
     [ address: %i(street zip city), contact: %i(email phone mobile) ]
   end
 
-  def student?
-    @scope == :student or (@person && @person.student?)
-  end
+  # def student?
+  #   @scope == :student or (@person && @person.student?)
+  # end
 end
