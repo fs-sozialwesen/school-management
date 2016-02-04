@@ -97,3 +97,8 @@ sudo update-rc.d nginx defaults
 sudo service nginx stop
 ./letsencrypt-auto certonly --standalone --standalone-supported-challenges http-01 -d www.fs-sozialwesen.de -d fs-sozialwesen.de
 sudo service nginx start
+
+
+# postgres backups
+sudo -u postgres pg_dump -U postgres school_management_staging > dump.sql
+sudo -u postgres pg_dump -U postgres school_management_staging | gzip > dump.gz

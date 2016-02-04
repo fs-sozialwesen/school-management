@@ -19,12 +19,13 @@ class Candidate < ActiveRecord::Base
 
   has_paper_trail
 
-  def progress
-    self[:status]
-  end
+  # def progress
+  #   self[:status]
+  # end
 
   def documents_complete?
-    police_certificate and school_graduate.complete? and profession_graduate.complete? and internships_complete?
+    police_certificate and school_graduate.complete? and
+      profession_graduate.complete? and internships_complete?
   end
 
   def internships_complete?
@@ -33,10 +34,7 @@ class Candidate < ActiveRecord::Base
   end
 
   def contracts_complete?
-    %i(education_contract_sent education_contract_received
-       internship_contract_sent internship_contract_received ).all? do |contract|
-      send(contract).present?
-    end
+    [education_contract_received, internship_contract_received].all? &:present?
   end
 
 end

@@ -23,27 +23,17 @@ class Course < ActiveRecord::Base
     end_date > Date.current
   end
 
-  def self.course_scopes
-    active.all.each_with_object({}) do |course, hsh|
-      hsh[course.underscore_name] = course.name
-    end
-  end
-
-  def underscore_name
-    name.downcase.tr(' ', '_').to_sym
-  end
-
-  def add_student!(student)
-    course_memberships.find_or_create_by! student: student
-    student.course = self
-  end
+  # def add_student!(student)
+  #   course_memberships.find_or_create_by! student: student
+  #   student.course = self
+  # end
 
   def students_without_login
     students.includes(person: :login).order('people.last_name').where('logins.id' => nil)
   end
 
-  def remove_all_logins
-    students.each { | student | student.login.destroy if student.login }
-  end
+  # def remove_all_logins
+  #   students.each { | student | student.login.destroy if student.login }
+  # end
 
 end

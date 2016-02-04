@@ -1,6 +1,6 @@
 .row
   .col-md-4
-    .panel.panel-default
+    .panel.panel-default.candidation
       .panel-heading Bewerbung
       .panel-body
         = f.input :date, as: :string, input_html:{ class: :date }, required: true
@@ -8,14 +8,14 @@
         = f.input :year, collection: (year..(year + 2)).to_a
 
   .col-md-4
-    .panel.panel-default
+    .panel.panel-default.education-graduate
       .panel-heading Schulabschluss
       .panel-body
         = f.simple_fields_for :school_graduate, f.object.school_graduate do |s|
           = s.input :proved, as: :boolean
           = s.input :graduate, collection: Enum.school_graduates
   .col-md-4
-    .panel.panel-default
+    .panel.panel-default.profession-graduate
       .panel-heading Berufsabschluss
       .panel-body
         = f.simple_fields_for :profession_graduate, f.object.profession_graduate do |pr|
@@ -23,7 +23,7 @@
           = pr.input :graduate, collection: Enum.profession_graduates, include_blank: 'kein'
           = pr.input :comments
   .col-md-4
-    .panel.panel-default
+    .panel.panel-default.police-certificate
       .panel-heading Führungszeugnis
       .panel-body = f.input :police_certificate
 
