@@ -31,4 +31,52 @@ feature 'Internship positions search', :devise do
     # expectations.each { |expectation| expect(page).to have_content expectation }
     # save_and_open_page
   end
+
+  scenario 'student apply different filters to the list' do
+    ip1 = FactoryGirl.create(:internship_position, name: 'PP1', description: 'Very good here!')
+    ip2 = FactoryGirl.create(:internship_position, name: 'PP2')
+
+    ip1.housing.provided = true
+    ip1.housing.costs = 'cheap'
+    ip1.applying.by_phone = false
+    ip1.applying.by_mail = true
+    ip1.applying.by_email = false
+    ip1.save
+
+    ip2.housing.provided = false
+    ip2.applying.by_phone = false
+    ip2.applying.by_mail = false
+    ip2.applying.by_email = true
+    ip2.save
+
+    sign_in_as_student
+
+    click_on 'Praktikumsplätze'
+    expect(page).to have_content 'PP1'
+    expect(page).to have_content 'PP2'
+
+    choose 'mit'
+    click_on 'Suchen'
+    expect(page).to     have_content 'PP1'
+    expect(page).not_to have_content 'PP2'
+
+    click_on 'Alle'
+    choose 'Post'
+    click_on 'Suchen'
+    expect(page).to     have_content 'PP1'
+    expect(page).not_to have_content 'PP2'
+
+    click_on 'Alle'
+    choose 'E-Mail'
+    click_on 'Suchen'
+    expect(page).not_to have_content 'PP1'
+    expect(page).to     have_content 'PP2'
+
+    click_on 'Alle'
+    choose 'Telefon'
+    click_on 'Suchen'
+    expect(page).not_to have_content 'PP1'
+    expect(page).not_to have_content 'PP2'
+
+  end
 end

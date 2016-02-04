@@ -5,6 +5,12 @@ feature 'Manage candidates', :devise do
 
   scenario 'create new candidate' do
     sign_in_as_manager
+
+    click_on 'Bewerber'
+    click_on 'Neu'
+    click_on 'Speichern'
+    expect(page).to have_content('Bewerber konnte nicht gespeichert werden')
+
     click_on 'Bewerber'
     expect do
       create_candidate Vorname: 'Frank', Nachname: 'Meyer', Anrede: 'Herr'
@@ -51,6 +57,10 @@ feature 'Manage candidates', :devise do
     end
     within('.panel.police-certificate') do
       check 'Beglaubigte Kopie liegt vor'
+    end
+    within('.panel.internships') do
+      fill_in 'candidate[internships]', with: 'Internship1'
+      check 'Beglaubigte Kopien liegen vor'
     end
     click_on 'Speichern'
     expect(page).to have_content 'Bewerber(in) gespeichert'

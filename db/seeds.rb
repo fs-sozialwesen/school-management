@@ -11,12 +11,7 @@ if Rails.env.test?
   puts 'loading test seeds'
   require_relative 'test_seeds'
 else
-  begin
-    puts 'loading private seeds'
-    require_relative 'seeds/private_seeds'
-  rescue LoadError
-    puts 'no private seeds found'
-  end
+  require_relative 'seeds/private_seeds'
 end
 
 

@@ -45,6 +45,11 @@ feature 'Manage students', :devise do
                   Beginn: '01.01.2014', Ende: '01.01.2017'
 
     click_on 'Auszubildende'
+    click_on 'Neu'
+    click_on 'Speichern'
+    expect(page).to have_content('Personendaten konnten nicht gespeichert werden')
+
+    click_on 'Auszubildende'
     expect do
       create_student Vorname: 'Frank', Nachname: 'Meyer', Anrede: 'Herr', Klasse: 'Active Course'
     end.to change { page.all('tbody tr[data-url]').count }.by(1)
@@ -87,6 +92,58 @@ feature 'Manage students', :devise do
       click_on 'Löschen'
     end.to change { page.all('tbody tr[data-url]').count }.by(-1)
     expect(page).to have_content 'gelöscht'
+  end
+
+  scenario 'create login for student' do
+    sign_in_as_manager
+    create_course Name: 'Active Course', Klassenlehrer: 'Frank Meyer',
+                  Beginn: '01.01.2014', Ende: '01.01.2017'
+
+    create_student Vorname: 'Frank', Nachname: 'Meyer', Anrede: 'Herr', Klasse: 'Active Course'
+
+    click_row_with 'Frank'
+    click_on 'Login erstellen'
+    fill_in 'E-Mail', with: ''
+    click_on 'Erstellen'
+    expect(page).to have_content('Login konnte nicht gespeichert werden')
+
+    fill_in 'E-Mail', with: 'test@email.de'
+    click_on 'Erstellen'
+    expect(page).to have_content('Login gespeichert')
+    expect(page).to have_content('test@email.de')
+    expect(page).to have_content('aktiv')
+  end
+
+  scenario 'activate and deactivate logins' do
+    sign_in_as_student
+    student = @current_user
+    sign_out
+
+    sign_in_as_manager
+    manager = @current_user
+    click_on 'Auszubildende'
+    click_on 'ohne Klasse'
+    click_row_with student.first_name
+    click_on 'Deaktivieren'
+    expect(page).to have_content('Login deaktiviert')
+    expect(page).to have_content('deaktiviert am')
+    sign_out
+
+    sign_in student.login.email, '12341234'
+    expect(page).to have_content('Dein Account ist gesperrt. Bitte wende dich an das Sekretariat')
+
+    sign_in manager.login.email, '12341234'
+    click_on 'Auszubildende'
+    click_on 'ohne Klasse'
+    click_row_with student.first_name
+    click_on 'Aktivieren'
+    expect(page).to have_content('Login aktiviert')
+    expect(page).to have_content('aktiv')
+    sign_out
+
+    sign_in student.login.email, '12341234'
+    expect(page).to have_content('Erfolgreich angemeldet.')
+
   end
 
 end

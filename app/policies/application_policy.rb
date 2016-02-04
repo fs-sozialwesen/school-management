@@ -34,21 +34,21 @@ class ApplicationPolicy
     manager?
   end
 
-  def scope
-    Pundit.policy_scope!(user, record.class)
-  end
+  # def scope
+  #   Pundit.policy_scope!(user, record.class)
+  # end
 
   def manager?
     user.manager?
   end
 
-  def teacher?
-    user.teacher?
-  end
+  # def teacher?
+  #   user.teacher?
+  # end
 
-  def employee?
-    user.employee?
-  end
+  # def employee?
+  #   user.employee?
+  # end
 
   def student?
     user.student?
@@ -62,8 +62,8 @@ class ApplicationPolicy
       @scope = scope
     end
 
-    def resolve
-      scope
-    end
+    # def resolve
+    #   scope
+    # end
   end
 end
