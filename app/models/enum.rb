@@ -23,4 +23,8 @@ class Enum < ActiveRecord::Base
   validates :name, inclusion: {in: TYPES}
   validates :value, uniqueness: { scope: :name }
 
+  def self.clear_all
+    TYPES.each { |type| Rails.cache.delete("enum_#{type}") }
+  end
+
 end

@@ -1,0 +1,1 @@
+Enum.clear_all
