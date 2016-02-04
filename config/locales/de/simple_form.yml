@@ -15,6 +15,8 @@ de:
         date: Eingangsdatum
         education_subject: Fachrichtung
         notes: Notizen
+        contract_notes: Notizen
+        debit_mandate: Einzugsermächtigung
         year: Jahr
         police_certificate: Beglaubigte Kopie liegt vor
         internships: Praktika

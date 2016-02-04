@@ -95,12 +95,17 @@ feature 'Manage candidates', :devise do
       fill_in 'Versand am', with: '01.09.2016'
       fill_in 'zurück',     with: '03.09.2016'
     end
+    within('.panel.debit-mandate') do
+      check 'Einzugsermächtigung'
+      fill_in 'Notizen', with: 'Contract notes'
+    end
     click_on 'Speichern'
     expect(page).to have_content 'Bewerber(in) gespeichert'
     expect(page).to have_content '01.08.2016'
     expect(page).to have_content '03.08.2016'
     expect(page).to have_content '01.09.2016'
     expect(page).to have_content '03.09.2016'
+    expect(page).to have_content 'Contract notes'
   end
 
   scenario 'delete candidate' do

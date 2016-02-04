@@ -1,8 +1,6 @@
 .panel.panel-default.contracts
   .panel-heading
     |  Verträge
-    /= render 'candidates/show/panel_heading', done: @candidate.progress >= 3, status: 'ok',
-        part: 'contracts'
     ul.list-inline.pull-right
       - if @candidate.contracts_complete?
         li: span.label.label-success ✓ vollständig
@@ -28,4 +26,9 @@
         p
           label zurück
           =< l @candidate.internship_contract_received if @candidate.internship_contract_received.present?
+
+      .col-md-3
+        h5 Einzugsermächtigung
+        p = bool_icon(@candidate.debit_mandate, 'ja', 'nein')
+        p = @candidate.contract_notes
 
