@@ -7,11 +7,16 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 # Environment variables (ENV['...']) can be set in the file .env file.
 
-begin
-  puts 'loading private seeds'
-  require_relative 'seeds/private_seeds'
-rescue LoadError
-  puts 'no private seeds found'
+if Rails.env.test?
+  puts 'loading test seeds'
+  require_relative 'test_seeds'
+else
+  begin
+    puts 'loading private seeds'
+    require_relative 'seeds/private_seeds'
+  rescue LoadError
+    puts 'no private seeds found'
+  end
 end
 
 
