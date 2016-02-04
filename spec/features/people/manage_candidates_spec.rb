@@ -41,9 +41,17 @@ feature 'Manage candidates', :devise do
     create_candidate Vorname: 'Frank', Nachname: 'Meyer', Anrede: 'Herr'
     click_row_with 'Frank'
     within('.panel.documents') { click_on 'Bearbeiten' }
-    # save_and_open_page
-    select 'Grade1', from: :Schulabschluss
-    select 'Prof2', from: :Berufsausbildung
+    within('.panel.candidation') do
+      fill_in :Eingangsdatum, with: '01.02.2016'
+      select '2016', from: :Jahr
+    end
+    within('.panel.education-graduate') do
+      check 'Beglaubigte Kopie liegt vor'
+      select 'Grade1', from: 'Schulabschluss'
+    end
+    within('.panel.police-certificate') do
+      check 'Beglaubigte Kopie liegt vor'
+    end
     click_on 'Speichern'
     expect(page).to have_content 'Bewerber(in) gespeichert'
   end

@@ -10,12 +10,12 @@ module PunditHelper
     rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
   end
 
-  private
+  # private
 
-  def user_not_authorized
-    flash[:alert] = "Access denied."
-    redirect_to (request.referrer || root_path)
-  end
+  # def user_not_authorized
+  #   flash[:alert] = "Access denied."
+  #   redirect_to (request.referrer || root_path)
+  # end
 
 end
 

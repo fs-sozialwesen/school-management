@@ -38,21 +38,21 @@ class Person < ActiveRecord::Base
     send "as_#{role}"
   end
 
-  def employee?
-    manager? or teacher?
-  end
+  # def employee?
+  #   manager? or teacher?
+  # end
 
   def name
     "#{first_name} #{last_name}"
   end
 
-  def female?
-    gender == 'f'
-  end
-
-  def male?
-    gender == 'm'
-  end
+  # def female?
+  #   gender == 'f'
+  # end
+  #
+  # def male?
+  #   gender == 'm'
+  # end
 
 
   # private

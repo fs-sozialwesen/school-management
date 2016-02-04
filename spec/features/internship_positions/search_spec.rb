@@ -11,23 +11,24 @@ feature 'Internship positions search', :devise do
   #   When I click on one result
   #   Then I see the details of this internship position
   scenario 'student sees all internship positions' do
-    person  = FactoryGirl.create(:person)
-    student = School.add_student! person
+    ip1 = FactoryGirl.create(:internship_position, name: 'PP1', description: 'Very good here!')
+    ip2 = FactoryGirl.create(:internship_position, name: 'PP2')
 
-    ip1 = FactoryGirl.create(:internship_position, description: 'Very good here!')
-    ip2 = FactoryGirl.create(:internship_position)
+    sign_in_as_student
 
-    signin(person.login.email, '12341234')
-    visit internship_positions_path
-    expect(page).to have_content ip1.name
-    expect(page).to have_content ip2.name
+    click_on 'Praktikumsplätze'
+    expect(page).to have_content 'PP1'
+    expect(page).to have_content 'PP2'
 
-    click_on ip1.name
+    click_on 'PP1'
+    expect(page).to have_content 'PP1'
+    expect(page).to have_content ip1.description
+    expect(page).to have_content ip1.address.street
 
-    expectations = [:name, :description].map { | attr | ip1.send attr }
-    expectations += %i(street zip city).map { | attr | ip1.address.send attr }
-    expectations += %i(person email phone fax).map { | attr | ip1.contact.send attr }
-    expectations.each { |expectation| expect(page).to have_content expectation }
+    # expectations = [:name, :description].map { | attr | ip1.send attr }
+    # expectations += %i(street zip city).map { | attr | ip1.address.send attr }
+    # expectations += %i(person email phone fax).map { | attr | ip1.contact.send attr }
+    # expectations.each { |expectation| expect(page).to have_content expectation }
     # save_and_open_page
   end
 end
