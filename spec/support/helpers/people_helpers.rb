@@ -33,6 +33,23 @@ module Features
       end
     end
 
+    def create_candidate(attributes)
+      click_on 'Bewerber'
+      click_on 'Neu'
+      attributes.each do |name, value|
+        if name.in?(%i(Anrede))
+          select value, from: name
+        else
+          fill_in name, with: value
+        end
+      end
+      yield if block_given?
+      click_on 'Speichern'
+      expect(page).to have_content 'Bewerber(in) gespeichert'
+      attributes.values.each { |value| expect(page).to have_content value }
+      click_on 'Liste'
+    end
+
     # def select_course(scope = :active)
     #   option = case scope
     #   when :active   then 'optgroup[1]/option[2]'
