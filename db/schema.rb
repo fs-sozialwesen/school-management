@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160201050716) do
+ActiveRecord::Schema.define(version: 20160204173527) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,6 +48,8 @@ ActiveRecord::Schema.define(version: 20160201050716) do
     t.date     "internship_contract_received"
     t.date     "cancel_date"
     t.text     "cancel_reason"
+    t.boolean  "debit_mandate",                default: false
+    t.text     "contract_notes"
   end
 
   add_index "candidates", ["person_id"], name: "index_candidates_on_person_id", using: :btree
