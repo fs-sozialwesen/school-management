@@ -75,7 +75,7 @@ class CandidatesController < ApplicationController
     params.require(:candidate)
       .permit(%i(date notes education_subject year police_certificate internships cancel_date
                  internships_proved education_contract_sent education_contract_received
-                 internship_contract_sent internship_contract_received cancel_reason) +
+                 internship_contract_sent internship_contract_received cancel_reason status) +
                 [
                   school_graduate:     %i(graduate proved),
                   profession_graduate: %i(graduate proved comments),

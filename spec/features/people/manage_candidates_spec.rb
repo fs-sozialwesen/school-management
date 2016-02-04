@@ -96,4 +96,29 @@ feature 'Manage candidates', :devise do
     expect(page).to have_content 'gelöscht'
   end
 
+  scenario 'accept candidate' do
+    sign_in_as_manager
+
+    create_candidate Vorname: 'Frank', Nachname: 'Meyer', Anrede: 'Herr'
+    click_row_with 'Frank'
+    click_on 'Zulassen'
+    expect(page).to have_content 'Bewerber aufgenommen'
+    expect(page).to have_content 'Bewerber ist zugelassen'
+  end
+
+  scenario 'reject candidate' do
+    sign_in_as_manager
+
+    create_candidate Vorname: 'Frank', Nachname: 'Meyer', Anrede: 'Herr'
+    click_row_with 'Frank'
+    click_on 'Absagen'
+    fill_in :Datum, with: '6.7.2015'
+    select 'Schule', from: 'Absage durch'
+    click_on :Absagen
+    expect(page).to have_content 'Bewerber(in) gespeichert'
+    expect(page).to have_content '06.07.2015'
+    expect(page).to have_content 'Absage durch'
+    expect(page).to have_content 'Schule'
+  end
+
 end

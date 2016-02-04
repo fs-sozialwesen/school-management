@@ -24,7 +24,7 @@ Rails.application.routes.draw do
     member do
       patch :init
       patch :accept
-      match :reject, via: [:get, :patch]
+      get :reject
     end
   end
 
