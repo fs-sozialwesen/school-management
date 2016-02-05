@@ -1,21 +1,21 @@
 .page-header
   = link_to timetable_rooms_path, class: 'btn btn-default' do 
     span.glyphicon.glyphicon-list-alt
-    |  Liste
+    =< t(:list)
   = link_to edit_timetable_room_path(@room), class: 'btn btn-primary' do
     span.glyphicon.glyphicon-pencil
-    |  Bearbeiten
-  => link_to @room, method: :delete, data: { confirm: t('.confirm_delete') }, class: 'btn btn-danger' do
+    =< t(:edit)
+  => link_to @room, method: :delete, data: { confirm: t(:confirm_delete, model: Timetable::Room.model_name.human) }, class: 'btn btn-danger' do
     span.glyphicon.glyphicon-remove
-    |  Löschen
+    =< t(:delete)
   h1
-    => @room.name
-    small = Timetable::Room.model_name.human
+    small => Timetable::Room.model_name.human
+    = @room.name
 
 .row
   .col-md-6
     .panel.panel-default
-      .panel-heading room
+      .panel-heading = Timetable::Room.model_name.human
       .panel-body
         p
           label => Timetable::Room.human_attribute_name(:name)

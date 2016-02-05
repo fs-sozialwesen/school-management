@@ -1,4 +1,17 @@
 de:
+  new: Neu
+  export: Exportieren
+  list: Liste
+  edit: Bearbeiten
+  delete: Löschen
+  cancel: Abbrechen
+  save: Speichern
+
+  created: "%{model} gespeichert."
+  updated: "%{model} gespeichert."
+  destroyed: "%{model} gelöscht."
+  confirm_delete: "%{model} löschen?"
+
   basic_data: Stammdaten
   course: Klasse
   female: weiblich
@@ -39,6 +52,7 @@ de:
       students: Auszubildende
       teachers: Lehrer
       timetable/rooms: Räume
+      timetable/subjects: Fächer
   login_mailer:
     create_password_email:
       subject: Passwort zu deinem Account
@@ -122,12 +136,11 @@ de:
 
   timetable:
     rooms:
-      form:
-        error: Der Raum konnte nicht gespeichert werden.
       new:
         title: Raum erstellen
-      show:
-        confirm_delete: Wirklich?
+    subjects:
+      new:
+        title: Fach erstellen
   timetables:
     show:
       title_course_html: Stundenplan für Klasse %{course}

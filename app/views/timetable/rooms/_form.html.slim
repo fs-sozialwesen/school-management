@@ -9,7 +9,7 @@
   .row
     .col-md-4
       .panel.panel-default
-        .panel-heading Personendaten
+        .panel-heading = Timetable::Room.model_name.human
         .panel-body
           = f.input :name
           = f.input :comments
@@ -17,5 +17,5 @@
   .row.action-buttons
     .col-md-12
       .pull-right
-        => link_to 'Abbrechen', 'javascript: window.history.back();', class: 'btn btn-default'
-        = f.submit 'Speichern', class: 'btn btn-primary'
+        => link_to t(:cancel), 'javascript: window.history.back();', class: 'btn btn-default'
+        = f.submit t(:save), class: 'btn btn-primary'
