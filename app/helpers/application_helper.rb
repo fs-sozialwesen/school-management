@@ -31,7 +31,7 @@ module ApplicationHelper
     controller_name = model.name.tableize
     active = params[:controller] == controller_name
     label  = t(".#{controller_name}")
-    link   = url_for controller: controller_name, action: :index
+    link   = url_for model
     menu_item label, link, active
   end
 
@@ -40,7 +40,7 @@ module ApplicationHelper
     return '' unless policy(Person).send("#{controller_name}?")
     active = ((@person && @person.send("#{model.name.underscore}?")) or params[:action] == controller_name)
     label  = t(".#{controller_name}")
-    link   = url_for controller: 'people', action: controller_name
+    link   = send "#{controller_name}_people_path"
     menu_item label, link, active
   end
 
