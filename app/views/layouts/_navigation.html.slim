@@ -14,30 +14,12 @@
       #navbar.collapse.navbar-collapse
 
         ul.nav.navbar-nav
-          - if policy(Course).index?
-            li class = ('active' if params[:controller] == 'courses')
-              = link_to 'Klassen', courses_url
-          - if policy(Person).managers?
-            li class = ('active' if (@person && @person.manager?) or params[:action] == 'managers' )
-              = link_to 'Manager', managers_people_url
-          - if policy(Person).teachers?
-            li class = ('active' if (@person && @person.teacher?) or params[:action] == 'teachers' )
-              = link_to 'Lehrer', teachers_people_url
-          - if policy(Person).students?
-            li class = ('active' if (@person && @person.student?) or params[:action] == 'students' )
-              = link_to 'Auszubildende', students_people_url
-          - if policy(Candidate).index?
-            li class = ('active' if params[:controller] == 'candidates')
-              = link_to 'Bewerber', candidates_url
-          - if policy(InternshipPosition).index?
-            li class = ('active' if params[:controller] == 'internship_positions')
-              = link_to 'Praktikumsplätze', internship_positions_url
-          /  li = link_to 'Stundenpläne', '#'
-          /- if current_user.student? or current_user.teacher?
-          /  li = link_to  t(:timetable), timetables_path
-          /- if policy(Person).index?
-            li class = ('active' if params[:controller] == 'people')
-              = link_to 'Personenverzeichnis', people_url
+          = menu_item_for Course
+          = menu_item_for Manager
+          = menu_item_for Teacher
+          = menu_item_for Student
+          = menu_item_for Candidate
+          = menu_item_for InternshipPosition
 
         ul.nav.navbar-nav.navbar-right
           li.dropdown

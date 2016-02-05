@@ -20,4 +20,28 @@ module ApplicationHelper
     return '' if person.gender.blank?
     t "#{key}_#{person.gender}", options
   end
+
+  def menu_item(label, link, active)
+    content_tag(:li, class: ('active' if active)) { link_to label, link }
+  end
+
+  def menu_item_for(model)
+    return people_menu_item_for(model) if model.in?([Manager, Teacher, Student])
+    return '' unless policy(model).index?
+    controller_name = model.name.tableize
+    active = params[:controller] == controller_name
+    label  = t(".#{controller_name}")
+    link   = url_for controller: controller_name, action: :index
+    menu_item label, link, active
+  end
+
+  def people_menu_item_for(model)
+    controller_name = model.name.tableize
+    return '' unless policy(Person).send("#{controller_name}?")
+    active = ((@person && @person.send("#{model.name.underscore}?")) or params[:action] == controller_name)
+    label  = t(".#{controller_name}")
+    link   = url_for controller: 'people', action: controller_name
+    menu_item label, link, active
+  end
+
 end

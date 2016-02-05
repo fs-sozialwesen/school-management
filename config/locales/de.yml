@@ -30,6 +30,15 @@ de:
       success: Logins für alle Auszubildenden dieser Klasse erstellt.
     form:
       error: Klasse konnte nicht gespeichert werden.
+  layouts:
+    navigation:
+      candidates: Bewerber
+      courses: Klassen
+      internship_positions: Praktikumsplätze
+      managers: Manager
+      students: Auszubildende
+      teachers: Lehrer
+      timetable/rooms: Räume
   login_mailer:
     create_password_email:
       subject: Passwort zu deinem Account
