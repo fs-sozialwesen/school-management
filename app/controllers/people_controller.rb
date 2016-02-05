@@ -36,7 +36,7 @@ class PeopleController < ApplicationController
     authorize @person
 
     if @person.save
-      redirect_to @person, notice: t('.success')
+      redirect_to @person, notice: t(:created, model: model_name)
     else
       render :new
     end
@@ -50,7 +50,7 @@ class PeopleController < ApplicationController
 
   def update
     if @person.update(person_params)
-      redirect_to @person, notice: t('.success')
+      redirect_to @person, notice: t(:updated, model: model_name(@person))
     else
       render :edit
     end
@@ -58,7 +58,7 @@ class PeopleController < ApplicationController
 
   def destroy
     @person.destroy
-    redirect_to view_context.index_path_for(@person), notice: t('.success')
+    redirect_to view_context.index_path_for(@person), notice: t(:destroyed, model: model_name(@person))
   end
 
   private
@@ -95,6 +95,13 @@ class PeopleController < ApplicationController
     [ address: %i(street zip city), contact: %i(email phone mobile) ]
   end
 
+  def model_name(person = nil)
+    if person
+      person.roles.first.class
+    else
+      @scope.to_s.classify.constantize
+    end.model_name.human
+  end
   # def student?
   #   @scope == :student or (@person && @person.student?)
   # end

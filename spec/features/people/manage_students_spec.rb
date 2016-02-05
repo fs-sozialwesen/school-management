@@ -26,7 +26,7 @@ feature 'Manage students', :devise do
     fill_in 'Vorname', with: 'Rodriges'
     fill_in 'Nachname', with: 'Gonzales'
     click_on 'Speichern'
-    expect(page).to have_content 'Personendaten gespeichert'
+    expect(page).to have_content 'Auszubildende(r) gespeichert'
     expect(page).to have_content 'Rodriges Gonzales'
 
     # delete student
@@ -77,7 +77,7 @@ feature 'Manage students', :devise do
     fill_in 'Vorname', with: 'Rodriges'
     fill_in 'Nachname', with: 'Gonzales'
     click_on 'Speichern'
-    expect(page).to have_content 'Personendaten gespeichert'
+    expect(page).to have_content 'Auszubildende(r) gespeichert'
     expect(page).to have_content 'Rodriges Gonzales'
   end
 

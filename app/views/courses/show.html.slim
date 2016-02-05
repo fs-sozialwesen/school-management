@@ -1,10 +1,13 @@
 .page-header
   = link_to courses_path, class: 'btn btn-default' do
     span.glyphicon.glyphicon-list-alt
-    |  Liste
+    =< t(:list)
   = link_to edit_course_path(@course), class: 'btn btn-primary' do
     span.glyphicon.glyphicon-pencil
-    |  Bearbeiten
+    =< t(:edit)
+  => link_to @course, method: :delete, data: { confirm: t(:confirm_delete, model: Course.model_name.human) }, class: 'btn btn-danger' do
+    span.glyphicon.glyphicon-remove
+    =< t(:delete)
   h1
     small Klasse
     =< @course.name

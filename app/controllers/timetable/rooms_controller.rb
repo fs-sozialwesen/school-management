@@ -25,7 +25,7 @@ module Timetable
       @room = Room.new room_params
 
       if @room.save
-        redirect_to @room, notice: t('.success')
+        redirect_to @room, notice: t(:success, model: Room.model_name.human)
       else
         render :new
       end
@@ -33,7 +33,7 @@ module Timetable
 
     def update
       if @room.update room_params
-        redirect_to @room, notice: t('.success')
+        redirect_to @room, notice: t(:success, model: Room.model_name.human)
       else
         render :edit
       end
@@ -41,7 +41,7 @@ module Timetable
 
     def destroy
       @room.destroy
-      redirect_to timetable_rooms_url, notice: t('.success')
+      redirect_to timetable_rooms_url, notice: t(:success, model: Room.model_name.human)
     end
 
     private

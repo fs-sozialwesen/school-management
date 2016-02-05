@@ -23,7 +23,7 @@ feature 'Manage managers', :devise do
     fill_in 'Vorname', with: 'Rodriges'
     fill_in 'Nachname', with: 'Gonzales'
     click_on 'Speichern'
-    expect(page).to have_content 'Personendaten gespeichert'
+    expect(page).to have_content 'Manager gespeichert'
     expect(page).to have_content 'Rodriges Gonzales'
 
     # delete manager
@@ -57,7 +57,7 @@ feature 'Manage managers', :devise do
     fill_in 'Vorname', with: 'Rodriges'
     fill_in 'Nachname', with: 'Gonzales'
     click_on 'Speichern'
-    expect(page).to have_content 'Personendaten gespeichert'
+    expect(page).to have_content 'Manager gespeichert'
     expect(page).to have_content 'Rodriges Gonzales'
   end
 

@@ -79,16 +79,16 @@ de:
         one:    Auszubildende(r)
         other:  Auszubildende
       teacher:  Lehrer
-      room:
+      timetable/room:
         one: Raum
         other: Räume
-      subject:
+      timetable/subject:
         one: Fach
         other: Fächer
-      time_block:
+      timetable/time_block:
         one: Zeitblock
         other: Zeitblöcke
-      timetable:
+      timetable/timetable:
         one: Stundenplan
         other: Stundenpläne
     attributes:

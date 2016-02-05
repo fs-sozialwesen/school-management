@@ -1,7 +1,8 @@
 module Features
   module PeopleHelpers
 
-    def create_person(scope, attributes)
+    def create_person(scope, attributes, i18n_scope: nil)
+      i18n_scope ||= scope
       click_on scope
       click_on 'Neu'
       attributes.each do |name, value|
@@ -13,7 +14,7 @@ module Features
       end
       yield if block_given?
       click_on 'Speichern'
-      expect(page).to have_content 'Personendaten gespeichert'
+      expect(page).to have_content "#{i18n_scope} gespeichert"
       attributes.values.each { |value| expect(page).to have_content value }
       click_on 'Liste'
     end
@@ -28,7 +29,7 @@ module Features
 
     def create_student(attributes)
       course = attributes.delete :Klasse
-      create_person 'Auszubildende', attributes do
+      create_person 'Auszubildende', attributes, i18n_scope: 'Auszubildende(r)' do
         select course, from: 'person[as_student_attributes][course_id]'
       end
     end

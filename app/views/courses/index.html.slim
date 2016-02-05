@@ -1,11 +1,13 @@
 .page-header
   = link_to new_course_path, class: 'btn btn-primary' do 
     span.glyphicon.glyphicon-plus
-    |  Neu
+    =< t(:new)
   = link_to courses_path(format: :csv), id: 'export-csv-button', class: 'btn btn-default' do
     span.glyphicon.glyphicon-export
-    |  Exportieren
-  h1 #{@active_courses.count} Klassen
+    =< t(:export)
+  h1
+    => @active_courses.count
+    = Course.model_name.human count: @active_courses.count
 
 .table-responsive
   table.table.table-striped.table-bordered.table-hover.table-clickable
