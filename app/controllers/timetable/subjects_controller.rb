@@ -25,7 +25,7 @@ module Timetable
       @subject = Subject.new subject_params
 
       if @subject.save
-        redirect_to @subject, notice: t(:success, model: Subject.model_name.human)
+        redirect_to @subject, notice: t(:created, model: Subject.model_name.human)
       else
         render :new
       end
@@ -33,7 +33,7 @@ module Timetable
 
     def update
       if @subject.update subject_params
-        redirect_to @subject, notice: t(:success, model: Subject.model_name.human)
+        redirect_to @subject, notice: t(:updated, model: Subject.model_name.human)
       else
         render :edit
       end
@@ -41,7 +41,7 @@ module Timetable
 
     def destroy
       @subject.destroy
-      redirect_to timetable_subjects_url, notice: t(:success, model: Subject.model_name.human)
+      redirect_to timetable_subjects_url, notice: t(:destroyed, model: Subject.model_name.human)
     end
 
     private

@@ -141,9 +141,13 @@ de:
     subjects:
       new:
         title: Fach erstellen
-  timetables:
-    show:
-      title_course_html: Stundenplan für Klasse %{course}
+      form:
+        error: Das Fach konnte nicht gespeichert werden.
+    time_blocks:
+      new:
+        title: Zeitblock erstellen
+      form:
+        error: Der Zeitblock konnte nicht gespeichert werden.
       title_teacher_html: Stundenplan für %{teacher}
       title_room_html: "Raumplan: <strong>%{room}</strong>"
   student_cant_have_other_roles: "Ein Auszubildender kann keine weiteren Rollen haben."

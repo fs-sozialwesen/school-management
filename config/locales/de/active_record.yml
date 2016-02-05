@@ -28,6 +28,7 @@ de:
     phone:                Telefon
     school:               Schule
     start_date:           Beginn
+    start_time:           Beginn
     street:               Straße/Nr
     student:              Auszubildende(r)
     students:             Auszubildende
@@ -153,9 +154,9 @@ de:
         year: Jahrgang
       teacher:
         courses: Klassenlehrer von
-      time_block:
-        name: Zeit
-        position: Block
+      timetable/time_block:
+        start_time: Beginn
+        end_time: Ende
       login:
         login: "Handle"
         email: E-Mail
