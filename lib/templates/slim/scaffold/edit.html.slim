@@ -1,6 +1,6 @@
 .page-header
   h1
-    => @<%= file_name %>.name
-    small = <%= class_name %>.model_name.human
+    small => <%= class_name %>.model_name.human
+    = @<%= file_name %>.name
 
 = render 'form'

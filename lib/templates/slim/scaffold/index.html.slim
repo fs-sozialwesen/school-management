@@ -1,13 +1,13 @@
 .page-header
   = link_to <%= index_helper %>_path(format: :csv), id: 'export-csv-button', class: 'btn btn-default' do
     span.glyphicon.glyphicon-export
-    |  Exportieren
+    =< t(:export)
   = link_to new_<%= singular_table_name %>_path, class: 'btn btn-primary' do 
     span.glyphicon.glyphicon-plus
-    |  Neu
+    =< t(:new)
   h1
     => @<%= plural_file_name %>.count
-    = <%= class_name %>.model_name.human
+    = <%= class_name %>.model_name.human count: @<%= plural_file_name %>.count
 
 .table-responsive
   table.table.table-striped.table-bordered.table-hover.table-clickable

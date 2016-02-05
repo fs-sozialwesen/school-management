@@ -29,7 +29,7 @@ module <%= controller_class_path.map!(&:camelize).join('::') %>
       @<%= file_name %> = <%= file_name.camelize %>.new <%= file_name %>_params
 
       if @<%= file_name %>.save
-        redirect_to @<%= file_name %>, notice: t('.success')
+        redirect_to @<%= file_name %>, notice: t(:success, model: <%= file_name.camelize %>.model_name.human)
       else
         render :new
       end
@@ -37,7 +37,7 @@ module <%= controller_class_path.map!(&:camelize).join('::') %>
 
     def update
       if @<%= file_name %>.update <%= file_name %>_params
-        redirect_to @<%= file_name %>, notice: t('.success')
+        redirect_to @<%= file_name %>, notice: t(:success, model: <%= file_name.camelize %>.model_name.human)
       else
         render :edit
       end
@@ -45,7 +45,7 @@ module <%= controller_class_path.map!(&:camelize).join('::') %>
 
     def destroy
       @<%= file_name %>.destroy
-      redirect_to <%= plural_table_name.downcase %>_url, notice: t('.success')
+      redirect_to <%= plural_table_name.downcase %>_url, notice: t(:success, model: <%= file_name.camelize %>.model_name.human)
     end
 
     private
