@@ -1,64 +1,45 @@
-feature 'Manage courses', :devise do
+feature 'Manage rooms', :devise do
 #   As a manager
-#   I want to be able to add, find, edit and delete courses
-#   So I can keep the courses database up to date
+#   I want to be able to add, find, edit and delete rooms
+#   So I can use them in timetables
 
-  scenario 'create course' do
+  scenario 'create room' do
     sign_in_as_manager
 
-    click_on 'Klassen'
+    click_on 'Räume'
     click_on 'Neu'
     click_on 'Speichern'
-    expect(page).to have_content('Klasse konnte nicht gespeichert werden')
-    
-    create_course Name: 'Aktive Klasse', Klassenlehrer: 'Frank Meyer',
-                  Beginn: '01.01.2014', Ende: '01.01.2017'
+    expect(page).to have_content('Der Raum konnte nicht gespeichert werden')
+    create_room 'Room1'
+    click_on 'Räume'
+    expect(page).to have_content('Room1')
   end
 
-  scenario 'edit course' do
+  scenario 'edit room' do
     sign_in_as_manager
-    create_course Name: 'Aktive Klasse', Klassenlehrer: 'Frank Meyer',
-                  Beginn: '01.01.2014', Ende: '01.01.2017'
-    create_teacher Vorname: 'Sabine', Nachname: 'Strohmann', Anrede: 'Frau'
+    given_room 'Room1'
 
-    click_on 'Klassen'
-    click_row_with 'Aktive Klasse'
+    click_on 'Räume'
+    click_row_with 'Room1'
     click_on 'Bearbeiten'
-    fill_in :Name, with: 'Klasse Aktuell'
-    fill_in :Beginn, with: ''
+    fill_in :Name, with: ''
     click_on 'Speichern'
-    expect(page).to have_content('Klasse konnte nicht gespeichert werden')
-    fill_in :Beginn, with: '5.3.2013'
+    expect(page).to have_content('Der Raum konnte nicht gespeichert werden')
+    fill_in :Name, with: 'Room 42'
+    fill_in :Bemerkung, with: 'Nice Room'
     click_on 'Speichern'
-    expect(page).to have_content('Klasse gespeichert')
-    expect(page).to have_content('Frank Meyer')
-
-    click_on 'Bearbeiten'
-    select 'Sabine Strohmann', from: :Klassenlehrer
-    expect(page).to have_content('Sabine Strohmann')
+    expect(page).to have_content('Raum gespeichert')
+    expect(page).to have_content('Room 42')
+    expect(page).to have_content('Nice Room')
   end
 
-  scenario 'create logins for all students in course' do
+  scenario 'delete room' do
     sign_in_as_manager
-    create_course Name: 'Aktive Klasse', Klassenlehrer: 'Frank Meyer',
-                  Beginn: '01.01.2014', Ende: '01.01.2017'
-    create_student Vorname: 'Sabine', Nachname: 'Neumann', Anrede: 'Frau', Klasse: 'Aktive Klasse',
-                   'E-Mail-Adresse' => 'sabine@email.com'
-    create_student Vorname: 'Frank', Nachname: 'Meyer', Anrede: 'Herr', Klasse: 'Aktive Klasse',
-                   'E-Mail-Adresse' => 'frank@email.com'
-    create_student Vorname: 'Clara', Nachname: 'Schanz', Anrede: 'Frau', Klasse: 'Aktive Klasse'
+    given_room 'Room1'
 
-    click_on 'Klassen'
-    click_row_with 'Aktive Klasse'
-    click_on 'Login für alle erstellen'
-    expect(page).to have_content('Logins generieren für Klasse Aktive Klasse')
-    expect(page).to have_content('keine E-Mail-Adresse')
-
-    click_on 'Logins erstellen'
-    expect(page).to have_content('Aktive Klasse')
-    expect(page).to have_content(
-      'Es konnten nicht alle Logins für diese Klasse erstellt werden. Clara Schanz: E-Mail muss ausgefüllt werden')
-
-
+    click_on 'Räume'
+    click_row_with 'Room1'
+    click_on 'Löschen'
+    expect(page).to have_content('Raum gelöscht')
   end
 end

@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   namespace :timetable do
     resources :rooms
     resources :subjects
+    resources :time_blocks
   end
   devise_for :logins
   resources :people, except: :index do
