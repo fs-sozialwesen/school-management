@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
 
   root to: 'visitors#index'
+  namespace :timetable do
+    resources :rooms
+  end
   devise_for :logins
   resources :people, except: :index do
     resource(:login, only: %i(new create)) { patch :toggle }

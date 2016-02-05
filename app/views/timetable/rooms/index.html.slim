@@ -1,0 +1,22 @@
+.page-header
+  = link_to timetable_rooms_path(format: :csv), id: 'export-csv-button', class: 'btn btn-default' do
+    span.glyphicon.glyphicon-export
+    |  Exportieren
+  = link_to new_timetable_room_path, class: 'btn btn-primary' do 
+    span.glyphicon.glyphicon-plus
+    |  Neu
+  h1
+    => @rooms.count
+    = Timetable::Room.model_name.human
+
+.table-responsive
+  table.table.table-striped.table-bordered.table-hover.table-clickable
+    thead
+      tr
+        th = Timetable::Room.human_attribute_name(:name)
+        th = Timetable::Room.human_attribute_name(:comments)
+    tbody
+      - @rooms.each do | timetable_room |
+        tr data = {url: url_for(timetable_room)}
+          td = timetable_room.name
+          td = timetable_room.comments

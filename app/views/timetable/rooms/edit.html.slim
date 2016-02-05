@@ -1,0 +1,6 @@
+.page-header
+  h1
+    => @room.name
+    small = Timetable::Room.model_name.human
+
+= render 'form'

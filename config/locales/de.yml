@@ -111,7 +111,14 @@ de:
     show:
       confirm_delete: "Wirklich löschen?"
 
-  timetable: Stundenplan
+  timetable:
+    rooms:
+      form:
+        error: Der Raum konnte nicht gespeichert werden.
+      new:
+        title: Raum erstellen
+      show:
+        confirm_delete: Wirklich?
   timetables:
     show:
       title_course_html: Stundenplan für Klasse %{course}
