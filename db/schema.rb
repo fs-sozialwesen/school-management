@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160205015538) do
+ActiveRecord::Schema.define(version: 20160205145727) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -219,6 +219,13 @@ ActiveRecord::Schema.define(version: 20160205015538) do
   add_index "teachers", ["person_id"], name: "index_teachers_on_person_id", using: :btree
 
   create_table "timetable_rooms", force: :cascade do |t|
+    t.string   "name"
+    t.string   "comments"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "timetable_subjects", force: :cascade do |t|
     t.string   "name"
     t.string   "comments"
     t.datetime "created_at", null: false

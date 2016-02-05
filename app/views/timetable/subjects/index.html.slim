@@ -1,0 +1,22 @@
+.page-header
+  = link_to timetable_subjects_path(format: :csv), id: 'export-csv-button', class: 'btn btn-default' do
+    span.glyphicon.glyphicon-export
+    =< t(:export)
+  = link_to new_timetable_subject_path, class: 'btn btn-primary' do 
+    span.glyphicon.glyphicon-plus
+    =< t(:new)
+  h1
+    => @subjects.count
+    = Timetable::Subject.model_name.human count: @subjects.count
+
+.table-responsive
+  table.table.table-striped.table-bordered.table-hover.table-clickable
+    thead
+      tr
+        th = Timetable::Subject.human_attribute_name(:name)
+        th = Timetable::Subject.human_attribute_name(:comments)
+    tbody
+      - @subjects.each do | timetable_subject |
+        tr data = {url: url_for(timetable_subject)}
+          td = timetable_subject.name
+          td = timetable_subject.comments
