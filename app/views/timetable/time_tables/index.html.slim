@@ -1,0 +1,24 @@
+.page-header
+  = link_to timetable_time_tables_path(format: :csv), id: 'export-csv-button', class: 'btn btn-default' do
+    span.glyphicon.glyphicon-export
+    =< t(:export)
+  = link_to new_timetable_time_table_path, class: 'btn btn-primary' do 
+    span.glyphicon.glyphicon-plus
+    =< t(:new)
+  h1
+    => @time_tables.count
+    = Timetable::TimeTable.model_name.human count: @time_tables.count
+
+.table-responsive
+  table.table.table-striped.table-bordered.table-hover.table-clickable
+    thead
+      tr
+        th = Timetable::TimeTable.human_attribute_name(:course)
+        th = Timetable::TimeTable.human_attribute_name(:start_date)
+        th = Timetable::TimeTable.human_attribute_name(:comments)
+    tbody
+      - @time_tables.each do | timetable_time_table |
+        tr data = {url: url_for(timetable_time_table)}
+          td = timetable_time_table.course.name
+          td = ldate timetable_time_table.start_date
+          td = timetable_time_table.comments

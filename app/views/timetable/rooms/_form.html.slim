@@ -7,7 +7,7 @@
       h4 = t('.error')
 
   .row
-    .col-md-4
+    .col-md-6
       .panel.panel-default
         .panel-heading = Timetable::Room.model_name.human
         .panel-body
@@ -15,7 +15,7 @@
           = f.input :comments
 
   .row.action-buttons
-    .col-md-12
+    .col-md-6
       .pull-right
         => link_to t(:cancel), 'javascript: window.history.back();', class: 'btn btn-default'
         = f.submit t(:save), class: 'btn btn-primary'

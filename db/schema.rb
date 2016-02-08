@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160205190322) do
+ActiveRecord::Schema.define(version: 20160205230835) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -239,6 +239,16 @@ ActiveRecord::Schema.define(version: 20160205190322) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "timetable_time_tables", force: :cascade do |t|
+    t.integer  "course_id"
+    t.date     "start_date"
+    t.text     "comments"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "timetable_time_tables", ["course_id"], name: "index_timetable_time_tables_on_course_id", using: :btree
+
   create_table "versions", force: :cascade do |t|
     t.string   "item_type",      null: false
     t.integer  "item_id",        null: false
@@ -261,4 +271,5 @@ ActiveRecord::Schema.define(version: 20160205190322) do
   add_foreign_key "students", "courses"
   add_foreign_key "students", "people"
   add_foreign_key "teachers", "people"
+  add_foreign_key "timetable_time_tables", "courses"
 end

@@ -13,27 +13,6 @@
     =< @course.name
 
 .row
-  .col-md-9
-    .panel.panel-default
-      .panel-heading
-        h4.panel-title #{@course.students.count} Auszubildende
-      table.table.table-condensed.table-hover.table-striped.table-clickable
-        thead
-          th Vorname
-          th Nachname
-          th E-Mail
-          th Login
-        tbody
-          - @course.students.includes(person: :login).order('people.last_name').each do | student |
-            - student = student.person
-            /= student.id
-            /= student.person.present?
-            tr data={ url: url_for(student) }
-              td = student.first_name
-              td = student.last_name
-              td = student.contact.email
-              td = student.login.present? ? 'ja' : 'nein'
-
   .col-md-3
     ul.list-unstyled
       li
@@ -45,4 +24,43 @@
       li
         label Ende:
         =< ldate @course.end_date
-    p = link_to 'Login für alle erstellen', generate_logins_course_path(@course), class: 'btn btn-default'
+
+.row
+  .col-md-6
+    .panel.panel-default
+      .panel-heading
+        h4.panel-title
+          |  #{@course.students.count} Auszubildende
+          ul.list-inline.pull-right
+            li = link_to generate_logins_course_path(@course), class: 'btn btn-default btn-xs' do
+              span.glyphicon.glyphicon-plus>
+              | Login für alle erstellen
+      table.table.table-condensed.table-hover.table-striped.table-clickable
+        thead
+          th Vorname
+          th Nachname
+          th E-Mail
+          th Login
+        tbody
+          - @course.students.includes(person: :login).order('people.last_name').each do | student |
+            - student = student.person
+            tr data={ url: url_for(student) }
+              td = student.first_name
+              td = student.last_name
+              td = student.contact.email
+              td = student.login.present? ? 'ja' : 'nein'
+
+  .col-md-6
+    .panel.panel-default
+      .panel-heading
+        h4.panel-title
+          |  Stundenpläne
+          ul.list-inline.pull-right
+            li = link_to courses_path, class: 'btn btn-default btn-xs' do
+              span.glyphicon.glyphicon-plus>
+              | Neu
+            li = link_to courses_path, class: 'btn btn-default btn-xs' do
+              span.glyphicon.glyphicon-list-alt>
+              | Alle
+
+      .panel-body

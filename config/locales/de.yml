@@ -151,6 +151,11 @@ de:
         title: Zeitblock erstellen
       form:
         error: Der Zeitblock konnte nicht gespeichert werden.
+    time_tables:
+      new:
+        title: Neuer Stundenplan
+      form:
+        error: Der Stundenplan konnte nicht gespeichert werden.
   timetables:
     show:
       title_course_html: Stundenplan für Klasse %{course}

@@ -3,7 +3,7 @@ class Timetable::TimeBlock < ActiveRecord::Base
   has_many :lessons
 
   validates :start_time, :end_time, presence: true
-  
+
   def name
     "#{formatted_start_time} - #{formatted_end_time}"
   end

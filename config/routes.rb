@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     resources :rooms
     resources :subjects
     resources :time_blocks
+    resources :time_tables
   end
   devise_for :logins
   resources :people, except: :index do

@@ -1,0 +1,24 @@
+= simple_form_for(@time_table, html: { role: "form" }, defaults: { required: false, include_blank: false }) do |f|
+  - if @time_table.errors.any?
+    .alert.alert-danger.alert-dismissable@alert
+      button.close type="button" data-dismiss="alert"
+        span aria-hidden="true" &times;
+        span.sr-only Close
+      h4
+        = t('.error')
+
+  .panel.panel-default
+    .panel-heading = Timetable::TimeTable.model_name.human
+    .panel-body
+      .row
+        .col-md-4
+          = f.association :course, collection: Course.active.all
+          = f.input :start_date, as: :string, input_html: { class: 'date' }, label: 'Woche'
+        .col-md-8
+          = f.input :comments
+
+  .row.action-buttons
+    .col-md-12
+      .pull-right
+        => link_to t(:cancel), 'javascript: window.history.back();', class: 'btn btn-default'
+        = f.submit t(:save), class: 'btn btn-primary'
