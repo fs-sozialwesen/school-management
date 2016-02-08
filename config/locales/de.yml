@@ -51,9 +51,6 @@ de:
       managers: Manager
       students: Auszubildende
       teachers: Lehrer
-      timetable/rooms: Räume
-      timetable/subjects: Fächer
-      timetable/time_blocks: Zeitblöcke
   login_mailer:
     create_password_email:
       subject: Passwort zu deinem Account
@@ -135,27 +132,26 @@ de:
     show:
       confirm_delete: "Wirklich löschen?"
 
-  timetable:
-    rooms:
-      new:
-        title: Raum erstellen
-      form:
-        error: Der Raum konnte nicht gespeichert werden.
-    subjects:
-      new:
-        title: Fach erstellen
-      form:
-        error: Das Fach konnte nicht gespeichert werden.
-    time_blocks:
-      new:
-        title: Zeitblock erstellen
-      form:
-        error: Der Zeitblock konnte nicht gespeichert werden.
-    time_tables:
-      new:
-        title: Neuer Stundenplan
-      form:
-        error: Der Stundenplan konnte nicht gespeichert werden.
+  rooms:
+    new:
+      title: Raum erstellen
+    form:
+      error: Der Raum konnte nicht gespeichert werden.
+  subjects:
+    new:
+      title: Fach erstellen
+    form:
+      error: Das Fach konnte nicht gespeichert werden.
+  time_blocks:
+    new:
+      title: Zeitblock erstellen
+    form:
+      error: Der Zeitblock konnte nicht gespeichert werden.
+  time_tables:
+    new:
+      title: Neuer Stundenplan
+    form:
+      error: Der Stundenplan konnte nicht gespeichert werden.
   timetables:
     show:
       title_course_html: Stundenplan für Klasse %{course}

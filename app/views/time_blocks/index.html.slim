@@ -1,0 +1,20 @@
+.page-header
+  = link_to new_time_block_path, class: 'btn btn-primary' do
+    span.glyphicon.glyphicon-plus
+    =< t(:new)
+  = link_to time_blocks_path(format: :csv), id: 'export-csv-button', class: 'btn btn-default' do
+    span.glyphicon.glyphicon-export
+    =< t(:export)
+  h1
+    => @time_blocks.count
+    = TimeBlock.model_name.human count: @time_blocks.count
+
+.table-responsive
+  table.table.table-striped.table-bordered.table-hover.table-clickable
+    thead
+      tr
+        th Zeit
+    tbody
+      - @time_blocks.each do | time_block |
+        tr data = {url: url_for(time_block)}
+          td = time_block.name

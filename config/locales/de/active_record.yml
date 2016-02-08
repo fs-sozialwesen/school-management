@@ -80,16 +80,16 @@ de:
         one:   Auszubildende(r)
         other: Auszubildende
       teacher: Lehrer
-      timetable/room:
+      room:
         one:   Raum
         other: Räume
-      timetable/subject:
+      subject:
         one:   Fach
         other: Fächer
-      timetable/time_block:
+      time_block:
         one:   Zeitblock
         other: Zeitblöcke
-      timetable/time_table:
+      time_table:
         one:   Stundenplan
         other: Stundenpläne
     attributes:
@@ -154,7 +154,7 @@ de:
         year: Jahrgang
       teacher:
         courses: Klassenlehrer von
-      timetable/time_block:
+      time_block:
         start_time: Beginn
         end_time: Ende
       login:
@@ -175,7 +175,7 @@ de:
         unconfirmed_email: Unbestätigte Email
     errors:
       models:
-        timetable/time_table:
+        time_table:
           attributes:
             start_date:
               no_monday: muss ein Montag sein

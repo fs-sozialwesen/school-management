@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160205230835) do
+ActiveRecord::Schema.define(version: 20160208155948) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -178,6 +178,13 @@ ActiveRecord::Schema.define(version: 20160205230835) do
     t.datetime "updated_at",                  null: false
   end
 
+  create_table "rooms", force: :cascade do |t|
+    t.string   "name"
+    t.string   "comments"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "students", force: :cascade do |t|
     t.integer  "person_id"
     t.integer  "course_id"
@@ -188,6 +195,13 @@ ActiveRecord::Schema.define(version: 20160205230835) do
 
   add_index "students", ["course_id"], name: "index_students_on_course_id", using: :btree
   add_index "students", ["person_id"], name: "index_students_on_person_id", using: :btree
+
+  create_table "subjects", force: :cascade do |t|
+    t.string   "name"
+    t.string   "comments"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "taggings", force: :cascade do |t|
     t.integer  "tag_id"
@@ -217,6 +231,23 @@ ActiveRecord::Schema.define(version: 20160205230835) do
   end
 
   add_index "teachers", ["person_id"], name: "index_teachers_on_person_id", using: :btree
+
+  create_table "time_blocks", force: :cascade do |t|
+    t.time     "start_time"
+    t.time     "end_time"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "time_tables", force: :cascade do |t|
+    t.integer  "course_id"
+    t.date     "start_date"
+    t.text     "comments"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "time_tables", ["course_id"], name: "index_time_tables_on_course_id", using: :btree
 
   create_table "timetable_rooms", force: :cascade do |t|
     t.string   "name"
@@ -271,5 +302,6 @@ ActiveRecord::Schema.define(version: 20160205230835) do
   add_foreign_key "students", "courses"
   add_foreign_key "students", "people"
   add_foreign_key "teachers", "people"
+  add_foreign_key "time_tables", "courses"
   add_foreign_key "timetable_time_tables", "courses"
 end

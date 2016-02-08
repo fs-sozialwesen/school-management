@@ -1,2 +1,0 @@
-module Timetable::RoomsHelper
-end

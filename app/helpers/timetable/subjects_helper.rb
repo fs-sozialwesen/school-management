@@ -1,2 +1,0 @@
-module Timetable::SubjectsHelper
-end

@@ -1,0 +1,22 @@
+.page-header
+  = link_to rooms_path(format: :csv), id: 'export-csv-button', class: 'btn btn-default' do
+    span.glyphicon.glyphicon-export
+    =< t(:export)
+  = link_to new_room_path, class: 'btn btn-primary' do 
+    span.glyphicon.glyphicon-plus
+    =< t(:new)
+  h1
+    => @rooms.count
+    = Room.model_name.human count: @rooms.count
+
+.table-responsive
+  table.table.table-striped.table-bordered.table-hover.table-clickable
+    thead
+      tr
+        th = Room.human_attribute_name(:name)
+        th = Room.human_attribute_name(:comments)
+    tbody
+      - @rooms.each do | room |
+        tr data = {url: url_for(room)}
+          td = room.name
+          td = room.comments

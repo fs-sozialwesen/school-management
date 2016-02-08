@@ -30,4 +30,9 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :time_tables
+  resources :time_blocks
+  resources :subjects
+  resources :rooms
+
 end
