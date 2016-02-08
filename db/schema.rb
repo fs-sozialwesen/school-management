@@ -249,37 +249,6 @@ ActiveRecord::Schema.define(version: 20160208155948) do
 
   add_index "time_tables", ["course_id"], name: "index_time_tables_on_course_id", using: :btree
 
-  create_table "timetable_rooms", force: :cascade do |t|
-    t.string   "name"
-    t.string   "comments"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "timetable_subjects", force: :cascade do |t|
-    t.string   "name"
-    t.string   "comments"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "timetable_time_blocks", force: :cascade do |t|
-    t.time     "start_time"
-    t.time     "end_time"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "timetable_time_tables", force: :cascade do |t|
-    t.integer  "course_id"
-    t.date     "start_date"
-    t.text     "comments"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  add_index "timetable_time_tables", ["course_id"], name: "index_timetable_time_tables_on_course_id", using: :btree
-
   create_table "versions", force: :cascade do |t|
     t.string   "item_type",      null: false
     t.integer  "item_id",        null: false
@@ -303,5 +272,4 @@ ActiveRecord::Schema.define(version: 20160208155948) do
   add_foreign_key "students", "people"
   add_foreign_key "teachers", "people"
   add_foreign_key "time_tables", "courses"
-  add_foreign_key "timetable_time_tables", "courses"
 end
