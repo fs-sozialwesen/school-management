@@ -1,8 +1,8 @@
 .page-header
-  = link_to timetable_time_tables_path, class: 'btn btn-default' do
+  = link_to time_tables_path, class: 'btn btn-default' do
     span.glyphicon.glyphicon-list-alt
     =< t(:list)
-  = link_to edit_timetable_time_table_path(@time_table), class: 'btn btn-primary' do
+  = link_to edit_time_table_path(@time_table), class: 'btn btn-primary' do
     span.glyphicon.glyphicon-pencil
     =< t(:edit)
   - confirm = { confirm: t(:confirm_delete, model: TimeTable.model_name.human) }
@@ -17,17 +17,40 @@
       | -
       =< l @time_table.end_date, format: :wday_short
 
-/.row
+.row
   .col-md-6
-    .panel.panel-default
-      .panel-heading = TimeTable.model_name.human
-      .panel-body
-        p
-          label => TimeTable.human_attribute_name(:course)
-          = @time_table.course.name
-        p
-          label => TimeTable.human_attribute_name(:start_date)
-          = ldate @time_table.start_date
-        p
-          label => TimeTable.human_attribute_name(:comments)
-          = @time_table.comments
+    p = @time_table.comments
+
+.table-responsive
+  table.table.table-striped.table-hover
+    thead
+      tr
+        th Zeit
+        th Montag
+        th Dienstag
+        th Mittwoch
+        th Donnerstag
+        th Freitag
+    tbody
+      - @time_blocks.each do |time_block|
+        tr
+          th = time_block.name
+          - 1.upto(5) do |weekday|
+            td class=["time-block-#{time_block.id}", "weekday-#{weekday}"]
+
+  .lessons
+    - @time_table.lessons.each do |lesson|
+      - unless lesson.empty?
+        - options = { time_block_id: lesson.time_block_id, weekday: lesson.weekday }
+        .lesson data=options
+          p: strong = link_to lesson.subject.name, edit_time_table_path(@time_table, options)
+          p = lesson.teacher_name
+          p: i = lesson.room.name if lesson.room_id.present?
+          p: small = lesson.comments
+
+coffee:
+  $ ->
+    $('.lessons .lesson').each (index, lesson) =>
+      lesson = $(lesson)
+      td = $("td.time-block-" + lesson.data('timeBlockId') + '.weekday-' + lesson.data('weekday'))
+      $(lesson).appendTo(td)

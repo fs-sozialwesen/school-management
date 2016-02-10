@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160208155948) do
+ActiveRecord::Schema.define(version: 20160209044506) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -117,6 +117,25 @@ ActiveRecord::Schema.define(version: 20160208155948) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "lessons", force: :cascade do |t|
+    t.integer  "time_table_id"
+    t.integer  "teacher_id"
+    t.integer  "subject_id"
+    t.integer  "room_id"
+    t.integer  "time_block_id"
+    t.integer  "weekday"
+    t.string   "comments"
+    t.string   "color"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "lessons", ["room_id"], name: "index_lessons_on_room_id", using: :btree
+  add_index "lessons", ["subject_id"], name: "index_lessons_on_subject_id", using: :btree
+  add_index "lessons", ["teacher_id"], name: "index_lessons_on_teacher_id", using: :btree
+  add_index "lessons", ["time_block_id"], name: "index_lessons_on_time_block_id", using: :btree
+  add_index "lessons", ["time_table_id"], name: "index_lessons_on_time_table_id", using: :btree
 
   create_table "logins", force: :cascade do |t|
     t.integer  "person_id"
@@ -266,6 +285,11 @@ ActiveRecord::Schema.define(version: 20160208155948) do
   add_foreign_key "course_memberships", "courses"
   add_foreign_key "courses", "teachers"
   add_foreign_key "internship_positions", "organisations"
+  add_foreign_key "lessons", "rooms"
+  add_foreign_key "lessons", "subjects"
+  add_foreign_key "lessons", "teachers"
+  add_foreign_key "lessons", "time_blocks"
+  add_foreign_key "lessons", "time_tables"
   add_foreign_key "logins", "people"
   add_foreign_key "managers", "people"
   add_foreign_key "students", "courses"

@@ -9,6 +9,7 @@ class TimeTablesController < ApplicationController
   end
 
   def show
+    @time_blocks = TimeBlock.all
   end
 
   def new
@@ -17,11 +18,21 @@ class TimeTablesController < ApplicationController
   end
 
   def edit
+    @time_blocks = TimeBlock.all
+    @teachers = Teacher.all
+    @subjects = Subject.all
+    @rooms = Room.all
   end
 
   def create
     authorize TimeTable
     @time_table = TimeTable.new time_table_params
+
+    TimeBlock.all.each do |time_block|
+      1.upto(5).each do |weekday|
+        @time_table.lessons.build time_block: time_block, weekday: weekday
+      end
+    end
 
     if @time_table.save
       redirect_to @time_table, notice: t(:created, model: TimeTable.model_name.human)
@@ -47,12 +58,14 @@ class TimeTablesController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_time_table
-    @time_table = TimeTable.find params[:id]
+    @time_table = TimeTable.includes(:lessons).find params[:id]
     authorize @time_table
   end
 
   # Only allow a trusted parameter "white list" through.
   def time_table_params
-    params.require(:time_table).permit(:course_id, :start_date, :comments)
+    params.require(:time_table).permit(:course_id, :start_date, :comments, lessons_attributes:
+      %i(id weekday time_block_id teacher_id subject_id room_id comments )
+    )
   end
 end
