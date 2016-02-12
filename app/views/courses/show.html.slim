@@ -56,11 +56,22 @@
         h4.panel-title
           |  Stundenpläne
           ul.list-inline.pull-right
-            li = link_to courses_path, class: 'btn btn-default btn-xs' do
+            li = link_to new_course_time_table_path(@course), class: 'btn btn-default btn-xs' do
               span.glyphicon.glyphicon-plus>
               | Neu
-            li = link_to courses_path, class: 'btn btn-default btn-xs' do
+            li = link_to course_time_tables_path(@course), class: 'btn btn-default btn-xs' do
               span.glyphicon.glyphicon-list-alt>
               | Alle
+      table.table.table-condensed.table-hover.table-striped.table-clickable
+        thead
+          th Woche
+          th Bemerkungen
+        tbody
+          - @course.time_tables.order('time_tables.start_date').each do | time_table |
+            tr data={ url: url_for(time_table) }
+              td
+                => l time_table.start_date, format: :wday_short
+                | -
+                =< l time_table.end_date, format: :wday_short
+              td = time_table.comments
 
-      .panel-body

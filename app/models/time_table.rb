@@ -1,12 +1,12 @@
 class TimeTable < ActiveRecord::Base
-  belongs_to :course, required: true
+  belongs_to :course, inverse_of: :time_tables , required: true
 
-  has_many :lessons, inverse_of: :time_table
+  has_many :lessons, inverse_of: :time_table, dependent: :delete_all
 
   accepts_nested_attributes_for :lessons
 
-  validates :start_date, presence: true
-  before_save :make_start_date_a_monday
+  validates :start_date, presence: true, uniqueness: { scope: [:course_id] }
+  before_validation :make_start_date_a_monday, on: :create
 
   def name
   end
@@ -18,6 +18,6 @@ class TimeTable < ActiveRecord::Base
   private
 
   def make_start_date_a_monday
-    self.start_date = start_date.beginning_of_week
+    self.start_date = start_date.beginning_of_week if start_date.present?
   end
 end

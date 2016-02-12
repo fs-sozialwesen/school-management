@@ -1,8 +1,8 @@
 .page-header
-  = link_to time_tables_path(format: :csv), id: 'export-csv-button', class: 'btn btn-default' do
+  /= link_to time_tables_path(format: :csv), id: 'export-csv-button', class: 'btn btn-default' do
     span.glyphicon.glyphicon-export
     =< t(:export)
-  = link_to new_time_table_path, class: 'btn btn-primary' do 
+  = link_to new_course_time_table_path, class: 'btn btn-primary' do
     span.glyphicon.glyphicon-plus
     =< t(:new)
   h1
@@ -13,12 +13,12 @@
   table.table.table-striped.table-bordered.table-hover.table-clickable
     thead
       tr
-        th = TimeTable.human_attribute_name(:course)
+        /th = TimeTable.human_attribute_name(:course)
         th = TimeTable.human_attribute_name(:start_date)
         th = TimeTable.human_attribute_name(:comments)
     tbody
       - @time_tables.each do | time_table |
         tr data = {url: url_for(time_table)}
-          td = time_table.course.name
+          /td = time_table.course.name
           td = ldate time_table.start_date
           td = time_table.comments

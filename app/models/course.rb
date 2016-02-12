@@ -10,6 +10,7 @@ class Course < ActiveRecord::Base
   has_many :active_course_memberships, -> { where active: true }, class_name: 'CourseMembership'
   has_many :students, inverse_of: :course #, through: :active_course_memberships
   # has_many :lessons, inverse_of: :course
+  has_many :time_tables, inverse_of: :course
 
   has_paper_trail
   acts_as_taggable_on :education_subjects

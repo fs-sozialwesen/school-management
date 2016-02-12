@@ -1,12 +1,6 @@
 Rails.application.routes.draw do
 
   root to: 'visitors#index'
-  namespace :timetable do
-    resources :rooms
-    resources :subjects
-    resources :time_blocks
-    resources :time_tables
-  end
   devise_for :logins
   resources :people, except: :index do
     resource(:login, only: %i(new create)) { patch :toggle }
@@ -18,9 +12,9 @@ Rails.application.routes.draw do
   end
   resources :courses do
     match :generate_logins, via: [:get, :patch], on: :member
+    resources :time_tables, shallow: true
   end
 
-  resources :timetables, only: [:index, :show]
   resources :internship_positions, only: [:index, :show]
   resources :candidates do
     member do
@@ -30,7 +24,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :time_tables
+  # resources :time_tables
   resources :time_blocks
   resources :subjects
   resources :rooms

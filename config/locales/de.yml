@@ -149,7 +149,7 @@ de:
       error: Der Zeitblock konnte nicht gespeichert werden.
   time_tables:
     new:
-      title: Neuer Stundenplan
+      title: Neuer Stundenplan für %{course}
     form:
       error: Der Stundenplan konnte nicht gespeichert werden.
   timetables:

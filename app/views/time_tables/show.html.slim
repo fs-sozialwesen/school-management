@@ -1,5 +1,5 @@
 .page-header
-  = link_to time_tables_path, class: 'btn btn-default' do
+  /= link_to time_tables_path, class: 'btn btn-default' do
     span.glyphicon.glyphicon-list-alt
     =< t(:list)
   = link_to edit_time_table_path(@time_table), class: 'btn btn-primary' do
@@ -11,7 +11,7 @@
     =< t(:delete)
   h1
     small => TimeTable.model_name.human
-    => @time_table.course.name
+    => link_to @time_table.course.name, @time_table.course
     small
       => l @time_table.start_date, format: :wday_short
       | -
@@ -25,12 +25,12 @@
   table.table.table-striped.table-hover
     thead
       tr
-        th Zeit
-        th Montag
-        th Dienstag
-        th Mittwoch
-        th Donnerstag
-        th Freitag
+        th width="10%" Zeit
+        th width="18%" Montag
+        th width="18%" Dienstag
+        th width="18%" Mittwoch
+        th width="18%" Donnerstag
+        th width="18%" Freitag
     tbody
       - @time_blocks.each do |time_block|
         tr
@@ -54,3 +54,8 @@ coffee:
       lesson = $(lesson)
       td = $("td.time-block-" + lesson.data('timeBlockId') + '.weekday-' + lesson.data('weekday'))
       $(lesson).appendTo(td)
+
+sass:
+  td
+    p
+      margin-bottom: 0
