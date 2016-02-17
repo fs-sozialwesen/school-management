@@ -8,6 +8,10 @@ class TimeTablePolicy < ApplicationPolicy
     manager? or (student? and time_table.course == student.course)
   end
 
+  def toggle?
+    manager?
+  end
+
   private
 
   def time_table
@@ -16,7 +20,7 @@ class TimeTablePolicy < ApplicationPolicy
 
   class Scope < Scope
     def resolve
-      return scope.where(course: user.as_student.course) if user.student?
+      return scope.active.where(course: user.as_student.course) if user.student?
       scope
     end
   end

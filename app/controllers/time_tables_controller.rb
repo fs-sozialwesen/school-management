@@ -2,7 +2,7 @@ class TimeTablesController < ApplicationController
   before_action :authenticate_login!
   after_action :verify_authorized
   before_action :set_course, only: [:index, :new, :create]
-  before_action :set_time_table, only: [:show, :edit, :update, :destroy]
+  before_action :set_time_table, only: [:show, :edit, :update, :destroy, :toggle]
 
   def index
     authorize TimeTable
@@ -51,6 +51,12 @@ class TimeTablesController < ApplicationController
     end
   end
 
+  def toggle
+    @time_table.toggle_active!
+    msg = @time_table.active? ? t('.activated') : 'SP deaktiviert'
+    redirect_to @time_table, notice: msg
+  end
+
   def destroy
     @time_table.destroy
     redirect_to @time_table.course, notice: t(:destroyed, model: TimeTable.model_name.human)
@@ -64,7 +70,7 @@ class TimeTablesController < ApplicationController
   end
 
   def set_time_table
-    @time_table = TimeTable.includes(:lessons).find params[:id]
+    @time_table = TimeTable.includes(lessons: [:subject, :room, teacher: :person]).find params[:id]
     authorize @time_table
   end
 

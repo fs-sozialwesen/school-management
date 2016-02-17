@@ -12,7 +12,9 @@ Rails.application.routes.draw do
   end
   resources :courses do
     match :generate_logins, via: [:get, :patch], on: :member
-    resources :time_tables, shallow: true
+    resources :time_tables, shallow: true do
+      patch :toggle, on: :member
+    end
   end
 
   resources :internship_positions, only: [:index, :show]

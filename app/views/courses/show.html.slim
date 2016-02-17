@@ -68,7 +68,7 @@
           th Bemerkungen
         tbody
           - @course.time_tables.order('time_tables.start_date').each do | time_table |
-            tr data={ url: url_for(time_table) }
+            tr data={ url: url_for(time_table) }  class=(time_table.active? ? 'success' : 'warning')
               td
                 => l time_table.start_date, format: :wday_short
                 | -

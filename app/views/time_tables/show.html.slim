@@ -2,6 +2,9 @@
   /= link_to time_tables_path, class: 'btn btn-default' do
     span.glyphicon.glyphicon-list-alt
     =< t(:list)
+  = link_to toggle_time_table_path(@time_table), method: :patch, class: 'btn btn-default' do
+    span.glyphicon.glyphicon-exclamation-sign
+    =< @time_table.active? ? t('.deactivate') : t('.activate')
   = link_to edit_time_table_path(@time_table), class: 'btn btn-primary' do
     span.glyphicon.glyphicon-pencil
     =< t(:edit)

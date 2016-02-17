@@ -157,6 +157,8 @@ de:
       time_block:
         start_time: Beginn
         end_time: Ende
+      time_table:
+        activated_at: Veröffentlicht am
       login:
         login: "Handle"
         email: E-Mail

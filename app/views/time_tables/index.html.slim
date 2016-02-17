@@ -16,9 +16,11 @@
         /th = TimeTable.human_attribute_name(:course)
         th = TimeTable.human_attribute_name(:start_date)
         th = TimeTable.human_attribute_name(:comments)
+        th = TimeTable.human_attribute_name(:activated_at)
     tbody
       - @time_tables.each do | time_table |
-        tr data = {url: url_for(time_table)}
+        tr data = {url: url_for(time_table)} class=(time_table.active? ? 'success' : 'warning')
           /td = time_table.course.name
           td = ldate time_table.start_date
           td = time_table.comments
+          td = ldate time_table.activated_at

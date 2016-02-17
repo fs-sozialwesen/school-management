@@ -152,8 +152,13 @@ de:
       title: Neuer Stundenplan für %{course}
     form:
       error: Der Stundenplan konnte nicht gespeichert werden.
-  timetables:
     show:
+      activate: Veröffentlichen
+      deactivate: Deaktivieren
+    toggle:
+      activated: Stundenplan veröffentlicht.
+      deactivated: Stundenplan deaktiviert.
+  timetables:
       title_course_html: Stundenplan für Klasse %{course}
       title_teacher_html: Stundenplan für %{teacher}
       title_room_html: "Raumplan: <strong>%{room}</strong>"

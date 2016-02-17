@@ -3,6 +3,8 @@ class TimeTable < ActiveRecord::Base
 
   has_many :lessons, inverse_of: :time_table, dependent: :delete_all
 
+  scope :active, -> { where.not activated_at: nil }
+
   accepts_nested_attributes_for :lessons
 
   validates :start_date, presence: true, uniqueness: { scope: [:course_id] }
@@ -13,6 +15,14 @@ class TimeTable < ActiveRecord::Base
 
   def end_date
     start_date + 4
+  end
+
+  def active?
+    !!activated_at
+  end
+
+  def toggle_active!
+    update! activated_at: (active? ? nil : Date.current)
   end
 
   private
