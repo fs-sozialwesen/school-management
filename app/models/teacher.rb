@@ -7,7 +7,7 @@ class Teacher < ActiveRecord::Base
 
   accepts_nested_attributes_for :person
 
-  # has_many :lessons, inverse_of: :teacher
+  has_many :lessons, inverse_of: :teacher
 
   has_paper_trail
 

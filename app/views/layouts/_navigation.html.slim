@@ -20,6 +20,9 @@
           = menu_item_for :students
           = menu_item_for Candidate
           = menu_item_for InternshipPosition
+          - if current_user.student? and policy_scope(TimeTable).any?
+            li class=('active' if params[:controller] == 'my_time_tables')
+              = link_to 'Stundenplan', my_time_tables_url
 
         ul.nav.navbar-nav.navbar-right
           - if current_user.manager?
@@ -30,7 +33,6 @@
                 = menu_item_for Room
                 = menu_item_for Subject
                 = menu_item_for TimeBlock
-                /= menu_item_for TimeTable
           li.dropdown
             a.dropdown-toggle@button href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
               |  #{current_user.name} <span class="caret"></span>

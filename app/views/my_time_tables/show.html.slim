@@ -1,0 +1,52 @@
+.page-header
+  h1 Stundenplan #{time_table_title_for(@time_table)}
+
+.row
+  .col-md-9
+    .table-responsive
+      table.table.table-striped.table-hover
+        thead
+          tr
+            th width="10%" Zeit
+            th width="18%" Montag
+            th width="18%" Dienstag
+            th width="18%" Mittwoch
+            th width="18%" Donnerstag
+            th width="18%" Freitag
+        tbody
+          - @time_blocks.each do |time_block|
+            tr
+              th = time_block.name
+              - 1.upto(5) do |weekday|
+                td class=["time-block-#{time_block.id}", "weekday-#{weekday}"]
+
+      .lessons
+        - @time_table.lessons.each do |lesson|
+          - unless lesson.empty?
+            - options = { time_block_id: lesson.time_block_id, weekday: lesson.weekday }
+            .lesson data=options
+              p: strong = lesson.subject.name
+              p = lesson.teacher_name
+              p: i = lesson.room.name if lesson.room_id.present?
+              p: small = lesson.comments
+  .col-md-3
+    h3 Woche
+    ul.nav.nav-pills.nav-stacked
+      - @time_tables.each do |time_table|
+        li class=('active' if time_table == @time_table)
+          - title = time_table_title_for(time_table)
+          - title += ' aktuell' if time_table.start_date == Date.current.beginning_of_week
+          = link_to title, my_time_table_url(time_table)
+
+
+coffee:
+  $ ->
+    $('.lessons .lesson').each (index, lesson) =>
+      lesson = $(lesson)
+      td = $("td.time-block-" + lesson.data('timeBlockId') + '.weekday-' + lesson.data('weekday'))
+      $(lesson).appendTo(td)
+
+sass:
+  td
+    p
+      margin-bottom: 0
