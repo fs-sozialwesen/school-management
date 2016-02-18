@@ -1,7 +1,4 @@
 .page-header
-  /= link_to time_tables_path, class: 'btn btn-default' do
-    span.glyphicon.glyphicon-list-alt
-    =< t(:list)
   = link_to toggle_time_table_path(@time_table), method: :patch, class: 'btn btn-default' do
     span.glyphicon.glyphicon-exclamation-sign
     =< @time_table.active? ? t('.deactivate') : t('.activate')
@@ -13,52 +10,47 @@
     span.glyphicon.glyphicon-remove
     =< t(:delete)
   h1
-    small => TimeTable.model_name.human
-    => link_to @time_table.course.name, @time_table.course
+    => TimeTable.model_name.human
     small
-      => l @time_table.start_date, format: :wday_short
-      | -
-      =< l @time_table.end_date, format: :wday_short
+      |  für
+      =< link_to @time_table.course.name, @time_table.course
 
 .row
-  .col-md-6
-    p = @time_table.comments
+  .col-md-3
+    h4 = time_table_title_for(@time_table)
 
 .table-responsive
-  table.table.table-striped.table-hover
+  table.table.table-striped.table-hover.time_table
     thead
       tr
-        th width="10%" Zeit
-        th width="18%" Montag
-        th width="18%" Dienstag
-        th width="18%" Mittwoch
-        th width="18%" Donnerstag
-        th width="18%" Freitag
+        th.time Zeit
+        th.day Montag
+        th.day Dienstag
+        th.day Mittwoch
+        th.day Donnerstag
+        th.day Freitag
     tbody
+      - lessons_by_time_block = @time_table.lessons.group_by(&:time_block)
       - @time_blocks.each do |time_block|
         tr
           th = time_block.name
+          - time_block_lessons = lessons_by_time_block[time_block] || []
+          - lessons_by_weekday = time_block_lessons.group_by(&:weekday)
           - 1.upto(5) do |weekday|
-            td class=["time-block-#{time_block.id}", "weekday-#{weekday}"]
+            - lessons = lessons_by_weekday[weekday] || []
+            - lessons.reject!(&:empty?)
+            td class=('danger' if lessons.size > 1)
+              - lessons.each do |lesson|
+                - options = { time_block_id: lesson.time_block_id, weekday: lesson.weekday }
+                p.subject = link_to lesson.subject.name, edit_time_table_path(@time_table, options)
+                p.teacher = lesson.teacher_name
+                p.room = lesson.room.name if lesson.room_id.present?
+                p.comments = lesson.comments
 
-  .lessons
-    - @time_table.lessons.each do |lesson|
-      - unless lesson.empty?
-        - options = { time_block_id: lesson.time_block_id, weekday: lesson.weekday }
-        .lesson data=options
-          p: strong = link_to lesson.subject.name, edit_time_table_path(@time_table, options)
-          p = lesson.teacher_name
-          p: i = lesson.room.name if lesson.room_id.present?
-          p: small = lesson.comments
-
-coffee:
-  $ ->
-    $('.lessons .lesson').each (index, lesson) =>
-      lesson = $(lesson)
-      td = $("td.time-block-" + lesson.data('timeBlockId') + '.weekday-' + lesson.data('weekday'))
-      $(lesson).appendTo(td)
-
-sass:
-  td
-    p
-      margin-bottom: 0
+- if @time_table.comments.present?
+  .row
+    .col-md-6
+      p.well
+        label Bemerkungen:
+        br
+        = @time_table.comments

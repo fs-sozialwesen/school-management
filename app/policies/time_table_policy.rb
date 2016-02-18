@@ -5,7 +5,9 @@ class TimeTablePolicy < ApplicationPolicy
   end
 
   def show?
-    manager? or (student? and time_table.course == student.course)
+    manager? or
+      (student? and time_table.course == student.course) or
+      (teacher?)
   end
 
   def toggle?
@@ -21,6 +23,7 @@ class TimeTablePolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
       return scope.active.where(course: user.as_student.course) if user.student?
+      return scope.active.where(id: user.as_teacher.time_tables) if user.teacher?
       scope
     end
   end

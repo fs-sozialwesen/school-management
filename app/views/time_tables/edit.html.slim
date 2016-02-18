@@ -46,9 +46,9 @@
       .lesson data={ time_block_id: lesson.time_block_id, weekday: lesson.weekday }
         = lessons_form.input :time_block_id, as: :hidden
         = lessons_form.input :weekday, as: :hidden
-        = lessons_form.input :subject_id, collection: @subjects, label: false, prompt: 'Fach'
-        = lessons_form.input :teacher_id, collection: @teachers, label: false, prompt: 'Lehrer'
-        = lessons_form.input :room_id, collection: @rooms, label: false, prompt: 'Raum'
+        = lessons_form.input :subject_id, collection: @subjects, label: false, prompt: ''
+        = lessons_form.input :teacher_id, collection: @teachers, label: false, prompt: ''
+        = lessons_form.input :room_id,    collection: @rooms,    label: false, prompt: ''
         = lessons_form.input :comments, label: false
 
 coffee:

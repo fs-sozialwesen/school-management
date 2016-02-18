@@ -27,6 +27,7 @@ Rails.application.routes.draw do
   end
 
   resources :my_time_tables, only: [:index, :show]
+  resources :teacher_time_tables, only: [:index, :show]
   resources :time_blocks
   resources :subjects
   resources :rooms

@@ -23,6 +23,9 @@
           - if current_user.student? and policy_scope(TimeTable).any?
             li class=('active' if params[:controller] == 'my_time_tables')
               = link_to 'Stundenplan', my_time_tables_url
+          - if current_user.teacher? and current_user.as_teacher.time_table_dates.any?
+            li class=('active' if params[:controller] == 'teacher_time_tables')
+              = link_to 'Stundenplan', teacher_time_tables_url
 
         ul.nav.navbar-nav.navbar-right
           - if current_user.manager?
