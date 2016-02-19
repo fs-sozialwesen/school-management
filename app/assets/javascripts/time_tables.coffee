@@ -10,11 +10,10 @@ class window.TimeTable
     @setClickEvents()
 
   setClickEvents: =>
-    @table.find('a.add-lesson').click @addOrEditLinkClicked
-    @table.find('a.edit-lesson').click @addOrEditLinkClicked
+    @table.find('a.add-lesson, a.edit-lesson, a.copy-lesson').click @modalLinkClicked
     @table.find('a.delete-lesson').click @deleteLinkClicked
 
-  addOrEditLinkClicked: (event) =>
+  modalLinkClicked: (event) =>
     event.preventDefault()
     link = $(event.currentTarget)
     url = link.attr('href')

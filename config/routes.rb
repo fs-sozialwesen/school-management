@@ -13,7 +13,9 @@ Rails.application.routes.draw do
   resources :courses, shallow: true do
     match :generate_logins, via: [:get, :patch], on: :member
     resources :time_tables do
-      resources :lessons, only: %i(new create edit update destroy)
+      resources :lessons, only: %i(new create edit update destroy) do
+        get :copy, on: :member
+      end
       patch :toggle, on: :member
     end
   end

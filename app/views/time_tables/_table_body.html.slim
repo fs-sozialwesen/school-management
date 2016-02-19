@@ -8,10 +8,14 @@
       - lesson = time_block_lessons.find { |lesson| lesson.weekday == weekday }
       td
         - if lesson
+          .buttons.pull-right
+            => link_to copy_lesson_path(lesson), class: 'copy-lesson btn btn-default btn-xs' do
+              span.glyphicon.glyphicon-copy
+            => link_to lesson, class: 'delete-lesson btn btn-danger btn-xs' do
+              span.glyphicon.glyphicon-trash
+
           p.subject
             => link_to lesson.subject.name, edit_lesson_url(lesson), class: 'edit-lesson'
-            = link_to lesson, class: 'delete-lesson btn btn-danger btn-xs pull-right' do
-              span.glyphicon.glyphicon-trash
           p.teacher = lesson.teacher_name
           p.room = lesson.room.name if lesson.room_id.present?
           p.comments = lesson.comments

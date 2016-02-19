@@ -1,7 +1,7 @@
 class LessonsController < ApplicationController
   before_action :authenticate_login!
   after_action :verify_authorized
-  before_action :set_lesson, only: [:update, :edit, :destroy]
+  before_action :set_lesson, only: [:copy, :update, :edit, :destroy]
   before_action :set_time_table, only: [:new, :create]
 
   layout false
@@ -10,6 +10,12 @@ class LessonsController < ApplicationController
     lesson = params.permit :time_block_id, :weekday
     @lesson = @time_table.lessons.build lesson
     authorize @lesson
+  end
+
+  def copy
+    @time_table = @lesson.time_table
+    @lesson = @time_table.lessons.build @lesson.attributes
+    render :new
   end
 
   def create

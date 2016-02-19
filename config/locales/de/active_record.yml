@@ -121,6 +121,7 @@ de:
         room: Raum
         start_time: Start
         end_time: Ende
+        weekday: Wochentag
       person:
         as_admin: Admin
         as_candidate: Bewerber(in)

@@ -5,7 +5,7 @@ class Lesson < ActiveRecord::Base
   belongs_to :room
   belongs_to :time_block, required: true
 
-  validates :weekday, presence: true
+  validates :weekday, presence: true, uniqueness: { scope: %i(time_table_id time_block_id) }
 
   def empty?
     teacher_id.blank? or subject_id.blank?
