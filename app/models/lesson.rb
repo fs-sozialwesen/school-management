@@ -1,9 +1,11 @@
 class Lesson < ActiveRecord::Base
-  belongs_to :time_table, inverse_of: :lessons
-  belongs_to :teacher
-  belongs_to :subject
+  belongs_to :time_table, inverse_of: :lessons, required: true
+  belongs_to :teacher, required: true
+  belongs_to :subject, required: true
   belongs_to :room
-  belongs_to :time_block
+  belongs_to :time_block, required: true
+
+  validates :weekday, presence: true
 
   def empty?
     teacher_id.blank? or subject_id.blank?

@@ -1,0 +1,22 @@
+- lessons_by_time_block = time_table.lessons.group_by(&:time_block)
+- time_blocks.each do |time_block|
+  tr
+    th = time_block.name
+    - time_block_lessons = lessons_by_time_block[time_block] || []
+    - 1.upto(5) do |weekday|
+      - options = { time_block_id: time_block.id, weekday: weekday }
+      - lesson = time_block_lessons.find { |lesson| lesson.weekday == weekday }
+      td
+        - if lesson
+          p.subject
+            => link_to lesson.subject.name, edit_lesson_url(lesson), class: 'edit-lesson'
+            = link_to lesson, class: 'delete-lesson btn btn-danger btn-xs pull-right' do
+              span.glyphicon.glyphicon-trash
+          p.teacher = lesson.teacher_name
+          p.room = lesson.room.name if lesson.room_id.present?
+          p.comments = lesson.comments
+
+        - else
+          p
+            a.add-lesson.btn.btn-default.btn-xs href=new_time_table_lesson_path(time_table, options)
+              span.glyphicon.glyphicon-plus

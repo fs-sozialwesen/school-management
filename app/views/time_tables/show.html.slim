@@ -30,22 +30,7 @@
         th.day Donnerstag
         th.day Freitag
     tbody
-      - lessons_by_time_block = @time_table.lessons.group_by(&:time_block)
-      - @time_blocks.each do |time_block|
-        tr
-          th = time_block.name
-          - time_block_lessons = lessons_by_time_block[time_block] || []
-          - lessons_by_weekday = time_block_lessons.group_by(&:weekday)
-          - 1.upto(5) do |weekday|
-            - lessons = lessons_by_weekday[weekday] || []
-            - lessons.reject!(&:empty?)
-            td class=('danger' if lessons.size > 1)
-              - lessons.each do |lesson|
-                - options = { time_block_id: lesson.time_block_id, weekday: lesson.weekday }
-                p.subject = link_to lesson.subject.name, edit_time_table_path(@time_table, options)
-                p.teacher = lesson.teacher_name
-                p.room = lesson.room.name if lesson.room_id.present?
-                p.comments = lesson.comments
+      = render 'table_body', time_table: @time_table, time_blocks: @time_blocks
 
 - if @time_table.comments.present?
   .row
@@ -54,3 +39,20 @@
         label Bemerkungen:
         br
         = @time_table.comments
+
+#lessonModal.modal.fade tabindex="-1"
+  .modal-dialog role="document"
+    .modal-content
+      .modal-header
+        button.close aria-label="Close" data-dismiss="modal" type="button"
+          span aria-hidden="true"  &times;
+        h4.modal-title Neue Stunde
+      .modal-body
+
+      .modal-footer
+        button.btn.btn-default data-dismiss="modal" type="button" = t(:cancel)
+        button.btn.btn-primary type="submit" = t(:save)
+
+coffee:
+  $ ->
+    window.timeTable = new TimeTable('table.time-table', '#lessonModal')

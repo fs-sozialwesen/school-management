@@ -17,13 +17,6 @@ class TimeTablesController < ApplicationController
   def create
     authorize TimeTable
     @time_table = @course.time_tables.build time_table_params
-    # @time_table = TimeTable.new time_table_params
-
-    TimeBlock.all.each do |time_block|
-      1.upto(5).each do |weekday|
-        @time_table.lessons.build time_block: time_block, weekday: weekday
-      end
-    end
 
     if @time_table.save
       redirect_to @time_table, notice: t(:created, model: TimeTable.model_name.human)
@@ -76,8 +69,6 @@ class TimeTablesController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def time_table_params
-    params.require(:time_table).permit(:course_id, :start_date, :comments, lessons_attributes:
-      %i(id weekday time_block_id teacher_id subject_id room_id comments )
-    )
+    params.require(:time_table).permit(:start_date, :comments)
   end
 end

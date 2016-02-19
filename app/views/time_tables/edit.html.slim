@@ -15,23 +15,6 @@
         span.sr-only Close
       h4 = t('.error')
 
-  .table-responsive
-    table.table.table-striped.table-hover
-      thead
-        tr
-          th Zeit
-          th Montag
-          th Dienstag
-          th Mittwoch
-          th Donnerstag
-          th Freitag
-      tbody
-        - @time_blocks.each do |time_block|
-          tr
-            th = time_block.name
-            - 1.upto(5) do |weekday|
-              td class=["time-block-#{time_block.id}", "weekday-#{weekday}"]
-
   .row: .col-md-8 = f.input :comments
 
   .row.action-buttons
@@ -39,32 +22,3 @@
       .pull-right
         => link_to t(:cancel), 'javascript: window.history.back();', class: 'btn btn-default'
         = f.submit t(:save), class: 'btn btn-primary'
-
-  .lessons data={ focus: { time_block_id: params[:time_block_id], weekday: params[:weekday] } }
-    = f.simple_fields_for :lessons do |lessons_form|
-      - lesson = lessons_form.object
-      .lesson data={ time_block_id: lesson.time_block_id, weekday: lesson.weekday }
-        = lessons_form.input :time_block_id, as: :hidden
-        = lessons_form.input :weekday, as: :hidden
-        = lessons_form.input :subject_id, collection: @subjects, label: false, prompt: ''
-        = lessons_form.input :teacher_id, collection: @teachers, label: false, prompt: ''
-        = lessons_form.input :room_id,    collection: @rooms,    label: false, prompt: ''
-        = lessons_form.input :comments, label: false
-
-coffee:
-  $ ->
-    $('.lessons .lesson').each (index, lesson) =>
-      lesson = $(lesson)
-      td = $("td.time-block-" + lesson.data('timeBlockId') + '.weekday-' + lesson.data('weekday'))
-      $(lesson).appendTo(td)
-
-    focusWeekday = $('.lessons').data('focusWeekday')
-    focusTimeBlock = $('.lessons').data('focusTimeBlockId')
-    $("td.time-block-" + focusTimeBlock + '.weekday-' + focusWeekday + ' select').first().focus()
-sass:
-  hr
-    margin: 10px 0 5px
-  .form-group
-    margin-bottom: 0
-    select, input
-      border: 0 !important
