@@ -19,5 +19,4 @@
 // require bootstrap-sprockets
 //= require bootstrap-datepicker
 //= require select2
-//= require time_tables
 //= require_tree .
