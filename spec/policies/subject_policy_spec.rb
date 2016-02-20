@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Timetable::SubjectPolicy do
+describe SubjectPolicy do
 
   let(:user) { User.new }
 

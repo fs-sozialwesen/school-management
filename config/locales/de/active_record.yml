@@ -115,7 +115,7 @@ de:
         person: Ansprechpartner
         positions_count: Anzahl Plätze
       lesson:
-        timetable: Stundenplan
+        time_table: Stundenplan
         teacher: Lehrer
         subject: Fach
         room: Raum

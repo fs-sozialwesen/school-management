@@ -56,9 +56,6 @@ de:
         password: Neues Passwort
         password_confirmation: Neues Passwort wiederholen
         current_password: aktuelles Passwort
-      timetable:
-        time_block:
-          start_time: Beginn
     hints:
       user:
         username: 'User name to sign in.'
