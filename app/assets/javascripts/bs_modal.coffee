@@ -2,9 +2,6 @@ class window.Modal
   constructor: (selector) ->
     @elem = $(selector)
 
-    @footer().find('button.btn-primary').click =>
-      @body().find('form').submit()
-
   on: (event, func)  => @elem.on event, func
   onShow: (func)     => @elem.on 'show.bs.modal', func
   setTitle: (title)  => @title().html title

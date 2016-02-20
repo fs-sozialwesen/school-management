@@ -8,6 +8,8 @@ class window.TimeTable
     @modal.on 'ajax:success', (event, data) => @updateTimeTable(data)
     @modal.on 'ajax:error',   (_, xhr)      => @modal.setBody(xhr.responseText)
     @setClickEvents()
+    @modal.footer().find('button.btn-primary').click =>
+      @modal.body().find('form').submit()
 
   setClickEvents: =>
     @table.find('a.add-lesson, a.edit-lesson, a.copy-lesson').click @modalLinkClicked
@@ -17,6 +19,7 @@ class window.TimeTable
     event.preventDefault()
     link = $(event.currentTarget)
     url = link.attr('href')
+    @modal.setTitle link.attr('title')
     $.get url, (data) => @modal.setBody(data)
     @modal.show()
 

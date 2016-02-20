@@ -158,6 +158,11 @@ de:
     toggle:
       activated: Stundenplan veröffentlicht.
       deactivated: Stundenplan deaktiviert.
+    table_body:
+      copy_title: "Stunde kopieren"
+      delete_title: "Stunde löschen"
+      edit_title: "Stunde bearbeiten"
+      new_title: "Neue Stunde"
   timetables:
       title_course_html: Stundenplan für Klasse %{course}
       title_teacher_html: Stundenplan für %{teacher}

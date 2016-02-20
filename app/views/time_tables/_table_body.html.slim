@@ -9,18 +9,26 @@
       td
         - if lesson
           .buttons.pull-right
-            => link_to copy_lesson_path(lesson), class: 'copy-lesson btn btn-default btn-xs' do
+            => link_to copy_lesson_path(lesson),
+                title: t('.copy_title'),
+                class: 'copy-lesson btn btn-default btn-xs' do
               span.glyphicon.glyphicon-copy
-            => link_to lesson, class: 'delete-lesson btn btn-danger btn-xs' do
+            => link_to lesson,
+                title: t('.delete_title'),
+                class: 'delete-lesson btn btn-danger btn-xs' do
               span.glyphicon.glyphicon-trash
 
           p.subject
-            => link_to lesson.subject.name, edit_lesson_url(lesson), class: 'edit-lesson'
+            => link_to lesson.subject.name, edit_lesson_url(lesson),
+                title: t('.edit_title'),
+                class: 'edit-lesson'
           p.teacher = lesson.teacher_name
           p.room = lesson.room.name if lesson.room_id.present?
           p.comments = lesson.comments
 
         - else
           p
-            a.add-lesson.btn.btn-default.btn-xs href=new_time_table_lesson_path(time_table, options)
+            a.add-lesson.btn.btn-default.btn-xs[
+              title=t('.new_title')
+              href=new_time_table_lesson_path(time_table, options)]
               span.glyphicon.glyphicon-plus
