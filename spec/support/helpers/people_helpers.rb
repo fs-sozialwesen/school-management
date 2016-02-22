@@ -22,10 +22,12 @@ module Features
     def create_teacher(attributes)
       create_person 'Lehrer', attributes
     end
+    alias :given_teacher :create_teacher
 
     def create_manager(attributes)
       create_person 'Manager', attributes
     end
+    alias :given_manager :create_manager
 
     def create_student(attributes)
       course = attributes.delete :Klasse
@@ -33,6 +35,7 @@ module Features
         select course, from: 'person[as_student_attributes][course_id]'
       end
     end
+    alias :given_student :create_student
 
     def create_candidate(attributes)
       click_on 'Bewerber'
