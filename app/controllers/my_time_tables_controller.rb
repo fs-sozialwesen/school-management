@@ -5,6 +5,7 @@ class MyTimeTablesController < ApplicationController
   def index
     authorize TimeTable
     @time_table = policy_scope(TimeTable).find_by(start_date: Date.current.beginning_of_week)
+    @time_table = policy_scope(TimeTable).last unless @time_table
     redirect_to my_time_table_url(@time_table)
   end
 
