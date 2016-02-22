@@ -43,6 +43,8 @@ de:
       updated: "Deine Daten wurden aktualisiert."
       edit:
         title: Passwort ändern
+        new_password: Neues Passwort
+        new_password_confirmation: Neues Passwort wiederholen
     sessions:
       new:
         sign_in: Anmelden

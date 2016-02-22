@@ -4,6 +4,6 @@
     = devise_error_messages!
 
     = f.input :current_password
-    = f.input :password
-    = f.input :password_confirmation
+    = f.input :password, label: t('.new_password')
+    = f.input :password_confirmation, label: t('.new_password_confirmation')
     = f.submit 'Ändern', class: 'button right'
