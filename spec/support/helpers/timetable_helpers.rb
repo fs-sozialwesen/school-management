@@ -2,6 +2,7 @@ module Features
   module TimetableHelpers
 
     def create_room(name, comments = nil)
+      click_on 'Verwaltung'
       click_on 'Räume'
       click_on 'Neu'
       fill_in :Name, with: name
@@ -12,6 +13,7 @@ module Features
     alias :given_room :create_room
 
     def create_subject(name, comments = nil)
+      click_on 'Verwaltung'
       click_on 'Fächer'
       click_on 'Neu'
       fill_in :Name, with: name
@@ -22,6 +24,7 @@ module Features
     alias :given_subject :create_subject
 
     def create_time_block(start_time, end_time)
+      click_on 'Verwaltung'
       click_on 'Zeitblöcke'
       click_on 'Neu'
       fill_in :Beginn, with: start_time

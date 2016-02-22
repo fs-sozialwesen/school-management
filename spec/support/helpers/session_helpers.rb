@@ -9,6 +9,7 @@ module Features
     end
 
     def sign_out
+      click_on @current_user.name, match: :first
       click_on 'Abmelden'
     end
 
@@ -16,12 +17,14 @@ module Features
       @current_user = manager = FactoryGirl.create(:person)
       manager.create_as_manager!
       sign_in(manager.login.email, '12341234')
+      manager
     end
 
     def sign_in_as_student
       @current_user = student = FactoryGirl.create(:person)
       student.create_as_student!
       sign_in(student.login.email, '12341234')
+      student
     end
 
     # def signin_login(login)

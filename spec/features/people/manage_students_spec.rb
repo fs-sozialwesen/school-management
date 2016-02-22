@@ -115,12 +115,10 @@ feature 'Manage students', :devise do
   end
 
   scenario 'activate and deactivate logins' do
-    sign_in_as_student
-    student = @current_user
+    student = sign_in_as_student
     sign_out
 
-    sign_in_as_manager
-    manager = @current_user
+    manager = sign_in_as_manager
     click_on 'Auszubildende'
     click_on 'ohne Klasse'
     click_row_with student.first_name
