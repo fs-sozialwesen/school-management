@@ -1,0 +1,25 @@
+= simple_form_for(@organisation, html: { role: "form" }, defaults: { required: false, include_blank: false }) do |f|
+  - if @organisation.errors.any?
+    .alert.alert-danger.alert-dismissable@alert
+      button.close type="button" data-dismiss="alert"
+        span aria-hidden="true" &times;
+        span.sr-only Close
+      h4 = t('.error')
+
+  .row
+    .col-md-6
+      .panel.panel-default
+        .panel-heading = Organisation.model_name.human
+        .panel-body
+          = f.input :name, required: true
+          = f.input :comments
+
+  .row
+    .col-md-6 = render 'serializers/form/contact', f: f
+    .col-md-6 = render 'serializers/form/address', f: f
+
+  .row.action-buttons
+    .col-md-6
+      .pull-right
+        => link_to t(:cancel), 'javascript: window.history.back();', class: 'btn btn-default'
+        = f.submit t(:save), class: 'btn btn-primary'

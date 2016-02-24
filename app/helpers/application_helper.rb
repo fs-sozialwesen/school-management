@@ -45,6 +45,11 @@ module ApplicationHelper
     content_tag(:div, class: 'panel-heading') { content_tag(:div, title, class: 'panel-title') }
   end
 
+  def link_to_email(address)
+    return '' if address.blank?
+    link_to address, "mailto:#{address}"
+  end
+
   private
 
   def simple_menu_item_for(model)

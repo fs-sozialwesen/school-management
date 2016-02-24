@@ -20,8 +20,6 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :internship_positions
-  
   resources :candidates do
     member do
       # patch :init
@@ -35,5 +33,8 @@ Rails.application.routes.draw do
   resources :time_blocks
   resources :subjects
   resources :rooms
+
+  resources :organisations
+  resources :internship_positions
 
 end

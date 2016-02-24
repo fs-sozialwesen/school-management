@@ -1,0 +1,26 @@
+.page-header
+  = link_to organisations_path(format: :csv), id: 'export-csv-button', class: 'btn btn-default' do
+    span.glyphicon.glyphicon-export
+    =< t(:export)
+  = link_to new_organisation_path, class: 'btn btn-primary' do 
+    span.glyphicon.glyphicon-plus
+    =< t(:new)
+  h1
+    => @organisations.count
+    = Organisation.model_name.human count: @organisations.count
+
+.table-responsive
+  table.table.table-striped.table-bordered.table-hover.table-clickable
+    thead
+      tr
+        th = Organisation.human_attribute_name(:name)
+        th Ansprechpartner
+        th E-Mail
+        th Telefon
+    tbody
+      - @organisations.each do | organisation |
+        tr data = {url: url_for(organisation)}
+          td = organisation.name
+          td = organisation.contact.person
+          td = link_to_email organisation.contact.email
+          td = organisation.contact.phone

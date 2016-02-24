@@ -54,6 +54,17 @@ de:
       error: Praktikumsplatz konnte nicht gespeichert werden.
     show:
       confirm_delete: Wirklich löschen?
+  organisations:
+    create:
+      success: Organisation gespeichert.
+    update:
+      success: Organisation gespeichert.
+    destroy:
+      success: Organisation gelöscht.
+    form:
+      error: Organisation konnte nicht gespeichert werden.
+    show:
+      confirm_delete: Wirklich löschen?
   layouts:
     navigation:
       candidates: Bewerber

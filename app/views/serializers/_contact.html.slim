@@ -11,3 +11,7 @@
   p
     label> Fax
     = contact.fax
+  p
+    label> Homepage
+    - if contact.homepage.present?
+      = link_to contact.homepage

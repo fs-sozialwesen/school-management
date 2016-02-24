@@ -1,0 +1,42 @@
+.page-header
+  = link_to organisations_path, class: 'btn btn-default' do 
+    span.glyphicon.glyphicon-list-alt
+    =< t(:list)
+  = link_to edit_organisation_path(@organisation), class: 'btn btn-primary' do
+    span.glyphicon.glyphicon-pencil
+    =< t(:edit)
+  => link_to @organisation, method: :delete, data: { confirm: t(:confirm_delete, model: Organisation.model_name.human) }, class: 'btn btn-danger' do
+    span.glyphicon.glyphicon-remove
+    =< t(:delete)
+  h1
+    small => Organisation.model_name.human
+    = @organisation.name
+
+.row
+  .col-md-6
+    .panel.panel-default
+      .panel-heading = Organisation.model_name.human
+      .panel-body
+        p
+          label => Organisation.human_attribute_name(:name)
+          = @organisation.name
+        /p
+          label> Träger
+          = @organisation.carrier.name if @organisation.carrier.present?
+        p
+          label> Bemerkungen
+          = @organisation.comments
+    = render @organisation.address
+    = render @organisation.contact
+
+  .col-md-6
+    .panel.panel-default
+      .panel-heading Einrichtungen
+      table.table.table-condensed.table-striped.table-hover.table-clickable
+        /thead
+          th Name
+        tbody
+          - @organisation.internship_positions.each do |internship_position|
+            tr data={ url: url_for(internship_position) }
+              td = internship_position.name
+
