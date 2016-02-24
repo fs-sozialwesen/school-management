@@ -377,7 +377,7 @@ PLATFORMS
 
 DEPENDENCIES
   acts-as-taggable-on (~> 3.4)
-  axlsx_rails (~> 0.1.5)
+  axlsx_rails (= 0.1.5)
   better_errors
   bootstrap-datepicker-rails
   bootstrap-generators (~> 3.3.4)
