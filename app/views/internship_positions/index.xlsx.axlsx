@@ -1,0 +1,43 @@
+response.headers['Content-Disposition'] = %Q(attachment; filename="praktikumsplätze-#{Time.now}.xlsx")
+
+wb = xlsx_package.workbook
+wb.add_worksheet(name: "Buttons") do |sheet|
+  sheet.add_row %w(Einrichtung Träger
+              Straße PLZ Ort
+              Ansprechpartner E-Mail Telefon Fax Mobil Homepage
+              Unterkunft Kosten
+              Bew_Tel Bew_Post Bew_Email Bew_Dokumente
+              )
+  @internship_positions.each do | internship_position |
+
+    address = internship_position.address
+    contact = internship_position.contact
+    housing = internship_position.housing
+    applying = internship_position.applying
+
+    sheet.add_row [
+      internship_position.name,
+      internship_position.organisation.name,
+      # internship_position.description.to_s.gsub("\n", ' '),
+
+      address.street,
+      address.zip.to_s,
+      address.city,
+
+      contact.person,
+      contact.email,
+      contact.phone.to_s,
+      contact.fax.to_s,
+      contact.mobile.to_s,
+      contact.homepage,
+
+      (housing.provided ? 'ja' : ''),
+      housing.costs,
+
+      (applying.by_phone ? 'ja' : ''),
+      (applying.by_mail ? 'ja' : ''),
+      (applying.by_email ? 'ja' : ''),
+      applying.documents,
+    ], types: :string
+  end
+end

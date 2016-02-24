@@ -14,7 +14,7 @@ class InternshipPositionsController < ApplicationController
         @work_areas = Enum.work_areas
         # @education_subjects   = EducationSubject.all
       end
-      format.csv { }
+      format.xlsx
     end
   end
 
