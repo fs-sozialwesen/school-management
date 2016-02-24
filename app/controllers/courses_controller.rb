@@ -31,7 +31,7 @@ class CoursesController < ApplicationController
     authorize @course
 
     if @course.save
-      redirect_to @course, notice: t('.success')
+      redirect_to @course, notice: t(:created, model: Course.model_name.human)
     else
       render :new
     end
@@ -39,7 +39,7 @@ class CoursesController < ApplicationController
 
   def update
     if @course.update(course_params)
-      redirect_to @course, notice: t('.success')
+      redirect_to @course, notice: t(:updated, model: Course.model_name.human)
     else
       render :edit
     end
@@ -58,7 +58,7 @@ class CoursesController < ApplicationController
       messages = errors.map { |l| "#{l.person.name}: #{l.errors.full_messages.join('. ')}" }
       redirect_to @course, alert: t('.error', messages: messages.join(' '))
     else
-      redirect_to @course, notice: t('.success')
+      redirect_to @course, notice: t(:success, model: Course.model_name.human)
     end
   end
 

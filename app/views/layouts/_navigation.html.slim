@@ -14,36 +14,31 @@
       #navbar.collapse.navbar-collapse
 
         ul.nav.navbar-nav
-          - if policy(Course).index?
-            li class = ('active' if params[:controller] == 'courses')
-              = link_to 'Klassen', courses_url
-          - if policy(Person).managers?
-            li class = ('active' if (@person && @person.manager?) or params[:action] == 'managers' )
-              = link_to 'Manager', managers_people_url
-          - if policy(Person).teachers?
-            li class = ('active' if (@person && @person.teacher?) or params[:action] == 'teachers' )
-              = link_to 'Lehrer', teachers_people_url
-          - if policy(Person).students?
-            li class = ('active' if (@person && @person.student?) or params[:action] == 'students' )
-              = link_to 'Auszubildende', students_people_url
-          - if policy(Candidate).index?
-            li class = ('active' if params[:controller] == 'candidates')
-              = link_to 'Bewerber', candidates_url
-          - if policy(InternshipPosition).index?
-            li class = ('active' if params[:controller] == 'internship_positions')
-              = link_to 'Praktikumsplätze', internship_positions_url
-          /  li = link_to 'Stundenpläne', '#'
-          /- if current_user.student? or current_user.teacher?
-          /  li = link_to  t(:timetable), timetables_path
-          /- if policy(Person).index?
-            li class = ('active' if params[:controller] == 'people')
-              = link_to 'Personenverzeichnis', people_url
+          = menu_item_for Course
+          = menu_item_for :managers
+          = menu_item_for :teachers
+          = menu_item_for :students
+          = menu_item_for Candidate
+          = menu_item_for InternshipPosition
+          - if current_user.student? and policy_scope(TimeTable).any?
+            li class=('active' if params[:controller] == 'my_time_tables')
+              = link_to 'Stundenplan', my_time_tables_url
+          - if current_user.teacher? and current_user.as_teacher.time_table_dates.any?
+            li class=('active' if params[:controller] == 'teacher_time_tables')
+              = link_to 'Stundenplan', teacher_time_tables_url
 
         ul.nav.navbar-nav.navbar-right
+          - if current_user.manager?
+            li.dropdown
+              a.dropdown-toggle@button href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                |  Verwaltung <span class="caret"></span>
+              ul.dropdown-menu
+                = menu_item_for Room
+                = menu_item_for Subject
+                = menu_item_for TimeBlock
           li.dropdown
-            a.dropdown-toggle href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
-              => current_user.name
-              span.caret
+            a.dropdown-toggle@button href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+              |  #{current_user.name} <span class="caret"></span>
             ul.dropdown-menu
               /li = link_to 'Profil', current_user, title: current_user.name
               li = link_to 'Passwort ändern', edit_login_registration_url(current_user.login)

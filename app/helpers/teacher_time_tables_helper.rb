@@ -1,0 +1,2 @@
+module TeacherTimeTablesHelper
+end

@@ -1,0 +1,24 @@
+.page-header
+  h1
+    small => TimeTable.model_name.human
+    => @time_table.course.name
+    small
+      => l @time_table.start_date, format: :wday_short
+      | -
+      =< l @time_table.end_date, format: :wday_short
+
+= simple_form_for(@time_table, html: { role: "form" }, defaults: { required: false }) do |f|
+  - if @time_table.errors.any?
+    .alert.alert-danger.alert-dismissable@alert
+      button.close type="button" data-dismiss="alert"
+        span aria-hidden="true" &times;
+        span.sr-only Close
+      h4 = t('.error')
+
+  .row: .col-md-8 = f.input :comments
+
+  .row.action-buttons
+    .col-md-12
+      .pull-right
+        => link_to t(:cancel), 'javascript: window.history.back();', class: 'btn btn-default'
+        = f.submit t(:save), class: 'btn btn-primary'

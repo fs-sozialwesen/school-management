@@ -38,6 +38,10 @@ class Person < ActiveRecord::Base
     send "as_#{role}"
   end
 
+  def roles
+    AS_ROLES.map { |role| send role }.compact
+  end
+
   # def employee?
   #   manager? or teacher?
   # end

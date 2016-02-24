@@ -1,16 +1,24 @@
 .page-header
   = link_to <%= index_helper %>_path, class: 'btn btn-default' do 
     span.glyphicon.glyphicon-list-alt
-    |  Back 
-  = link_to edit_<%= singular_table_name %>_path(@<%= singular_table_name %>), class: 'btn btn-primary' do 
+    =< t(:list)
+  = link_to edit_<%= singular_table_name %>_path(@<%= file_name %>), class: 'btn btn-primary' do
     span.glyphicon.glyphicon-pencil
-    |  Edit 
+    =< t(:edit)
+  => link_to @<%= file_name %>, method: :delete, data: { confirm: t(:confirm_delete, model: <%= class_name %>.model_name.human) }, class: 'btn btn-danger' do
+    span.glyphicon.glyphicon-remove
+    =< t(:delete)
   h1
-    | Show <%= singular_table_name %>
-dl.dl-horizontal
+    small => <%= class_name %>.model_name.human
+    = @<%= file_name %>.name
+
+.row
+  .col-md-6
+    .panel.panel-default
+      .panel-heading = <%= class_name %>.model_name.human
+      .panel-body
 <%- for attribute in attributes -%>
-  dt
-    | <%= attribute.human_name %>:
-  dd
-    = @<%= singular_table_name %>.<%= attribute.name %>
+        p
+          label => <%= class_name %>.human_attribute_name(:<%= attribute.name %>)
+          = @<%= file_name %>.<%= attribute.name %>
 <%- end -%>

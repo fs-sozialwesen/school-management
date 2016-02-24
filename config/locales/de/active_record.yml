@@ -28,6 +28,7 @@ de:
     phone:                Telefon
     school:               Schule
     start_date:           Beginn
+    start_time:           Beginn
     street:               Straße/Nr
     student:              Auszubildende(r)
     students:             Auszubildende
@@ -43,53 +44,53 @@ de:
         one: Vertrag
         other: Verträge
       course:
-        one: Klasse
+        one:   Klasse
         other: Klassen
       education_subject:
-        one:    Fachrichtung
-        other:  Fachrichtungen
+        one:   Fachrichtung
+        other: Fachrichtungen
       enum:
         one:   Aufzählung
         other: Aufzählungen
       internship:
-        one:    Praktikum
-        other:  Praktika
+        one:   Praktikum
+        other: Praktika
       internship_position:
-        one:    Praktikumsplatz
-        other:  Praktikumsplätze
+        one:   Praktikumsplatz
+        other: Praktikumsplätze
       legacy_datum: Importierte Daten
       lesson:
-        one: Stunde
+        one:   Stunde
         other: Stunden
       organisation:
-        one: Organisation
+        one:   Organisation
         other: Organisationen
       person:
-        one: Person
+        one:   Person
         other: Personenverzeichnis
       admin:
-        one: Administrator
+        one:   Administrator
         other: Administratoren
       candidate:
-        one: Bewerber(in)
+        one:   Bewerber(in)
         other: Bewerber
       manager: Manager
       mentor: Praxisanleiter
       student:
-        one:    Auszubildende(r)
-        other:  Auszubildende
-      teacher:  Lehrer
+        one:   Auszubildende(r)
+        other: Auszubildende
+      teacher: Lehrer
       room:
-        one: Raum
+        one:   Raum
         other: Räume
       subject:
-        one: Fach
+        one:   Fach
         other: Fächer
       time_block:
-        one: Zeitblock
+        one:   Zeitblock
         other: Zeitblöcke
-      timetable:
-        one: Stundenplan
+      time_table:
+        one:   Stundenplan
         other: Stundenpläne
     attributes:
       course:
@@ -114,12 +115,13 @@ de:
         person: Ansprechpartner
         positions_count: Anzahl Plätze
       lesson:
-        timetable: Stundenplan
+        time_table: Stundenplan
         teacher: Lehrer
         subject: Fach
         room: Raum
         start_time: Start
         end_time: Ende
+        weekday: Wochentag
       person:
         as_admin: Admin
         as_candidate: Bewerber(in)
@@ -154,8 +156,10 @@ de:
       teacher:
         courses: Klassenlehrer von
       time_block:
-        name: Zeit
-        position: Block
+        start_time: Beginn
+        end_time: Ende
+      time_table:
+        activated_at: Veröffentlicht am
       login:
         login: "Handle"
         email: E-Mail
@@ -172,3 +176,9 @@ de:
         confirmed_at: Bestätigt am
         confirmation_sent_at: Bestätigung gesendet am
         unconfirmed_email: Unbestätigte Email
+    errors:
+      models:
+        time_table:
+          attributes:
+            start_date:
+              no_monday: muss ein Montag sein

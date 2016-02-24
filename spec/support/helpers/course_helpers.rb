@@ -15,5 +15,6 @@ module Features
       attributes.values.each { |value| expect(page).to have_content value }
       click_on 'Liste'
     end
+    alias :given_course :create_course
   end
 end

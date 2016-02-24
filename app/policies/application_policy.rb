@@ -42,9 +42,9 @@ class ApplicationPolicy
     user.manager?
   end
 
-  # def teacher?
-  #   user.teacher?
-  # end
+  def teacher?
+    user.teacher?
+  end
 
   # def employee?
   #   user.employee?
@@ -52,6 +52,18 @@ class ApplicationPolicy
 
   def student?
     user.student?
+  end
+
+  def manager
+    manager? && user.as_manager
+  end
+
+  def teacher
+    teacher? && user.as_teacher
+  end
+
+  def student
+    student? && user.as_student
   end
 
   class Scope
