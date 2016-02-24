@@ -1,20 +1,37 @@
 .page-header
+  - if policy(@internship_position).destroy?
+    = link_to @internship_position, method: :delete, data: { confirm: t('.confirm_delete') }, class: 'btn btn-danger' do
+      span.glyphicon.glyphicon-remove
+      |  Löschen
+  - if policy(@internship_position).update?
+    = link_to edit_internship_position_path(@internship_position), class: 'btn btn-primary' do
+      span.glyphicon.glyphicon-pencil
+      |  Bearbeiten
   h1
     - homepage = @internship_position.contact.homepage
-    = link_to_if homepage.present?, @internship_position.name, homepage, target: '_blank'
+    - if homepage.present?
+      = link_to homepage, target: '_blank', title: homepage do
+        => @internship_position.name
+        small: span.glyphicon.glyphicon-new-window
+    - else
+      => @internship_position.name
     br
     small
       - homepage = @internship_position.organisation.contact.homepage
-      = link_to_if homepage.present?, @internship_position.organisation.name, homepage, target: '_blank'
+      - if homepage.present?
+        = link_to homepage, target: '_blank', title: homepage do
+          => @internship_position.organisation.name
+          small: span.glyphicon.glyphicon-new-window
+      - else
+        => @internship_position.organisation.name
+
 - if @internship_position.description.present?
-  .row
-    .col-md-12
-      .panel.panel-default
-        .panel-body = @internship_position.description
+  .panel.panel-default
+    .panel-body = @internship_position.description.gsub("\n", '<br>').html_safe
 .row
   .col-md-6 = render 'applying', applying: @internship_position.applying
-  .col-md-6 = render 'address',  address:  @internship_position.address
+  .col-md-6 = render 'housing',  housing:  @internship_position.housing
 .row
   .col-md-6 = render 'contact',  contact:  @internship_position.contact
-  .col-md-6 = render 'housing',  housing:  @internship_position.housing
+  .col-md-6 = render 'address',  address:  @internship_position.address
 

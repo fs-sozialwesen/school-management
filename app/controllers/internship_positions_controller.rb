@@ -3,10 +3,10 @@ class InternshipPositionsController < ApplicationController
   before_action :authenticate_login!
   after_action :verify_authorized
   before_action :process_filter_params, only: :index
+  before_action :set_internship_position, only: [:show, :edit, :update, :destroy]
+  before_action :authorize_internship_position
 
   def index
-    authorize InternshipPosition
-
     @internship_positions = filter(internship_positions)
     @cities               = @internship_positions.all.map { |ip| ip.address.city }.compact.uniq.sort
     @work_areas           = Enum.work_areas
@@ -14,11 +14,48 @@ class InternshipPositionsController < ApplicationController
   end
 
   def show
-    @internship_position = InternshipPosition.find params[:id]
-    authorize @internship_position
+  end
+
+  def new
+    @internship_position = InternshipPosition.new
+  end
+
+  def create
+    @internship_position = InternshipPosition.new internship_position_params
+    if @internship_position.save
+      redirect_to @internship_position, notice: t('.success')
+    else
+      render :edit
+    end
+  end
+
+  def edit
+  end
+
+  def update
+    if @internship_position.update(internship_position_params)
+      redirect_to @internship_position, notice: t('.success')
+    else
+      render :edit
+    end
+  end
+
+  def destroy
+    @internship_position.destroy
+    redirect_to InternshipPosition, notice: t('.success')
   end
 
   private
+
+  def internship_position_params
+    params.require(:internship_position).permit(
+      :name, :organisation_id, :description,
+      applying: %i(by_phone by_mail by_email documents),
+      housing: %i(provided costs),
+      contact: %i(email phone fax mobile homepage),
+      address: %i(street zip city)
+    )
+  end
 
   def process_filter_params
     # filter_params = %i(education_subject_id city housing applying_by work_area)
@@ -27,6 +64,15 @@ class InternshipPositionsController < ApplicationController
     # @education_subject_id = params[:education_subject_id]
     @city                 = params[:city]
     @work_area            = params[:work_area]
+  end
+
+  def set_internship_position
+    @internship_position = InternshipPosition.find params[:id]
+    # authorize @internship_position
+  end
+
+  def authorize_internship_position
+    authorize(@internship_position || InternshipPosition)
   end
 
   def housing

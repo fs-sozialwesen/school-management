@@ -30,6 +30,17 @@ de:
       success: Logins für alle Auszubildenden dieser Klasse erstellt.
     form:
       error: Klasse konnte nicht gespeichert werden.
+  internship_positions:
+    create:
+      success: Praktikumsplatz gespeichert.
+    update:
+      success: Praktikumsplatz gespeichert.
+    destroy:
+      success: Praktikumsplatz gelöscht.
+    form:
+      error: Praktikumsplatz konnte nicht gespeichert werden.
+    show:
+      confirm_delete: Wirklich löschen?
   login_mailer:
     create_password_email:
       subject: Passwort zu deinem Account
@@ -118,9 +129,4 @@ de:
       title_teacher_html: Stundenplan für %{teacher}
       title_room_html: "Raumplan: <strong>%{room}</strong>"
   student_cant_have_other_roles: "Ein Auszubildender kann keine weiteren Rollen haben."
-  internship_positions:
-    internship_position:
-      by_mail: Post
-      by_email: E-Mail
-      by_phone: Telefon
   people_index: "Personenverzeichnis"

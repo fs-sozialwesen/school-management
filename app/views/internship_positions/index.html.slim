@@ -1,8 +1,14 @@
+.page-header
+  - if policy(InternshipPosition).create?
+    = link_to new_internship_position_path, class: 'btn btn-primary' do
+      span.glyphicon.glyphicon-plus
+      |  Neu
+  /= link_to courses_path(format: :csv), id: 'export-csv-button', class: 'btn btn-default' do
+    span.glyphicon.glyphicon-export
+    |  Exportieren
+  h1 #{@internship_positions.count} Praktikumsplätze
+
 .internship-positions
   .row
     .col-md-3 = render 'search_form'
-    .col-md-9
-      h3
-        => @internship_positions.size
-        'Praktikumsplätze gefunden
-      = render @internship_positions
+    .col-md-9 = render @internship_positions

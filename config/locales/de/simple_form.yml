@@ -11,6 +11,22 @@ de:
     error_notification:
       default_message: "Bitte überprüfen Sie folgende Fehler:"
     labels:
+      address:
+        city: Ort
+        street: Straße/Nr
+        zip: PLZ
+      contact:
+        email: E-Mail-Adresse
+        mobile: Mobiltelefon
+        phone: Telefon
+      applying:
+        by_phone: per Telefon
+        by_mail: per Post
+        by_email: per E-Mail
+        documents: Erforderliche Dokumente
+      housing:
+        provided: Verfügbar
+        costs: Kosten
       candidate:
         date: Eingangsdatum
         education_subject: Fachrichtung
@@ -39,14 +55,6 @@ de:
           result: Ergebnis
           reason: Begründung
       person:
-        address:
-          city: Ort
-          street: Straße/Nr
-          zip: PLZ
-        contact:
-          email: E-Mail-Adresse
-          mobile: Mobiltelefon
-          phone: Telefon
         date_of_birth: Geburtsdatum
         first_name: Vorname
         last_name: Nachname
