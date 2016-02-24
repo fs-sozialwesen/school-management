@@ -1,6 +1,6 @@
 # class InternshipPosition
 class InternshipPosition < ActiveRecord::Base
-  belongs_to :organisation, inverse_of: :internship_positions
+  belongs_to :organisation, inverse_of: :internship_positions, required: true
   # belongs_to :education_subject, required: true
 
   acts_as_addressable
@@ -25,5 +25,7 @@ class InternshipPosition < ActiveRecord::Base
   # where("applying ->>'documents' ILIKE '%leben%'" ).count
 
   has_paper_trail
+
+  validates :name, presence: true
 
 end

@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   end
 
   resources :timetables, only: [:index, :show]
-  resources :internship_positions, only: [:index, :show]
+  resources :internship_positions
   resources :candidates do
     member do
       # patch :init
