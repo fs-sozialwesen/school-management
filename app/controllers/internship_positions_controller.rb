@@ -52,7 +52,7 @@ class InternshipPositionsController < ApplicationController
       :name, :organisation_id, :description,
       applying: %i(by_phone by_mail by_email documents),
       housing: %i(provided costs),
-      contact: %i(email phone fax mobile homepage),
+      contact: %i(person email phone fax mobile homepage),
       address: %i(street zip city)
     )
   end

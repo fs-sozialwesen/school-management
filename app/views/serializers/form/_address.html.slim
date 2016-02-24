@@ -1,0 +1,5 @@
+= panel_box title: 'Adresse' do
+  = f.simple_fields_for :address, f.object.address do |address|
+    = address.input :street
+    = address.input :zip
+    = address.input :city

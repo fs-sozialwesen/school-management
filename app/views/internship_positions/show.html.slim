@@ -8,30 +8,31 @@
       span.glyphicon.glyphicon-pencil
       |  Bearbeiten
   h1
-    - homepage = @internship_position.contact.homepage
-    - if homepage.present?
-      = link_to homepage, target: '_blank', title: homepage do
-        => @internship_position.name
-        small: span.glyphicon.glyphicon-new-window
-    - else
-      => @internship_position.name
-    br
-    small
-      - homepage = @internship_position.organisation.contact.homepage
-      - if homepage.present?
-        = link_to homepage, target: '_blank', title: homepage do
-          => @internship_position.organisation.name
-          small: span.glyphicon.glyphicon-new-window
-      - else
-        => @internship_position.organisation.name
+    small => InternshipPosition.model_name.human
+    => @internship_position.name
 
-- if @internship_position.description.present?
-  .panel.panel-default
-    .panel-body = @internship_position.description.gsub("\n", '<br>').html_safe
+= panel_box do
+  - homepage = @internship_position.contact.homepage
+  - if homepage.present?
+    p
+      label> Homepage
+      = link_to homepage, target: '_blank', title: homepage do
+        => homepage
+        small: span.glyphicon.glyphicon-new-window
+  p
+    label> Träger
+    - org = @internship_position.organisation
+    - if policy(org).show?
+      = link_to org.name, org
+    - else
+      - homepage = org.contact.homepage
+      = link_to_if homepage.present?, org.name, homepage, target: '_blank', title: homepage
+  p = @internship_position.description.gsub("\n", '<br>').html_safe if @internship_position.description.present?
+
 .row
-  .col-md-6 = render 'applying', applying: @internship_position.applying
-  .col-md-6 = render 'housing',  housing:  @internship_position.housing
+  .col-md-6 = render @internship_position.applying
+  .col-md-6 = render @internship_position.housing
 .row
-  .col-md-6 = render 'contact',  contact:  @internship_position.contact
-  .col-md-6 = render 'address',  address:  @internship_position.address
+  .col-md-6 = render @internship_position.contact
+  .col-md-6 = render @internship_position.address
 

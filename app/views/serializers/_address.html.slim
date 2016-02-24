@@ -1,0 +1,7 @@
+= panel_box title: 'Adresse' do
+  address
+    = link_to address.gmaps_search_link, target: '_blank' do
+      = address.street
+      br
+      => address.zip
+      = address.city

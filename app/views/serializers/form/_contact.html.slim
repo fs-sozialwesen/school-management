@@ -1,0 +1,8 @@
+= panel_box title: 'Kontaktdaten' do
+  = f.simple_fields_for :contact, f.object.contact do |contact|
+    = contact.input :person
+    = contact.input :email, as: :email
+    = contact.input :phone, as: :tel
+    = contact.input :fax, as: :tel
+    = contact.input :mobile, as: :tel
+    = contact.input :homepage, as: :url

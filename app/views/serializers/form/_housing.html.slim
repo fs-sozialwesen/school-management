@@ -1,0 +1,4 @@
+= panel_box title: 'Unterkunft' do
+  = f.simple_fields_for :housing, f.object.housing do |housing|
+    = housing.input :provided, as: :boolean
+    = housing.input :costs

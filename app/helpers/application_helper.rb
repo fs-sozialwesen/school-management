@@ -31,6 +31,20 @@ module ApplicationHelper
     menu_item (scope == :index) ? simple_menu_item_for(model) : people_menu_item_for(scope.to_s)
   end
 
+  def panel_box(title: nil, &block)
+    content = capture(&block)
+    content_tag(:div, class: 'panel panel-default') do
+      head = panel_heading title:   title
+      body = content_tag(:div, content, class: 'panel-body')
+      [head, body].join.html_safe
+    end
+  end
+
+  def panel_heading(title: nil)
+    return unless title
+    content_tag(:div, class: 'panel-heading') { content_tag(:div, title, class: 'panel-title') }
+  end
+
   private
 
   def simple_menu_item_for(model)

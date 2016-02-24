@@ -1,0 +1,9 @@
+= panel_box title: 'Bewerbung' do
+  = f.simple_fields_for :applying, f.object.applying do |applying|
+    .row
+      .col-md-4
+        = applying.input :by_phone, as: :boolean
+        = applying.input :by_mail, as: :boolean
+        = applying.input :by_email, as: :boolean
+      .col-md-8
+        = applying.input :documents, as: :text, input_html: { rows: 3 }
