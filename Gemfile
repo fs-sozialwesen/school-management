@@ -14,6 +14,7 @@ gem 'paper_trail', '~> 4.0.0'
 gem 'virtus'
 gem 'select2-rails'
 gem 'acts-as-taggable-on', '~> 3.4'
+gem 'axlsx_rails', '~> 0.1.5'
 
 group :development, :test do
   gem 'byebug'
