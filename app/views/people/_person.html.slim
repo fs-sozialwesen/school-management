@@ -18,16 +18,16 @@
 
       .col-md-4
         p
-          label
+          label.icon
             span.glyphicon.glyphicon-envelope
           - email = person.contact.email
           - if email.present?
             =< link_to email, "mailto:#{email}"
         p
-          label
+          label.icon
             span.glyphicon.glyphicon-earphone
           =< person.contact.phone
         p
-          label
+          label.icon
             span.glyphicon.glyphicon-phone
           =< person.contact.mobile
