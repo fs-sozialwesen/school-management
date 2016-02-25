@@ -5,9 +5,8 @@ wb = xlsx_package.workbook
 wb.styles do |s|
   bold = s.add_style b: true, sz: 12, alignment: { horizontal: :center }
   date = s.add_style(format_code: 'dd.mm.yyyy')
-  text = s.add_style
 
-  wb.add_worksheet(name: "Buttons") do |sheet|
+  wb.add_worksheet(name: 'Bewerber') do |sheet|
     header = %w(Status Eingangsdatum Jahr
                 Anrede Vorname Nachname Geburtsdatum Geburtsort
                 Straße PLZ Ort

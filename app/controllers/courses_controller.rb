@@ -11,7 +11,7 @@ class CoursesController < ApplicationController
         @active_courses = @courses.active.all
         @inactive_courses = @courses.inactive.all
       end
-      format.csv  { @courses = @courses.all }
+      format.xlsx  { @courses = @courses.all }
     end
   end
 
