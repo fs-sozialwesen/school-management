@@ -1,11 +1,13 @@
 .page-header
   = link_to new_course_path, class: 'btn btn-primary' do 
     span.glyphicon.glyphicon-plus
-    |  Neu
-  = link_to courses_path(format: :csv), id: 'export-csv-button', class: 'btn btn-default' do
+    =< t(:new)
+  = link_to courses_path(format: :xlsx), id: 'export-button', class: 'btn btn-default' do
     span.glyphicon.glyphicon-export
-    |  Exportieren
-  h1 #{@active_courses.count} Klassen
+    =< t(:export)
+  h1
+    => @active_courses.count
+    = Course.model_name.human count: @active_courses.count
 
 .table-responsive
   table.table.table-striped.table-bordered.table-hover.table-clickable
@@ -14,6 +16,7 @@
         th Name
         th Klassenlehrer
         th Auszubildende
+        th Stundenpläne
         th Beginn
         th Ende
         /th
@@ -25,6 +28,8 @@
           td = course.name
           td = link_to course.teacher.person.name, course.teacher.person
           td #{course.students.count}
+          /td = link_to course.time_tables.count, course_time_tables_path(course)
+          td = course.time_tables.count
           td = ldate course.start_date
           td = ldate course.end_date
           /td = link_to 'Show', course

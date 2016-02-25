@@ -1,0 +1,31 @@
+response.headers['Content-Disposition'] = %Q(attachment; filename="organisationen-#{Time.now}.xlsx")
+
+wb = xlsx_package.workbook
+
+wb.styles do |s|
+  bold = s.add_style b: true, sz: 12, alignment: { horizontal: :center }
+
+  wb.add_worksheet(name: 'Organisationen') do |sheet|
+    header = %w(Name Bemerkungen Straße PLZ Ort Ansprechpartner E-Mail Telefon Fax Mobil Homepage)
+    sheet.add_row header, style: bold
+
+    @organisations.each do |organisation|
+      a = organisation.address
+      c = organisation.contact
+
+      row = []
+      types = []
+
+      row   += [organisation.name, organisation.comments]
+      types += [nil,               nil]
+
+      row   += [a.street, a.zip.to_s, a.city]
+      types += [nil,      :string,    nil]
+
+      row   += [c.person, c.email, c.phone, c.fax, c.mobile, c.homepage]
+      types += [nil,       nil,    :string, :string, :string]
+
+      sheet.add_row row, types: types
+    end
+  end
+end

@@ -14,6 +14,8 @@ class Organisation < ActiveRecord::Base
 
   has_paper_trail
 
+  validates :name, presence: true
+
   # def contracts
   #   contracts_as_first_party + contracts_as_second_party
   # end

@@ -1,0 +1,40 @@
+.page-header
+  h1
+    |  Stundenplan #{day_span_title(@date, @date + 4)}
+    small< für #{current_user.name}
+
+.row
+  .col-md-9
+    .table-responsive
+      table.table.table-striped.table-hover.time_table
+        thead
+          tr
+            th.time Zeit
+            th.day Montag
+            th.day Dienstag
+            th.day Mittwoch
+            th.day Donnerstag
+            th.day Freitag
+        tbody
+          - lessons_by_time_block = @lessons.group_by(&:time_block)
+          - @time_blocks.each do |time_block|
+            tr
+              th = time_block.name
+              - time_block_lessons = lessons_by_time_block[time_block] || []
+              - lessons_by_weekday = time_block_lessons.group_by(&:weekday)
+              - 1.upto(5) do |weekday|
+                - lessons = (lessons_by_weekday[weekday] || []).reject(&:empty?)
+                td class=('danger' if lessons.size > 1)
+                  - lessons.each do |lesson|
+                    p: strong = lesson.subject.name
+                    p = lesson.time_table.course.name
+                    p: i = lesson.room.name if lesson.room_id.present?
+                    p: small = lesson.comments
+  .col-md-3
+    h3 Woche
+    ul.nav.nav-pills.nav-stacked
+      - @weeks.each do |week|
+        li class=('active' if week == @date)
+          - title = day_span_title(week, week + 4)
+          - title += ' aktuell' if week == Date.current.beginning_of_week
+          = link_to title, teacher_time_table_url(week)

@@ -8,9 +8,14 @@ class InternshipPositionsController < ApplicationController
 
   def index
     @internship_positions = filter(internship_positions)
-    @cities               = @internship_positions.all.map { |ip| ip.address.city }.compact.uniq.sort
-    @work_areas           = Enum.work_areas
-    # @education_subjects   = EducationSubject.all
+    respond_to do |format|
+      format.html do
+        @cities     = @internship_positions.all.map { |ip| ip.address.city }.compact.uniq.sort
+        @work_areas = Enum.work_areas
+        # @education_subjects   = EducationSubject.all
+      end
+      format.xlsx
+    end
   end
 
   def show
@@ -52,7 +57,7 @@ class InternshipPositionsController < ApplicationController
       :name, :organisation_id, :description,
       applying: %i(by_phone by_mail by_email documents),
       housing: %i(provided costs),
-      contact: %i(email phone fax mobile homepage),
+      contact: %i(person email phone fax mobile homepage),
       address: %i(street zip city)
     )
   end
@@ -86,7 +91,8 @@ class InternshipPositionsController < ApplicationController
 
   def internship_positions
     policy_scope(InternshipPosition).joins(:organisation).includes(:organisation)
-      .order("internship_positions.address->>'city'")
+      .order(:name)
+      # .order("internship_positions.address->>'city'")
   end
 
   def filter(ips)

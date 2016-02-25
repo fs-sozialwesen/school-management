@@ -1,0 +1,24 @@
+response.headers['Content-Disposition'] = %Q(attachment; filename="klassen-#{Time.now}.xlsx")
+
+wb = xlsx_package.workbook
+
+wb.styles do |s|
+  bold = s.add_style b: true, sz: 12, alignment: { horizontal: :center }
+  date = s.add_style(format_code: 'dd.mm.yyyy')
+
+  wb.add_worksheet(name: 'Klassen') do |sheet|
+    header = %w(Name Klassenlehrer Beginn Ende Archiv Auszubildende)
+    sheet.add_row header, style: bold
+
+    @courses.each do |course|
+      row = []
+      styles = []
+
+      row    += [course.name, course.teacher.name, course.start_date, course.end_date]
+      styles += [nil,         nil,                 date,              date]
+      row    += [bool(course.active?), course.students.count]
+
+      sheet.add_row row, style: styles
+    end
+  end
+end

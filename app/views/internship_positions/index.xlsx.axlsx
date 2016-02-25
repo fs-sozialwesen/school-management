@@ -1,0 +1,43 @@
+response.headers['Content-Disposition'] = %Q(attachment; filename="praktikumsplätze-#{Time.now}.xlsx")
+
+wb = xlsx_package.workbook
+
+wb.styles do |s|
+  # border = { style: :thin, color: "00" }
+  # alignment   = { horizontal: :center, vertical: :center, wrap_text: true }
+  # wrap_text = s.add_style fg_color: 'FFFFFF', b: true, bg_color: '004586', sz: 12,
+  #                         border: border, alignment: alignment
+  bold = s.add_style b: true, sz: 12, alignment: { horizontal: :center }
+
+  wb.add_worksheet(name: 'Praktikumsplätze') do |sheet|
+    sheet.add_row %w(Einrichtung Träger
+                Straße PLZ Ort
+                Ansprechpartner E-Mail Telefon Fax Mobil Homepage
+                Unterkunft Kosten
+                Bew_Tel Bew_Post Bew_Email Bew_Dokumente
+                ), style: bold
+    @internship_positions.each do | internship_position |
+      a = internship_position.address
+      c = internship_position.contact
+      h = internship_position.housing
+      ap = internship_position.applying
+
+      row = []
+      types = []
+
+      row += [internship_position.name, internship_position.organisation.name]
+      types  += [nil,                   nil]
+
+      row += [a.street, a.zip.to_s, a.city]
+      types  += [nil,   :string,    nil]
+
+      row += [c.person, c.email, c.phone, c.fax, c.mobile, c.homepage]
+      types  += [nil,   nil,     :string, :string, :string]
+
+      row += [bool(h.provided), h.costs]
+      row += [bool(ap.by_phone), bool(ap.by_mail), bool(ap.by_email), ap.documents]
+
+      sheet.add_row row, types: types
+    end
+  end
+end

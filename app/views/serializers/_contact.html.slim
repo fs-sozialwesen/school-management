@@ -1,0 +1,17 @@
+= panel_box title: 'Kontaktdaten' do
+  p
+    label> Ansprechpartner
+    = contact.person
+  p
+    label> E-Mail
+    = contact.email
+  p
+    label> Telefon
+    = contact.phone
+  p
+    label> Fax
+    = contact.fax
+  p
+    label> Homepage
+    - if contact.homepage.present?
+      = link_to contact.homepage

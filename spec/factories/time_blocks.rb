@@ -1,11 +1,7 @@
 FactoryGirl.define do
   factory :time_block do
-    start_hour 9
-    start_minute 15
-    end_hour 10
-    end_minute 45
-    position 1
-    active true
+    start_time "2016-02-08 10:37:42"
+end_time "2016-02-08 10:37:42"
   end
 
 end

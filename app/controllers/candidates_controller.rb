@@ -9,7 +9,6 @@ class CandidatesController < ApplicationController
     @filter = CandidatesFilter.new(params)
     @candidates = @filter.perform.all
     @grouped = params[:view] == 'grouped'
-    @filename = "bewerber-#{Time.now}"
   end
 
   def show
@@ -30,7 +29,7 @@ class CandidatesController < ApplicationController
     @candidate = Candidate.new(candidate_params)
 
     if @candidate.save
-      redirect_to @candidate, notice: t('.success')
+      redirect_to @candidate, notice: t(:created, model: Candidate.model_name.human)
     else
       render :new
     end
@@ -38,7 +37,7 @@ class CandidatesController < ApplicationController
 
   def update
     if @candidate.update(candidate_params)
-      redirect_to @candidate, notice: t('.success')
+      redirect_to @candidate, notice: t(:updated, model: Candidate.model_name.human)
     else
       render :edit
     end
@@ -46,7 +45,7 @@ class CandidatesController < ApplicationController
 
   def destroy
     @candidate.destroy
-    redirect_to candidates_url, notice: t('.success')
+    redirect_to candidates_url, notice: t(:destroyed, model: Candidate.model_name.human)
   end
 
   # def init

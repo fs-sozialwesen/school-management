@@ -1,31 +1,24 @@
 .page-header
+  = link_to <%= index_helper %>_path(format: :csv), id: 'export-csv-button', class: 'btn btn-default' do
+    span.glyphicon.glyphicon-export
+    =< t(:export)
   = link_to new_<%= singular_table_name %>_path, class: 'btn btn-primary' do 
     span.glyphicon.glyphicon-plus
-    |  New <%= human_name %>
+    =< t(:new)
   h1
-    | Listing <%= plural_table_name %>
+    => @<%= plural_file_name %>.count
+    = <%= class_name %>.model_name.human count: @<%= plural_file_name %>.count
 
 .table-responsive
-  table.table.table-striped.table-bordered.table-hover
+  table.table.table-striped.table-bordered.table-hover.table-clickable
     thead
       tr
 <%- for attribute in attributes -%>
-        th
-          | <%= attribute.human_name %>
+        th = <%= class_name %>.human_attribute_name(:<%= attribute.name %>)
 <%- end -%>
-        th
-        th
-        th
     tbody
-      - @<%= plural_table_name %>.each do | <%= singular_table_name %> |
-        tr
+      - @<%= plural_file_name %>.each do | <%= singular_table_name %> |
+        tr data = {url: url_for(<%= singular_table_name %>)}
 <%- for attribute in attributes -%>
-          td
-            = <%= singular_table_name %>.<%= attribute.name %>
+          td = <%= singular_table_name %>.<%= attribute.name %>
 <%- end -%>
-          td
-            = link_to 'Show', <%= singular_table_name %>
-          td
-            = link_to 'Edit', edit_<%= singular_table_name %>_path(<%= singular_table_name %>) 
-          td
-            = link_to 'Destroy', <%= singular_table_name %>, method: :delete, data: { confirm: 'Are you sure?' } 

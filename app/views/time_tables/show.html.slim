@@ -1,0 +1,58 @@
+.page-header
+  = link_to toggle_time_table_path(@time_table), method: :patch, class: 'btn btn-default' do
+    span.glyphicon.glyphicon-exclamation-sign
+    =< @time_table.active? ? t('.deactivate') : t('.activate')
+  = link_to edit_time_table_path(@time_table), class: 'btn btn-primary' do
+    span.glyphicon.glyphicon-pencil
+    =< t(:edit)
+  - confirm = { confirm: t(:confirm_delete, model: TimeTable.model_name.human) }
+  => link_to @time_table, method: :delete, data: confirm, class: 'btn btn-danger' do
+    span.glyphicon.glyphicon-remove
+    =< t(:delete)
+  h1
+    => TimeTable.model_name.human
+    small
+      |  für
+      =< link_to @time_table.course.name, @time_table.course
+
+.row
+  .col-md-3
+    h4 = time_table_title_for(@time_table)
+
+.table-responsive
+  table.table.table-striped.table-hover.time-table
+    thead
+      tr
+        th.time Zeit
+        th.day Montag
+        th.day Dienstag
+        th.day Mittwoch
+        th.day Donnerstag
+        th.day Freitag
+    tbody
+      = render 'table_body', time_table: @time_table, time_blocks: @time_blocks
+
+- if @time_table.comments.present?
+  .row
+    .col-md-6
+      p.well
+        label Bemerkungen:
+        br
+        = @time_table.comments
+
+#lessonModal.modal.fade tabindex="-1"
+  .modal-dialog role="document"
+    .modal-content
+      .modal-header
+        button.close aria-label="Close" data-dismiss="modal" type="button"
+          span aria-hidden="true"  &times;
+        h4.modal-title Neue Stunde
+      .modal-body
+
+      .modal-footer
+        button.btn.btn-default data-dismiss="modal" type="button" = t(:cancel)
+        button.btn.btn-primary type="submit" = t(:save)
+
+coffee:
+  $ ->
+    window.timeTable = new TimeTable('table.time-table', '#lessonModal')

@@ -1,5 +1,4 @@
-# require 'rails_helper'
-#
-# RSpec.describe TimeBlock, type: :model do
-#
-# end
+require 'rails_helper'
+
+RSpec.describe TimeBlock, type: :model do
+end

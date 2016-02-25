@@ -3,7 +3,7 @@
     = link_to new_internship_position_path, class: 'btn btn-primary' do
       span.glyphicon.glyphicon-plus
       |  Neu
-  /= link_to courses_path(format: :csv), id: 'export-csv-button', class: 'btn btn-default' do
+  = link_to internship_positions_path(format: :xlsx), id: 'export-button', class: 'btn btn-default' do
     span.glyphicon.glyphicon-export
     |  Exportieren
   h1 #{@internship_positions.count} Praktikumsplätze
@@ -12,3 +12,9 @@
   .row
     .col-md-3 = render 'search_form'
     .col-md-9 = render @internship_positions
+
+coffee:
+  $ ->
+    $('#export-button').each (index, link) ->
+      $link = $(link)
+      $link.attr('href', $link.attr('href') + window.location.search)

@@ -1,0 +1,13 @@
+= panel_box title: 'Bewerbung' do
+  p
+    label> telefonisch
+    = bool_icon applying.by_phone
+  p
+    label> per Post
+    = bool_icon applying.by_mail
+  p
+    label> per E-Mail
+    = bool_icon applying.by_email
+  p
+    label> Erforderliche Dokumente
+    = applying.documents

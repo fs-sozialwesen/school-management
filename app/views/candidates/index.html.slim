@@ -2,7 +2,10 @@
   = link_to new_candidate_path, class: 'btn btn-primary' do
     span.glyphicon.glyphicon-plus
     |  Neu
-  .btn-group.pull-right style="margin-right: 8px;"
+  = link_to candidates_path(format: :xlsx), class: 'btn btn-default export-button' do
+    span.glyphicon.glyphicon-export
+    |  Exportieren
+  /.btn-group.pull-right style="margin-right: 8px;"
     a.btn.btn-default.dropdown-toggle aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" type="button"
       span.glyphicon.glyphicon-export>
       | Exportieren
@@ -23,6 +26,6 @@
 
 coffee:
   $ ->
-    $('.export-buttons a').each (index, link) ->
+    $('a.export-button').each (index, link) ->
       $link = $(link)
       $link.attr('href', $link.attr('href') + window.location.search)

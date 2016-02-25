@@ -1,4 +1,17 @@
 de:
+  new: Neu
+  export: Exportieren
+  list: Liste
+  edit: Bearbeiten
+  delete: Löschen
+  cancel: Abbrechen
+  save: Speichern
+
+  created: "%{model} gespeichert."
+  updated: "%{model} gespeichert."
+  destroyed: "%{model} gelöscht."
+  confirm_delete: "%{model} löschen?"
+
   basic_data: Stammdaten
   course: Klasse
   female: weiblich
@@ -41,6 +54,25 @@ de:
       error: Praktikumsplatz konnte nicht gespeichert werden.
     show:
       confirm_delete: Wirklich löschen?
+  organisations:
+    create:
+      success: Organisation gespeichert.
+    update:
+      success: Organisation gespeichert.
+    destroy:
+      success: Organisation gelöscht.
+    form:
+      error: Organisation konnte nicht gespeichert werden.
+    show:
+      confirm_delete: Wirklich löschen?
+  layouts:
+    navigation:
+      candidates: Bewerber
+      courses: Klassen
+      internship_positions: Praktikumsplätze
+      managers: Manager
+      students: Auszubildende
+      teachers: Lehrer
   login_mailer:
     create_password_email:
       subject: Passwort zu deinem Account
@@ -122,9 +154,38 @@ de:
     show:
       confirm_delete: "Wirklich löschen?"
 
-  timetable: Stundenplan
-  timetables:
+  rooms:
+    new:
+      title: Raum erstellen
+    form:
+      error: Der Raum konnte nicht gespeichert werden.
+  subjects:
+    new:
+      title: Fach erstellen
+    form:
+      error: Das Fach konnte nicht gespeichert werden.
+  time_blocks:
+    new:
+      title: Zeitblock erstellen
+    form:
+      error: Der Zeitblock konnte nicht gespeichert werden.
+  time_tables:
+    new:
+      title: Neuer Stundenplan für %{course}
+    form:
+      error: Der Stundenplan konnte nicht gespeichert werden.
     show:
+      activate: Veröffentlichen
+      deactivate: Deaktivieren
+    toggle:
+      activated: Stundenplan veröffentlicht.
+      deactivated: Stundenplan deaktiviert.
+    table_body:
+      copy_title: "Stunde kopieren"
+      delete_title: "Stunde löschen"
+      edit_title: "Stunde bearbeiten"
+      new_title: "Neue Stunde"
+  timetables:
       title_course_html: Stundenplan für Klasse %{course}
       title_teacher_html: Stundenplan für %{teacher}
       title_room_html: "Raumplan: <strong>%{room}</strong>"

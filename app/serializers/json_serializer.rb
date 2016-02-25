@@ -13,4 +13,8 @@ class JsonSerializer
     when nil then new
     end
   end
+
+  def to_partial_path
+    "serializers/#{self.class.name.underscore}"
+  end
 end

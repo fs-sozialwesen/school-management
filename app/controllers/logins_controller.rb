@@ -13,7 +13,7 @@ class LoginsController < ApplicationController
     @login = LoginGenerator.new(@person, email: login_params[:email]).call
 
     if @login.valid?
-      redirect_to @person, notice: t('.success')
+      redirect_to @person, notice: t(:created, model: Login.model_name.human)
     else
       render 'new'
     end
