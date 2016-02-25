@@ -4,6 +4,7 @@ feature 'Manage time tables', :devise do
 #   So that the students can see their time table
 
   scenario 'create time table', js: true do
+    skip
     student = sign_in_as_student
     sign_out
     # click_on student.name
