@@ -18,7 +18,7 @@ set :log_level, :debug
 set :stages, ["staging", "production"]
 set :default_stage, "staging"
 
-set :linked_files, %w{config/database.yml}
+set :linked_files, %w{config/database.yml config/environment_variables.yml}
 set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system db/seeds}
 
 # puma options with defaults

@@ -43,6 +43,17 @@ namespace :deploy do
     end
   end
 
+  desc 'Upload env_variables'
+  task :upload_env_variables => [:set_rails_env] do
+    on primary fetch(:migration_role) do
+      within release_path do
+        with rails_env: fetch(:rails_env) do
+          upload! 'config/environment_variables.yml', shared_path.join('config', 'environment_variables.yml')
+        end
+      end
+    end
+  end
+
   desc 'load imports'
   task :load_imports => [:set_rails_env] do
     on primary fetch(:migration_role) do
