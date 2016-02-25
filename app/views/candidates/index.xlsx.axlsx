@@ -1,0 +1,73 @@
+response.headers['Content-Disposition'] = %Q(attachment; filename="bewerber-#{Time.now}.xlsx")
+
+wb = xlsx_package.workbook
+
+wb.styles do |s|
+  bold = s.add_style b: true, sz: 12, alignment: { horizontal: :center }
+  date = s.add_style(format_code: 'dd.mm.yyyy')
+  text = s.add_style
+
+  wb.add_worksheet(name: "Buttons") do |sheet|
+    header = %w(Status Eingangsdatum Jahr
+                Anrede Vorname Nachname Geburtsdatum Geburtsort
+                Straße PLZ Ort
+                E-Mail Telefon Mobil
+                Schulausbildung bestät. Berufsausb bestät. sonstiges Praktika bestät. Führungszeugnis
+                KLT Eingeladen Rueckmeldung ErgebnisKLT
+                AusbVertr_gesendet zurück PraktVertr_gesendet zurück)
+    sheet.add_row header, style: bold
+
+    @candidates.each do |candidate|
+      i              = candidate.interview
+      p              = candidate.person
+      a              = p.address
+      c              = p.contact
+      prof_grad      = candidate.profession_graduate
+      prof_proved    = prof_grad.proved ? 'ja' : 'nein'
+      prof_proved    = '-' if prof_grad.graduate.blank?
+      internships    = candidate.internships.to_s.gsub(/\n/, ' ').gsub(/\r/, ' ')
+      intern_proved  = candidate.internships_proved ? 'ja' : 'nein'
+      intern_proved  = '-' if candidate.internships.blank?
+
+      row = []
+      styles = []
+      types = []
+
+      row    += [human_status_name(candidate.status), candidate.date, candidate.year]
+      styles += [nil,                                 date,           nil]
+      types  += [nil,                                 nil,          nil]
+
+      row    += [gt(:salut, p), p.first_name, p.last_name, p.date_of_birth, p.place_of_birth]
+      styles += [nil,           nil,          nil,         date,            nil]
+      types  += [nil,           nil,          nil,         nil,             nil]
+
+      row    += [a.street, a.zip.to_s, a.city]
+      styles += [nil,      nil,        nil]
+      types  += [nil,      :string,    nil]
+
+      row    += [c.email, c.phone, c.mobile]
+      styles += [nil,     nil,     nil]
+      types  += [nil,     :string, :string]
+
+      row    += [candidate.school_graduate.graduate, bool(candidate.school_graduate.proved)]
+      styles += [nil,                                nil]
+
+      row    += [prof_grad.graduate, prof_proved, prof_grad.comments]
+      styles += [nil,                nil,         nil]
+
+      row    += [internships, intern_proved, bool(candidate.police_certificate)]
+      styles += [date,        nil,           nil]
+
+      row    += [i.date, bool(i.invited), human_answer_name(i.answer), human_result_name(i.result)]
+      styles += [date,   nil,             nil,                         nil]
+
+      row    += [candidate.education_contract_sent, candidate.education_contract_received]
+      styles += [date,                              date]
+
+      row    += [candidate.internship_contract_sent, candidate.internship_contract_received]
+      styles += [date,                               date]
+
+      sheet.add_row row, style: styles, types: types
+    end
+  end
+end

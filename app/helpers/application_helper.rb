@@ -50,6 +50,9 @@ module ApplicationHelper
     link_to address, "mailto:#{address}"
   end
 
+  def bool(val, yes: 'x', no: '-')
+    val ? yes : no
+  end
   private
 
   def simple_menu_item_for(model)

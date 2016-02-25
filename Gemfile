@@ -14,13 +14,6 @@ gem 'paper_trail', '~> 4.0.0'
 gem 'virtus'
 gem 'select2-rails'
 gem 'acts-as-taggable-on', '~> 3.4'
-# added these dependencies to force codeship to install them
-# gem 'rubyzip', '1.0.0'
-# gem 'axlsx', '2.0.1'
-# gem 'concurrent-ruby', '1.0.0'
-# gem 'sprockets', '3.5.2'
-# gem 'sprockets-rails', '3.0.2'
-
 gem 'axlsx_rails', '0.3.0'
 
 group :development, :test do
