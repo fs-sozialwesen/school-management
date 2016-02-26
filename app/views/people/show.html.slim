@@ -13,9 +13,10 @@
 -if @person == current_user
   h3 Das bin ich
 
-= render @person
+
 .row
-  .col-md-6
+  .col-md-9 = render @person
+  .col-md-3
     - if @person.login
       = render @person.login
     - else
@@ -23,15 +24,10 @@
         .panel-heading Login
         .panel-body = link_to 'Login erstellen', new_person_login_path(@person)
 
-  /.col-md-6
-    .panel.panel-default
-      .panel-heading Funktionen
-      .panel-body
-        /- if @person.manager?
-          |  Manager
-          /= link_to 'Manager', @person.as_manager
-        /- if @person.teacher?
-          = link_to 'Lehrer', @person.as_teacher
-= render @person.as_student if @person.student?
-= render @person.as_teacher if @person.teacher?
-= render @person.as_manager if @person.manager?
+.row
+  .col-md-6 = render @person.as_student if @person.student?
+  .col-md-6 = render @person.as_candidate if @person.candidate?
+
+.row
+  .col-md-6 = render @person.as_teacher if @person.teacher?
+  .col-md-6 = render @person.as_manager if @person.manager?
