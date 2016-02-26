@@ -55,6 +55,7 @@ class CandidatesController < ApplicationController
 
   def accept
     @candidate.accepted!
+    @candidate.person.create_as_student!
     redirect_to candidate_url(@candidate), notice: 'Bewerber aufgenommen!'
   end
 
