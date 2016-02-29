@@ -102,3 +102,8 @@ sudo service nginx start
 # postgres backups
 sudo -u postgres pg_dump -U postgres school_management_staging > dump.sql
 sudo -u postgres pg_dump -U postgres school_management_staging | gzip > dump.gz
+
+
+# install imagemagick
+sudo apt-get update
+sudo apt-get install imagemagick
