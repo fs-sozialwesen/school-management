@@ -17,6 +17,6 @@
         th = Subject.human_attribute_name(:comments)
     tbody
       - @subjects.each do | subject |
-        tr data = {url: url_for(subject)}
+        tr data = {url: edit_subject_url(subject)}
           td = subject.name
           td = subject.comments

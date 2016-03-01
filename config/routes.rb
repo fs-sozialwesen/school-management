@@ -31,9 +31,9 @@ Rails.application.routes.draw do
   resources :my_time_tables, only: [:index, :show]
   resources :teacher_time_tables, only: [:index, :show]
   resources :timetable_documents, except: :show
-  resources :time_blocks
-  resources :subjects
-  resources :rooms
+  resources :time_blocks, except: :show
+  resources :subjects, except: :show
+  resources :rooms, except: :show
 
   resources :organisations
   resources :internship_positions

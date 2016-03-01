@@ -21,7 +21,6 @@ feature 'Manage rooms', :devise do
 
     click_on 'Räume'
     click_row_with 'Room1'
-    click_on 'Bearbeiten'
     fill_in :Name, with: ''
     click_on 'Speichern'
     expect(page).to have_content('Der Raum konnte nicht gespeichert werden')

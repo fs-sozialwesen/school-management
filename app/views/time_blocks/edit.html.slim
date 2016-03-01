@@ -1,4 +1,8 @@
 .page-header
+  - confirm = { confirm: t(:confirm_delete, model: TimeBlock.model_name.human) }
+  => link_to @time_block, method: :delete, data: confirm, class: 'btn btn-danger' do
+    span.glyphicon.glyphicon-remove
+    =< t(:delete)
   h1
     small => TimeBlock.model_name.human
     = @time_block.name

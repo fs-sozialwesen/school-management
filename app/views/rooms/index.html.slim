@@ -17,6 +17,6 @@
         th = Room.human_attribute_name(:comments)
     tbody
       - @rooms.each do | room |
-        tr data = {url: url_for(room)}
+        tr data = {url: edit_room_url(room)}
           td = room.name
           td = room.comments

@@ -8,11 +8,8 @@
 
   .row
     .col-md-6
-      .panel.panel-default
-        .panel-heading = Subject.model_name.human
-        .panel-body
-          = f.input :name
-          = f.input :comments
+      = f.input :name
+      = f.input :comments
 
   .row.action-buttons
     .col-md-6

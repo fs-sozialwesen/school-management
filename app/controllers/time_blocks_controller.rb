@@ -1,14 +1,11 @@
 class TimeBlocksController < ApplicationController
   before_action :authenticate_login!
   after_action :verify_authorized
-  before_action :set_time_block, only: [:show, :edit, :update, :destroy]
+  before_action :set_time_block, only: [:edit, :update, :destroy]
 
   def index
     authorize TimeBlock
     @time_blocks = TimeBlock.all
-  end
-
-  def show
   end
 
   def new
@@ -24,7 +21,7 @@ class TimeBlocksController < ApplicationController
     @time_block = TimeBlock.new time_block_params
 
     if @time_block.save
-      redirect_to @time_block, notice: t(:created, model: TimeBlock.model_name.human)
+      redirect_to TimeBlock, notice: t(:created, model: TimeBlock.model_name.human)
     else
       render :new
     end
@@ -32,7 +29,7 @@ class TimeBlocksController < ApplicationController
 
   def update
     if @time_block.update time_block_params
-      redirect_to @time_block, notice: t(:updated, model: TimeBlock.model_name.human)
+      redirect_to TimeBlock, notice: t(:updated, model: TimeBlock.model_name.human)
     else
       render :edit
     end
@@ -40,7 +37,7 @@ class TimeBlocksController < ApplicationController
 
   def destroy
     @time_block.destroy
-    redirect_to time_blocks_url, notice: t(:destroyed, model: TimeBlock.model_name.human)
+    redirect_to TimeBlock, notice: t(:destroyed, model: TimeBlock.model_name.human)
   end
 
   private

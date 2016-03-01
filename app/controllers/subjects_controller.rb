@@ -1,14 +1,11 @@
 class SubjectsController < ApplicationController
   before_action :authenticate_login!
   after_action :verify_authorized
-  before_action :set_subject, only: [:show, :edit, :update, :destroy]
+  before_action :set_subject, only: [:edit, :update, :destroy]
 
   def index
     authorize Subject
     @subjects = Subject.all
-  end
-
-  def show
   end
 
   def new
@@ -24,7 +21,7 @@ class SubjectsController < ApplicationController
     @subject = Subject.new subject_params
 
     if @subject.save
-      redirect_to @subject, notice: t(:created, model: Subject.model_name.human)
+      redirect_to Subject, notice: t(:created, model: Subject.model_name.human)
     else
       render :new
     end
@@ -32,7 +29,7 @@ class SubjectsController < ApplicationController
 
   def update
     if @subject.update subject_params
-      redirect_to @subject, notice: t(:updated, model: Subject.model_name.human)
+      redirect_to Subject, notice: t(:updated, model: Subject.model_name.human)
     else
       render :edit
     end
@@ -40,7 +37,7 @@ class SubjectsController < ApplicationController
 
   def destroy
     @subject.destroy
-    redirect_to subjects_url, notice: t(:destroyed, model: Subject.model_name.human)
+    redirect_to Subject, notice: t(:destroyed, model: Subject.model_name.human)
   end
 
   private
