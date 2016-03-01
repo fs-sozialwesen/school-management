@@ -1,0 +1,28 @@
+.page-header
+  = link_to timetable_documents_path(format: :csv), id: 'export-csv-button', class: 'btn btn-default' do
+    span.glyphicon.glyphicon-export
+    =< t(:export)
+  = link_to new_timetable_document_path, class: 'btn btn-primary' do 
+    span.glyphicon.glyphicon-plus
+    =< t(:new)
+  h1
+    => @timetable_documents.count
+    = TimetableDocument.model_name.human count: @timetable_documents.count
+
+.table-responsive
+  table.table.table-striped.table-bordered.table-hover.table-clickable
+    thead
+      tr
+        th = TimetableDocument.human_attribute_name(:name)
+        th = TimetableDocument.human_attribute_name(:start_date)
+        th = TimetableDocument.human_attribute_name(:end_date)
+        th = TimetableDocument.human_attribute_name(:year)
+        th = TimetableDocument.human_attribute_name(:document)
+    tbody
+      - @timetable_documents.each do | timetable_document |
+        tr data = {url: edit_timetable_document_path(timetable_document)}
+          td = timetable_document.name
+          td = ldate timetable_document.start_date
+          td = ldate timetable_document.end_date
+          td = timetable_document.year
+          td = link_to 'PDF', timetable_document.document.url(:original, false)

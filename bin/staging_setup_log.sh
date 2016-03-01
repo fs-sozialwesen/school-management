@@ -43,6 +43,19 @@ sudo make install
 
 # in .bashrc and .profile
 source /usr/local/share/chruby/chruby.sh
+source /usr/local/share/chruby/auto.sh
+# to auto load ruby version in dirs with .ruby-version
+
+# update ruby version on server
+ruby-install ruby 2.3.0
+chruby ruby 2.3.0
+gem install bundler
+sudo apt-get install libxml2
+gem install nokogiri
+# update Gemfile, .ruby-version, config/deploy.rb
+# edit version in codeship
+# commit, push, done
+cap staging puma:restart
 
 
 # install postgresql
@@ -102,3 +115,8 @@ sudo service nginx start
 # postgres backups
 sudo -u postgres pg_dump -U postgres school_management_staging > dump.sql
 sudo -u postgres pg_dump -U postgres school_management_staging | gzip > dump.gz
+
+
+# install imagemagick
+sudo apt-get update
+sudo apt-get install imagemagick

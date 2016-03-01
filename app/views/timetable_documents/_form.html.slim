@@ -1,0 +1,22 @@
+= simple_form_for(@timetable_document, html: { role: "form" }, defaults: { include_blank: false }) do |f|
+  - if @timetable_document.errors.any?
+    .alert.alert-danger.alert-dismissable@alert
+      button.close type="button" data-dismiss="alert"
+        span aria-hidden="true" &times;
+        span.sr-only Close
+      h4 = t('.error')
+
+  .row
+    .col-md-4
+      = f.input :name
+      = f.input :document
+    .col-md-4
+      = f.input :start_date, as: :string, input_html:{ class: :date }
+      = f.input :end_date, as: :string, input_html:{ class: :date }
+      = f.input :year, collection: @years
+
+  .row.action-buttons
+    .col-md-8
+      .pull-right
+        => link_to t(:cancel), 'javascript: window.history.back();', class: 'btn btn-default'
+        = f.submit t(:save), class: 'btn btn-primary'

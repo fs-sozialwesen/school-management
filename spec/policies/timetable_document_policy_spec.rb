@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe OrganisationPolicy do
+describe TimetableDocumentPolicy do
 
   let(:user) { User.new }
 

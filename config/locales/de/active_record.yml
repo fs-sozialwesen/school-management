@@ -92,6 +92,9 @@ de:
       time_table:
         one:   Stundenplan
         other: Stundenpläne
+      timetable_document:
+        one: Stundenplan Download
+        other: Stundenplan Downloads
     attributes:
       course:
         teacher: Klassenlehrer
@@ -160,6 +163,11 @@ de:
         end_time: Ende
       time_table:
         activated_at: Veröffentlicht am
+      timetable_document:
+        document: Datei
+        end_date: Gültig bis
+        start_date: Gültig ab
+        year: Jahrgang
       login:
         login: "Handle"
         email: E-Mail
