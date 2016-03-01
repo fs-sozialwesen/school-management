@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160217012510) do
+ActiveRecord::Schema.define(version: 20160301191035) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -268,6 +268,19 @@ ActiveRecord::Schema.define(version: 20160217012510) do
   end
 
   add_index "time_tables", ["course_id"], name: "index_time_tables_on_course_id", using: :btree
+
+  create_table "timetable_documents", force: :cascade do |t|
+    t.string   "name"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.integer  "year"
+    t.string   "document_file_name"
+    t.string   "document_content_type"
+    t.integer  "document_file_size"
+    t.datetime "document_updated_at"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+  end
 
   create_table "versions", force: :cascade do |t|
     t.string   "item_type",      null: false
