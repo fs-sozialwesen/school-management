@@ -43,6 +43,19 @@ sudo make install
 
 # in .bashrc and .profile
 source /usr/local/share/chruby/chruby.sh
+source /usr/local/share/chruby/auto.sh
+# to auto load ruby version in dirs with .ruby-version
+
+# update ruby version on server
+ruby-install ruby 2.3.0
+chruby ruby 2.3.0
+gem install bundler
+sudo apt-get install libxml2
+gem install nokogiri
+# update Gemfile, .ruby-version, config/deploy.rb
+# edit version in codeship
+# commit, push, done
+cap staging puma:restart
 
 
 # install postgresql
