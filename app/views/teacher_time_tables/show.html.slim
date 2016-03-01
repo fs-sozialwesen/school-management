@@ -38,3 +38,9 @@
           - title = day_span_title(week, week + 4)
           - title += ' aktuell' if week == Date.current.beginning_of_week
           = link_to title, teacher_time_table_url(week)
+    h3 Stundenpläne als PDF
+    ul.list-unstyled
+      - @timetable_documents.each do |doc|
+        - title = "#{doc.year} #{ldate doc.start_date} - #{ldate doc.end_date}"
+        - title += " (#{doc.name})" if doc.name.present?
+        li = link_to title, doc.document.url(:original, false)
