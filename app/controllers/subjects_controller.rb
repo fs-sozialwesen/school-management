@@ -5,7 +5,7 @@ class SubjectsController < ApplicationController
 
   def index
     authorize Subject
-    @subjects = Subject.all
+    @subjects = Subject.order(:name).all
   end
 
   def new

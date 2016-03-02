@@ -5,7 +5,7 @@ class TimeBlocksController < ApplicationController
 
   def index
     authorize TimeBlock
-    @time_blocks = TimeBlock.all
+    @time_blocks = TimeBlock.order(:start_time).all
   end
 
   def new

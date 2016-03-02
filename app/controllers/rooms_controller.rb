@@ -5,7 +5,7 @@ class RoomsController < ApplicationController
 
   def index
     authorize Room
-    @rooms = Room.all
+    @rooms = Room.order(:name).all
   end
 
   def new
