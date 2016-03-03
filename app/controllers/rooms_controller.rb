@@ -1,14 +1,11 @@
 class RoomsController < ApplicationController
   before_action :authenticate_login!
   after_action :verify_authorized
-  before_action :set_room, only: [:show, :edit, :update, :destroy]
+  before_action :set_room, only: [:edit, :update, :destroy]
 
   def index
     authorize Room
-    @rooms = Room.all
-  end
-
-  def show
+    @rooms = Room.order(:name).all
   end
 
   def new
@@ -24,7 +21,7 @@ class RoomsController < ApplicationController
     @room = Room.new room_params
 
     if @room.save
-      redirect_to @room, notice: t(:created, model: Room.model_name.human)
+      redirect_to Room, notice: t(:created, model: Room.model_name.human)
     else
       render :new
     end
@@ -32,7 +29,7 @@ class RoomsController < ApplicationController
 
   def update
     if @room.update room_params
-      redirect_to @room, notice: t(:updated, model: Room.model_name.human)
+      redirect_to Room, notice: t(:updated, model: Room.model_name.human)
     else
       render :edit
     end
@@ -40,7 +37,7 @@ class RoomsController < ApplicationController
 
   def destroy
     @room.destroy
-    redirect_to rooms_url, notice: t(:destroyed, model: Room.model_name.human)
+    redirect_to Room, notice: t(:destroyed, model: Room.model_name.human)
   end
 
   private

@@ -21,6 +21,7 @@ de:
     internship_position:  Praktikumsplatz
     internship_positions: Praktikumsplätze
     last_name:            Nachname
+    lessons:              Unterrichtsstunden
     mentor:               Praxisanleiter
     mentors:              Praxisanleiter
     mobile:               Mobil
@@ -156,6 +157,8 @@ de:
           result/repeat: Wiederholen
       student:
         year: Jahrgang
+      subject:
+        lessons: Unterichtsstunden
       teacher:
         courses: Klassenlehrer von
       time_block:

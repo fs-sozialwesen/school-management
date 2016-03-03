@@ -21,7 +21,6 @@ feature 'Manage time blocks', :devise do
 
     click_on 'Zeitblöcke'
     click_row_with '09:15 - 10:45'
-    click_on 'Bearbeiten'
     fill_in :Beginn, with: ''
     click_on 'Speichern'
     expect(page).to have_content('Der Zeitblock konnte nicht gespeichert werden')

@@ -1,4 +1,4 @@
-= simple_form_for(@room, html: { role: "form" }, defaults: { required: false, include_blank: false }) do |f|
+= simple_form_for(@room, html: { role: "form" }, defaults: { include_blank: false }) do |f|
   - if @room.errors.any?
     .alert.alert-danger.alert-dismissable@alert
       button.close type="button" data-dismiss="alert"
@@ -8,11 +8,8 @@
 
   .row
     .col-md-6
-      .panel.panel-default
-        .panel-heading = Room.model_name.human
-        .panel-body
-          = f.input :name
-          = f.input :comments
+      = f.input :name
+      = f.input :comments
 
   .row.action-buttons
     .col-md-6

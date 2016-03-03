@@ -16,5 +16,5 @@
         th Zeit
     tbody
       - @time_blocks.each do | time_block |
-        tr data = {url: url_for(time_block)}
+        tr data = {url: edit_time_block_url(time_block)}
           td = time_block.name

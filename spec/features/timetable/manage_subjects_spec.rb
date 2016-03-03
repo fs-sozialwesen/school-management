@@ -21,7 +21,6 @@ feature 'Manage subjects', :devise do
 
     click_on 'Fächer'
     click_row_with 'Mathematics'
-    click_on 'Bearbeiten'
     fill_in :Name, with: ''
     click_on 'Speichern'
     expect(page).to have_content('Das Fach konnte nicht gespeichert werden')
