@@ -36,8 +36,11 @@ class SubjectsController < ApplicationController
   end
 
   def destroy
-    @subject.destroy
-    redirect_to Subject, notice: t(:destroyed, model: Subject.model_name.human)
+    if @subject.destroy
+      redirect_to Subject, notice: t(:destroyed, model: Subject.model_name.human)
+    else
+      redirect_to edit_subject_url(@subject), flash: { error: @subject.errors.full_messages.join(' ') }
+    end
   end
 
   private
