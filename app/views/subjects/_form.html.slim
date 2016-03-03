@@ -6,13 +6,9 @@
         span.sr-only Close
       h4 = t('.error')
 
-  .row
-    .col-md-6
-      = f.input :name
-      = f.input :comments
+  = f.input :name
+  = f.input :comments
 
-  .row.action-buttons
-    .col-md-6
-      .pull-right
-        => link_to t(:cancel), 'javascript: window.history.back();', class: 'btn btn-default'
-        = f.submit t(:save), class: 'btn btn-primary'
+  .action-buttons.pull-right
+    => link_to t(:cancel), 'javascript: window.history.back();', class: 'btn btn-default'
+    = f.submit t(:save), class: 'btn btn-primary'

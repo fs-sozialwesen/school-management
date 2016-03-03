@@ -11,6 +11,7 @@ class Course < ActiveRecord::Base
   has_many :students, inverse_of: :course #, through: :active_course_memberships
   # has_many :lessons, inverse_of: :course
   has_many :time_tables, inverse_of: :course
+  has_many :lessons, through: :time_tables
 
   has_paper_trail
   acts_as_taggable_on :education_subjects

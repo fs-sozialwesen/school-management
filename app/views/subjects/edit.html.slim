@@ -7,4 +7,8 @@
     small => Subject.model_name.human
     = @subject.name
 
-= render 'form'
+.row
+  .col-md-6 = render 'form'
+  .col-md-6
+    = panel_box title: 'Unterrichtsstunden' do
+      => @subject.lessons.count
