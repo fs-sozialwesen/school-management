@@ -1,12 +1,12 @@
 module Features
   module InternshipHelpers
     def create_organisation(name)
-      click_on 'Organisationen'
+      click_on 'Träger'
       click_on 'Neu'
       fill_in :Name, with: name
       click_on 'Speichern'
       expect(page).to have_content(name)
-      click_on 'Organisationen'
+      click_on 'Träger'
     end
     alias :given_organisation :create_organisation
 

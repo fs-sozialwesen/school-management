@@ -1,11 +1,11 @@
-response.headers['Content-Disposition'] = %Q(attachment; filename="organisationen-#{Time.now}.xlsx")
+response.headers['Content-Disposition'] = %Q(attachment; filename="traeger-#{Time.now}.xlsx")
 
 wb = xlsx_package.workbook
 
 wb.styles do |s|
   bold = s.add_style b: true, sz: 12, alignment: { horizontal: :center }
 
-  wb.add_worksheet(name: 'Organisationen') do |sheet|
+  wb.add_worksheet(name: 'Träger') do |sheet|
     header = %w(Name Bemerkungen Straße PLZ Ort Ansprechpartner E-Mail Telefon Fax Mobil Homepage)
     sheet.add_row header, style: bold
 

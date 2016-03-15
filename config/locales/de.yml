@@ -56,13 +56,13 @@ de:
       confirm_delete: Wirklich löschen?
   organisations:
     create:
-      success: Organisation gespeichert.
+      success: Träger gespeichert.
     update:
-      success: Organisation gespeichert.
+      success: Träger gespeichert.
     destroy:
-      success: Organisation gelöscht.
+      success: Träger gelöscht.
     form:
-      error: Organisation konnte nicht gespeichert werden.
+      error: Träger konnte nicht gespeichert werden.
     show:
       confirm_delete: Wirklich löschen?
   layouts:
