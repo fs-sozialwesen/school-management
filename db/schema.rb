@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160301191035) do
+ActiveRecord::Schema.define(version: 20160315195256) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -109,6 +109,20 @@ ActiveRecord::Schema.define(version: 20160301191035) do
   end
 
   add_index "internship_positions", ["organisation_id"], name: "index_internship_positions_on_organisation_id", using: :btree
+
+  create_table "internships", force: :cascade do |t|
+    t.integer  "student_id"
+    t.integer  "internship_position_id"
+    t.string   "mentor"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.text     "comments"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_index "internships", ["internship_position_id"], name: "index_internships_on_internship_position_id", using: :btree
+  add_index "internships", ["student_id"], name: "index_internships_on_student_id", using: :btree
 
   create_table "legacy_data", force: :cascade do |t|
     t.string   "old_table"
@@ -299,6 +313,8 @@ ActiveRecord::Schema.define(version: 20160301191035) do
   add_foreign_key "course_memberships", "courses"
   add_foreign_key "courses", "teachers"
   add_foreign_key "internship_positions", "organisations"
+  add_foreign_key "internships", "internship_positions"
+  add_foreign_key "internships", "students"
   add_foreign_key "lessons", "rooms"
   add_foreign_key "lessons", "subjects"
   add_foreign_key "lessons", "teachers"

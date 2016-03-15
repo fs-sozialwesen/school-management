@@ -6,32 +6,32 @@ feature 'Manage organisations', :devise do
   scenario 'create organisation' do
     sign_in_as_manager
 
-    create_organisation 'Organisation1'
+    create_organisation 'Träger1'
   end
 
   scenario 'edit organisation' do
     sign_in_as_manager
-    given_organisation 'Organisation1'
+    given_organisation 'Träger1'
 
-    click_on 'Organisationen'
-    click_row_with 'Organisation1'
+    click_on 'Träger'
+    click_row_with 'Träger1'
     click_on 'Bearbeiten'
     fill_in :Name, with: ''
     click_on 'Speichern'
-    expect(page).to have_content('Organisation konnte nicht gespeichert werden')
-    fill_in :Name, with: 'Organisation 42'
+    expect(page).to have_content('Träger konnte nicht gespeichert werden')
+    fill_in :Name, with: 'Träger 42'
     click_on 'Speichern'
-    expect(page).to have_content('Organisation gespeichert')
-    expect(page).to have_content('Organisation 42')
+    expect(page).to have_content('Träger gespeichert')
+    expect(page).to have_content('Träger 42')
   end
 
   scenario 'delete organisation' do
     sign_in_as_manager
-    given_organisation 'Organisation1'
+    given_organisation 'Träger1'
 
-    click_on 'Organisationen'
-    click_row_with 'Organisation1'
+    click_on 'Träger'
+    click_row_with 'Träger1'
     click_on 'Löschen'
-    expect(page).to have_content('Organisation gelöscht')
+    expect(page).to have_content('Träger gelöscht')
   end
 end

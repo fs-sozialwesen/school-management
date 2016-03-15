@@ -25,7 +25,7 @@ de:
     mentor:               Praxisanleiter
     mentors:              Praxisanleiter
     mobile:               Mobil
-    organisation:         Organisation
+    organisation:         Träger
     phone:                Telefon
     school:               Schule
     start_date:           Beginn
@@ -64,8 +64,8 @@ de:
         one:   Stunde
         other: Stunden
       organisation:
-        one:   Organisation
-        other: Organisationen
+        one:   Träger
+        other: Träger
       person:
         one:   Person
         other: Personenverzeichnis

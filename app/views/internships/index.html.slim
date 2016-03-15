@@ -1,0 +1,30 @@
+.page-header
+  = link_to internships_path(format: :csv), id: 'export-csv-button', class: 'btn btn-default' do
+    span.glyphicon.glyphicon-export
+    =< t(:export)
+  = link_to new_internship_path, class: 'btn btn-primary' do 
+    span.glyphicon.glyphicon-plus
+    =< t(:new)
+  h1
+    => @internships.count
+    = Internship.model_name.human count: @internships.count
+
+.table-responsive
+  table.table.table-striped.table-bordered.table-hover.table-clickable
+    thead
+      tr
+        th = Internship.human_attribute_name(:student)
+        th = Internship.human_attribute_name(:internship_position)
+        th = InternshipPosition.human_attribute_name(:organisation)
+        th = Internship.human_attribute_name(:mentor)
+        th = Internship.human_attribute_name(:start_date)
+        th = Internship.human_attribute_name(:end_date)
+    tbody
+      - @internships.each do | internship |
+        tr data = {url: url_for(internship)}
+          td = internship.student.name
+          td = internship.internship_position.name
+          td = internship.internship_position.organisation.name
+          td = internship.mentor
+          td = ldate internship.start_date
+          td = ldate internship.end_date

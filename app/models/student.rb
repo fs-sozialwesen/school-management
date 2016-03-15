@@ -2,6 +2,7 @@ class Student < ActiveRecord::Base
   belongs_to :person, validate: true, inverse_of: :as_student
   has_one :login, through: :person
   belongs_to :course, inverse_of: :students
+  has_many :internships, inverse_of: :student
 
   has_many :course_memberships, dependent: :delete_all
   has_many :courses, through: :course_memberships

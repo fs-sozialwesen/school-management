@@ -1,0 +1,46 @@
+.page-header
+  = link_to internships_path, class: 'btn btn-default' do 
+    span.glyphicon.glyphicon-list-alt
+    =< t(:list)
+  = link_to edit_internship_path(@internship), class: 'btn btn-primary' do
+    span.glyphicon.glyphicon-pencil
+    =< t(:edit)
+  => link_to @internship, method: :delete, data: { confirm: t(:confirm_delete, model: Internship.model_name.human) }, class: 'btn btn-danger' do
+    span.glyphicon.glyphicon-remove
+    =< t(:delete)
+  h1
+    small => Internship.model_name.human
+    = @internship.student.name
+
+.row
+  .col-md-4
+    .panel.panel-default
+      .panel-heading = Internship.model_name.human
+      .panel-body
+        p
+          label => Internship.human_attribute_name(:student)
+          = link_to @internship.student.name, @internship.student.person
+        p
+          label => Internship.human_attribute_name(:internship_position)
+          = link_to @internship.internship_position.name, @internship.internship_position
+        p
+          label Träger
+          = @internship.internship_position.organisation.name
+        p
+          label => Internship.human_attribute_name(:mentor)
+          = @internship.mentor
+  .col-md-4
+    .panel.panel-default
+      .panel-heading Zeitraum
+      .panel-body
+        p
+          label => Internship.human_attribute_name(:start_date)
+          = ldate @internship.start_date
+        p
+          label => Internship.human_attribute_name(:end_date)
+          = ldate @internship.end_date
+  .col-md-4
+    .panel.panel-default
+      .panel-heading Bemerkungen
+      .panel-body
+        p = @internship.comments
