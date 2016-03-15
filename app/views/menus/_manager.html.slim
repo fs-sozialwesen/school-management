@@ -1,0 +1,27 @@
+= menu_item_for Course
+= menu_item_for :students
+
+li.dropdown
+  a.dropdown-toggle@button href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+    |  Mitarbeiter <span class="caret"></span>
+  ul.dropdown-menu
+    = menu_item_for :managers
+    = menu_item_for :teachers
+
+li.dropdown
+  a.dropdown-toggle@button href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+    |  Praktikum <span class="caret"></span>
+  ul.dropdown-menu
+    = menu_item_for Organisation
+    = menu_item_for InternshipPosition
+
+= menu_item_for Candidate
+
+li.dropdown
+  a.dropdown-toggle@button href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+    |  Verwaltung <span class="caret"></span>
+  ul.dropdown-menu
+    = menu_item_for Room
+    = menu_item_for Subject
+    = menu_item_for TimeBlock
+    = menu_item_for TimetableDocument
