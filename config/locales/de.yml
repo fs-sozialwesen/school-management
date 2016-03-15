@@ -54,6 +54,19 @@ de:
       error: Praktikumsplatz konnte nicht gespeichert werden.
     show:
       confirm_delete: Wirklich löschen?
+  internships:
+    create:
+      success: Praktikum gespeichert.
+    update:
+      success: Praktikum gespeichert.
+    destroy:
+      success: Praktikum gelöscht.
+    form:
+      error: Praktikum konnte nicht gespeichert werden.
+    new:
+      title: Neues Praktikum anlegen
+    show:
+      confirm_delete: Wirklich löschen?
   organisations:
     create:
       success: Träger gespeichert.

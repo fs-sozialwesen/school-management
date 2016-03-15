@@ -1,5 +1,25 @@
-.panel.panel-default
-  .panel-heading Klasse
-  .panel-body
-    - if student.course.present?
-      = link_to student.course.name, student.course
+.row
+  .col-md-6
+    .panel.panel-default
+      .panel-heading Klasse
+      .panel-body
+        - if student.course.present?
+          = link_to student.course.name, student.course
+
+  .col-md-6
+    .panel.panel-default
+      .panel-heading Praktika
+      table.table.table-striped.table-bordered.table-condensed.table-clickable
+        thead
+          tr
+            th Zeitraum
+            th Praktikumsplatz
+        tbody
+          - student.internships.includes(:internship_position).each do |internship|
+            tr data={ url: url_for(internship) }
+              td
+                => ldate(internship.start_date)
+                |  -
+                =< ldate(internship.end_date)
+              td = internship.internship_position.name
+

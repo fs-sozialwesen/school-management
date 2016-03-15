@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :internships
   root to: 'visitors#index'
   devise_for :logins
   resources :people, except: :index do
