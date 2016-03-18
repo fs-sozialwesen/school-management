@@ -44,6 +44,10 @@ de:
     form:
       error: Klasse konnte nicht gespeichert werden.
   internship_positions:
+    internship_position:
+      by_mail: per Post
+      by_email: per E-Mail
+      by_phone: per Telefon
     create:
       success: Praktikumsplatz gespeichert.
     update:
