@@ -2,18 +2,19 @@
   /- delete_link = teacher_login_path(login.person.as_teacher)
 .panel class=(login.account_active? ? 'panel-default' : 'panel-danger')
   .panel-heading
-    |  Login
-    ul.list-inline.pull-right
-      li = link_to toggle_link, method: :patch, data: { confirm: t('.confirm_toggle') }, class: 'btn btn-default btn-xs' do
-        - if login.account_active?
-          span.glyphicon.glyphicon-remove-sign>
-          |  Deaktivieren
-        - else
-          span.glyphicon.glyphicon-ok-sign>
-          |  Aktivieren
-      /li = link_to delete_link, method: :delete, data: { confirm: ('.confirm_delete') }, class: 'btn btn-danger btn-xs' do
-        span.glyphicon.glyphicon-remove
-        |  Sperren
+    h4.panel-title
+      |  Login
+      ul.list-inline.pull-right
+        li = link_to toggle_link, method: :patch, data: { confirm: t('.confirm_toggle') }, class: 'btn btn-default btn-xs' do
+          - if login.account_active?
+            span.glyphicon.glyphicon-remove-sign>
+            |  Deaktivieren
+          - else
+            span.glyphicon.glyphicon-ok-sign>
+            |  Aktivieren
+        /li = link_to delete_link, method: :delete, data: { confirm: ('.confirm_delete') }, class: 'btn btn-danger btn-xs' do
+          span.glyphicon.glyphicon-remove
+          |  Sperren
   .panel-body
     p
       label> E-Mail:

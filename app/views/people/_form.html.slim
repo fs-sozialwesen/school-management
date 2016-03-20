@@ -10,7 +10,8 @@
   .row
     .col-md-4
       .panel.panel-default
-        .panel-heading Personendaten
+        .panel-heading
+          h4.panel-title Personendaten
         .panel-body
           .row
             .col-md-6 = f.input :gender, collection: [%w(Frau f), %w(Herr m)]
@@ -22,7 +23,8 @@
 
     .col-md-4
       .panel.panel-default
-        .panel-heading Adresse
+        .panel-heading
+          h4.panel-title Adresse
         .panel-body
           = f.simple_fields_for :address, @person.address do |a|
             = a.input :street
@@ -31,7 +33,8 @@
 
     .col-md-4
       .panel.panel-default
-        .panel-heading Kontaktdaten
+        .panel-heading
+          h4.panel-title Kontaktdaten
         .panel-body
           = f.simple_fields_for :contact, @person.contact do |c|
             = c.input :email
@@ -41,7 +44,8 @@
     .row
       .col-md-6
         .panel.panel-default
-          .panel-heading Klasse
+          .panel-heading
+          h4.panel-title Klasse
           .panel-body
             = f.simple_fields_for :as_student do |s|
               = s.association :course, label: false, include_blank: 'keine',
@@ -54,7 +58,8 @@
     .row
       .col-md-6
         .panel.panel-default
-          .panel-heading Träger
+          .panel-heading
+          h4.panel-title Träger
           .panel-body
             = f.simple_fields_for :as_mentor do |s|
               = s.association :organisation, collection: Organisation.order(:name)

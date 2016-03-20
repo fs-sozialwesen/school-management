@@ -9,7 +9,8 @@
   - if params[:part] == 'person' or params[:part].blank?
     - if @candidate.new_record?
       .panel.panel-default
-        .panel-heading Bewerbung
+        .panel-heading
+          h4.panel-title Bewerbung
         .panel-body = f.input :date, as: :string, input_html:{ class: :date }
 
     /= f.simple_fields_for :person do |p|

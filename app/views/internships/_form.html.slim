@@ -11,7 +11,8 @@
   .row
     .col-md-4
       .panel.panel-default
-        .panel-heading = Internship.model_name.human
+        .panel-heading
+          h4.panel-title = Internship.model_name.human
         .panel-body
           = f.association :student, collection: students
           = f.association :internship_position, collection: organisations, as: :grouped_select,
@@ -19,13 +20,15 @@
           = f.association :mentor, collection: Mentor.joins(:person).order('people.last_name'), include_blank: true
     .col-md-4
       .panel.panel-default
-        .panel-heading Zeitraum
+        .panel-heading
+          h4.panel-title Zeitraum
         .panel-body
           = f.input :start_date, as: :string, input_html:{ class: :date }
           = f.input :end_date, as: :string, input_html:{ class: :date }
     .col-md-4
       .panel.panel-default
-        .panel-heading Bemerkungen
+        .panel-heading
+          h4.panel-title Bemerkungen
         .panel-body
           = f.input :comments, label: false
 

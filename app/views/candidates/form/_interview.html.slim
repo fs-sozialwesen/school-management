@@ -2,22 +2,26 @@
   .row
     .col-md-6
       .panel.panel-default
-        .panel-heading Tag
+        .panel-heading
+          h4.panel-title Tag
         .panel-body = i.input :date, as: :string, label: false, input_html: { class: 'date' }
     .col-md-6
       .panel.panel-default
-        .panel-heading Notizen
+        .panel-heading
+          h4.panel-title Notizen
         .panel-body = i.input :comments, as: :text, input_html: { rows: 4 }, label: false
   .row
     .col-md-4
       .panel.panel-default
-        .panel-heading Einladung
+        .panel-heading
+          h4.panel-title Einladung
         .panel-body
           = i.input :invited, as: :boolean
           = i.input :answer, collection: interview_answer_options
     .col-md-8
       .panel.panel-default
-        .panel-heading Ergebnis
+        .panel-heading
+          h4.panel-title Ergebnis
         .panel-body
           = i.input :result, collection: interview_result_options
           = i.input :reason, as: :text

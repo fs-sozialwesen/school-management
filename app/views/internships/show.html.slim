@@ -15,7 +15,8 @@
 .row
   .col-md-4
     .panel.panel-default
-      .panel-heading = Internship.model_name.human
+      .panel-heading
+        h4.panel-title = Internship.model_name.human
       .panel-body
         .row
           label.col-md-5 => Internship.human_attribute_name(:student)
@@ -34,7 +35,8 @@
               = link_to @internship.mentor.name, @internship.mentor.person
   .col-md-4
     .panel.panel-default
-      .panel-heading Zeitraum
+      .panel-heading
+        h4.panel-title Zeitraum
       .panel-body
         .row
           label.col-md-4 = Internship.human_attribute_name(:start_date)
@@ -44,6 +46,7 @@
           p.col-md-8 = ldate @internship.end_date
   .col-md-4
     .panel.panel-default
-      .panel-heading Bemerkungen
+      .panel-heading
+        h4.panel-title Bemerkungen
       .panel-body
         p = @internship.comments

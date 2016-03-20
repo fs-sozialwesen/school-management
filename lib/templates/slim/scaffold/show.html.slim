@@ -15,7 +15,8 @@
 .row
   .col-md-6
     .panel.panel-default
-      .panel-heading = <%= class_name %>.model_name.human
+      .panel-heading
+        h4.panel-title = <%= class_name %>.model_name.human
       .panel-body
 <%- for attribute in attributes -%>
         p

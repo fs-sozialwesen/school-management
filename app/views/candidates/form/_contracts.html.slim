@@ -1,19 +1,22 @@
 .row
   .col-md-4
     .panel.panel-default.education-contract
-      .panel-heading Ausbildungsvertrag
+      .panel-heading
+        h4.panel-title Ausbildungsvertrag
       .panel-body
         = f.input :education_contract_sent,     as: :string, label: 'Versand am', input_html:{ class: :date }
         = f.input :education_contract_received, as: :string, label: 'zurück',   input_html:{ class: :date }
   .col-md-4
     .panel.panel-default.internship-contract
-      .panel-heading Praktikumsvertrag
+      .panel-heading
+        h4.panel-title Praktikumsvertrag
       .panel-body
         = f.input :internship_contract_sent,     as: :string, label: 'Versand am', input_html:{ class: :date }
         = f.input :internship_contract_received, as: :string, label: 'zurück',   input_html:{ class: :date }
   .col-md-4
     .panel.panel-default.debit-mandate
-      .panel-heading Einzugsermächtigung
+      .panel-heading
+        h4.panel-title Einzugsermächtigung
       .panel-body
         = f.input :debit_mandate, as: :boolean
         = f.input :contract_notes, as: :text

@@ -21,7 +21,8 @@
       = render @person.login
     - else
       .panel.panel-default
-        .panel-heading Login
+        .panel-heading
+          h4.panel-title Login
         .panel-body = link_to 'Login erstellen', new_person_login_path(@person)
 
 = render @person.as_student if @person.student?

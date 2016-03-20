@@ -2,7 +2,8 @@
   .row
     .col-md-4
       .panel.panel-default
-        .panel-heading Bewerber
+        .panel-heading
+          h4.panel-title Bewerber
         .panel-body
           .row
             .col-md-6 = p.input :gender, collection: [%w(Frau f), %w(Herr m)], label: 'Anrede'
@@ -14,7 +15,8 @@
 
     .col-md-4
       .panel.panel-default
-        .panel-heading Adresse
+        .panel-heading
+          h4.panel-title Adresse
         .panel-body
           = p.simple_fields_for :address, p.object.address do |a|
             = a.input :street
@@ -23,7 +25,8 @@
 
     .col-md-4
       .panel.panel-default
-        .panel-heading Kontaktdaten
+        .panel-heading
+          h4.panel-title Kontaktdaten
         .panel-body
           = p.simple_fields_for :contact, p.object.contact do |c|
             = c.input :email
