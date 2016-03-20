@@ -5,7 +5,7 @@
   = link_to new_internship_path, class: 'btn btn-primary' do 
     span.glyphicon.glyphicon-plus
     =< t(:new)
-  h1
+  h2
     => @internships.count
     = Internship.model_name.human count: @internships.count
 

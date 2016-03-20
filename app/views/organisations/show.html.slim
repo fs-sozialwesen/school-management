@@ -8,7 +8,7 @@
   => link_to @organisation, method: :delete, data: { confirm: t(:confirm_delete, model: Organisation.model_name.human) }, class: 'btn btn-danger' do
     span.glyphicon.glyphicon-remove
     =< t(:delete)
-  h1
+  h2
     => @organisation.name
     small = Organisation.model_name.human
 

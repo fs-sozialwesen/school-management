@@ -3,7 +3,7 @@
   => link_to @room, method: :delete, data: confirm, class: 'btn btn-danger' do
     span.glyphicon.glyphicon-remove
     =< t(:delete)
-  h1
+  h2
     => @room.name
     small = Room.model_name.human
 
