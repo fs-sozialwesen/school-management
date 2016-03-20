@@ -4,7 +4,7 @@
     span.glyphicon.glyphicon-remove
     =< t(:delete)
   h1
-    small => TimeBlock.model_name.human
-    = @time_block.name
+    => @time_block.name
+    small = TimeBlock.model_name.human
 
 = render 'form'

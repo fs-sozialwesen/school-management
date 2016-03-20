@@ -8,8 +8,8 @@
       span.glyphicon.glyphicon-pencil
       |  Bearbeiten
   h1
-    small => InternshipPosition.model_name.human
     => @internship_position.name
+    small = InternshipPosition.model_name.human
 
 = panel_box do
   - homepage = @internship_position.contact.homepage

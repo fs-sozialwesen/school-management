@@ -1,6 +1,6 @@
 .page-header
   h1
-    small => Organisation.model_name.human
-    = @organisation.name
+    => @organisation.name
+    small = Organisation.model_name.human
 
 = render 'form'

@@ -3,7 +3,7 @@
     span.glyphicon.glyphicon-remove
     =< t(:delete)
   h1
-    small => TimetableDocument.model_name.human
-    = @timetable_document.name
+    => @timetable_document.name
+    small = TimetableDocument.model_name.human
 
 = render 'form'

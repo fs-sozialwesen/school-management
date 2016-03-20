@@ -4,7 +4,7 @@
     span.glyphicon.glyphicon-remove
     =< t(:delete)
   h1
-    small => Room.model_name.human
-    = @room.name
+    => @room.name
+    small = Room.model_name.human
 
 = render 'form'

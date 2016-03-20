@@ -9,8 +9,8 @@
     span.glyphicon.glyphicon-remove
     =< t(:delete)
   h1
-    small => Internship.model_name.human
-    = @internship.student.name
+    => @internship.student.name
+    small = Internship.model_name.human
 
 .row
   .col-md-4

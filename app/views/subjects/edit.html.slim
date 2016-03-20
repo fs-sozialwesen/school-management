@@ -4,8 +4,8 @@
     span.glyphicon.glyphicon-remove
     =< t(:delete)
   h1
-    small => Subject.model_name.human
-    = @subject.name
+    => @subject.name
+    small = Subject.model_name.human
 
 .row
   .col-md-6 = render 'form'
