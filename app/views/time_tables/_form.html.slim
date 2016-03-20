@@ -6,16 +6,12 @@
         span.sr-only Close
       h4
         = t('.error')
-
-  .panel.panel-default
-    .panel-heading
-      h4.panel-title = TimeTable.model_name.human
-    .panel-body
-      .row
-        .col-md-4
-          = f.input :start_date, as: :string, input_html: { class: 'date' }, label: 'Woche'
-        .col-md-8
-          = f.input :comments
+  = panel_box title: TimeTable.model_name.human
+    .row
+      .col-md-4
+        = f.input :start_date, as: :string, input_html: { class: 'date' }, label: 'Woche'
+      .col-md-8
+        = f.input :comments
 
   .row.action-buttons
     .col-md-12

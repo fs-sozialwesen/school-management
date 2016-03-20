@@ -1,27 +1,13 @@
 = f.simple_fields_for :interview, f.object.interview do |i|
   .row
-    .col-md-6
-      .panel.panel-default
-        .panel-heading
-          h4.panel-title Tag
-        .panel-body = i.input :date, as: :string, label: false, input_html: { class: 'date' }
-    .col-md-6
-      .panel.panel-default
-        .panel-heading
-          h4.panel-title Notizen
-        .panel-body = i.input :comments, as: :text, input_html: { rows: 4 }, label: false
+    .col-md-6 = panel_box title: 'Tag' do
+      = i.input :date, as: :string, label: false, input_html: { class: 'date' }
+    .col-md-6 = panel_box title: 'Notizen' do
+      = i.input :comments, as: :text, input_html: { rows: 4 }, label: false
   .row
-    .col-md-4
-      .panel.panel-default
-        .panel-heading
-          h4.panel-title Einladung
-        .panel-body
-          = i.input :invited, as: :boolean
-          = i.input :answer, collection: interview_answer_options
-    .col-md-8
-      .panel.panel-default
-        .panel-heading
-          h4.panel-title Ergebnis
-        .panel-body
-          = i.input :result, collection: interview_result_options
-          = i.input :reason, as: :text
+    .col-md-4 = panel_box title: 'Einladung' do
+      = i.input :invited, as: :boolean
+      = i.input :answer, collection: interview_answer_options
+    .col-md-8 = panel_box title: 'Ergebnis' do
+      = i.input :result, collection: interview_result_options
+      = i.input :reason, as: :text

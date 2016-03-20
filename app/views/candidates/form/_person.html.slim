@@ -1,35 +1,23 @@
 = f.simple_fields_for :person do |p|
   .row
-    .col-md-4
-      .panel.panel-default
-        .panel-heading
-          h4.panel-title Bewerber
-        .panel-body
-          .row
-            .col-md-6 = p.input :gender, collection: [%w(Frau f), %w(Herr m)], label: 'Anrede'
-          .row
-            .col-md-6 = p.input :first_name, required: true
-            .col-md-6 = p.input :last_name, required: true
-            .col-md-6 = p.input :date_of_birth, as: :string, input_html:{ class: :date, data: { start_view: 2 } }
-            .col-md-6 = p.input :place_of_birth
+    .col-md-4 = panel_box title: 'Bewerber' do
+      .row
+        .col-md-6 = p.input :gender, collection: [%w(Frau f), %w(Herr m)], label: 'Anrede'
+      .row
+        .col-md-6 = p.input :first_name, required: true
+        .col-md-6 = p.input :last_name, required: true
+        .col-md-6 = p.input :date_of_birth, as: :string, input_html:{ class: :date, data: { start_view: 2 } }
+        .col-md-6 = p.input :place_of_birth
 
-    .col-md-4
-      .panel.panel-default
-        .panel-heading
-          h4.panel-title Adresse
-        .panel-body
-          = p.simple_fields_for :address, p.object.address do |a|
-            = a.input :street
-            = a.input :zip
-            = a.input :city
+    .col-md-4 = panel_box title: 'Adresse' do
+      = p.simple_fields_for :address, p.object.address do |a|
+        = a.input :street
+        = a.input :zip
+        = a.input :city
 
-    .col-md-4
-      .panel.panel-default
-        .panel-heading
-          h4.panel-title Kontaktdaten
-        .panel-body
-          = p.simple_fields_for :contact, p.object.contact do |c|
-            = c.input :email
-            = c.input :phone
-            = c.input :mobile
+    .col-md-4 = panel_box title: 'Kontaktdaten' do
+      = p.simple_fields_for :contact, p.object.contact do |c|
+        = c.input :email
+        = c.input :phone
+        = c.input :mobile
 

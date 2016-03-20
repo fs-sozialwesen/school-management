@@ -24,16 +24,13 @@ nav.navbar.navbar-default
         span.sr-only Close
       h4 = t('.error')
 
-  .panel.panel-default
-    .panel-heading
-      h4.panel-title Absage
-    .panel-body
-      .row
-        .col-md-4
-          = f.input :cancel_date, as: :string, input_html: { class: 'date' }
-          = f.input :status, collection: [%w(Schule rejected), %w(Bewerber canceled)], label: 'Absage durch'
-        .col-md-8
-          = f.input :cancel_reason, input_html: { rows: 5 }
+  = panel_box title: 'Absage' do
+    .row
+      .col-md-4
+        = f.input :cancel_date, as: :string, input_html: { class: 'date' }
+        = f.input :status, collection: [%w(Schule rejected), %w(Bewerber canceled)], label: 'Absage durch'
+      .col-md-8
+        = f.input :cancel_reason, input_html: { rows: 5 }
 
   .row: .col-md-9 = f.submit 'Absagen', class: 'btn btn-danger'
 

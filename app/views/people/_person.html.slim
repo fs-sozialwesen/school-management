@@ -1,34 +1,31 @@
-.panel.panel-default
-  .panel-heading
-    h4.panel-title Personendaten
-  .panel-body
-    .row
-      .col-md-4
-        p = gt(:salut, person)
-        p = person.name
-        p
-          label geb.
-          =< ldate person.date_of_birth
-          - if person.place_of_birth.present?
-            |  in #{person.place_of_birth}
+= panel_box title: 'Personendaten' do
+  .row
+    .col-md-4
+      p = gt(:salut, person)
+      p = person.name
+      p
+        label geb.
+        =< ldate person.date_of_birth
+        - if person.place_of_birth.present?
+          |  in #{person.place_of_birth}
 
-      .col-md-4
-        - address = person.address
-        p = address.street
-        p #{address.zip} #{address.city}
+    .col-md-4
+      - address = person.address
+      p = address.street
+      p #{address.zip} #{address.city}
 
-      .col-md-4
-        p
-          label.icon
-            span.glyphicon.glyphicon-envelope
-          - email = person.contact.email
-          - if email.present?
-            =< link_to email, "mailto:#{email}"
-        p
-          label.icon
-            span.glyphicon.glyphicon-earphone
-          =< person.contact.phone
-        p
-          label.icon
-            span.glyphicon.glyphicon-phone
-          =< person.contact.mobile
+    .col-md-4
+      p
+        label.icon
+          span.glyphicon.glyphicon-envelope
+        - email = person.contact.email
+        - if email.present?
+          =< link_to email, "mailto:#{email}"
+      p
+        label.icon
+          span.glyphicon.glyphicon-earphone
+        =< person.contact.phone
+      p
+        label.icon
+          span.glyphicon.glyphicon-phone
+        =< person.contact.mobile

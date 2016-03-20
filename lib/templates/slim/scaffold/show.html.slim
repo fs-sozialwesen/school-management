@@ -13,13 +13,9 @@
     small = <%= class_name %>.model_name.human
 
 .row
-  .col-md-6
-    .panel.panel-default
-      .panel-heading
-        h4.panel-title = <%= class_name %>.model_name.human
-      .panel-body
+  .col-md-6 = panel_box title: <%= class_name %>.model_name.human do
 <%- for attribute in attributes -%>
-        p
-          label => <%= class_name %>.human_attribute_name(:<%= attribute.name %>)
-          = @<%= file_name %>.<%= attribute.name %>
+    .row
+      label.col-md-4 => <%= class_name %>.human_attribute_name(:<%= attribute.name %>)
+      .col-md-8 = @<%= file_name %>.<%= attribute.name %>
 <%- end -%>

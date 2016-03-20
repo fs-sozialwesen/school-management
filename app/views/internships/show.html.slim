@@ -13,40 +13,30 @@
     small = Internship.model_name.human
 
 .row
-  .col-md-4
-    .panel.panel-default
-      .panel-heading
-        h4.panel-title = Internship.model_name.human
-      .panel-body
-        .row
-          label.col-md-5 => Internship.human_attribute_name(:student)
-          p.col-md-7 = link_to @internship.student.name, @internship.student.person
-        .row
-          label.col-md-5 => Internship.human_attribute_name(:internship_position)
-          p.col-md-7 = link_to @internship.internship_position.name, @internship.internship_position
-        .row
-          label.col-md-5 Träger
-          - organisation = @internship.internship_position.organisation
-          p.col-md-7 = link_to organisation.name, organisation
-        .row
-          label.col-md-5 => Internship.human_attribute_name(:mentor)
-          p.col-md-7
-            - if @internship.mentor.present?
-              = link_to @internship.mentor.name, @internship.mentor.person
-  .col-md-4
-    .panel.panel-default
-      .panel-heading
-        h4.panel-title Zeitraum
-      .panel-body
-        .row
-          label.col-md-4 = Internship.human_attribute_name(:start_date)
-          p.col-md-8 = ldate @internship.start_date
-        .row
-          label.col-md-4 = Internship.human_attribute_name(:end_date)
-          p.col-md-8 = ldate @internship.end_date
-  .col-md-4
-    .panel.panel-default
-      .panel-heading
-        h4.panel-title Bemerkungen
-      .panel-body
-        p = @internship.comments
+  .col-md-4 = panel_box title: Internship.model_name.human do
+    .row
+      label.col-md-5 => Internship.human_attribute_name(:student)
+      p.col-md-7 = link_to @internship.student.name, @internship.student.person
+    .row
+      label.col-md-5 => Internship.human_attribute_name(:internship_position)
+      p.col-md-7 = link_to @internship.internship_position.name, @internship.internship_position
+    .row
+      label.col-md-5 Träger
+      - organisation = @internship.internship_position.organisation
+      p.col-md-7 = link_to organisation.name, organisation
+    .row
+      label.col-md-5 => Internship.human_attribute_name(:mentor)
+      p.col-md-7
+        - if @internship.mentor.present?
+          = link_to @internship.mentor.name, @internship.mentor.person
+
+  .col-md-4 = panel_box title: 'Zeitraum' do
+    .row
+      label.col-md-4 = Internship.human_attribute_name(:start_date)
+      p.col-md-8 = ldate @internship.start_date
+    .row
+      label.col-md-4 = Internship.human_attribute_name(:end_date)
+      p.col-md-8 = ldate @internship.end_date
+
+  .col-md-4 = panel_box title: 'Bemerkungen' do
+    p = @internship.comments

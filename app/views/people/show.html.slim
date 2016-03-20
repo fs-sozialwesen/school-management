@@ -20,10 +20,8 @@
     - if @person.login
       = render @person.login
     - else
-      .panel.panel-default
-        .panel-heading
-          h4.panel-title Login
-        .panel-body = link_to 'Login erstellen', new_person_login_path(@person)
+      = panel_box title: 'Login' do
+        = link_to 'Login erstellen', new_person_login_path(@person)
 
 = render @person.as_student if @person.student?
 = render @person.as_mentor if @person.mentor?

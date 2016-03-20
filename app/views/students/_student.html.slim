@@ -1,11 +1,7 @@
 .row
-  .col-md-6
-    .panel.panel-default
-      .panel-heading
-        h4.panel-title Klasse
-      .panel-body
-        - if student.course.present?
-          = link_to student.course.name, student.course
+  .col-md-6 = panel_box title: 'Klasse' do
+    - if student.course.present?
+      = link_to student.course.name, student.course
 
   .col-md-6
     .panel.panel-default

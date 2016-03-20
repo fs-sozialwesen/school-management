@@ -74,10 +74,7 @@
                 | -
                 =< l time_table.end_date, format: :wday_short
               td = time_table.comments
-    .panel.panel-default
-      .panel-heading
-        h4.panel-title
-          |  Stundenstatistik
+    = panel_box_with_table title: 'Stundenstatistik' do
       table.table.table-condensed.table-hover.table-striped
         thead
           th Fach
