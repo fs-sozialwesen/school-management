@@ -1,7 +1,7 @@
 # class Person
 class Person < ActiveRecord::Base
   # ROLES = %w(admin manager teacher student mentor candidate).freeze
-  ROLES = %w(admin manager teacher student candidate).freeze
+  ROLES = %w(admin manager teacher student candidate mentor).freeze
   AS_ROLES = ROLES.map { |role| "as_#{role}".to_sym }.freeze
 
   acts_as_addressable
@@ -19,14 +19,14 @@ class Person < ActiveRecord::Base
   has_one :as_manager,   class_name: 'Manager', dependent: :destroy
   has_one :as_teacher,   class_name: 'Teacher', dependent: :destroy
   has_one :as_student,   class_name: 'Student', dependent: :destroy
-  # has_one :as_mentor,    class_name: 'Mentor'
+  has_one :as_mentor,    class_name: 'Mentor', dependent: :destroy
   has_one :as_candidate, class_name: 'Candidate', dependent: :destroy
 
   scope :admins,     -> { joins(:as_admin).    includes(:as_admin) }
   scope :managers,   -> { joins(:as_manager).  includes(:as_manager) }
   scope :teachers,   -> { joins(:as_teacher).  includes(:as_teacher) }
   scope :students,   -> { joins(:as_student).  includes(:as_student) }
-  # scope :mentors,    -> { joins(:as_mentor).   includes(:as_mentor) }
+  scope :mentors,    -> { joins(:as_mentor).   includes(:as_mentor) }
   scope :candidates, -> { joins(:as_candidate).includes(:as_candidate) }
 
   has_paper_trail

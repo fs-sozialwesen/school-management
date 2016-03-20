@@ -7,3 +7,5 @@ h1
       small => gt(:teacher, @person)
     - if @person.manager?
       small = gt(:manager, @person)
+    - if @person.mentor?
+      small = gt(:mentor, @person)

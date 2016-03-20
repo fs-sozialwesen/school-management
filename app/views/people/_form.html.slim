@@ -50,6 +50,14 @@
                 group_method: :last,
                 label_method: :name,
                 value_method: :id
+  - if @person.mentor?
+    .row
+      .col-md-6
+        .panel.panel-default
+          .panel-heading Träger
+          .panel-body
+            = f.simple_fields_for :as_mentor do |s|
+              = s.association :organisation, collection: Organisation.order(:name)
 
   .row.action-buttons
     .col-md-12

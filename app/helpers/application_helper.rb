@@ -42,7 +42,7 @@ module ApplicationHelper
 
   def panel_heading(title: nil)
     return unless title
-    content_tag(:div, class: 'panel-heading') { content_tag(:div, title, class: 'panel-title') }
+    content_tag(:div, class: 'panel-heading') { content_tag(:h4, title, class: 'panel-title') }
   end
 
   def link_to_email(address)

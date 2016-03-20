@@ -22,7 +22,12 @@ class InternshipPositionsController < ApplicationController
   end
 
   def new
-    @internship_position = InternshipPosition.new
+    @internship_position = if params[:organisation_id].present?
+      organisation = Organisation.find params[:organisation_id]
+      organisation.internship_positions.build
+    else
+      InternshipPosition.new
+    end
   end
 
   def create

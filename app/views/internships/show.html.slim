@@ -17,28 +17,31 @@
     .panel.panel-default
       .panel-heading = Internship.model_name.human
       .panel-body
-        p
-          label => Internship.human_attribute_name(:student)
-          = link_to @internship.student.name, @internship.student.person
-        p
-          label => Internship.human_attribute_name(:internship_position)
-          = link_to @internship.internship_position.name, @internship.internship_position
-        p
-          label Träger
-          = @internship.internship_position.organisation.name
-        p
-          label => Internship.human_attribute_name(:mentor)
-          = @internship.mentor
+        .row
+          label.col-md-5 => Internship.human_attribute_name(:student)
+          p.col-md-7 = link_to @internship.student.name, @internship.student.person
+        .row
+          label.col-md-5 => Internship.human_attribute_name(:internship_position)
+          p.col-md-7 = link_to @internship.internship_position.name, @internship.internship_position
+        .row
+          label.col-md-5 Träger
+          - organisation = @internship.internship_position.organisation
+          p.col-md-7 = link_to organisation.name, organisation
+        .row
+          label.col-md-5 => Internship.human_attribute_name(:mentor)
+          p.col-md-7
+            - if @internship.mentor.present?
+              = link_to @internship.mentor.name, @internship.mentor.person
   .col-md-4
     .panel.panel-default
       .panel-heading Zeitraum
       .panel-body
-        p
-          label => Internship.human_attribute_name(:start_date)
-          = ldate @internship.start_date
-        p
-          label => Internship.human_attribute_name(:end_date)
-          = ldate @internship.end_date
+        .row
+          label.col-md-4 = Internship.human_attribute_name(:start_date)
+          p.col-md-8 = ldate @internship.start_date
+        .row
+          label.col-md-4 = Internship.human_attribute_name(:end_date)
+          p.col-md-8 = ldate @internship.end_date
   .col-md-4
     .panel.panel-default
       .panel-heading Bemerkungen

@@ -13,8 +13,10 @@ class InternshipsController < ApplicationController
 
   def new
     authorize Internship
-    @internship = Internship.new
-    @students = Student.joins(:person).includes(:person).order('people.first_name, people.last_name')
+    options           = {}
+    options[:student] = Student.find params[:student_id] if params[:student_id].present?
+    @internship       = Internship.new options
+    @students         = Student.joins(:person).includes(:person).order('people.first_name, people.last_name')
   end
 
   def edit
@@ -54,7 +56,7 @@ class InternshipsController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def internship_params
-    params.require(:internship).permit(:student_id, :internship_position_id, :mentor, :start_date, :end_date, :comments)
+    params.require(:internship).permit(:student_id, :internship_position_id, :mentor_id, :start_date, :end_date, :comments)
   end
 
 end

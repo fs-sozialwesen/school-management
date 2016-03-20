@@ -8,12 +8,19 @@
 
   .col-md-6
     .panel.panel-default
-      .panel-heading Praktika
+      .panel-heading
+        h4.panel-title
+          |  Praktika
+          ul.list-inline.pull-right
+            li = link_to new_internship_path(student_id: student.id), class: 'btn btn-default btn-xs' do
+              span.glyphicon.glyphicon-plus>
+              | Neu
       table.table.table-striped.table-bordered.table-condensed.table-clickable
         thead
           tr
             th Zeitraum
             th Praktikumsplatz
+            th Praxisanleiter
         tbody
           - student.internships.includes(:internship_position).each do |internship|
             tr data={ url: url_for(internship) }
@@ -22,4 +29,5 @@
                 |  -
                 =< ldate(internship.end_date)
               td = internship.internship_position.name
+              td = internship.mentor.try :name
 

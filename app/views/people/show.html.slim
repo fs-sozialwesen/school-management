@@ -25,6 +25,7 @@
         .panel-body = link_to 'Login erstellen', new_person_login_path(@person)
 
 = render @person.as_student if @person.student?
+= render @person.as_mentor if @person.mentor?
 = render @person.as_candidate if @person.candidate?
 .row
   .col-md-6 = render @person.as_teacher if @person.teacher?

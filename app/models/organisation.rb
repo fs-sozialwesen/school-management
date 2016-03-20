@@ -11,6 +11,7 @@ class Organisation < ActiveRecord::Base
   # has_many :roles
 
   has_many :internship_positions, inverse_of: :organisation
+  has_many :mentors, inverse_of: :organisation
 
   has_paper_trail
 

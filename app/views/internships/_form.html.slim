@@ -16,7 +16,7 @@
           = f.association :student, collection: students
           = f.association :internship_position, collection: organisations, as: :grouped_select,
               group_method: :internship_positions, group_label_method: :name
-          = f.input :mentor
+          = f.association :mentor, collection: Mentor.joins(:person).order('people.last_name'), include_blank: true
     .col-md-4
       .panel.panel-default
         .panel-heading Zeitraum

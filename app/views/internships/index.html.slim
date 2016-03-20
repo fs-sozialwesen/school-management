@@ -25,6 +25,6 @@
           td = internship.student.name
           td = internship.internship_position.name
           td = internship.internship_position.organisation.name
-          td = internship.mentor
+          td = internship.mentor.try :name
           td = ldate internship.start_date
           td = ldate internship.end_date
