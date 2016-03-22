@@ -12,6 +12,10 @@ class PersonPolicy < ApplicationPolicy
     manager?
   end
 
+  def mentors?
+    manager?
+  end
+
   def show?
     manager? or user == person
   end

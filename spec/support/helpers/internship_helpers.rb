@@ -31,7 +31,8 @@ module Features
       create_internship_position internship_position_name
       click_on 'Praktika'
       click_on 'Neu'
-      select 'Sabine Neumann', from: 'Auszubildende(r)'
+      # select 'Sabine Neumann', from: 'Auszubildende(r)'
+      select 'Sabine Neumann', from: 'internship[student_id]'
       select internship_position_name, from: 'Praktikumsplatz'
       fill_in :Beginn, with: '1.1.2016'
       fill_in :Ende, with: '31.3.2016'

@@ -31,18 +31,26 @@ module ApplicationHelper
     menu_item (scope == :index) ? simple_menu_item_for(model) : people_menu_item_for(scope.to_s)
   end
 
-  def panel_box(title: nil, &block)
+  def panel_box(title: nil, css_class: '', &block)
     content = capture(&block)
-    content_tag(:div, class: 'panel panel-default') do
+    content_tag(:div, class: "panel panel-default #{css_class}") do
       head = panel_heading title:   title
       body = content_tag(:div, content, class: 'panel-body')
       [head, body].join.html_safe
     end
   end
 
+  def panel_box_with_table(title: nil, css_class: '', &block)
+    content = capture(&block)
+    content_tag(:div, class: "panel panel-default #{css_class}") do
+      head = panel_heading title:   title
+      [head, content].join.html_safe
+    end
+  end
+
   def panel_heading(title: nil)
     return unless title
-    content_tag(:div, class: 'panel-heading') { content_tag(:div, title, class: 'panel-title') }
+    content_tag(:div, class: 'panel-heading') { content_tag(:h4, title, class: 'panel-title') }
   end
 
   def link_to_email(address)

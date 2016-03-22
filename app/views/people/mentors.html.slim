@@ -1,0 +1,26 @@
+.page-header
+  = link_to new_person_path(scope: :mentor), class: 'btn btn-primary' do
+    span.glyphicon.glyphicon-plus
+    |  Neu
+  /= link_to students_people_path(format: :csv), id: 'export-csv-button', class: 'btn btn-default' do
+    span.glyphicon.glyphicon-export
+    |  Exportieren
+
+  h2 #{@mentors.count} Praxisanleiter
+
+.table-responsive
+  table.table.table-striped.table-bordered.table-hover.table-clickable
+    thead
+      tr
+        th Vorname
+        th Nachname
+        th Träger
+    tbody
+      - @mentors.each do | mentor |
+        tr data={ url: url_for(mentor) }
+          td = mentor.first_name
+          td = mentor.last_name
+          td = mentor.as_mentor.organisation.name
+
+coffee:
+  $ -> window.onhashchange = -> window.scrollTo(0, window.scrollY - 80 )

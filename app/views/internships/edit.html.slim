@@ -1,6 +1,6 @@
 .page-header
-  h1
-    small => Internship.model_name.human
-    = @internship.student.name
+  h2
+    => @internship.student.name
+    small = Internship.model_name.human
 
 = render 'form'

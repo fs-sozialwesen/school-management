@@ -1,0 +1,20 @@
+.row
+  .col-md-6 = panel_box title: 'Träger' do
+    = link_to mentor.organisation.name, mentor.organisation
+
+  .col-md-6 = panel_box_with_table title: 'Betreute Praktika' do
+    table.table.table-striped.table-bordered.table-condensed.table-clickable
+      thead
+        tr
+          th Zeitraum
+          th Praktikumsplatz
+          th Auszubildender
+      tbody
+        - mentor.internships.includes(:internship_position).each do |internship|
+          tr data={ url: url_for(internship) }
+            td
+              => ldate(internship.start_date)
+              |  -
+              =< ldate(internship.end_date)
+            td = internship.internship_position.name
+            td = internship.student.name

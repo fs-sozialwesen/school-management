@@ -8,35 +8,44 @@
   => link_to @organisation, method: :delete, data: { confirm: t(:confirm_delete, model: Organisation.model_name.human) }, class: 'btn btn-danger' do
     span.glyphicon.glyphicon-remove
     =< t(:delete)
-  h1
-    small => Organisation.model_name.human
-    = @organisation.name
+  h2
+    => @organisation.name
+    small = Organisation.model_name.human
 
 .row
   .col-md-6
+    - if @organisation.comments.present?
+      .panel.panel-default
+        .panel-body = @organisation.comments
     .panel.panel-default
-      .panel-heading = Organisation.model_name.human
-      .panel-body
-        p
-          label => Organisation.human_attribute_name(:name)
-          = @organisation.name
-        /p
-          label> Träger
-          = @organisation.carrier.name if @organisation.carrier.present?
-        p
-          label> Bemerkungen
-          = @organisation.comments
-    = render @organisation.address
-    = render @organisation.contact
-
-  .col-md-6
-    .panel.panel-default
-      .panel-heading Einrichtungen
+      .panel-heading
+        h4.panel-title
+          |  Einrichtungen (Praktikumsplätze)
+          ul.list-inline.pull-right
+            li = link_to new_internship_position_path(organisation_id: @organisation.id), class: 'btn btn-default btn-xs' do
+              span.glyphicon.glyphicon-plus>
+              | Neu
       table.table.table-condensed.table-striped.table-hover.table-clickable
-        /thead
-          th Name
         tbody
-          - @organisation.internship_positions.each do |internship_position|
+          - @organisation.internship_positions.order(:name).each do |internship_position|
             tr data={ url: url_for(internship_position) }
               td = internship_position.name
+
+    .panel.panel-default
+      .panel-heading
+        h4.panel-title
+          |  Praxisanleiter
+          ul.list-inline.pull-right
+            li = link_to new_person_path(scope: :mentor, organisation_id: @organisation.id), class: 'btn btn-default btn-xs' do
+              span.glyphicon.glyphicon-plus>
+              | Neu
+      table.table.table-condensed.table-striped.table-hover.table-clickable
+        tbody
+          - @organisation.mentors.each do |mentor|
+            tr data={ url: url_for(mentor.person) }
+              td = mentor.name
+
+  .col-md-6
+    = render @organisation.address
+    = render @organisation.contact
 

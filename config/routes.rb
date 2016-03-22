@@ -9,6 +9,7 @@ Rails.application.routes.draw do
       get :managers
       get :teachers
       get :students
+      get :mentors
     end
   end
   resources :courses, shallow: true do

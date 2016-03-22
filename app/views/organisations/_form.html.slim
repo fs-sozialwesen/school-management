@@ -8,18 +8,15 @@
 
   .row
     .col-md-6
-      .panel.panel-default
-        .panel-heading = Organisation.model_name.human
-        .panel-body
-          = f.input :name, required: true
-          = f.input :comments
-
+      = panel_box title: Organisation.model_name.human do
+        = f.input :name, required: true
+        = f.input :comments
   .row
-    .col-md-6 = render 'serializers/form/contact', f: f
     .col-md-6 = render 'serializers/form/address', f: f
+    .col-md-6 = render 'serializers/form/contact', f: f
 
   .row.action-buttons
-    .col-md-6
+    .col-md-12
       .pull-right
         => link_to t(:cancel), 'javascript: window.history.back();', class: 'btn btn-default'
         = f.submit t(:save), class: 'btn btn-primary'

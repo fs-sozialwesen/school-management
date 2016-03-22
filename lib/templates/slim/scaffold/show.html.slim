@@ -8,17 +8,14 @@
   => link_to @<%= file_name %>, method: :delete, data: { confirm: t(:confirm_delete, model: <%= class_name %>.model_name.human) }, class: 'btn btn-danger' do
     span.glyphicon.glyphicon-remove
     =< t(:delete)
-  h1
-    small => <%= class_name %>.model_name.human
-    = @<%= file_name %>.name
+  h2
+    => @<%= file_name %>.name
+    small = <%= class_name %>.model_name.human
 
 .row
-  .col-md-6
-    .panel.panel-default
-      .panel-heading = <%= class_name %>.model_name.human
-      .panel-body
+  .col-md-6 = panel_box title: <%= class_name %>.model_name.human do
 <%- for attribute in attributes -%>
-        p
-          label => <%= class_name %>.human_attribute_name(:<%= attribute.name %>)
-          = @<%= file_name %>.<%= attribute.name %>
+    .row
+      label.col-md-4 => <%= class_name %>.human_attribute_name(:<%= attribute.name %>)
+      .col-md-8 = @<%= file_name %>.<%= attribute.name %>
 <%- end -%>

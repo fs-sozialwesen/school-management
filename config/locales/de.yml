@@ -44,6 +44,10 @@ de:
     form:
       error: Klasse konnte nicht gespeichert werden.
   internship_positions:
+    internship_position:
+      by_mail: per Post
+      by_email: per E-Mail
+      by_phone: per Telefon
     create:
       success: Praktikumsplatz gespeichert.
     update:
@@ -118,6 +122,8 @@ de:
       error: Manager konnte nicht gespeichert werden.
     show:
       confirm_delete: "Wirklich löschen?"
+  mentor_f: Praxisanleiterin
+  mentor_m: Praxisanleiter
   people:
     employees:
       manager: Manager
@@ -126,6 +132,7 @@ de:
       title_manager: Neue(n) Manager(in) anlegen
       title_teacher: Neue(n) Lehrer(in) anlegen
       title_student: Neue(n) Auszubildende(n) anlegen
+      title_mentor: Neue(n) Praxisanleiter(in) anlegen
     create:
       success: Personendaten gespeichert.
     update:

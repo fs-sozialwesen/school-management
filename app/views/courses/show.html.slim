@@ -8,9 +8,9 @@
   => link_to @course, method: :delete, data: { confirm: t(:confirm_delete, model: Course.model_name.human) }, class: 'btn btn-danger' do
     span.glyphicon.glyphicon-remove
     =< t(:delete)
-  h1
+  h2
+    => @course.name
     small Klasse
-    =< @course.name
 
 .row
   .col-md-3
@@ -74,10 +74,7 @@
                 | -
                 =< l time_table.end_date, format: :wday_short
               td = time_table.comments
-    .panel.panel-default
-      .panel-heading
-        h4.panel-title
-          |  Stundenstatistik
+    = panel_box_with_table title: 'Stundenstatistik' do
       table.table.table-condensed.table-hover.table-striped
         thead
           th Fach

@@ -1,4 +1,4 @@
-.page-header: h1 Bewerber #{@candidate.person.name} absagen
+.page-header: h2 Bewerber #{@candidate.person.name} absagen
 
 nav.navbar.navbar-default
   .navbar-header
@@ -24,15 +24,13 @@ nav.navbar.navbar-default
         span.sr-only Close
       h4 = t('.error')
 
-  .panel.panel-default
-    .panel-heading Absage
-    .panel-body
-      .row
-        .col-md-4
-          = f.input :cancel_date, as: :string, input_html: { class: 'date' }
-          = f.input :status, collection: [%w(Schule rejected), %w(Bewerber canceled)], label: 'Absage durch'
-        .col-md-8
-          = f.input :cancel_reason, input_html: { rows: 5 }
+  = panel_box title: 'Absage' do
+    .row
+      .col-md-4
+        = f.input :cancel_date, as: :string, input_html: { class: 'date' }
+        = f.input :status, collection: [%w(Schule rejected), %w(Bewerber canceled)], label: 'Absage durch'
+      .col-md-8
+        = f.input :cancel_reason, input_html: { rows: 5 }
 
   .row: .col-md-9 = f.submit 'Absagen', class: 'btn btn-danger'
 

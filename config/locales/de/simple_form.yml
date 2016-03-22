@@ -16,6 +16,7 @@ de:
         street: Straße/Nr
         zip: PLZ
       contact:
+        person: Ansprechpartner
         email: E-Mail-Adresse
         mobile: Mobiltelefon
         phone: Telefon

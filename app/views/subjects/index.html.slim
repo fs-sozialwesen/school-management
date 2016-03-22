@@ -5,7 +5,7 @@
   = link_to new_subject_path, class: 'btn btn-primary' do 
     span.glyphicon.glyphicon-plus
     =< t(:new)
-  h1
+  h2
     => @subjects.count
     = Subject.model_name.human count: @subjects.count
 

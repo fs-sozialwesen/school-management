@@ -1,14 +1,12 @@
-.panel.panel-default
-  .panel-heading Klassenlehrer von folgenden Klassen
-  .panel-body
-    .row
-      .col-md-6
-        label Aktive
-        ul.list-unstyled
-          - teacher.courses.active.order(:end_date).each do | course |
-            li = link_to course.name, course
-      .col-md-6
-        label Archiv
-        ul.list-unstyled
-          - teacher.courses.inactive.order(:end_date).each do | course |
-            li = link_to course.name, course, class: 'text-muted'
+= panel_box title: 'Klassenlehrer von folgenden Klassen' do
+  .row
+    .col-md-6
+      label Aktive
+      ul.list-unstyled
+        - teacher.courses.active.order(:end_date).each do | course |
+          li = link_to course.name, course
+    .col-md-6
+      label Archiv
+      ul.list-unstyled
+        - teacher.courses.inactive.order(:end_date).each do | course |
+          li = link_to course.name, course, class: 'text-muted'

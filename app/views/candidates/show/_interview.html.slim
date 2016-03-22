@@ -1,17 +1,18 @@
 .panel.panel-default.interview
   .panel-heading
-    |  Kennlerntreffen
-    ul.list-inline.pull-right
-      li
-        - if interview.open?
-          span.label.label-default ✓ offen
-        - if interview.accepted?
-          span.label.label-success ✓ angenommen
-        - if interview.rejected?
-          span.label.label-danger abgelehnt
-      li = link_to edit_candidate_path(@candidate, part: 'interview'), class: 'btn btn-default btn-xs' do
-        span.glyphicon.glyphicon-cog>
-        | Bearbeiten
+    h4.panel-title
+      |  Kennlerntreffen
+      ul.list-inline.pull-right
+        li
+          - if interview.open?
+            span.label.label-default ✓ offen
+          - if interview.accepted?
+            span.label.label-success ✓ angenommen
+          - if interview.rejected?
+            span.label.label-danger abgelehnt
+        li = link_to edit_candidate_path(@candidate, part: 'interview'), class: 'btn btn-default btn-xs' do
+          span.glyphicon.glyphicon-cog>
+          | Bearbeiten
 
   .panel-body
     .row

@@ -2,8 +2,8 @@
   => link_to @timetable_document, method: :delete, data: { confirm: t(:confirm_delete, model: TimetableDocument.model_name.human) }, class: 'btn btn-danger' do
     span.glyphicon.glyphicon-remove
     =< t(:delete)
-  h1
-    small => TimetableDocument.model_name.human
-    = @timetable_document.name
+  h2
+    => @timetable_document.name
+    small = TimetableDocument.model_name.human
 
 = render 'form'

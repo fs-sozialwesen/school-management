@@ -1,6 +1,7 @@
 - students = Student.joins(:person).includes(:person).order('people.first_name, people.last_name')
 - organisations = Organisation.includes(:internship_positions).order(:name)
-= simple_form_for(@internship, html: { role: 'form' }, defaults: { include_blank: false }) do |f|
+
+= simple_form_for(@internship, html: { role: 'form' }) do |f|
   - if @internship.errors.any?
     .alert.alert-danger.alert-dismissable@alert
       button.close type="button" data-dismiss="alert"
@@ -9,28 +10,39 @@
       h4 = t('.error')
 
   .row
-    .col-md-4
-      .panel.panel-default
-        .panel-heading = Internship.model_name.human
-        .panel-body
-          = f.association :student, collection: students
-          = f.association :internship_position, collection: organisations, as: :grouped_select,
-              group_method: :internship_positions, group_label_method: :name
-          = f.input :mentor
-    .col-md-4
-      .panel.panel-default
-        .panel-heading Zeitraum
-        .panel-body
-          = f.input :start_date, as: :string, input_html:{ class: :date }
-          = f.input :end_date, as: :string, input_html:{ class: :date }
-    .col-md-4
-      .panel.panel-default
-        .panel-heading Bemerkungen
-        .panel-body
-          = f.input :comments, label: false
+    .col-md-6
+      = panel_box title: 'Auszubildende(r)' do
+        = f.association :student, collection: students, include_blank: false, label: false
+      = panel_box title: 'Einrichtung' do
+        = f.input :organisation, collection: organisations, selected: @internship.organisation, include_blank: true
+        = f.association :internship_position, include_blank: true
+        = f.association :mentor, collection: Mentor.joins(:person).order('people.last_name'), include_blank: true
+
+    .col-md-6
+      = panel_box title: 'Zeitraum' do
+        = f.input :start_date, as: :string, input_html:{ class: :date }
+        = f.input :end_date, as: :string, input_html:{ class: :date }
+
+      /= panel_box title: 'Bemerkungen' do
+      = f.input :comments
 
   .row.action-buttons
     .col-md-12
       .pull-right
         => link_to t(:cancel), 'javascript: window.history.back();', class: 'btn btn-default'
         = f.submit t(:save), class: 'btn btn-primary'
+
+.data data={organisations: json_for_select(organisations).to_json}
+
+coffee:
+  $ ->
+    window.organisations = $('.data').data().organisations
+    $('#internship_organisation').change ->
+      orga_id = $(this).val()
+      orga = window.organisations[orga_id]
+      $('#internship_internship_position_id option, #internship_mentor_id option').remove()
+      $('#internship_mentor_id').append $("<option></option>")
+      for id, name of orga.ips
+        $('#internship_internship_position_id').append $("<option value='#{id}'>#{name}</option>")
+      for id, name of orga.mentors
+        $('#internship_mentor_id').append $("<option value='#{id}'>#{name}</option>")

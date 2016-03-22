@@ -5,7 +5,7 @@
   = link_to organisations_path(format: :xlsx), id: 'export-button', class: 'btn btn-default' do
     span.glyphicon.glyphicon-export
     =< t(:export)
-  h1
+  h2
     => @organisations.count
     = Organisation.model_name.human count: @organisations.count
 

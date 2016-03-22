@@ -5,7 +5,7 @@
   = link_to new_course_time_table_path, class: 'btn btn-primary' do
     span.glyphicon.glyphicon-plus
     =< t(:new)
-  h1
+  h2
     => @time_tables.count
     = TimeTable.model_name.human count: @time_tables.count
 

@@ -8,48 +8,43 @@
       h4 = t('.error')
 
   .row
-    .col-md-4
-      .panel.panel-default
-        .panel-heading Personendaten
-        .panel-body
-          .row
-            .col-md-6 = f.input :gender, collection: [%w(Frau f), %w(Herr m)]
-          .row
-            .col-md-6 = f.input :first_name, required: true
-            .col-md-6 = f.input :last_name, required: true
-            .col-md-6 = f.input :date_of_birth, as: :string, input_html:{ class: :date, data: { start_view: 2 } }
-            .col-md-6 = f.input :place_of_birth
+    .col-md-4 = panel_box title: 'Personendaten' do
+      .row
+        .col-md-6 = f.input :gender, collection: [%w(Frau f), %w(Herr m)]
+      .row
+        .col-md-6 = f.input :first_name, required: true
+        .col-md-6 = f.input :last_name, required: true
+        .col-md-6 = f.input :date_of_birth, as: :string, input_html:{ class: :date, data: { start_view: 2 } }
+        .col-md-6 = f.input :place_of_birth
 
-    .col-md-4
-      .panel.panel-default
-        .panel-heading Adresse
-        .panel-body
-          = f.simple_fields_for :address, @person.address do |a|
-            = a.input :street
-            = a.input :zip
-            = a.input :city
+    .col-md-4 = panel_box title: 'Adresse' do
+      = f.simple_fields_for :address, @person.address do |a|
+        = a.input :street
+        = a.input :zip
+        = a.input :city
 
-    .col-md-4
-      .panel.panel-default
-        .panel-heading Kontaktdaten
-        .panel-body
-          = f.simple_fields_for :contact, @person.contact do |c|
-            = c.input :email
-            = c.input :phone
-            = c.input :mobile
+    .col-md-4 = panel_box title: 'Kontaktdaten' do
+      = f.simple_fields_for :contact, @person.contact do |c|
+        = c.input :email
+        = c.input :phone
+        = c.input :mobile
+
   - if @person.student?
     .row
-      .col-md-6
-        .panel.panel-default
-          .panel-heading Klasse
-          .panel-body
-            = f.simple_fields_for :as_student do |s|
-              = s.association :course, label: false, include_blank: 'keine',
-                as: :grouped_select,
-                collection: { 'Aktive' => Course.active, 'Archiv' => Course.inactive },
-                group_method: :last,
-                label_method: :name,
-                value_method: :id
+      .col-md-6 = panel_box title: 'Klasse' do
+        = f.simple_fields_for :as_student do |s|
+          = s.association :course, label: false, include_blank: 'keine',
+            as: :grouped_select,
+            collection: { 'Aktive' => Course.active, 'Archiv' => Course.inactive },
+            group_method: :last,
+            label_method: :name,
+            value_method: :id
+
+  - if @person.mentor?
+    .row
+      .col-md-6 = panel_box title: 'Träger' do
+        = f.simple_fields_for :as_mentor do |s|
+          = s.association :organisation, collection: Organisation.order(:name)
 
   .row.action-buttons
     .col-md-12

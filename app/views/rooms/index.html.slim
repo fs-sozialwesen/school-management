@@ -5,7 +5,7 @@
   = link_to new_room_path, class: 'btn btn-primary' do 
     span.glyphicon.glyphicon-plus
     =< t(:new)
-  h1
+  h2
     => @rooms.count
     = Room.model_name.human count: @rooms.count
 

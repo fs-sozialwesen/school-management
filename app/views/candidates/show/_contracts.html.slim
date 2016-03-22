@@ -1,12 +1,13 @@
 .panel.panel-default.contracts
   .panel-heading
-    |  Verträge
-    ul.list-inline.pull-right
-      - if @candidate.contracts_complete?
-        li: span.label.label-success ✓ vollständig
-      li = link_to edit_candidate_path(@candidate, part: 'contracts'), class: 'btn btn-default btn-xs' do
-        span.glyphicon.glyphicon-cog>
-        | Bearbeiten
+    h4.panel-title
+      |  Verträge
+      ul.list-inline.pull-right
+        - if @candidate.contracts_complete?
+          li: span.label.label-success ✓ vollständig
+        li = link_to edit_candidate_path(@candidate, part: 'contracts'), class: 'btn btn-default btn-xs' do
+          span.glyphicon.glyphicon-cog>
+          | Bearbeiten
   .panel-body
     .row
       .col-md-3

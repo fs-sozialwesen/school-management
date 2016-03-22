@@ -5,7 +5,7 @@
   = link_to courses_path(format: :xlsx), id: 'export-button', class: 'btn btn-default' do
     span.glyphicon.glyphicon-export
     =< t(:export)
-  h1
+  h2
     => @active_courses.count
     = Course.model_name.human count: @active_courses.count
 

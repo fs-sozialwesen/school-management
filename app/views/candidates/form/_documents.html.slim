@@ -1,35 +1,23 @@
 .row
-  .col-md-4
-    .panel.panel-default.candidation
-      .panel-heading Bewerbung
-      .panel-body
-        = f.input :date, as: :string, input_html:{ class: :date }, required: true
-        - year = Date.current.year
-        = f.input :year, collection: (year..(year + 2)).to_a
+  .col-md-4 = panel_box title: 'Bewerbung', css_class: 'candidation' do
+    = f.input :date, as: :string, input_html:{ class: :date }, required: true
+    - year = Date.current.year
+    = f.input :year, collection: (year..(year + 2)).to_a
 
-  .col-md-4
-    .panel.panel-default.education-graduate
-      .panel-heading Schulabschluss
-      .panel-body
-        = f.simple_fields_for :school_graduate, f.object.school_graduate do |s|
-          = s.input :proved, as: :boolean
-          = s.input :graduate, collection: Enum.school_graduates
-  .col-md-4
-    .panel.panel-default.profession-graduate
-      .panel-heading Berufsabschluss
-      .panel-body
-        = f.simple_fields_for :profession_graduate, f.object.profession_graduate do |pr|
-          = pr.input :proved, as: :boolean
-          = pr.input :graduate, collection: Enum.profession_graduates, include_blank: 'kein'
-          = pr.input :comments
-  .col-md-4
-    .panel.panel-default.police-certificate
-      .panel-heading Führungszeugnis
-      .panel-body = f.input :police_certificate
+  .col-md-4 = panel_box title: 'Schulabschluss', css_class: 'education-graduate' do
+    = f.simple_fields_for :school_graduate, f.object.school_graduate do |s|
+      = s.input :proved, as: :boolean
+      = s.input :graduate, collection: Enum.school_graduates
 
-  .col-md-8
-    .panel.panel-default.internships
-      .panel-heading Praktika
-      .panel-body
-        = f.input :internships, label: false
-        = f.input :internships_proved
+  .col-md-4 = panel_box title: 'Berufsabschluss', css_class: 'profession-graduate' do
+    = f.simple_fields_for :profession_graduate, f.object.profession_graduate do |pr|
+      = pr.input :proved, as: :boolean
+      = pr.input :graduate, collection: Enum.profession_graduates, include_blank: 'kein'
+      = pr.input :comments
+
+  .col-md-4 = panel_box title: 'Führungszeugnis', css_class: 'police-certificate' do
+    = f.input :police_certificate
+
+  .col-md-8 = panel_box title: 'Praktika', css_class: 'internships' do
+    = f.input :internships, label: false
+    = f.input :internships_proved

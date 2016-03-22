@@ -7,12 +7,9 @@
       h4 = t('.error')
 
   .row
-    .col-md-4
-      .panel.panel-default
-        .panel-heading = <%= class_name %>.model_name.human
-        .panel-body
+    .col-md-4 = panel_box title: <%= class_name %>.model_name.human do
 <%-  attributes.each do |attribute| -%>
-          = f.input :<%= attribute.name %>
+      = f.input :<%= attribute.name %>
 <%- end -%>
 
   .row.action-buttons

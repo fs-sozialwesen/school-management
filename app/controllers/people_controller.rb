@@ -24,9 +24,22 @@ class PeopleController < ApplicationController
     end
   end
 
+  def mentors
+    authorize Person
+    @mentors = Person.mentors.includes(as_mentor: :organisation).order(:last_name)
+    # respond_to do |format|
+    #   format.html { @mentors = @mentors.where('students.course_id' => course_filter).all }
+    #   format.csv  { @mentors = @mentors.order('courses.name, last_name').all }
+    # end
+  end
+
   def new
     @person = Person.new
-    @person.send "build_as_#{@scope}"
+    if @scope == :mentor && params[:organisation_id].present?
+      @person.build_as_mentor organisation: Organisation.find(params[:organisation_id])
+    else
+      @person.send "build_as_#{@scope}"
+    end
     authorize @person
   end
 
@@ -65,7 +78,7 @@ class PeopleController < ApplicationController
 
   def set_scope
     @scope = params[:scope].to_sym
-    raise StandardError, "unknown scope #{@scope}" unless @scope.in?(%i(manager teacher student))
+    raise StandardError, "unknown scope #{@scope}" unless @scope.in?(%i(manager teacher student mentor))
   end
 
   # Use callbacks to share common setup or constraints between actions.
@@ -88,6 +101,7 @@ class PeopleController < ApplicationController
   def person_params
     permit = %i(id first_name last_name gender date_of_birth place_of_birth) + contact_params
     permit += [as_student_attributes: [:id, :course_id]] #if student?
+    permit += [as_mentor_attributes: [:id, :organisation_id]] #if mentor?
     params.require(:person).permit(permit)
   end
 

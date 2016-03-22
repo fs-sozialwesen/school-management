@@ -1,11 +1,12 @@
 .panel.panel-default.person
   .panel-heading
-    |  Bewerberdaten
-    ul.list-inline.pull-right
-      li: span.label.label-success ✓ angelegt
-      li = link_to edit_candidate_path(@candidate), class: 'btn btn-default btn-xs' do
-        span.glyphicon.glyphicon-cog>
-        | Bearbeiten
+    h4.panel-title
+      |  Bewerberdaten
+      ul.list-inline.pull-right
+        li: span.label.label-success ✓ angelegt
+        li = link_to edit_candidate_path(@candidate), class: 'btn btn-default btn-xs' do
+          span.glyphicon.glyphicon-cog>
+          | Bearbeiten
   .panel-body
     .row
       .col-md-4
