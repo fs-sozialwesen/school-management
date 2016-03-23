@@ -70,8 +70,11 @@ class PeopleController < ApplicationController
   end
 
   def destroy
-    @person.destroy
-    redirect_to view_context.index_path_for(@person), notice: t(:destroyed, model: model_name(@person))
+    if @person.destroy
+      redirect_to view_context.index_path_for(@person), notice: t(:destroyed, model: model_name(@person))
+    else
+      redirect_to @person, flash: { error: t('.failed')}
+    end
   end
 
   private

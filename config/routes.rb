@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   root to: 'visitors#index'
   devise_for :logins
   resources :people, except: :index do
-    resource(:login, only: %i(new create)) { patch :toggle }
+    resource(:login, only: %i(new create destroy)) { patch :toggle }
     collection do
       get :managers
       get :teachers

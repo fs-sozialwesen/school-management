@@ -2,7 +2,7 @@ class Teacher < ActiveRecord::Base
   belongs_to :person, validate: true, inverse_of: :as_teacher
   has_one :login, through: :person
   has_many :courses, inverse_of: :teacher
-  has_many :lessons, inverse_of: :teacher
+  has_many :lessons, inverse_of: :teacher, dependent: :restrict_with_error
 
   delegate :first_name, :last_name, :name, to: :person, allow_nil: true
 

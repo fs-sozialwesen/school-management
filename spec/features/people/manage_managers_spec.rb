@@ -75,7 +75,7 @@ feature 'Manage managers', :devise do
     sign_in_as_manager
     click_on 'Manager'
     click_row_with @current_user.last_name
-    click_on 'Löschen'
+    click_on 'Löschen', match: :first
     expect(page).to have_content('nicht berechtigt')
   end
 

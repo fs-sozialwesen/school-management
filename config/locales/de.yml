@@ -96,6 +96,7 @@ de:
   logins:
     login:
       confirm_toggle: Sicher?
+      confirm_delete: Soll das Login für diese Person wirklich gelöscht werden?
     create:
       success: Login gespeichert.
     update:
@@ -139,6 +140,7 @@ de:
       success: Personendaten gespeichert.
     destroy:
       success: Person gelöscht.
+      failed: Person kann nicht gelöscht werden, da sie mit anderen Datensätzen verknüpft ist
     form:
       error: Personendaten konnten nicht gespeichert werden.
     show:
