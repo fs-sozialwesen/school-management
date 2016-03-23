@@ -14,7 +14,7 @@
       = panel_box title: 'Auszubildende(r)' do
         = f.association :student, collection: students, include_blank: false, label: false
       = panel_box title: 'Einrichtung' do
-        = f.input :organisation, collection: organisations, selected: @internship.organisation.id, include_blank: true
+        = f.input :organisation, collection: organisations, selected: @internship&.organisation&.id, include_blank: true
         = f.association :internship_position, include_blank: true
         = f.association :mentor, collection: Mentor.joins(:person).order('people.last_name'), include_blank: true
 
