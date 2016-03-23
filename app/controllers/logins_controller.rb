@@ -21,25 +21,25 @@ class LoginsController < ApplicationController
 
   # def edit
   #   @login = @person.login
+  #   authorize @login
   # end
-
+  #
   # def update
-  #   @login = Login.find(params[:id])
+  #   @login = @person.login
   #   authorize @login
   #   if @login.update_attributes(login_params)
-  #     redirect_to @role, notice: t('.success')
+  #     redirect_to @person, notice: t(:updated, model: Login.model_name.human)
   #   else
   #     render :edit
-  #     # redirect_to logins_path, :alert => "Unable to update login."
   #   end
   # end
 
-  # def destroy
-  #   login = @person.login
-  #   authorize login
-  #   login.destroy
-  #   redirect_to @role, notice: t('.success')
-  # end
+  def destroy
+    login = @person.login
+    authorize login
+    login.destroy
+    redirect_to @person, notice: t('.success')
+  end
 
   def toggle
     login = @person.login
@@ -55,7 +55,7 @@ class LoginsController < ApplicationController
   end
 
   def login_params
-    params.require(:login).permit(:email, :password, :password_confirmation)
+    params.require(:login).permit(:id, :email, :password, :password_confirmation)
   end
 
 end
