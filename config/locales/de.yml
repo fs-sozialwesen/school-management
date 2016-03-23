@@ -140,6 +140,7 @@ de:
       success: Personendaten gespeichert.
     destroy:
       success: Person gelöscht.
+      failed: Person kann nicht gelöscht werden, da sie mit anderen Datensätzen verknüpft ist
     form:
       error: Personendaten konnten nicht gespeichert werden.
     show:
