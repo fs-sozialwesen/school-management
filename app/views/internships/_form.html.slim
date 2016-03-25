@@ -1,5 +1,5 @@
 - students = Student.joins(:person).includes(:person).order('people.first_name, people.last_name')
-- organisations = Organisation.includes(:internship_positions).order(:name)
+- organisations = Organisation.includes(:institutions).order(:name)
 
 = simple_form_for(@internship, html: { role: 'form' }) do |f|
   - if @internship.errors.any?
@@ -15,7 +15,7 @@
         = f.association :student, collection: students, include_blank: false, label: false
       = panel_box title: 'Einrichtung' do
         = f.input :organisation, collection: organisations, selected: @internship&.organisation&.id, include_blank: true
-        = f.association :internship_position, include_blank: true
+        = f.association :institution, include_blank: true
         = f.association :mentor, collection: Mentor.joins(:person).order('people.last_name'), include_blank: true
 
     .col-md-6
@@ -37,12 +37,13 @@
 coffee:
   $ ->
     window.organisations = $('.data').data().organisations
+    #$('#internship_organisation').removeAttribute('name')
     $('#internship_organisation').change ->
       orga_id = $(this).val()
       orga = window.organisations[orga_id]
-      $('#internship_internship_position_id option, #internship_mentor_id option').remove()
+      $('#internship_institution_id option, #internship_mentor_id option').remove()
       $('#internship_mentor_id').append $("<option></option>")
-      for id, name of orga.ips
-        $('#internship_internship_position_id').append $("<option value='#{id}'>#{name}</option>")
+      for id, name of orga.institutions
+        $('#internship_institution_id').append $("<option value='#{id}'>#{name}</option>")
       for id, name of orga.mentors
         $('#internship_mentor_id').append $("<option value='#{id}'>#{name}</option>")

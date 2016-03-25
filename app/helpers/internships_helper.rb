@@ -4,8 +4,8 @@ module InternshipsHelper
     organisations.each do |o|
       json_organisations[o.id] = { name: o.name }
 
-      ips = json_organisations[o.id][:ips] = {}
-      o.internship_positions.each { |ip| ips[ip.id] = ip.name }
+      institutions = json_organisations[o.id][:institutions] = {}
+      o.institutions.each { |ip| institutions[ip.id] = ip.name }
 
       mentors = json_organisations[o.id][:mentors] = {}
       o.mentors.each { |mentor| mentors[mentor.id] = mentor.name }

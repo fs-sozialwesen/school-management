@@ -1,89 +1,88 @@
-- ip = internship_position
 .panel.panel-default
   .panel-heading
     h3.panel-title
       /span
-      /- if ip.housing.provided
-      /  span.glyphicon.glyphicon-home> title=("Unterkunft (Kosten: #{ip.housing.costs})")
-      /- if ip.applying.by_mail
+      /- if institution.housing.provided
+      /  span.glyphicon.glyphicon-home> title=("Unterkunft (Kosten: #{institution.housing.costs})")
+      /- if institution.applying.by_mail
       /  span.glyphicon.glyphicon-envelope> title="Bewerbung per Post"
-      /- if ip.applying.by_email
+      /- if institution.applying.by_email
       /  span> style="font-size: larger;" title="Bewerbung per E-Mail" @
-      /- if ip.applying.by_phone
+      /- if institution.applying.by_phone
       /  span.glyphicon.glyphicon-earphone> title="Bewerbung per Telefon"
-      /- if ip.applying.documents.present?
-      /  span.glyphicon.glyphicon-paperclip> title=("Bewerbungsdokumente: " + ip.applying.documents)
+      /- if institution.applying.documents.present?
+      /  span.glyphicon.glyphicon-paperclip> title=("Bewerbungsdokumente: " + institution.applying.documents)
 
-      => link_to ip.name, ip, title: 'Einrichtung'
+      => link_to institution.name, internship_position_path(institution), title: 'Einrichtung'
 
   .panel-body
     .col-md-4
       p
         /span.glyphicon.glyphicon-map-marker>
-        = link_to ip.address.gmaps_search_link, target: '_blank' do
-          = ip.address.street
+        = link_to institution.address.gmaps_search_link, target: '_blank' do
+          = institution.address.street
           br
-          => ip.address.zip
-          = ip.address.city
-      - if ip.contact.person.present?
+          => institution.address.zip
+          = institution.address.city
+      - if institution.contact.person.present?
         p
           span.glyphicon.glyphicon-user> title="Ansprechpartner"
-          = ip.contact.person
+          = institution.contact.person
 
-      - if ip.contact.email.present?
+      - if institution.contact.email.present?
         p
           span.glyphicon.glyphicon-envelope> title="E-Mail-Adresse"
-          = link_to ip.contact.email, 'mailto:' + ip.contact.email
+          = link_to institution.contact.email, 'mailto:' + institution.contact.email
 
-      - if ip.contact.phone.present?
+      - if institution.contact.phone.present?
         p
           span.glyphicon.glyphicon-earphone> title="Telefon"
-          = link_to ip.contact.phone, 'tel:' + ip.contact.phone
+          = link_to institution.contact.phone, 'tel:' + institution.contact.phone
 
-      - if ip.contact.mobile.present?
+      - if institution.contact.mobile.present?
         p
           span.glyphicon.glyphicon-phone> title="Mobil"
-          = link_to ip.contact.phone, 'tel:' + ip.contact.mobile
+          = link_to institution.contact.phone, 'tel:' + institution.contact.mobile
 
-      - if ip.contact.fax.present?
+      - if institution.contact.fax.present?
         p
           span.glyphicon.glyphicon-print> title="Fax"
-          = ip.contact.fax
+          = institution.contact.fax
 
     .col-md-4
       label Bewerbungen möglich per:
       ul.list-unstyled
-        - ip.applying.by.each do |via|
+        - institution.applying.by.each do |via|
           li
             span.glyphicon.glyphicon-earphone
             =< t(".#{via}")
-      - if ip.applying.documents.present?
+      - if institution.applying.documents.present?
         label Bewerbungsdokumente:
         ul.list-unstyled
-          - ip.applying.documents.gsub('und', ',').split(',').each do |doc|
+          - institution.applying.documents.gsub('und', ',').split(',').each do |doc|
             li
               span.glyphicon.glyphicon-paperclip
               =< doc
     .col-md-4
-      - if ip.housing.provided
+      - if institution.housing.provided
         p
           label Unterkunft:
           br
           /span.glyphicon.glyphicon-home> title="Unterkunft"
-          =< ['ja', ip.housing.costs].select(&:present?).join(', ')
+          =< ['ja', institution.housing.costs].select(&:present?).join(', ')
       /dl.dl-horizontal
         dt Träger
-        - homepage = ip.organisation.contact.homepage
-        dd = link_to_if homepage.present?, ip.organisation.name, homepage, target: '_blank'
+        - homepage = institution.organisation.contact.homepage
+        dd = link_to_if homepage.present?, institution.organisation.name, homepage, target: '_blank'
         dt
       /p.carrier
-        - homepage = ip.organisation.contact.homepage
+        - homepage = institution.organisation.contact.homepage
         label Träger:
-        =< link_to_if homepage.present?, ip.organisation.name, homepage, target: '_blank'
-      /- if ip.description.present?
-        p = ip.description.gsub("\n", '<br>').html_safe
+        =< link_to_if homepage.present?, institution.organisation.name, homepage, target: '_blank'
+      /- if institution.description.present?
+        p = institution.description.gsub("\n", '<br>').html_safe
       p.work_area
         label Arbeitsfeld:
         br
-        =< ip.work_area
-      /p.education_subject: small = ip.education_subject.name
+        =< institution.work_area
+      /p.education_subject: small = institution.education_subject.name

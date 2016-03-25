@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
 
-  resources :internships
   root to: 'visitors#index'
   devise_for :logins
   resources :people, except: :index do
@@ -38,6 +37,8 @@ Rails.application.routes.draw do
   resources :rooms, except: :show
 
   resources :organisations
-  resources :internship_positions
+  resources :internship_positions, only: [:index, :show]
+  resources :institutions
+  resources :internships
 
 end

@@ -58,6 +58,23 @@ de:
       error: Praktikumsplatz konnte nicht gespeichert werden.
     show:
       confirm_delete: Wirklich löschen?
+  institutions:
+    institution:
+      by_mail: per Post
+      by_email: per E-Mail
+      by_phone: per Telefon
+    new:
+      title: Neue Einrichtung anlegen
+    create:
+      success: Einrichtung gespeichert.
+    update:
+      success: Einrichtung gespeichert.
+    destroy:
+      success: Einrichtung gelöscht.
+    form:
+      error: Einrichtung konnte nicht gespeichert werden.
+    show:
+      confirm_delete: Wirklich löschen?
   internships:
     create:
       success: Praktikum gespeichert.

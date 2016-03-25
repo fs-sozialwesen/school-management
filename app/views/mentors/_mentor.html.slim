@@ -10,11 +10,11 @@
           th Praktikumsplatz
           th Auszubildender
       tbody
-        - mentor.internships.includes(:internship_position).each do |internship|
+        - mentor.internships.includes(:institutions).each do |internship|
           tr data={ url: url_for(internship) }
             td
               => ldate(internship.start_date)
               |  -
               =< ldate(internship.end_date)
-            td = internship.internship_position.name
+            td = internship.institution.name
             td = internship.student.name

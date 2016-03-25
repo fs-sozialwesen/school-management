@@ -1,4 +1,4 @@
-response.headers['Content-Disposition'] = %Q(attachment; filename="praktikumsplätze-#{Time.now}.xlsx")
+response.headers['Content-Disposition'] = %Q(attachment; filename="einrichtungen-#{Time.now}.xlsx")
 
 wb = xlsx_package.workbook
 
@@ -9,23 +9,23 @@ wb.styles do |s|
   #                         border: border, alignment: alignment
   bold = s.add_style b: true, sz: 12, alignment: { horizontal: :center }
 
-  wb.add_worksheet(name: 'Praktikumsplätze') do |sheet|
-    sheet.add_row %w(Einrichtung Träger
+  wb.add_worksheet(name: 'Einrichtungen') do |sheet|
+    sheet.add_row %w(Name Träger
                 Straße PLZ Ort
                 Ansprechpartner E-Mail Telefon Fax Mobil Homepage
                 Unterkunft Kosten
                 Bew_Tel Bew_Post Bew_Email Bew_Dokumente
                 ), style: bold
-    @internship_positions.each do | internship_position |
-      a = internship_position.address
-      c = internship_position.contact
-      h = internship_position.housing
-      ap = internship_position.applying
+    @institutions.each do | institution |
+      a = institution.address
+      c = institution.contact
+      h = institution.housing
+      ap = institution.applying
 
       row = []
       types = []
 
-      row += [internship_position.name, internship_position.organisation.name]
+      row += [institution.name, institution.organisation.name]
       types  += [nil,                   nil]
 
       row += [a.street, a.zip.to_s, a.city]

@@ -1,0 +1,39 @@
+.page-header
+  = link_to institutions_path, class: 'btn btn-default' do 
+    span.glyphicon.glyphicon-list-alt
+    =< t(:list)
+  = link_to edit_institution_path(@institution), class: 'btn btn-primary' do
+    span.glyphicon.glyphicon-pencil
+    =< t(:edit)
+  => link_to @institution, method: :delete, data: { confirm: t(:confirm_delete, model: Institution.model_name.human) }, class: 'btn btn-danger' do
+    span.glyphicon.glyphicon-remove
+    =< t(:delete)
+  h2
+    => @institution.name
+    small = Institution.model_name.human
+
+= panel_box do
+  - homepage = @institution.contact.homepage
+  - if homepage.present?
+    p
+      label> Homepage
+      = link_to homepage, target: '_blank', title: homepage do
+        => homepage
+        small: span.glyphicon.glyphicon-new-window
+  p
+    label> Träger
+    - org = @institution.organisation
+    - if policy(org).show?
+      = link_to org.name, org
+    - else
+      - homepage = org.contact.homepage
+      = link_to_if homepage.present?, org.name, homepage, target: '_blank', title: homepage
+  p = @institution.description.gsub("\n", '<br>').html_safe if @institution.description.present?
+
+.row
+  .col-md-6 = render @institution.applying
+  .col-md-6 = render @institution.housing
+.row
+  .col-md-6 = render @institution.contact
+  .col-md-6 = render @institution.address
+

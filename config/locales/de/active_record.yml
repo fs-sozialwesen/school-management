@@ -20,6 +20,8 @@ de:
     internships:          Praktika
     internship_position:  Praktikumsplatz
     internship_positions: Praktikumsplätze
+    institution:          Einrichtung
+    institutions:         Einrichtungen
     last_name:            Nachname
     lessons:              Unterrichtsstunden
     mentor:               Praxisanleiter
@@ -59,6 +61,9 @@ de:
       internship_position:
         one:   Praktikumsplatz
         other: Praktikumsplätze
+      institution:
+        one:   Einrichtung
+        other: Einrichtungen
       legacy_datum: Importierte Daten
       lesson:
         one:   Stunde
@@ -115,6 +120,19 @@ de:
         housing_costs: Kosten
         housing_provided: bereitgestellt
         name: Name der Einrichtung
+        organisation: Träger
+        person: Ansprechpartner
+        positions_count: Anzahl Plätze
+      institution:
+        applying: Bewerbung
+        applying_by_mail: per Post
+        applying_by_email: per E-Mail
+        applying_by_phone: per Telefon
+        applying_documents: Dokumente
+        housing: Unterkunft
+        housing_costs: Kosten
+        housing_provided: bereitgestellt
+        name: Name
         organisation: Träger
         person: Ansprechpartner
         positions_count: Anzahl Plätze

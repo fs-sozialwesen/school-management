@@ -1,18 +1,8 @@
 .page-header
-  - if policy(@internship_position).destroy?
-    = link_to @internship_position, method: :delete, data: { confirm: t('.confirm_delete') }, class: 'btn btn-danger' do
-      span.glyphicon.glyphicon-remove
-      |  Löschen
-  - if policy(@internship_position).update?
-    = link_to edit_internship_position_path(@internship_position), class: 'btn btn-primary' do
-      span.glyphicon.glyphicon-pencil
-      |  Bearbeiten
-  h2
-    => @internship_position.name
-    small = InternshipPosition.model_name.human
+  h2 = @institution.name
 
 = panel_box do
-  - homepage = @internship_position.contact.homepage
+  - homepage = @institution.contact.homepage
   - if homepage.present?
     p
       label> Homepage
@@ -21,18 +11,15 @@
         small: span.glyphicon.glyphicon-new-window
   p
     label> Träger
-    - org = @internship_position.organisation
-    - if policy(org).show?
-      = link_to org.name, org
-    - else
-      - homepage = org.contact.homepage
-      = link_to_if homepage.present?, org.name, homepage, target: '_blank', title: homepage
-  p = @internship_position.description.gsub("\n", '<br>').html_safe if @internship_position.description.present?
+    - org = @institution.organisation
+    - homepage = org.contact.homepage
+    = link_to_if homepage.present?, org.name, homepage, target: '_blank', title: homepage
+  p = @institution.description.gsub("\n", '<br>').html_safe if @institution.description.present?
 
 .row
-  .col-md-6 = render @internship_position.applying
-  .col-md-6 = render @internship_position.housing
+  .col-md-6 = render @institution.applying
+  .col-md-6 = render @institution.housing
 .row
-  .col-md-6 = render @internship_position.contact
-  .col-md-6 = render @internship_position.address
+  .col-md-6 = render @institution.contact
+  .col-md-6 = render @institution.address
 

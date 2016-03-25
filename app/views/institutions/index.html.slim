@@ -1,0 +1,34 @@
+.page-header
+  = link_to institutions_path(format: :xlsx), id: 'export-csv-button', class: 'btn btn-default' do
+    span.glyphicon.glyphicon-export
+    =< t(:export)
+  = link_to new_institution_path, class: 'btn btn-primary' do 
+    span.glyphicon.glyphicon-plus
+    =< t(:new)
+  h2
+    => @institutions.count
+    = Institution.model_name.human count: @institutions.count
+
+.table-responsive
+  table.table.table-striped.table-bordered.table-hover.table-clickable
+    thead
+      tr
+        th = Institution.human_attribute_name(:name)
+        th = Institution.human_attribute_name(:organisation)
+        th = Institution.human_attribute_name(:work_area)
+        th = Institution.human_attribute_name(:positions_count)
+        /th = Institution.human_attribute_name(:address)
+        /th = Institution.human_attribute_name(:contact)
+        /th = Institution.human_attribute_name(:applying)
+        /th = Institution.human_attribute_name(:housing)
+    tbody
+      - @institutions.each do | institution |
+        tr data = {url: url_for(institution)}
+          td = institution.name
+          td = institution.organisation.name
+          td = institution.work_area
+          td = institution.positions_count
+          /td = institution.address
+          /td = institution.contact
+          /td = institution.applying
+          /td = institution.housing

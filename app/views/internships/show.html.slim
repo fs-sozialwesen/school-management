@@ -18,11 +18,11 @@
       label.col-md-5 => Internship.human_attribute_name(:student)
       p.col-md-7 = link_to @internship.student.name, @internship.student.person
     .row
-      label.col-md-5 => Internship.human_attribute_name(:internship_position)
-      p.col-md-7 = link_to @internship.internship_position.name, @internship.internship_position
+      label.col-md-5 => Internship.human_attribute_name(:institution)
+      p.col-md-7 = link_to @internship.institution.name, @internship.institution
     .row
       label.col-md-5 Träger
-      - organisation = @internship.internship_position.organisation
+      - organisation = @internship.institution.organisation
       p.col-md-7 = link_to organisation.name, organisation
     .row
       label.col-md-5 => Internship.human_attribute_name(:mentor)

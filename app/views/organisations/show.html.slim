@@ -22,14 +22,14 @@
         h4.panel-title
           |  Einrichtungen (Praktikumsplätze)
           ul.list-inline.pull-right
-            li = link_to new_internship_position_path(organisation_id: @organisation.id), class: 'btn btn-default btn-xs' do
+            li = link_to new_institution_path(organisation_id: @organisation.id), class: 'btn btn-default btn-xs' do
               span.glyphicon.glyphicon-plus>
               | Neu
       table.table.table-condensed.table-striped.table-hover.table-clickable
         tbody
-          - @organisation.internship_positions.order(:name).each do |internship_position|
-            tr data={ url: url_for(internship_position) }
-              td = internship_position.name
+          - @organisation.institutions.order(:name).each do |institution|
+            tr data={ url: url_for(institution) }
+              td = institution.name
 
     .panel.panel-default
       .panel-heading
