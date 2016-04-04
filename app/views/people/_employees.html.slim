@@ -20,7 +20,7 @@
         th Telefon
         - if scope == :teacher
           th Klassen
-        th Login
+        th Login (letzte Anmeld.)
     tbody
       - people.each do | person |
         tr data = {url: url_for(person)}
@@ -36,5 +36,9 @@
               - courses = person.as_teacher.courses.order(:name).map do | course |
                 - link_to course.name, course, class: ('text-muted' unless course.active?)
               = courses.join(', ').html_safe
-          td = person.login.present? ? 'ja' : 'nein'
+          td
+            - if person.login.present?
+              = ['ja', ldate(person.login.last_sign_in_at)].select(&:present?).join(', ')
+            - else
+              |  nein
 

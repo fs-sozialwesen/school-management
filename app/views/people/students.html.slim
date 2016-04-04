@@ -39,7 +39,7 @@ ul.nav.nav-tabs
           th Nachname
           - if @course != :no
             th Klasse
-          th Login
+          th Login (letzte Anmeld.)
       tbody
         - students.each do | student |
           tr data={ url: url_for(student) }
@@ -47,7 +47,11 @@ ul.nav.nav-tabs
             td = student.last_name
             - if @course != :no
               td = link_to student.as_student.course.name, student.as_student.course
-            td = student.login.present? ? 'ja' : 'nein'
+            td
+              - if student.login.present?
+                = ['ja', ldate(student.login.last_sign_in_at)].select(&:present?).join(', ')
+              - else
+                |  nein
 
 coffee:
   $ -> window.onhashchange = -> window.scrollTo(0, window.scrollY - 80 )
