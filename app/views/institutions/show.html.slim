@@ -12,28 +12,62 @@
     => @institution.name
     small = Institution.model_name.human
 
-= panel_box do
-  - homepage = @institution.contact.homepage
-  - if homepage.present?
-    p
-      label> Homepage
-      = link_to homepage, target: '_blank', title: homepage do
-        => homepage
-        small: span.glyphicon.glyphicon-new-window
-  p
-    label> Träger
-    - org = @institution.organisation
-    - if policy(org).show?
-      = link_to org.name, org
-    - else
-      - homepage = org.contact.homepage
-      = link_to_if homepage.present?, org.name, homepage, target: '_blank', title: homepage
-  p = @institution.description.gsub("\n", '<br>').html_safe if @institution.description.present?
+p
+  label> Träger:
+  = link_to @institution.organisation.name, @institution.organisation
+p = @institution.description.gsub("\n", '<br>').html_safe if @institution.description.present?
+
 
 .row
-  .col-md-6 = render @institution.applying
-  .col-md-6 = render @institution.housing
-.row
-  .col-md-6 = render @institution.contact
-  .col-md-6 = render @institution.address
+  .col-md-5
+    = panel_box title: 'Kontaktdaten' do
+      table.table.table-condensed.table-no-border
+        tr
+          th  Ansprechpartner(in)
+          td = @institution.contact.person
+        tr
+          th  Adresse
+          td = link_to @institution.address.gmaps_search_link, target: '_blank' do
+            = @institution.address.street
+            br
+            => @institution.address.zip
+            = @institution.address.city
+        tr
+          th   E-Mail
+          td  = @institution.contact.email
+        tr
+          th   Telefon
+          td  = @institution.contact.phone
+        tr
+          th   Mobil
+          td  = @institution.contact.mobile
+        tr
+          th   Fax
+          td  = @institution.contact.fax
+        tr
+          th Homepage
+          td
+            - if @institution.contact.homepage.present?
+              = link_to @institution.contact.homepage
+
+  .col-md-5
+    = panel_box title: 'Praktikum' do
+
+      table.table.table-condensed.table-no-border
+        tr
+          th Anzahl Plätze
+          td = @institution.positions_count
+        tr
+          th Bewerbung
+          td = @institution.applying.by.map { |via| t(".#{via}") }.join(', ').html_safe
+        tr
+          th Erforderliche Dokumente
+          td = @institution.applying.documents
+        tr
+          th Unterkunft
+          td
+            - if @institution.housing.provided
+              =< ['ja', @institution.housing.costs].select(&:present?).join(', ')
+            - else
+              |  nein
 
