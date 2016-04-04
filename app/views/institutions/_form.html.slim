@@ -13,13 +13,39 @@
     .col-md-6
       = f.association :organisation, required: true
   = f.input :description, input_html: { rows: 5 }
-  .row
-    .col-md-6 = render 'serializers/form/applying', f: f
-    .col-md-6 = render 'serializers/form/housing', f: f
 
   .row
-    .col-md-6 = render 'serializers/form/contact', f: f
-    .col-md-6 = render 'serializers/form/address', f: f
+    .col-md-6
+      = panel_box title: 'Kontaktdaten' do
+        = f.simple_fields_for :contact, @institution.contact do |contact|
+          = contact.input :person
+        = f.simple_fields_for :address, f.object.address do |address|
+          = address.input :street
+          = address.input :zip
+          = address.input :city
+        = f.simple_fields_for :contact, @institution.contact do |contact|
+          = contact.input :email, as: :email
+          = contact.input :phone, as: :tel
+          = contact.input :fax, as: :tel
+          = contact.input :mobile, as: :tel
+          = contact.input :homepage, as: :url
+    .col-md-6
+      = panel_box title: 'Praktikum' do
+        = f.input :positions_count
+        h5 Bewerbung
+        = f.simple_fields_for :applying, @institution.applying do |applying|
+          .row
+            .col-md-4
+              = applying.input :by_phone, as: :boolean
+              = applying.input :by_mail, as: :boolean
+              = applying.input :by_email, as: :boolean
+            .col-md-8
+              = applying.input :documents, as: :text, input_html: { rows: 3 }
+        h5 Unterkunft
+        = f.simple_fields_for :housing, @institution.housing do |housing|
+          .row
+            .col-md-4 = housing.input :provided, as: :boolean
+            .col-md-8 = housing.input :costs
 
   .row.action-buttons
     .col-md-12
