@@ -5,7 +5,7 @@ class InstitutionsController < ApplicationController
 
   def index
     authorize Institution
-    @institutions = Institution.includes(:organisation).all
+    @institutions = Institution.includes(:organisation).order(:name).all
 
     respond_to do |format|
       format.html

@@ -17,6 +17,7 @@
         th = Institution.human_attribute_name(:organisation)
         th = Institution.human_attribute_name(:work_area)
         th = Institution.human_attribute_name(:positions_count)
+        th Unterkunft
         /th = Institution.human_attribute_name(:address)
         /th = Institution.human_attribute_name(:contact)
         /th = Institution.human_attribute_name(:applying)
@@ -28,6 +29,7 @@
           td = institution.organisation.name
           td = institution.work_area
           td = institution.positions_count
+          td = bool_icon institution.housing.provided
           /td = institution.address
           /td = institution.contact
           /td = institution.applying
