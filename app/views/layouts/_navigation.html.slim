@@ -36,3 +36,9 @@
         /ul.nav.navbar-nav
           li = link_to 'Anmelden', new_login_session_path
           /li = link_to 'Bewerben', new_user_registration_path
+
+coffee:
+  $ ->
+    $('li.dropdown').each (_, dropDown) =>
+      $dropDown = $(dropDown)
+      $dropDown.addClass('active') if $dropDown.find('.active').size() > 0
