@@ -51,11 +51,17 @@
 
     .col-md-4
       label Bewerbungen möglich per:
-      ul.list-unstyled
-        - institution.applying.by.each do |via|
-          li
-            span.glyphicon.glyphicon-earphone
-            =< t(".#{via}")
+      - if institution.applying.by_phone
+        p
+          span.glyphicon.glyphicon-earphone
+          |  Telefon
+      - if institution.applying.by_mail
+        p
+          span.glyphicon.glyphicon-envelope
+          |  Post
+      - if institution.applying.by_phone
+        p <b>@</b> E-Mail
+
       - if institution.applying.documents.present?
         label Bewerbungsdokumente:
         ul.list-unstyled
@@ -70,17 +76,6 @@
           br
           /span.glyphicon.glyphicon-home> title="Unterkunft"
           =< ['ja', institution.housing.costs].select(&:present?).join(', ')
-      /dl.dl-horizontal
-        dt Träger
-        - homepage = institution.organisation.contact.homepage
-        dd = link_to_if homepage.present?, institution.organisation.name, homepage, target: '_blank'
-        dt
-      /p.carrier
-        - homepage = institution.organisation.contact.homepage
-        label Träger:
-        =< link_to_if homepage.present?, institution.organisation.name, homepage, target: '_blank'
-      /- if institution.description.present?
-        p = institution.description.gsub("\n", '<br>').html_safe
       p.work_area
         label Arbeitsfeld:
         br

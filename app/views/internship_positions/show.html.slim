@@ -1,7 +1,102 @@
-.page-header
+- institution = @institution
+/.page-header
   h2 = @institution.name
 
-= panel_box do
+
+.panel.panel-default
+  .panel-heading
+    h3.panel-title = institution.name
+
+  .panel-body
+    - if institution.description.present?
+    .row
+      .col-md-12
+        - homepage = institution.organisation.contact.homepage
+        p
+          label Träger
+          =< link_to_if homepage.present?, institution.organisation.name, homepage, target: '_blank'
+        - if institution.description.present?
+          p style="margin-top: 10px;"
+            = institution.description.gsub("\n", '<br>').html_safe
+    hr
+    .row
+      .col-md-4
+        p
+          span.glyphicon.glyphicon-map-marker>
+          = link_to institution.address.gmaps_search_link, target: '_blank' do
+            = institution.address.street
+            br
+            => institution.address.zip
+            = institution.address.city
+        - if institution.contact.person.present?
+          p
+            span.glyphicon.glyphicon-user> title="Ansprechpartner"
+            = institution.contact.person
+
+        - if institution.contact.email.present?
+          p
+            span.glyphicon.glyphicon-envelope> title="E-Mail-Adresse"
+            = link_to institution.contact.email, 'mailto:' + institution.contact.email
+
+        - if institution.contact.phone.present?
+          p
+            span.glyphicon.glyphicon-earphone> title="Telefon"
+            = link_to institution.contact.phone, 'tel:' + institution.contact.phone
+
+        - if institution.contact.mobile.present?
+          p
+            span.glyphicon.glyphicon-phone> title="Mobil"
+            = link_to institution.contact.phone, 'tel:' + institution.contact.mobile
+
+        - if institution.contact.fax.present?
+          p
+            span.glyphicon.glyphicon-print> title="Fax"
+            = institution.contact.fax
+
+      .col-md-4
+        label Bewerbungen möglich per:
+        - if institution.applying.by_phone
+          p
+            span.glyphicon.glyphicon-earphone
+            |  Telefon
+        - if institution.applying.by_mail
+          p
+            span.glyphicon.glyphicon-envelope
+            |  Post
+        - if institution.applying.by_phone
+          p <b>@</b> E-Mail
+        - if institution.applying.documents.present?
+          label Bewerbungsdokumente:
+          ul.list-unstyled
+            - institution.applying.documents.gsub('und', ',').split(',').each do |doc|
+              li
+                span.glyphicon.glyphicon-paperclip
+                =< doc
+      .col-md-4
+        - if institution.housing.provided
+          p
+            label Unterkunft:
+            br
+            /span.glyphicon.glyphicon-home> title="Unterkunft"
+            =< ['ja', institution.housing.costs].select(&:present?).join(', ')
+        /dl.dl-horizontal
+          dt Träger
+          - homepage = institution.organisation.contact.homepage
+          dd = link_to_if homepage.present?, institution.organisation.name, homepage, target: '_blank'
+        /p.carrier
+          - homepage = institution.organisation.contact.homepage
+          label Träger:
+          =< link_to_if homepage.present?, institution.organisation.name, homepage, target: '_blank'
+        /- if institution.description.present?
+          p = institution.description.gsub("\n", '<br>').html_safe
+        p.work_area
+          label Arbeitsfeld:
+          br
+          =< institution.work_area
+        /p.education_subject: small = institution.education_subject.name
+
+
+/= panel_box do
   - homepage = @institution.contact.homepage
   - if homepage.present?
     p
@@ -16,10 +111,10 @@
     = link_to_if homepage.present?, org.name, homepage, target: '_blank', title: homepage
   p = @institution.description.gsub("\n", '<br>').html_safe if @institution.description.present?
 
-.row
+/.row
   .col-md-6 = render @institution.applying
   .col-md-6 = render @institution.housing
-.row
+/.row
   .col-md-6 = render @institution.contact
   .col-md-6 = render @institution.address
 
