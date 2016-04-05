@@ -18,8 +18,9 @@ class PeopleController < ApplicationController
   def students
     authorize Person
     @students = Person.students.includes(:login, as_student: :course).order(:last_name)
+      .where('students.course_id' => course_filter)
     respond_to do |format|
-      format.html { @students = @students.where('students.course_id' => course_filter).all }
+      format.html { @students = @students.all }
       format.csv  { @students = @students.order('courses.name, last_name').all }
     end
   end
