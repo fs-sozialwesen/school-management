@@ -74,3 +74,20 @@ p = @institution.description.gsub("\n", '<br>').html_safe if @institution.descri
             - else
               |  nein
 
+    = panel_box_with_table title: 'Praktika' do
+      table.table.table-striped.table-bordered.table-condensed.table-clickable
+        thead
+          tr
+            th Zeitraum
+            th Auszubildender
+            th Praxisanleiter
+        tbody
+          - @institution.internships.includes(:student, :mentor).each do |internship|
+            tr data={ url: url_for(internship) }
+              td
+                => ldate(internship.start_date)
+                |  -
+                =< ldate(internship.end_date)
+              td = internship.student.name
+              td = internship.mentor.name
+

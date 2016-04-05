@@ -19,7 +19,7 @@
             th Praktikumsplatz
             th Praxisanleiter
         tbody
-          - student.internships.includes(:institution).each do |internship|
+          - student.internships.includes(:institution, :mentor).each do |internship|
             tr data={ url: url_for(internship) }
               td
                 => ldate(internship.start_date)
