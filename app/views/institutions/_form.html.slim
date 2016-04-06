@@ -31,7 +31,6 @@
           = contact.input :homepage, as: :url
     .col-md-6
       = panel_box title: 'Praktikum' do
-        = f.input :positions_count
         h5 Bewerbung
         = f.simple_fields_for :applying, @institution.applying do |applying|
           .row
