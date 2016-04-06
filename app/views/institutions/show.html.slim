@@ -18,6 +18,9 @@
 p
   label> Träger:
   = link_to @institution.organisation.name, @institution.organisation
+p
+  label> Arbeitsfeld:
+  = @institution.work_area
 p = @institution.description.gsub("\n", '<br>').html_safe if @institution.description.present?
 
 
