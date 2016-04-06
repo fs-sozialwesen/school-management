@@ -64,7 +64,7 @@ class InstitutionsController < ApplicationController
   def institution_params
     # params.require(:institution).permit(:organisation_id, :name, :description, :work_area, :start_date, :end_date, :positions_count, :address, :contact, :applying, :housing)
     params.require(:institution).permit(
-      :name, :organisation_id, :description,
+      :name, :organisation_id, :description, :work_area,
       applying: %i(by_phone by_mail by_email documents),
       housing: %i(provided costs),
       contact: %i(person email phone fax mobile homepage),
