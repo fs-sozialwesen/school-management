@@ -61,9 +61,6 @@ p = @institution.description.gsub("\n", '<br>').html_safe if @institution.descri
 
       table.table.table-condensed.table-no-border
         tr
-          th Anzahl Plätze
-          td = @institution.positions_count
-        tr
           th Bewerbung
           td = @institution.applying.by.map { |via| t(".#{via}") }.join(', ').html_safe
         tr
