@@ -1,0 +1,93 @@
+.page-header
+  = link_to institutions_path, class: 'btn btn-default' do 
+    span.glyphicon.glyphicon-list-alt
+    =< t(:list)
+  = link_to @institution.organisation, class: 'btn btn-default' do
+    span.glyphicon.glyphicon-list-alt
+    |  Träger
+  = link_to edit_institution_path(@institution), class: 'btn btn-primary' do
+    span.glyphicon.glyphicon-pencil
+    =< t(:edit)
+  => link_to @institution, method: :delete, data: { confirm: t(:confirm_delete, model: Institution.model_name.human) }, class: 'btn btn-danger' do
+    span.glyphicon.glyphicon-remove
+    =< t(:delete)
+  h2
+    => @institution.name
+    small = Institution.model_name.human
+
+p
+  label> Träger:
+  = link_to @institution.organisation.name, @institution.organisation
+p = @institution.description.gsub("\n", '<br>').html_safe if @institution.description.present?
+
+
+.row
+  .col-md-5
+    = panel_box title: 'Kontaktdaten' do
+      table.table.table-condensed.table-no-border
+        tr
+          th  Ansprechpartner(in)
+          td = @institution.contact.person
+        tr
+          th  Adresse
+          td = link_to @institution.address.gmaps_search_link, target: '_blank' do
+            = @institution.address.street
+            br
+            => @institution.address.zip
+            = @institution.address.city
+        tr
+          th   E-Mail
+          td  = @institution.contact.email
+        tr
+          th   Telefon
+          td  = @institution.contact.phone
+        tr
+          th   Mobil
+          td  = @institution.contact.mobile
+        tr
+          th   Fax
+          td  = @institution.contact.fax
+        tr
+          th Homepage
+          td
+            - if @institution.contact.homepage.present?
+              = link_to @institution.contact.homepage
+
+  .col-md-5
+    = panel_box title: 'Praktikum' do
+
+      table.table.table-condensed.table-no-border
+        tr
+          th Anzahl Plätze
+          td = @institution.positions_count
+        tr
+          th Bewerbung
+          td = @institution.applying.by.map { |via| t(".#{via}") }.join(', ').html_safe
+        tr
+          th Erforderliche Dokumente
+          td = @institution.applying.documents
+        tr
+          th Unterkunft
+          td
+            - if @institution.housing.provided
+              =< ['ja', @institution.housing.costs].select(&:present?).join(', ')
+            - else
+              |  nein
+
+    = panel_box_with_table title: 'Praktika' do
+      table.table.table-striped.table-bordered.table-condensed.table-clickable
+        thead
+          tr
+            th Zeitraum
+            th Auszubildender
+            th Praxisanleiter
+        tbody
+          - @institution.internships.includes(:student, :mentor).each do |internship|
+            tr data={ url: url_for(internship) }
+              td
+                => ldate(internship.start_date)
+                |  -
+                =< ldate(internship.end_date)
+              td = internship.student.name
+              td = internship.mentor.name
+

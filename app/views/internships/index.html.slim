@@ -14,8 +14,8 @@
     thead
       tr
         th = Internship.human_attribute_name(:student)
-        th = Internship.human_attribute_name(:internship_position)
-        th = InternshipPosition.human_attribute_name(:organisation)
+        th = Internship.human_attribute_name(:institution)
+        th = Institution.human_attribute_name(:organisation)
         th = Internship.human_attribute_name(:mentor)
         th = Internship.human_attribute_name(:start_date)
         th = Internship.human_attribute_name(:end_date)
@@ -23,8 +23,8 @@
       - @internships.each do | internship |
         tr data = {url: url_for(internship)}
           td = internship.student.name
-          td = internship.internship_position.name
-          td = internship.internship_position.organisation.name
+          td = internship.institution.name
+          td = internship.institution.organisation.name
           td = internship.mentor.try :name
           td = ldate internship.start_date
           td = ldate internship.end_date

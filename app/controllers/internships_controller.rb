@@ -5,7 +5,7 @@ class InternshipsController < ApplicationController
 
   def index
     authorize Internship
-    @internships = Internship.includes(student: :person, internship_position: :organisation).all
+    @internships = Internship.includes(student: :person, institution: :organisation).all
   end
 
   def show
@@ -56,7 +56,9 @@ class InternshipsController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def internship_params
-    params.require(:internship).permit(:student_id, :internship_position_id, :mentor_id, :start_date, :end_date, :comments)
+    params[:internship].delete :organisation
+    # binding.pry
+    params.require(:internship).permit(:student_id, :institution_id, :mentor_id, :start_date, :end_date, :comments)
   end
 
 end

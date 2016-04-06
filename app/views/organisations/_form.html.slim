@@ -11,8 +11,7 @@
       = panel_box title: Organisation.model_name.human do
         = f.input :name, required: true
         = f.input :comments
-  .row
-    .col-md-6 = render 'serializers/form/address', f: f
+      = render 'serializers/form/address', f: f
     .col-md-6 = render 'serializers/form/contact', f: f
 
   .row.action-buttons

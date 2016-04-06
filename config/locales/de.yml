@@ -44,10 +44,6 @@ de:
     form:
       error: Klasse konnte nicht gespeichert werden.
   internship_positions:
-    internship_position:
-      by_mail: per Post
-      by_email: per E-Mail
-      by_phone: per Telefon
     create:
       success: Praktikumsplatz gespeichert.
     update:
@@ -57,6 +53,22 @@ de:
     form:
       error: Praktikumsplatz konnte nicht gespeichert werden.
     show:
+      confirm_delete: Wirklich löschen?
+  institutions:
+    new:
+      title: Neue Einrichtung anlegen
+    create:
+      success: Einrichtung gespeichert.
+    update:
+      success: Einrichtung gespeichert.
+    destroy:
+      success: Einrichtung gelöscht.
+    form:
+      error: Einrichtung konnte nicht gespeichert werden.
+    show:
+      by_mail: per Post
+      by_email: per E-Mail
+      by_phone: per Telefon
       confirm_delete: Wirklich löschen?
   internships:
     create:

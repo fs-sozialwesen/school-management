@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160319160353) do
+ActiveRecord::Schema.define(version: 20160325182524) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -92,6 +92,24 @@ ActiveRecord::Schema.define(version: 20160319160353) do
 
   add_index "enums", ["name"], name: "index_enums_on_name", using: :btree
 
+  create_table "institutions", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "organisation_id"
+    t.text     "description"
+    t.string   "work_area"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.integer  "positions_count", default: 1
+    t.jsonb    "address",         default: {}
+    t.jsonb    "contact",         default: {}
+    t.jsonb    "housing",         default: {}
+    t.jsonb    "applying",        default: {}
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+  end
+
+  add_index "institutions", ["organisation_id"], name: "index_institutions_on_organisation_id", using: :btree
+
   create_table "internship_positions", force: :cascade do |t|
     t.string   "name"
     t.integer  "organisation_id"
@@ -119,8 +137,10 @@ ActiveRecord::Schema.define(version: 20160319160353) do
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
     t.integer  "mentor_id"
+    t.integer  "institution_id"
   end
 
+  add_index "internships", ["institution_id"], name: "index_internships_on_institution_id", using: :btree
   add_index "internships", ["internship_position_id"], name: "index_internships_on_internship_position_id", using: :btree
   add_index "internships", ["mentor_id"], name: "index_internships_on_mentor_id", using: :btree
   add_index "internships", ["student_id"], name: "index_internships_on_student_id", using: :btree
@@ -323,7 +343,9 @@ ActiveRecord::Schema.define(version: 20160319160353) do
   add_foreign_key "candidates", "people"
   add_foreign_key "course_memberships", "courses"
   add_foreign_key "courses", "teachers"
+  add_foreign_key "institutions", "organisations"
   add_foreign_key "internship_positions", "organisations"
+  add_foreign_key "internships", "institutions"
   add_foreign_key "internships", "internship_positions"
   add_foreign_key "internships", "mentors"
   add_foreign_key "internships", "students"

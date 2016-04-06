@@ -11,8 +11,8 @@ feature 'Internship positions search', :devise do
   #   When I click on one result
   #   Then I see the details of this internship position
   scenario 'student sees all internship positions' do
-    ip1 = FactoryGirl.create(:internship_position, name: 'PP1', description: 'Very good here!')
-    ip2 = FactoryGirl.create(:internship_position, name: 'PP2')
+    ip1 = FactoryGirl.create(:institution, name: 'PP1', description: 'Very good here!')
+    ip2 = FactoryGirl.create(:institution, name: 'PP2')
 
     sign_in_as_student
 
@@ -33,8 +33,8 @@ feature 'Internship positions search', :devise do
   end
 
   scenario 'student apply different filters to the list' do
-    ip1 = FactoryGirl.create(:internship_position, name: 'PP1', description: 'Very good here!')
-    ip2 = FactoryGirl.create(:internship_position, name: 'PP2')
+    ip1 = FactoryGirl.create(:institution, name: 'PP1', description: 'Very good here!')
+    ip2 = FactoryGirl.create(:institution, name: 'PP2')
 
     ip1.housing.provided = true
     ip1.housing.costs = 'cheap'

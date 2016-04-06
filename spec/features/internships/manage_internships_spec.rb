@@ -6,12 +6,12 @@ feature 'Manage internships', :devise do
   scenario 'create internship' do
     sign_in_as_manager
 
-    create_internship internship_position_name: 'Einrichtung1'
+    create_internship institution_name: 'Einrichtung1'
   end
 
   scenario 'edit internship' do
     sign_in_as_manager
-    given_internship internship_position_name: 'Einrichtung1'
+    given_internship institution_name: 'Einrichtung1'
 
     click_on 'Praktika'
     click_row_with 'Einrichtung1'
@@ -27,7 +27,7 @@ feature 'Manage internships', :devise do
 
   scenario 'delete internship' do
     sign_in_as_manager
-    given_internship internship_position_name: 'Einrichtung1'
+    given_internship institution_name: 'Einrichtung1'
 
     click_on 'Praktika'
     click_row_with 'Einrichtung1'
