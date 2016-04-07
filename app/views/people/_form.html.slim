@@ -39,6 +39,7 @@
             group_method: :last,
             label_method: :name,
             value_method: :id
+          = s.input :active, hint: 'kein Haken heißt Dropout'
 
   - if @person.mentor?
     .row
