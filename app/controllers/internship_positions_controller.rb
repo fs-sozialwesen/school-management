@@ -39,7 +39,7 @@ class InternshipPositionsController < ApplicationController
 
   def institutions
     policy_scope(Institution).joins(:organisation).includes(:organisation)
-      .order(:name)
+      .order(:name).where(in_search: true)
       # .order("institutions.address->>'city'")
   end
 

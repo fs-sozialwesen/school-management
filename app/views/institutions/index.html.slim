@@ -18,10 +18,7 @@
         th = Institution.human_attribute_name(:work_area)
         th = Institution.human_attribute_name(:positions_count)
         th Unterkunft
-        /th = Institution.human_attribute_name(:address)
-        /th = Institution.human_attribute_name(:contact)
-        /th = Institution.human_attribute_name(:applying)
-        /th = Institution.human_attribute_name(:housing)
+        th = Institution.human_attribute_name(:in_search)
     tbody
       - @institutions.each do | institution |
         tr data = {url: url_for(institution)}
@@ -30,7 +27,4 @@
           td = institution.work_area
           td = institution.positions_count
           td = bool_icon institution.housing.provided
-          /td = institution.address
-          /td = institution.contact
-          /td = institution.applying
-          /td = institution.housing
+          td = bool_icon institution.in_search

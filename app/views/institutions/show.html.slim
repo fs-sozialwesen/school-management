@@ -61,6 +61,9 @@ p = @institution.description.gsub("\n", '<br>').html_safe if @institution.descri
 
       table.table.table-condensed.table-no-border
         tr
+          th In der Suche anzeigen
+          td = bool_icon @institution.in_search
+        tr
           th Bewerbung
           td = @institution.applying.by.map { |via| t(".#{via}") }.join(', ').html_safe
         tr
