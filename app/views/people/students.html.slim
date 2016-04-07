@@ -11,10 +11,12 @@
 ul.nav.nav-tabs
   li class=('active' if @course == :active)
     = link_to 'Aktuelle', students_people_path
-  li class=('active' if @course == :archived)
-    = link_to 'Archiv', students_people_path(course: 'archived')
   li class=('active' if @course == :no)
     = link_to 'ohne Klasse', students_people_path(course: 'no')
+  li class=('active' if @course == :archived)
+    = link_to 'Archiv', students_people_path(course: 'archived')
+  li class=('active' if @course == :dropouts)
+    = link_to 'Dropouts', students_people_path(course: 'dropouts')
 
 - grouped_students = @students.to_a.group_by{ |student| student.last_name[0].upcase }
 - ('A'..'Z').each do | char |
@@ -37,7 +39,7 @@ ul.nav.nav-tabs
         tr
           th Vorname
           th Nachname
-          - if @course != :no
+          - if @course.in? [:active, :archived]
             th Klasse
           th Login (letzte Anmeld.)
       tbody
@@ -45,7 +47,7 @@ ul.nav.nav-tabs
           tr data={ url: url_for(student) }
             td = student.first_name
             td = student.last_name
-            - if @course != :no
+            - if @course.in? [:active, :archived]
               td = link_to student.as_student.course.name, student.as_student.course
             td
               - if student.login.present?

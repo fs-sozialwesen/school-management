@@ -18,7 +18,7 @@ class PeopleController < ApplicationController
   def students
     authorize Person
     @students = Person.students.includes(:login, as_student: :course).order(:last_name)
-      .where('students.course_id' => course_filter)
+      .where(filter)
     respond_to do |format|
       format.html { @students = @students.all }
       format.csv  { @students = @students.order('courses.name, last_name').all }
@@ -99,6 +99,14 @@ class PeopleController < ApplicationController
     return Course.active   if @course == :active
     return Course.inactive if @course == :archived
     nil
+  end
+
+  def filter
+    if @course == :dropouts
+      { 'students.active' => false }
+    else
+      { 'students.course_id' => course_filter }
+    end
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

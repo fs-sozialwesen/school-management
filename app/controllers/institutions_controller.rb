@@ -15,10 +15,9 @@ class InstitutionsController < ApplicationController
 
   def new
     authorize Institution
-    @institution = if params[:organisation_id].present?
-      Organisation.find(params[:organisation_id]).institutions.build
-    else
-      Institution.new
+    @institution = Institution.new
+    if params[:organisation_id].present?
+      @institution.organisation = Organisation.find_by(id: params[:organisation_id])
     end
   end
 
@@ -64,7 +63,7 @@ class InstitutionsController < ApplicationController
   def institution_params
     # params.require(:institution).permit(:organisation_id, :name, :description, :work_area, :start_date, :end_date, :positions_count, :address, :contact, :applying, :housing)
     params.require(:institution).permit(
-      :name, :organisation_id, :description, :work_area,
+      :name, :organisation_id, :description, :work_area, :in_search,
       applying: %i(by_phone by_mail by_email documents),
       housing: %i(provided costs),
       contact: %i(person email phone fax mobile homepage),
