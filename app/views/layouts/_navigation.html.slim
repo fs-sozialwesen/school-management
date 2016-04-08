@@ -32,6 +32,11 @@
               li = link_to 'Abmelden', destroy_login_session_path, method: 'delete', title: current_user.name
           /li.divider role="separator"
           /li: a href="#" Nachrichten
+        form.navbar-form.navbar-right role="search" action=search_url
+          .form-group
+            input.form-control type="text" placeholder="Suche" name="q"
+
+
       /- else
         /ul.nav.navbar-nav
           li = link_to 'Anmelden', new_login_session_path

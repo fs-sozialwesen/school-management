@@ -16,6 +16,9 @@ class Course < ActiveRecord::Base
   has_paper_trail
   acts_as_taggable_on :education_subjects
 
+  include PgSearch
+  multisearchable against: [:name]
+
   scope :active,   -> { where('end_date > ?',  Date.current) }
   scope :inactive, -> { where('end_date <= ?', Date.current) }
 

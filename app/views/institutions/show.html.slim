@@ -92,5 +92,5 @@ p = @institution.description.gsub("\n", '<br>').html_safe if @institution.descri
                 |  -
                 =< ldate(internship.end_date)
               td = internship.student.name
-              td = internship.mentor.name
+              td = internship.mentor&.name
 

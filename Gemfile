@@ -17,6 +17,7 @@ gem 'acts-as-taggable-on', '~> 3.4'
 gem 'axlsx_rails', '0.3.0'
 gem 'paperclip'
 gem 'airbrake', '~> 5.0'
+gem 'pg_search'
 
 group :development, :test do
   gem 'byebug'
