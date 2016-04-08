@@ -16,7 +16,6 @@
         th = Institution.human_attribute_name(:name)
         th = Institution.human_attribute_name(:organisation)
         th = Institution.human_attribute_name(:work_area)
-        th = Institution.human_attribute_name(:positions_count)
         th Unterkunft
         th = Institution.human_attribute_name(:in_search)
     tbody
@@ -25,6 +24,5 @@
           td = institution.name
           td = institution.organisation.name
           td = institution.work_area
-          td = institution.positions_count
           td = bool_icon institution.housing.provided
           td = bool_icon institution.in_search
