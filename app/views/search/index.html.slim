@@ -1,0 +1,9 @@
+h2 Ergebnisse für Suche nach "#{@query}"
+- if @result.any?
+  - @result.each do |klass, results|
+    h3 = klass.model_name.human(count: 2)
+    ul.list-unstyled
+      - results.each do |result|
+        li = link_to result.name, result
+- else
+  p keine Treffer

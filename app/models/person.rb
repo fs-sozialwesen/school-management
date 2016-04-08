@@ -29,6 +29,9 @@ class Person < ActiveRecord::Base
   scope :mentors,    -> { joins(:as_mentor).   includes(:as_mentor) }
   scope :candidates, -> { joins(:as_candidate).includes(:as_candidate) }
 
+  include PgSearch
+  multisearchable against: [:first_name, :last_name, :address, :contact]
+
   has_paper_trail
 
   ROLES.each { |role| define_method("#{role}?") { as(role).present? } }

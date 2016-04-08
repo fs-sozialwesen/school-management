@@ -41,4 +41,6 @@ Rails.application.routes.draw do
   resources :institutions
   resources :internships
 
+  get 'search', to: 'search#index', as: :search
+
 end

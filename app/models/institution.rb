@@ -8,6 +8,9 @@ class Institution < ActiveRecord::Base
   acts_as_housable
   acts_as_applyable
 
+  include PgSearch
+  multisearchable against: [:name, :description, :work_area, :contact, :address, :applying]
+
   scope :applying_by, -> (via) { where('applying @> ?', Applying.by(via)) }
   scope :housing, -> (housing) { where('housing @> ?', Housing.provided(housing)) }
   scope :by_city, -> (city) { where('institutions.address @> ?', { city: city }.to_json) }

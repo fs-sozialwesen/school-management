@@ -14,6 +14,9 @@ class Organisation < ActiveRecord::Base
   has_many :institutions, inverse_of: :organisation
   has_many :mentors, inverse_of: :organisation
 
+  include PgSearch
+  multisearchable against: [:name, :comments, :contact, :address]
+
   has_paper_trail
 
   validates :name, presence: true
