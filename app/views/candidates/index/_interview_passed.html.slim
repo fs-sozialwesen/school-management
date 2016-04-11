@@ -26,6 +26,6 @@
                 td = candidate.person.last_name
                 td = human_result_name candidate.interview.result
         .panel-footer
-          = link_to candidates_path(format: :csv, interview_date: date), class: 'btn btn-default btn-xs' do
+          = link_to candidates_path(format: :xlsx, interview_date: date), class: 'btn btn-default btn-xs' do
             span.glyphicon.glyphicon-export>
             | Exportieren

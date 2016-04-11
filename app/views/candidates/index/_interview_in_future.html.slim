@@ -26,6 +26,6 @@
                 td = bool_icon(candidate.interview.invited, 'eingeladen', 'offen')
                 td = human_answer_name candidate.interview.answer
         .panel-footer
-          = link_to candidates_path(format: :csv, interview_date: date), class: 'btn btn-default btn-xs' do
+          = link_to candidates_path(format: :xlsx, interview_date: date), class: 'btn btn-default btn-xs' do
             span.glyphicon.glyphicon-export>
             | Exportieren
