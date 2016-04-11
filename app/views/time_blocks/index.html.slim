@@ -2,7 +2,7 @@
   = link_to new_time_block_path, class: 'btn btn-primary' do
     span.glyphicon.glyphicon-plus
     =< t(:new)
-  = link_to time_blocks_path(format: :csv), id: 'export-csv-button', class: 'btn btn-default' do
+  /= link_to time_blocks_path(format: :csv), id: 'export-csv-button', class: 'btn btn-default' do
     span.glyphicon.glyphicon-export
     =< t(:export)
   h2
