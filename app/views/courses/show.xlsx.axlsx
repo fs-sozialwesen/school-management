@@ -1,0 +1,42 @@
+response.headers['Content-Disposition'] = %Q(attachment; filename="klasse-#{@course.name}-#{Time.now}.xlsx")
+
+wb = xlsx_package.workbook
+
+wb.styles do |s|
+  bold = s.add_style b: true, sz: 12, alignment: { horizontal: :center }
+  date = s.add_style(format_code: 'dd.mm.yyyy')
+
+  wb.add_worksheet(name: "Klasse #{@course.name}") do |sheet|
+
+    sheet.add_row ["Klasse #{@course.name}"], style: s.add_style(b: true, sz: 16)
+    sheet.add_row
+
+    header = %w(Anrede Vorname Nachname Geburtsdatum Geburtsort
+                Straße PLZ Ort
+                E-Mail Telefon Mobil)
+    sheet.add_row header, style: bold
+
+    @course.students.includes(:person).order('people.last_name').each do |student|
+      row = []
+      styles = []
+      types = []
+
+      p = student.person
+      a = p.address
+      c = p.contact
+      salut = gt(:salut, p)
+
+      row    += [salut, p.first_name, p.last_name, ldate(p.date_of_birth), p.place_of_birth]
+      styles += [nil,   nil,          nil,         date,                   nil]
+      types  += [nil,   nil,          nil,         nil,                    nil]
+
+      row    += [a.street, a.zip,   a.city]
+      types  += [nil,      :string, nil]
+
+      row    += [c.email, c.phone, c.mobile]
+      types  += [nil,     :string, :string]
+
+      sheet.add_row row, style: styles, types: types
+    end
+  end
+end

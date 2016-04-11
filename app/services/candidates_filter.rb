@@ -45,6 +45,7 @@ class CandidatesFilter
   end
 
   def filter_interview(filter)
+    return scope.where.not("interview ? 'date'") if filter[:date] == 'none'
     scope.where('interview @> ?', filter.to_json)
   end
 

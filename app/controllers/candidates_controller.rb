@@ -6,9 +6,9 @@ class CandidatesController < ApplicationController
 
   def index
     authorize Candidate
-    @filter = CandidatesFilter.new(params)
+    @filter     = CandidatesFilter.new(params)
     @candidates = @filter.perform.all
-    @grouped = params[:view] == 'grouped'
+    @grouped    = params[:view] == 'grouped'
   end
 
   def show
