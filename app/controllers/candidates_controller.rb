@@ -18,7 +18,6 @@ class CandidatesController < ApplicationController
     authorize Candidate
     @candidate = Candidate.new
     @candidate.date = Date.current
-    @candidate.build_person
   end
 
   def edit
@@ -48,14 +47,8 @@ class CandidatesController < ApplicationController
     redirect_to candidates_url, notice: t(:destroyed, model: Candidate.model_name.human)
   end
 
-  # def init
-  #   @candidate.created!
-  #   redirect_to @candidate, notice: 'Bewerber zurückgesetzt!'
-  # end
-
   def accept
-    @candidate.accepted!
-    @candidate.person.create_as_student!
+    @candidate.accept!
     redirect_to candidate_url(@candidate), notice: 'Bewerber aufgenommen!'
   end
 
@@ -66,30 +59,25 @@ class CandidatesController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_candidate
-    @candidate = Candidate.includes(:person).find(params[:id])
+    @candidate = Candidate.find_by id: params[:id]
     authorize @candidate
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def candidate_params
     params.require(:candidate)
-      .permit(%i(date notes education_subject year police_certificate internships cancel_date
+      .permit(%i(first_name last_name gender date_of_birth place_of_birth
+                 date notes education_subject year police_certificate internships cancel_date
                  internships_proved education_contract_sent education_contract_received
                  internship_contract_sent internship_contract_received cancel_reason status
                  debit_mandate contract_notes ) +
                 [
+                  address: %i(street zip city),
+                  contact: %i(email phone mobile),
                   school_graduate:     %i(graduate proved),
                   profession_graduate: %i(graduate proved comments),
                   interview:           %i(date time place comments invited answer result reason),
-                  person_attributes:   person_params
                 ])
   end
 
-  def person_params
-    %i(id first_name last_name gender date_of_birth place_of_birth) + contact_params
-  end
-
-  def contact_params
-    [ address: %i(street zip city), contact: %i(email phone mobile) ]
-  end
 end

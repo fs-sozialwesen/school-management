@@ -14,10 +14,10 @@
       - candidates.each do | candidate |
         tr class=({accepted: :success, rejected: :danger}[candidate.status.to_sym]) data={ url: url_for(candidate) }
           td = l(candidate.date, format: :short) if candidate.date.present?
-          td = candidate.person.first_name
-          td = candidate.person.last_name
-          td = candidate.person.address.city
-          td = candidate.person.contact.email
+          td = candidate.first_name
+          td = candidate.last_name
+          td = candidate.address.city
+          td = candidate.contact.email
 
   p = link_to candidates_path(format: :xlsx, interview_date: 'none'), class: 'btn btn-default' do
       span.glyphicon.glyphicon-export>

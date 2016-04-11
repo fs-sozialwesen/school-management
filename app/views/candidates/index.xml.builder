@@ -5,7 +5,7 @@ xml.instruct!
 xml.bewerberliste do
   @candidates.each do |candidate|
     interview      = candidate.interview
-    person         = candidate.person
+    person         = candidate
     address        = person.address
     contact        = person.contact
     prof_grad      = candidate.profession_graduate

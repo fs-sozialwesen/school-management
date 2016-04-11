@@ -11,12 +11,14 @@ de:
     course_teacher:       Klassenlehrer
     created_at:           Angelegt
     date:                 Datum
+    date_of_birth:        Geburtsdatum
     description:          Beschreibung
     education_subject:    Fachrichtung
     education_subjects:   Fachrichtungen
     email:                Email
     end_date:             Ende
     first_name:           Vorname
+    gender:               Geschlecht
     internships:          Praktika
     internship_position:  Praktikumsplatz
     internship_positions: Praktikumsplätze
@@ -29,6 +31,7 @@ de:
     mobile:               Mobil
     organisation:         Träger
     phone:                Telefon
+    place_of_birth:       Geburtsort
     school:               Schule
     start_date:           Beginn
     start_time:           Beginn
@@ -152,9 +155,6 @@ de:
         as_teacher: Lehrer
         as_mentor: Praxisanleiter
         as_student: Auszubildende(r)
-        date_of_birth: Geburtsdatum
-        gender: Geschlecht
-        place_of_birth: Geburtsort
         roles: Rollen
       candidate:
         status: Status

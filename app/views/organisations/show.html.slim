@@ -14,9 +14,6 @@
 
 .row
   .col-md-6
-    - if @organisation.comments.present?
-      .panel.panel-default
-        .panel-body = @organisation.comments
     .panel.panel-default
       .panel-heading
         h4.panel-title
@@ -44,6 +41,9 @@
           - @organisation.mentors.each do |mentor|
             tr data={ url: url_for(mentor.person) }
               td = mentor.name
+    - if @organisation.comments.present?
+      .panel.panel-default
+        .panel-body = @organisation.comments
 
   .col-md-6
     = render @organisation.address

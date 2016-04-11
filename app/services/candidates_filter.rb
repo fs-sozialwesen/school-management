@@ -4,7 +4,7 @@ class CandidatesFilter
 
   def initialize(params, scope = Candidate)
     @params   = params
-    @scope    = scope.includes(:person).order(order_options)
+    @scope    = scope.order(order_options)
     @statuses = Candidate.statuses
     @status   = params[:status].to_s
     @invited  = { 'yes' => true, 'no' => false }[params[:interview_invited]]
@@ -50,8 +50,8 @@ class CandidatesFilter
   end
 
   def order_options
-    return 'people.first_name, date' if params[:sort] == 'first_name'
-    return 'people.last_name, date'  if params[:sort] == 'last_name'
+    return 'first_name, date' if params[:sort] == 'first_name'
+    return 'last_name, date'  if params[:sort] == 'last_name'
     :date
   end
 end
