@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160408123914) do
+ActiveRecord::Schema.define(version: 20160411153307) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,9 +50,18 @@ ActiveRecord::Schema.define(version: 20160408123914) do
     t.text     "cancel_reason"
     t.boolean  "debit_mandate",                default: false
     t.text     "contract_notes"
+    t.integer  "student_id"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "gender"
+    t.date     "date_of_birth"
+    t.string   "place_of_birth"
+    t.jsonb    "address",                      default: {}
+    t.jsonb    "contact",                      default: {}
   end
 
   add_index "candidates", ["person_id"], name: "index_candidates_on_person_id", using: :btree
+  add_index "candidates", ["student_id"], name: "index_candidates_on_student_id", using: :btree
 
   create_table "course_memberships", force: :cascade do |t|
     t.integer  "student_id"
@@ -352,6 +361,7 @@ ActiveRecord::Schema.define(version: 20160408123914) do
 
   add_foreign_key "admins", "people"
   add_foreign_key "candidates", "people"
+  add_foreign_key "candidates", "students"
   add_foreign_key "course_memberships", "courses"
   add_foreign_key "courses", "teachers"
   add_foreign_key "institutions", "organisations"

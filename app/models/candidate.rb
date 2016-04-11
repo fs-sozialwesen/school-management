@@ -9,6 +9,12 @@ class Candidate < ActiveRecord::Base
 
   belongs_to :person, validate: true, inverse_of: :as_candidate
 
+  # acts_as_addressable
+  # acts_as_contactable
+
+  serialize :address, ::Address
+  serialize :contact, ::Contact
+
   serialize :school_graduate, Graduate
   serialize :profession_graduate, Graduate
   serialize :interview, Interview
