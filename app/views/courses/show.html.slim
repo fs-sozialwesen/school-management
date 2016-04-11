@@ -32,6 +32,9 @@
         h4.panel-title
           |  #{@course.students.count} Auszubildende
           ul.list-inline.pull-right
+            li = link_to course_path(@course, format: :xlsx), class: 'btn btn-default btn-xs' do
+              span.glyphicon.glyphicon-export>
+              | Exportieren
             li = link_to generate_logins_course_path(@course), class: 'btn btn-default btn-xs' do
               span.glyphicon.glyphicon-plus>
               | Login für alle erstellen
