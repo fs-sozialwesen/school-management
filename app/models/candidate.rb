@@ -29,6 +29,10 @@ class Candidate < ActiveRecord::Base
 
   def accept!
     accepted!
+    generate_student unless student.present?
+  end
+
+  def generate_student
     create_student! person_attributes: {
       first_name: first_name,
       last_name: last_name,
@@ -39,7 +43,6 @@ class Candidate < ActiveRecord::Base
       contact: contact
     }
   end
-
   def documents_complete?
     police_certificate and school_graduate.complete? and
       profession_graduate.complete? and internships_complete?
