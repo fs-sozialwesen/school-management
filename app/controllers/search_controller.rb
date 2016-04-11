@@ -4,15 +4,15 @@ class SearchController < ApplicationController
 
   def index
     authorize :search
-    @query = params[:q]
+    @query  = params[:q]
     @result = prepare_results PgSearch.multisearch(@query)
   end
 
   private
 
-  def prepare_results(search_results)
+  def prepare_results(search_documents)
     grouped_results = {}
-    search_results = search_results.to_a.map(&:searchable)
+    search_results = search_documents.map(&:searchable)
     search_results.each do |result|
       if result.is_a?(Person)
         result.roles.map(&:class).each do |klass|
