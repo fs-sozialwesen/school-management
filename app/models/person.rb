@@ -17,7 +17,7 @@ class Person < ActiveRecord::Base
   has_one :as_admin,     class_name: 'Admin'
   has_one :as_manager,   class_name: 'Manager', dependent: :destroy
   has_one :as_teacher,   class_name: 'Teacher', dependent: :destroy
-  has_one :as_student,   class_name: 'Student', dependent: :destroy
+  has_one :as_student,   class_name: 'Student'
   has_one :as_mentor,    class_name: 'Mentor', dependent: :destroy
 
   scope :admins,     -> { joins(:as_admin).    includes(:as_admin) }

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160411181805) do
+ActiveRecord::Schema.define(version: 20160411193422) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -360,8 +360,6 @@ ActiveRecord::Schema.define(version: 20160411181805) do
   add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
 
   add_foreign_key "admins", "people"
-  add_foreign_key "candidates", "people"
-  add_foreign_key "candidates", "students"
   add_foreign_key "course_memberships", "courses"
   add_foreign_key "courses", "teachers"
   add_foreign_key "institutions", "organisations"
@@ -380,7 +378,7 @@ ActiveRecord::Schema.define(version: 20160411181805) do
   add_foreign_key "mentors", "organisations"
   add_foreign_key "mentors", "people"
   add_foreign_key "students", "courses"
-  add_foreign_key "students", "people"
+  add_foreign_key "students", "people", on_delete: :cascade
   add_foreign_key "teachers", "people"
   add_foreign_key "time_tables", "courses"
 end
