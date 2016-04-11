@@ -11,18 +11,17 @@
     .row
       .col-md-4
         p
-          => { 'f' => 'Frau', 'm' => 'Herr' }[person.gender]
-          => person.first_name
-          = person.last_name
+          => { 'f' => 'Frau', 'm' => 'Herr' }[@candidate.gender]
+          => @candidate.first_name
+          = @candidate.last_name
         p
           label geb.
-          - if person.date_of_birth.present?
-            =< l person.date_of_birth
-          =< person.place_of_birth
+          =< ldate @candidate.date_of_birth
+          =< @candidate.place_of_birth
 
 
       .col-md-4
-        - address = person.address
+        - address = @candidate.address
         p = address.street
         p
           => address.zip
@@ -32,16 +31,16 @@
         p
           label.icon
             span.glyphicon.glyphicon-envelope
-          - email = person.contact.email
+          - email = @candidate.contact.email
           =< link_to email, "mailto:#{email}"
         p
           label.icon
             span.glyphicon.glyphicon-earphone
-          =< person.contact.phone
+          =< @candidate.contact.phone
         p
           label.icon
             span.glyphicon.glyphicon-phone
-          =< person.contact.mobile
+          =< @candidate.contact.mobile
 
     - if @candidate.notes.present?
       .row: .col-md-12 = @candidate.notes

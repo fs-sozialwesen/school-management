@@ -10,9 +10,6 @@
     - if @candidate.new_record?
       = panel_box title: 'Bewerbung' do
         = f.input :date, as: :string, input_html:{ class: :date }
-
-    /= f.simple_fields_for :person do |p|
-      = render 'people/form/person', f: p, person: @candidate.person
     = render 'candidates/form/person', f: f
     .row: .col-md-12 = f.input :notes, input_html: { rows: 5 }
   - if params[:part] == 'documents'

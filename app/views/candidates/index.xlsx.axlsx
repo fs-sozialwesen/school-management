@@ -18,7 +18,7 @@ wb.styles do |s|
 
     @candidates.each do |candidate|
       i              = candidate.interview
-      p              = candidate.person
+      p              = candidate
       a              = p.address
       c              = p.contact
       prof_grad      = candidate.profession_graduate

@@ -7,7 +7,7 @@ class Candidate < ActiveRecord::Base
     accepted: 1,
   }
 
-  belongs_to :person, validate: true, inverse_of: :as_candidate
+  belongs_to :student, inverse_of: :candidate
 
   # acts_as_addressable
   # acts_as_contactable
@@ -19,15 +19,26 @@ class Candidate < ActiveRecord::Base
   serialize :profession_graduate, Graduate
   serialize :interview, Interview
 
-  accepts_nested_attributes_for :person
-
-  validates :date, presence: true
+  validates :first_name, :last_name, :date, presence: true
 
   has_paper_trail
 
-  # def progress
-  #   self[:status]
-  # end
+  def name
+    "#{first_name} #{last_name}"
+  end
+
+  def accept!
+    accepted!
+    create_student! person_attributes: {
+      first_name: first_name,
+      last_name: last_name,
+      gender: gender,
+      date_of_birth: date_of_birth,
+      place_of_birth: place_of_birth,
+      address: address,
+      contact: contact
+    }
+  end
 
   def documents_complete?
     police_certificate and school_graduate.complete? and

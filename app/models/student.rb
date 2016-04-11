@@ -10,6 +10,7 @@ class Student < ActiveRecord::Base
   # has_one :course, through: :course_membership
   # has_one :education_subject, through: :course
   # has_one :school, through: :education_subject
+  has_one :candidate, inverse_of: :student
 
   accepts_nested_attributes_for :person
   delegate :first_name, :last_name, :name, to: :person, allow_nil: true

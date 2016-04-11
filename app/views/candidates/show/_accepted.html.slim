@@ -2,4 +2,4 @@
   .panel.panel-success.accepted
     .panel-heading
       |  Bewerber ist zugelassen.
-      =< link_to 'Auzubildender', @candidate.person if @candidate.person.student?
+      =< link_to 'Auzubildender', @candidate.student.person if @candidate.student.present?

@@ -25,7 +25,7 @@
 
 = render @person.as_student if @person.student?
 = render @person.as_mentor if @person.mentor?
-= render @person.as_candidate if @person.candidate?
+= render @person.as_student.candidate if @person.student? && @person.as_student.candidate.present?
 .row
   .col-md-6 = render @person.as_teacher if @person.teacher?
   .col-md-6 = render @person.as_manager if @person.manager?

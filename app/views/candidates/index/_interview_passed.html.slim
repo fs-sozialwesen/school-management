@@ -22,8 +22,8 @@
             - grouped_candidates[date].each do | candidate |
               tr class=({accepted: :success, rejected: :danger}[candidate.status.to_sym]) data={ url: url_for(candidate) }
                 td = l(candidate.date, format: :short) if candidate.date.present?
-                td = candidate.person.first_name
-                td = candidate.person.last_name
+                td = candidate.first_name
+                td = candidate.last_name
                 td = human_result_name candidate.interview.result
         .panel-footer
           = link_to candidates_path(format: :xlsx, interview_date: date), class: 'btn btn-default btn-xs' do

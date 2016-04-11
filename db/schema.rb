@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160411153307) do
+ActiveRecord::Schema.define(version: 20160411181805) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,8 +51,8 @@ ActiveRecord::Schema.define(version: 20160411153307) do
     t.boolean  "debit_mandate",                default: false
     t.text     "contract_notes"
     t.integer  "student_id"
-    t.string   "first_name"
-    t.string   "last_name"
+    t.string   "first_name",                                   null: false
+    t.string   "last_name",                                    null: false
     t.string   "gender"
     t.date     "date_of_birth"
     t.string   "place_of_birth"

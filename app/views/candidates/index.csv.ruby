@@ -12,9 +12,8 @@ CSV.generate(encoding: 'UTF-8', col_sep: ';', force_quotes: true) do |csv|
             AusbVertr_gesendet zurück PraktVertr_gesendet zurück)
   @candidates.each do |candidate|
     interview      = candidate.interview
-    person         = candidate.person
-    address        = person.address
-    contact        = person.contact
+    address        = candidate.address
+    contact        = candidate.contact
     prof_grad      = candidate.profession_graduate
     prof_proved    = prof_grad.proved ? 'ja' : 'nein'
     prof_proved    = '-' if prof_grad.graduate.blank?
@@ -28,11 +27,11 @@ CSV.generate(encoding: 'UTF-8', col_sep: ';', force_quotes: true) do |csv|
       (candidate.date ? l(candidate.date) : ''),
       candidate.year,
 
-      { 'f' => 'Frau', 'm' => 'Herr' }[candidate.person.gender],
-      person.first_name,
-      person.last_name,
-      (person.date_of_birth ? l(person.date_of_birth) : ''),
-      person.place_of_birth,
+      { 'f' => 'Frau', 'm' => 'Herr' }[candidate.gender],
+      candidate.first_name,
+      candidate.last_name,
+      ldate(candidate.date_of_birth),
+      candidate.place_of_birth,
 
       address.street,
       address.zip,

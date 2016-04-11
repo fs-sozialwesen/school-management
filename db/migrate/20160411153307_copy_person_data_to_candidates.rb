@@ -1,7 +1,7 @@
 class CopyPersonDataToCandidates < ActiveRecord::Migration
   def up
-    Candidate.includes(person: :as_student).all.each do |candidate|
-      person = candidate.person
+    Candidate.all.each do |candidate|
+      person = Person.find_by id: candidate.person_id
       next unless person
       candidate.student_id     = person.as_student&.id
       candidate.first_name     = person.first_name
