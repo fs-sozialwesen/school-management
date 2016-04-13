@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160411193422) do
+ActiveRecord::Schema.define(version: 20160413113215) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -58,6 +58,8 @@ ActiveRecord::Schema.define(version: 20160411193422) do
     t.string   "place_of_birth"
     t.jsonb    "address",                      default: {}
     t.jsonb    "contact",                      default: {}
+    t.boolean  "career_changer",               default: false
+    t.integer  "rank"
   end
 
   add_index "candidates", ["person_id"], name: "index_candidates_on_person_id", using: :btree
@@ -144,10 +146,11 @@ ActiveRecord::Schema.define(version: 20160411193422) do
     t.date     "start_date"
     t.date     "end_date"
     t.text     "comments"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
     t.integer  "mentor_id"
     t.integer  "institution_id"
+    t.boolean  "exchange",               default: false
   end
 
   add_index "internships", ["institution_id"], name: "index_internships_on_institution_id", using: :btree
@@ -220,8 +223,9 @@ ActiveRecord::Schema.define(version: 20160411193422) do
   create_table "mentors", force: :cascade do |t|
     t.integer  "person_id"
     t.integer  "organisation_id"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+    t.boolean  "qualified",       default: false
   end
 
   add_index "mentors", ["organisation_id"], name: "index_mentors_on_organisation_id", using: :btree

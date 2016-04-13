@@ -29,6 +29,9 @@
       p.col-md-7
         - if @internship.mentor.present?
           = link_to @internship.mentor.name, @internship.mentor.person
+    .row
+      label.col-md-5 => Internship.human_attribute_name(:exchange)
+      p.col-md-7 = bool_icon @internship.exchange
 
   .col-md-4 = panel_box title: 'Zeitraum' do
     .row

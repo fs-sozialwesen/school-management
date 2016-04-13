@@ -113,7 +113,7 @@ class PeopleController < ApplicationController
   def person_params
     permit = %i(id first_name last_name gender date_of_birth place_of_birth) + contact_params
     permit += [as_student_attributes: [:id, :course_id]] #if student?
-    permit += [as_mentor_attributes: [:id, :organisation_id]] #if mentor?
+    permit += [as_mentor_attributes: [:id, :organisation_id, :qualified]] #if mentor?
     params.require(:person).permit(permit)
   end
 

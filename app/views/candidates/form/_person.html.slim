@@ -7,6 +7,9 @@
       .col-md-6 = f.input :last_name, required: true
       .col-md-6 = f.input :date_of_birth, as: :string, input_html:{ class: :date, data: { start_view: 2 } }
       .col-md-6 = f.input :place_of_birth
+    .row
+      .col-md-6 = f.input :career_changer
+      .col-md-6 = f.input :rank
 
   .col-md-4 = panel_box title: 'Adresse' do
     = f.simple_fields_for :address, f.object.address do |a|

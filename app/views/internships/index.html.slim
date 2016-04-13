@@ -19,6 +19,7 @@
         th = Internship.human_attribute_name(:mentor)
         th = Internship.human_attribute_name(:start_date)
         th = Internship.human_attribute_name(:end_date)
+        th = Internship.human_attribute_name(:exchange)
     tbody
       - @internships.each do | internship |
         tr data = {url: url_for(internship)}
@@ -28,3 +29,4 @@
           td = internship.mentor.try :name
           td = ldate internship.start_date
           td = ldate internship.end_date
+          td = bool_icon internship.exchange

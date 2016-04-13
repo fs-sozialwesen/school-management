@@ -112,6 +112,7 @@ de:
       enum:
         value: Name
       internship:
+        exchange: Tauschpraktikum
         status:     Status
       internship_position:
         applying: Bewerbung
@@ -148,6 +149,8 @@ de:
         start_time: Start
         end_time: Ende
         weekday: Wochentag
+      mentor:
+        qualified: qualifiziert
       person:
         as_admin: Admin
         as_candidate: Bewerber(in)
@@ -166,6 +169,8 @@ de:
         status/student: Student
         status/rejected: Schule abgesagt
         status/canceled: Bewerber abgesagt
+        career_changer: Quereinsteiger
+        rank: Ranking
         interview:
           answer/open: offen
           answer/accepted: Zusage

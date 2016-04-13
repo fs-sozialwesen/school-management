@@ -9,6 +9,7 @@ wb.styles do |s|
   wb.add_worksheet(name: 'Bewerber') do |sheet|
     header = %w(Status Eingangsdatum Jahr
                 Anrede Vorname Nachname Geburtsdatum Geburtsort
+                Quereinst Ranking
                 Straße PLZ Ort
                 E-Mail Telefon Mobil
                 Schulausbildung bestät. Berufsausb bestät. sonstiges Praktika bestät. Führungszeugnis
@@ -39,6 +40,10 @@ wb.styles do |s|
       row    += [gt(:salut, p), p.first_name, p.last_name, p.date_of_birth, p.place_of_birth]
       styles += [nil,           nil,          nil,         date,            nil]
       types  += [nil,           nil,          nil,         nil,             nil]
+
+      row    += [bool(candidate.career_changer), candidate.rank]
+      styles += [nil,                            nil]
+      types  += [nil,                            nil]
 
       row    += [a.street, a.zip.to_s, a.city]
       styles += [nil,      nil,        nil]

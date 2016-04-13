@@ -9,6 +9,7 @@ class CandidatesController < ApplicationController
     @filter     = CandidatesFilter.new(params)
     @candidates = @filter.perform.all
     @grouped    = params[:view] == 'grouped'
+    @years      = Candidate.select('DISTINCT year').order('year').map(&:year).compact
   end
 
   def show
@@ -49,7 +50,7 @@ class CandidatesController < ApplicationController
 
   def accept
     @candidate.accept!
-    redirect_to candidate_url(@candidate), notice: 'Bewerber aufgenommen!'
+    redirect_to @candidate, notice: 'Bewerber aufgenommen!'
   end
 
   def reject
@@ -70,7 +71,7 @@ class CandidatesController < ApplicationController
                  date notes education_subject year police_certificate internships cancel_date
                  internships_proved education_contract_sent education_contract_received
                  internship_contract_sent internship_contract_received cancel_reason status
-                 debit_mandate contract_notes ) +
+                 debit_mandate contract_notes career_changer rank) +
                 [
                   address: %i(street zip city),
                   contact: %i(email phone mobile),

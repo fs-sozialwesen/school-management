@@ -18,6 +18,12 @@
           label geb.
           =< ldate @candidate.date_of_birth
           =< @candidate.place_of_birth
+        p
+          label> Quereinsteiger
+          = bool_icon @candidate.career_changer
+        p
+          label> Ranking
+          = @candidate.rank
 
 
       .col-md-4
