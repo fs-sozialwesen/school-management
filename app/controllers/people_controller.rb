@@ -112,7 +112,7 @@ class PeopleController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   def person_params
     permit = %i(id first_name last_name gender date_of_birth place_of_birth) + contact_params
-    permit += [as_student_attributes: [:id, :course_id]] #if student?
+    permit += [as_student_attributes: [:id, :course_id, :active]] #if student?
     permit += [as_mentor_attributes: [:id, :organisation_id, :qualified]] #if mentor?
     params.require(:person).permit(permit)
   end
