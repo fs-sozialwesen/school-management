@@ -27,5 +27,10 @@
         - Interview::RESULTS.each do |result|
           option selected=(result == @filter.result) value=result = human_result_name(result)
     .form-group
+      select.form-control name="education_contract_received"
+        option selected=(@filter.education_contract_received.nil?)     value=''    AV zurück
+        option selected=(@filter.education_contract_received == true)  value="yes" ja
+        option selected=(@filter.education_contract_received == false) value="no"  nein
+    .form-group
       => link_to 'Alle', candidates_path, class: 'btn btn-info'
       input.btn.btn-primary type="submit" value="Suchen"

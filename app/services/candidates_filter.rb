@@ -1,17 +1,19 @@
 # class CandidatesFilter
 class CandidatesFilter
-  attr_reader :params, :scope, :invited, :status, :answer, :result, :statuses, :date, :year
+  attr_reader :params, :scope, :invited, :status, :answer, :result, :statuses, :date, :year,
+              :education_contract_received
 
   def initialize(params, scope = Candidate)
-    @params   = params
-    @scope    = scope.order(order_options)
-    @statuses = Candidate.statuses
-    @status   = params[:status].to_s
-    @invited  = { 'yes' => true, 'no' => false }[params[:interview_invited]]
-    @answer   = params[:interview_answer]
-    @result   = params[:interview_result]
-    @date     = params[:interview_date]
-    @year     = params[:year]
+    @params                      = params
+    @scope                       = scope.order(order_options)
+    @statuses                    = Candidate.statuses
+    @status                      = params[:status].to_s
+    @invited                     = { 'yes' => true, 'no' => false }[params[:interview_invited]]
+    @answer                      = params[:interview_answer]
+    @result                      = params[:interview_result]
+    @date                        = params[:interview_date]
+    @year                        = params[:year]
+    @education_contract_received = { 'yes' => true, 'no' => false }[params[:education_contract_received]]
   end
 
   def perform
@@ -21,6 +23,7 @@ class CandidatesFilter
     filter_result
     filter_date
     filter_year
+    filter_education_contract_received
     @scope
   end
 
@@ -48,6 +51,15 @@ class CandidatesFilter
 
   def filter_year
     @scope = scope.where(year: year) if year.present?
+  end
+
+  def filter_education_contract_received
+    return unless @education_contract_received.in?([true, false])
+    @scope = if @education_contract_received
+      scope.where.not(education_contract_received: nil)
+    else
+      scope.where(education_contract_received: nil)
+    end
   end
 
   def filter_interview(filter)
