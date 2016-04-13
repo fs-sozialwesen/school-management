@@ -11,12 +11,11 @@
   .panel-body
     .row
       .col-md-3
-        p
-          label Eingangsdatum
-          =< l @candidate.date if @candidate.date.present?
-        p
-          label Jahr
-          =< @candidate.year
+        label Eingangsdatum
+        p =< l @candidate.date if @candidate.date.present?
+
+        label Jahr
+        p =< @candidate.year
 
       .col-md-3
         p
