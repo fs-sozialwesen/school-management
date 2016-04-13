@@ -1,7 +1,7 @@
 # class CandidatesFilter
 class CandidatesFilter
   attr_reader :params, :scope, :invited, :status, :answer, :result, :statuses, :date, :year,
-              :education_contract_received
+              :education_contract_received, :career_changer
 
   def initialize(params, scope = Candidate)
     @params                      = params
@@ -14,6 +14,7 @@ class CandidatesFilter
     @date                        = params[:interview_date]
     @year                        = params[:year]
     @education_contract_received = { 'yes' => true, 'no' => false }[params[:education_contract_received]]
+    @career_changer              = { 'yes' => true, 'no' => false }[params[:career_changer]]
   end
 
   def perform
@@ -24,6 +25,7 @@ class CandidatesFilter
     filter_date
     filter_year
     filter_education_contract_received
+    filter_career_changer
     @scope
   end
 
@@ -51,6 +53,10 @@ class CandidatesFilter
 
   def filter_year
     @scope = scope.where(year: year) if year.present?
+  end
+
+  def filter_career_changer
+    @scope = scope.where(career_changer: career_changer) if career_changer.in?([true, false])
   end
 
   def filter_education_contract_received
