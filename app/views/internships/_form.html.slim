@@ -17,6 +17,7 @@
         = f.input :organisation, collection: organisations, selected: @internship&.organisation&.id, include_blank: true
         = f.association :institution, include_blank: true
         = f.association :mentor, collection: Mentor.joins(:person).order('people.last_name'), include_blank: true
+        = f.input :exchange
 
     .col-md-6
       = panel_box title: 'Zeitraum' do

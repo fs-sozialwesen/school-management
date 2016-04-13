@@ -5,7 +5,8 @@ class InternshipsController < ApplicationController
 
   def index
     authorize Internship
-    @internships = Internship.includes(student: :person, institution: :organisation).all
+    @internships = Internship.includes(student: :person, institution: :organisation).
+      order('people.last_name').all
   end
 
   def show
@@ -58,7 +59,8 @@ class InternshipsController < ApplicationController
   def internship_params
     params[:internship].delete :organisation
     # binding.pry
-    params.require(:internship).permit(:student_id, :institution_id, :mentor_id, :start_date, :end_date, :comments)
+    params.require(:internship).permit(:student_id, :institution_id, :mentor_id,
+                                       :start_date, :end_date, :comments, :exchange)
   end
 
 end

@@ -112,6 +112,7 @@ de:
       enum:
         value: Name
       internship:
+        exchange: Tauschpraktikum
         status:     Status
       internship_position:
         applying: Bewerbung
