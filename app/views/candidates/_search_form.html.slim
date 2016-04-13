@@ -2,6 +2,11 @@
   /h3 Suche
   form action=candidates_url
     .form-group
+      select.form-control name="year"
+        option selected=(@filter.year.blank?) value='' Jahr
+        - @years.each do |year|
+          option selected=(year.to_s == @filter.year) value=year = year
+    .form-group
       select.form-control name="status"
         option selected=(@filter.status.blank?) value='' Status
         - @filter.statuses.each do |status, _|

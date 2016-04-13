@@ -1,6 +1,6 @@
 # class CandidatesFilter
 class CandidatesFilter
-  attr_reader :params, :scope, :invited, :status, :answer, :result, :statuses, :date
+  attr_reader :params, :scope, :invited, :status, :answer, :result, :statuses, :date, :year
 
   def initialize(params, scope = Candidate)
     @params   = params
@@ -11,6 +11,7 @@ class CandidatesFilter
     @answer   = params[:interview_answer]
     @result   = params[:interview_result]
     @date     = params[:interview_date]
+    @year     = params[:year]
   end
 
   def perform
@@ -19,6 +20,7 @@ class CandidatesFilter
     filter_answer
     filter_result
     filter_date
+    filter_year
     @scope
   end
 
@@ -42,6 +44,10 @@ class CandidatesFilter
 
   def filter_date
     @scope = filter_interview(date: date) if date.present?
+  end
+
+  def filter_year
+    @scope = scope.where(year: year) if year.present?
   end
 
   def filter_interview(filter)

@@ -9,6 +9,7 @@ class CandidatesController < ApplicationController
     @filter     = CandidatesFilter.new(params)
     @candidates = @filter.perform.all
     @grouped    = params[:view] == 'grouped'
+    @years      = Candidate.select('DISTINCT year').order('year').map(&:year).compact
   end
 
   def show
