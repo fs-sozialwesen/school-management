@@ -1,6 +1,9 @@
 .row
   .col-md-6 = panel_box title: 'Träger' do
     = link_to mentor.organisation.name, mentor.organisation
+    p
+      label> Qualifiziert
+      = bool_icon mentor.qualified
 
   .col-md-6 = panel_box_with_table title: 'Betreute Praktika' do
     table.table.table-striped.table-bordered.table-condensed.table-clickable

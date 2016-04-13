@@ -148,6 +148,8 @@ de:
         start_time: Start
         end_time: Ende
         weekday: Wochentag
+      mentor:
+        qualified: qualifiziert
       person:
         as_admin: Admin
         as_candidate: Bewerber(in)

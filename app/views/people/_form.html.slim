@@ -46,6 +46,7 @@
       .col-md-6 = panel_box title: 'Träger' do
         = f.simple_fields_for :as_mentor do |s|
           = s.association :organisation, collection: Organisation.order(:name)
+          = s.input :qualified
 
   .row.action-buttons
     .col-md-12
