@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160411193422) do
+ActiveRecord::Schema.define(version: 20160413085711) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -58,6 +58,8 @@ ActiveRecord::Schema.define(version: 20160411193422) do
     t.string   "place_of_birth"
     t.jsonb    "address",                      default: {}
     t.jsonb    "contact",                      default: {}
+    t.boolean  "career_changer",               default: false
+    t.integer  "rank"
   end
 
   add_index "candidates", ["person_id"], name: "index_candidates_on_person_id", using: :btree

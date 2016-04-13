@@ -21,6 +21,8 @@
               th Eingeladen
               th Rückmeldung
               th Ergebnis KLT
+              th Quereinsteiger
+              th Ranking
           tbody
             - @candidates.each do | candidate |
               tr class=({accepted: :success, rejected: :danger}[candidate.status.to_sym]) data={ url: url_for(candidate) }
@@ -32,3 +34,5 @@
                 td = bool_icon(candidate.interview.invited, 'eingeladen', 'offen')
                 td = human_answer_name candidate.interview.answer
                 td = human_result_name candidate.interview.result
+                td = bool_icon candidate.career_changer
+                td = candidate.rank

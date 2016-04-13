@@ -166,6 +166,8 @@ de:
         status/student: Student
         status/rejected: Schule abgesagt
         status/canceled: Bewerber abgesagt
+        career_changer: Quereinsteiger
+        rank: Ranking
         interview:
           answer/open: offen
           answer/accepted: Zusage
