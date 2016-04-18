@@ -1,2 +1,9 @@
 = panel_box title: 'Bewerbung' do
-  = link_to 'Bewerberprofil', candidate
+  p = link_to candidate, title: 'Bewerberprofil' do
+    - if candidate.documents_complete? and candidate.contracts_complete?
+      span.label.label-success vollständig
+    - else
+      - unless candidate.documents_complete?
+        span.label.label-danger> Dokumente unvollständig
+      - unless candidate.contracts_complete?
+        span.label.label-danger> Verträge unvollständig

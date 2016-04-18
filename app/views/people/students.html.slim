@@ -41,6 +41,8 @@ ul.nav.nav-tabs
           th Nachname
           - if @course.in? [:active, :archived]
             th Klasse
+          - if @course == :no
+            th Bewerbung
           th Login (letzte Anmeld.)
       tbody
         - students.each do | student |
@@ -49,6 +51,18 @@ ul.nav.nav-tabs
             td = student.last_name
             - if @course.in? [:active, :archived]
               td = link_to student.as_student.course.name, student.as_student.course
+            - if @course == :no
+              td
+                - if candidate = student.as_student.candidate
+                  - if candidate.documents_complete? and candidate.contracts_complete?
+                    span.label.label-success vollständig
+                  - else
+                    - unless candidate.documents_complete?
+                      span.label.label-danger> Dokumente unvollständig
+                    - unless candidate.contracts_complete?
+                      span.label.label-danger> Verträge unvollständig
+                - else
+                  |  -
             td
               - if student.login.present?
                 = ['ja', ldate(student.login.last_sign_in_at)].select(&:present?).join(', ')
