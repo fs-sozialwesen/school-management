@@ -20,7 +20,9 @@
 
           tbody
             - grouped_candidates[date].each do | candidate |
-              tr class=({accepted: :success, rejected: :danger, canceled: :danger}[candidate.status.to_sym]) data={ url: url_for(candidate) }
+              - css_class = {accepted: :success, rejected: :danger, canceled: :danger}[candidate.status.to_sym]
+              - css_class = :warning if candidate.interview.result == 'wait'
+              tr class=css_class data={ url: url_for(candidate) }
                 td = l(candidate.date, format: :short) if candidate.date.present?
                 td = candidate.first_name
                 td = candidate.last_name

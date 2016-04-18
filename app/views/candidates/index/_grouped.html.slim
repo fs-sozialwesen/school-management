@@ -1,4 +1,4 @@
-- grouped_candidates = @candidates.to_a.group_by { |cand| cand.interview.date.nil? ? nil : ( cand.interview.date < Date.current ) }
+- grouped_candidates = @candidates.to_a.group_by { |cand| cand.interview.date.blank? ? nil : ( cand.interview.date < Date.current ) }
 
 .row
   .col-md-2

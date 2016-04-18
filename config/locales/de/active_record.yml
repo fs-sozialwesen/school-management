@@ -179,6 +179,7 @@ de:
           result/accepted: Bewerber angenommen
           result/rejected: Bewerber abgelehnt
           result/repeat: Wiederholen
+          result/wait: Warteliste
       student:
         year: Jahrgang
       subject:

@@ -1,7 +1,7 @@
 # class Interview
 class Interview < JsonSerializer
   ANSWERS = %w(open accepted rejected).freeze
-  RESULTS = %w(open accepted rejected).freeze
+  RESULTS = %w(open accepted rejected wait).freeze
 
   attribute :date,       Date
   attribute :comments,   String,  default: ''
