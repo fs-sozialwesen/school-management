@@ -149,6 +149,9 @@ de:
         start_time: Start
         end_time: Ende
         weekday: Wochentag
+      organisation:
+        cooperation: Kooperationsvereinbarung
+        coop_notes: Notizen
       mentor:
         qualified: qualifiziert
       person:

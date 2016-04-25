@@ -14,6 +14,12 @@
       = render 'serializers/form/address', f: f
     .col-md-6 = render 'serializers/form/contact', f: f
 
+  .row
+    .col-md-6
+      = panel_box title: 'Kooperation' do
+        = f.input :cooperation, collection: Enum.cooperations
+        = f.input :coop_notes
+
   .row.action-buttons
     .col-md-12
       .pull-right
