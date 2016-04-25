@@ -18,6 +18,9 @@
       label.col-md-5 => Internship.human_attribute_name(:student)
       p.col-md-7 = link_to @internship.student.name, @internship.student.person
     .row
+      label.col-md-5 => Internship.human_attribute_name(:contract_proved)
+      p.col-md-7 = bool_icon @internship.contract_proved
+    .row
       label.col-md-5 => Internship.human_attribute_name(:institution)
       p.col-md-7 = link_to @internship.institution.name, @internship.institution
     .row
