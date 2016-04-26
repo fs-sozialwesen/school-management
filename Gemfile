@@ -19,6 +19,10 @@ gem 'paperclip'
 gem 'airbrake', '~> 5.0'
 gem 'pg_search'
 
+group :production do
+  gem 'rails_12factor'
+end
+
 group :development, :test do
   gem 'byebug'
   gem 'dotenv-rails'
