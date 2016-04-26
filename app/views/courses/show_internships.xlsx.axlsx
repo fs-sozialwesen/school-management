@@ -12,7 +12,8 @@ wb.styles do |s|
     sheet.add_row ['Praktikumsplätze', 'Praxisblock', @block], style: s.add_style(b: true, sz: 14)
     sheet.add_row
 
-    header = %w(Anrede Vorname Nachname E-Mail Mobil
+    header = %w(Anrede Vorname Nachname E-Mail Telefon
+                Tauschp. Träger Kooperationsv.
                 Einrichtung Straße PLZ Ort
                 Ansprechpartner E-Mail Telefon Fax Mobil Praxisanleiter)
     sheet.add_row header, style: bold
@@ -26,14 +27,20 @@ wb.styles do |s|
       salut = gt(:salut, p)
       internship = student.internships.order(:start_date).last
 
-      row    += [salut, p.first_name, p.last_name, p.contact.email, p.contact.mobile]
+      row    += [salut, p.first_name, p.last_name, p.contact.email, p.contact.phone]
       styles += [nil,   nil,          nil,         nil,             nil]
       types  += [nil,   nil,          nil,         nil,             :string]
 
       if internship
         inst = internship.institution
+        carrier = inst.organisation
         a = inst.address
         c = inst.contact
+        coop = carrier.cooperation
+        coop += " (#{carrier.coop_notes})" if carrier.coop_notes.present?
+
+        row    += [bool(internship.exchange), carrier.name, coop]
+        types  += [nil,                       nil,          nil]
 
         row    += [inst.name, a.street, a.zip,   a.city]
         types  += [nil,       nil,      :string, nil]
