@@ -5,7 +5,7 @@ class InternshipsController < ApplicationController
 
   def index
     authorize Internship
-    @internships = Internship.includes(student: :person, institution: :organisation).
+    @internships = Internship.includes(student: :person, institution: :organisation, mentor: :person).
       order('people.last_name').all
   end
 
