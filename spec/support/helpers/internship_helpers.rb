@@ -31,9 +31,9 @@ module Features
       create_institution institution_name
       click_on 'Praktika'
       click_on 'Neu'
-      # select 'Sabine Neumann', from: 'Auszubildende(r)'
       select 'Sabine Neumann', from: 'internship[student_id]'
       select institution_name, from: 'Einrichtung'
+      select Enum.internship_blocks.first, from: 'Praxisblock'
       fill_in :Beginn, with: '1.1.2016'
       fill_in :Ende, with: '31.3.2016'
       click_on 'Speichern'
