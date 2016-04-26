@@ -45,6 +45,7 @@ de:
       error: Klasse konnte nicht gespeichert werden.
   enum:
     cooperation: Kooperation
+    internship_block: Praxisblock
     profession_graduate: Berufsabschluss
     school_graduate: Schulabschluss
     work_area: Arbeitsfeld

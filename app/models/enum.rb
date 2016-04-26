@@ -1,6 +1,6 @@
 class Enum < ActiveRecord::Base
 
-  TYPES = %w(school_graduate profession_graduate work_area cooperation)
+  TYPES = %w(school_graduate profession_graduate work_area cooperation internship_block)
 
   TYPES.each do |type|
     types = type.pluralize

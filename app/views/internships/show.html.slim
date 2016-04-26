@@ -38,6 +38,9 @@
 
   .col-md-4 = panel_box title: 'Zeitraum' do
     .row
+      label.col-md-4 = Internship.human_attribute_name(:block)
+      p.col-md-8 = @internship.block
+    .row
       label.col-md-4 = Internship.human_attribute_name(:start_date)
       p.col-md-8 = ldate @internship.start_date
     .row

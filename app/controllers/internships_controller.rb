@@ -60,7 +60,7 @@ class InternshipsController < ApplicationController
     params[:internship].delete :organisation
     # binding.pry
     params.require(:internship).permit(:student_id, :institution_id, :mentor_id, :contract_proved,
-                                       :start_date, :end_date, :comments, :exchange)
+                                       :block, :start_date, :end_date, :comments, :exchange)
   end
 
 end

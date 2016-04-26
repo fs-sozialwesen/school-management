@@ -5,5 +5,5 @@ class Internship < ActiveRecord::Base
   has_one :organisation, through: :institution
   belongs_to :mentor
 
-  validates :start_date, :end_date, presence: true
+  validates :block, :start_date, :end_date, presence: true
 end

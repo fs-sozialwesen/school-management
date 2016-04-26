@@ -9,7 +9,7 @@ wb.styles do |s|
   wb.add_worksheet(name: "Klasse #{@course.name}") do |sheet|
 
     sheet.add_row ["Klasse #{@course.name}"], style: s.add_style(b: true, sz: 16)
-    sheet.add_row ['Praktikumsplätze'], style: s.add_style(b: true, sz: 14)
+    sheet.add_row ['Praktikumsplätze', 'Praxisblock', @block], style: s.add_style(b: true, sz: 14)
     sheet.add_row
 
     header = %w(Anrede Vorname Nachname E-Mail Mobil
@@ -17,7 +17,7 @@ wb.styles do |s|
                 Ansprechpartner E-Mail Telefon Fax Mobil Praxisanleiter)
     sheet.add_row header, style: bold
 
-    @course.students.includes(:person, internships: [:institution, :mentor]).order('people.last_name').each do |student|
+    @students.each do |student|
       row = []
       styles = []
       types = []

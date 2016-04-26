@@ -112,6 +112,7 @@ de:
       enum:
         value: Name
       internship:
+        block: Praxisblock
         contract_proved: Vertrag liegt vor
         exchange: Tauschpraktikum
         status:     Status

@@ -16,7 +16,15 @@ class CoursesController < ApplicationController
   end
 
   def show
-    render 'show_internships' if params[:internships]
+    if params[:internships]
+      @block = params[:block]
+      @students = @course.students
+        .joins(:internships)
+        .includes(:person, internships: [:institution, :mentor])
+        .where('internships.block' => @block)
+        .order('people.last_name')
+      render 'show_internships'
+    end
   end
 
   def new

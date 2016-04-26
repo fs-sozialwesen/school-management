@@ -17,6 +17,7 @@
         th = Internship.human_attribute_name(:institution)
         th = Institution.human_attribute_name(:organisation)
         th = Internship.human_attribute_name(:mentor)
+        th = Internship.human_attribute_name(:block)
         th = Internship.human_attribute_name(:start_date)
         th = Internship.human_attribute_name(:end_date)
         th = Internship.human_attribute_name(:exchange)
@@ -28,6 +29,7 @@
           td = internship.institution.name
           td = internship.institution.organisation.name
           td = internship.mentor.try :name
+          td = internship.block
           td = ldate internship.start_date
           td = ldate internship.end_date
           td = bool_icon internship.exchange

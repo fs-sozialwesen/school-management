@@ -1,5 +1,5 @@
 .row
-  .col-md-6 = panel_box title: 'Klasse' do
+  .col-md-4 = panel_box title: 'Klasse' do
     - if student.course.present?
       p = link_to student.course.name, student.course
     p
@@ -7,7 +7,7 @@
       => bool_icon student.active
       - unless student.active
         |  Dropout
-  .col-md-6
+  .col-md-8
     .panel.panel-default
       .panel-heading
         h4.panel-title
@@ -20,6 +20,8 @@
         thead
           tr
             th Zeitraum
+            th Praxisblock
+            th Vertrag liegt vor
             th Praktikumsplatz
             th Praxisanleiter
         tbody
@@ -29,6 +31,8 @@
                 => ldate(internship.start_date)
                 |  -
                 =< ldate(internship.end_date)
+              td = internship.block
+              td = bool_icon internship.contract_proved
               td = internship.institution.name
               td = internship.mentor.try :name
 
