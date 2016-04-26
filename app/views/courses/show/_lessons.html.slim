@@ -1,0 +1,9 @@
+table.table.table-condensed.table-hover.table-striped
+  thead
+    th Fach
+    th Stunden
+  tbody
+    - @course.lessons.includes(:subject).all.group_by {|l| l.subject }.each do |subject, lessons|
+      tr
+        td = subject.name
+        td = lessons.count

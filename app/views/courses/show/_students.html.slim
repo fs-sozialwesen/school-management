@@ -1,0 +1,21 @@
+ul.list-inline
+  li = link_to course_path(@course, format: :xlsx), class: 'btn btn-default' do
+    span.glyphicon.glyphicon-export>
+    | Exportieren
+  li = link_to generate_logins_course_path(@course), class: 'btn btn-default' do
+    span.glyphicon.glyphicon-plus>
+    | Login für alle erstellen
+table.table.table-condensed.table-hover.table-striped.table-clickable
+  thead
+    th Vorname
+    th Nachname
+    th E-Mail
+    th Login
+  tbody
+    - @course.students.includes(person: :login).order('people.last_name').each do | student |
+      - student = student.person
+      tr data={ url: url_for(student) }
+        td = student.first_name
+        td = student.last_name
+        td = student.contact.email
+        td = student.login.present? ? 'ja' : 'nein'

@@ -12,79 +12,26 @@
     => @course.name
     small Klasse
 
-.row
-  .col-md-3
-    ul.list-unstyled
-      li
-        label Klassenehrer:
-        =< link_to @course.teacher.person.name, @course.teacher.person
-      li
-        label Beginn:
-        =< ldate @course.start_date
-      li
-        label Ende:
-        =< ldate @course.end_date
 
-.row
-  .col-md-6
-    .panel.panel-default
-      .panel-heading
-        h4.panel-title
-          |  #{@course.students.count} Auszubildende
-          ul.list-inline.pull-right
-            li = link_to course_path(@course, format: :xlsx), class: 'btn btn-default btn-xs' do
-              span.glyphicon.glyphicon-export>
-              | Exportieren
-            li = link_to generate_logins_course_path(@course), class: 'btn btn-default btn-xs' do
-              span.glyphicon.glyphicon-plus>
-              | Login für alle erstellen
-      table.table.table-condensed.table-hover.table-striped.table-clickable
-        thead
-          th Vorname
-          th Nachname
-          th E-Mail
-          th Login
-        tbody
-          - @course.students.includes(person: :login).order('people.last_name').each do | student |
-            - student = student.person
-            tr data={ url: url_for(student) }
-              td = student.first_name
-              td = student.last_name
-              td = student.contact.email
-              td = student.login.present? ? 'ja' : 'nein'
+ul.list-inline
+  li
+    label Klassenehrer:
+    =< link_to @course.teacher.person.name, @course.teacher.person
+  li
+    label Beginn:
+    =< ldate @course.start_date
+  li
+    label Ende:
+    =< ldate @course.end_date
 
-  .col-md-6
-    .panel.panel-default
-      .panel-heading
-        h4.panel-title
-          |  Stundenpläne
-          ul.list-inline.pull-right
-            li = link_to new_course_time_table_path(@course), class: 'btn btn-default btn-xs' do
-              span.glyphicon.glyphicon-plus>
-              | Neu
-            li = link_to course_time_tables_path(@course), class: 'btn btn-default btn-xs' do
-              span.glyphicon.glyphicon-list-alt>
-              | Alle
-      table.table.table-condensed.table-hover.table-striped.table-clickable
-        thead
-          th Woche
-          th Bemerkungen
-        tbody
-          - @course.time_tables.order('time_tables.start_date').each do | time_table |
-            tr data={ url: url_for(time_table) }  class=(time_table.active? ? 'success' : 'warning')
-              td
-                => l time_table.start_date, format: :wday_short
-                | -
-                =< l time_table.end_date, format: :wday_short
-              td = time_table.comments
-    = panel_box_with_table title: 'Stundenstatistik' do
-      table.table.table-condensed.table-hover.table-striped
-        thead
-          th Fach
-          th Stunden
-        tbody
-          - @course.lessons.includes(:subject).all.group_by {|l| l.subject }.each do |subject, lessons|
-            tr
-              td = subject.name
-              td = lessons.count
+ul.nav.nav-tabs
+  li.active: a data-toggle="tab" href="#students"   #{@course.students.count} Auszubildende
+  li:        a data-toggle="tab" href="#timetables" Stundenpläne
+  li:        a data-toggle="tab" href="#lessons"    Stundenstatistik
+br
+.tab-content
+  #students.tab-pane.active = render 'courses/show/students'
+  #timetables.tab-pane      = render 'courses/show/timetables'
+  #lessons.tab-pane         = render 'courses/show/lessons'
+
 
