@@ -5,7 +5,7 @@ class CoursesController < ApplicationController
 
   def index
     authorize Course
-    @courses = Course.includes(:students).order(:name)
+    @courses = Course.includes(:students, :time_tables, teacher: :person).order(:name)
     respond_to do |format|
       format.html do
         @active_courses = @courses.active.all

@@ -1,5 +1,5 @@
 class TimeTable < ActiveRecord::Base
-  belongs_to :course, inverse_of: :time_tables , required: true
+  belongs_to :course, inverse_of: :time_tables, required: true, counter_cache: true
 
   has_many :lessons, inverse_of: :time_table, dependent: :delete_all
 
