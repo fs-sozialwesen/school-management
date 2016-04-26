@@ -1,0 +1,48 @@
+response.headers['Content-Disposition'] = %Q(attachment; filename="praktikumsplätze-#{@course.name}-#{Time.now}.xlsx")
+
+wb = xlsx_package.workbook
+
+wb.styles do |s|
+  bold = s.add_style b: true, sz: 12, alignment: { horizontal: :center }
+  date = s.add_style(format_code: 'dd.mm.yyyy')
+
+  wb.add_worksheet(name: "Klasse #{@course.name}") do |sheet|
+
+    sheet.add_row ["Klasse #{@course.name}"], style: s.add_style(b: true, sz: 16)
+    sheet.add_row ['Praktikumsplätze'], style: s.add_style(b: true, sz: 14)
+    sheet.add_row
+
+    header = %w(Anrede Vorname Nachname E-Mail Mobil
+                Einrichtung Straße PLZ Ort
+                Ansprechpartner E-Mail Telefon Fax Mobil Praxisanleiter)
+    sheet.add_row header, style: bold
+
+    @course.students.includes(:person, internships: [:institution, :mentor]).order('people.last_name').each do |student|
+      row = []
+      styles = []
+      types = []
+
+      p = student.person
+      salut = gt(:salut, p)
+      internship = student.internships.order(:start_date).last
+
+      row    += [salut, p.first_name, p.last_name, p.contact.email, p.contact.mobile]
+      styles += [nil,   nil,          nil,         nil,             nil]
+      types  += [nil,   nil,          nil,         nil,             :string]
+
+      if internship
+        inst = internship.institution
+        a = inst.address
+        c = inst.contact
+
+        row    += [inst.name, a.street, a.zip,   a.city]
+        types  += [nil,       nil,      :string, nil]
+
+        row    += [c.person, c.email, c.phone, c.fax,   c.mobile, internship.mentor&.name]
+        types  += [nil,      nil,     :string, :string, :string,  nil]
+      end
+
+      sheet.add_row row, style: styles, types: types
+    end
+  end
+end

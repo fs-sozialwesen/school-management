@@ -26,11 +26,13 @@ ul.list-inline
 
 ul.nav.nav-tabs
   li.active: a data-toggle="tab" href="#students"   #{@course.students.count} Auszubildende
+  li:        a data-toggle="tab" href="#internships" Praktika
   li:        a data-toggle="tab" href="#timetables" Stundenpläne
   li:        a data-toggle="tab" href="#lessons"    Stundenstatistik
 br
 .tab-content
   #students.tab-pane.active = render 'courses/show/students'
+  #internships.tab-pane     = render 'courses/show/internships'
   #timetables.tab-pane      = render 'courses/show/timetables'
   #lessons.tab-pane         = render 'courses/show/lessons'
 

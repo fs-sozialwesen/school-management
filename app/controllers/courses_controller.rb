@@ -16,6 +16,7 @@ class CoursesController < ApplicationController
   end
 
   def show
+    render 'show_internships' if params[:internships]
   end
 
   def new
