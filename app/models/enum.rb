@@ -3,21 +3,30 @@ class Enum < ActiveRecord::Base
   TYPES = %w(school_graduate profession_graduate work_area cooperation)
 
   TYPES.each do |type|
+    types = type.pluralize
     scope type, -> { where(name: type) }
+
     singleton_class.instance_eval do
       cache_key = "enum_#{type}"
+
       define_method(type.pluralize) do
         Rails.cache.fetch(cache_key, expires_in: 2.weeks) { where(name: type).pluck(:value) }
       end
-      # define_method("add_#{type}") do |val|
-      #   create(name: type, value: val)
-      #   Rails.cache.delete(cache_key)
-      # end
-      define_method("add_#{type.pluralize}") do |values|
-        create values.uniq.map { |val| {name: type, value: val} }
-        Rails.cache.delete(cache_key)
-      end
+
+      define_method("add_#{types}") { |values| add type, values }
+      define_method("replace_#{types}") { |values| replace type, values }
     end
+  end
+
+  def self.add(name, values)
+    raise ArgumentError unless name.in?(TYPES)
+    create values.uniq.map { |val| { name: name, value: val } }
+    Rails.cache.delete("enum_#{name}")
+  end
+
+  def self.replace(name, values)
+    where(name: name).delete_all
+    add name, values
   end
 
   validates :name, inclusion: {in: TYPES}

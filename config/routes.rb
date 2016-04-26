@@ -41,6 +41,8 @@ Rails.application.routes.draw do
   resources :institutions
   resources :internships
 
+  resources :enums, only: [:index, :edit, :update]
+
   get 'search', to: 'search#index', as: :search
 
 end

@@ -1,0 +1,15 @@
+.page-header
+  h2
+    => t("enum.#{@enum_name}")
+    small Aufzählung
+
+= simple_form_for(:enum, url: enum_url(@enum_name), method: :patch, html: { role: "form" }) do |f|
+  .row
+    .col-md-6
+      = f.input :values, as: :text, input_html: { value: @enums.join("\n"), rows: 10 }, label: 'Werte'
+  .row.action-buttons
+    .col-md-6
+      .pull-right
+        => link_to 'Abbrechen', 'javascript: window.history.back();', class: 'btn btn-default'
+        = f.submit 'Speichern', class: 'btn btn-primary'
+

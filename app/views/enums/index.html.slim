@@ -1,0 +1,13 @@
+.page-header: h2 Aufzählungen
+
+.table-responsive
+  table.table.table-striped.table-bordered.table-hover.table-clickable
+    thead
+      tr
+        th Name
+        th Werte
+    tbody
+      - @enum_types.each do |type|
+        tr data = {url: edit_enum_url(type)}
+          td = t("enum.#{type}")
+          td = Enum.send(type.pluralize).join(', ')

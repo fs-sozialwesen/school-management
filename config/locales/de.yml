@@ -43,6 +43,11 @@ de:
       success: Logins für alle Auszubildenden dieser Klasse erstellt.
     form:
       error: Klasse konnte nicht gespeichert werden.
+  enum:
+    cooperation: Kooperation
+    profession_graduate: Berufsabschluss
+    school_graduate: Schulabschluss
+    work_area: Arbeitsfeld
   internship_positions:
     create:
       success: Praktikumsplatz gespeichert.
