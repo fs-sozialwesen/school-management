@@ -45,15 +45,16 @@ ul.nav.nav-tabs
             th Bewerbung
           th Login (letzte Anmeld.)
       tbody
-        - students.each do | student |
-          tr data={ url: url_for(student) }
-            td = student.first_name
-            td = student.last_name
+        - students.each do | person |
+          - student = person.as_student
+          tr data={ url: url_for(person) } class=('danger' unless student.active?)
+            td = person.first_name
+            td = person.last_name
             - if @course.in? [:active, :archived]
-              td = link_to student.as_student.course.name, student.as_student.course
+              td = link_to student.course.name, student.course
             - if @course == :no
               td
-                - if candidate = student.as_student.candidate
+                - if candidate = student.candidate
                   - if candidate.documents_complete? and candidate.contracts_complete?
                     span.label.label-success vollständig
                   - else
@@ -64,8 +65,8 @@ ul.nav.nav-tabs
                 - else
                   |  -
             td
-              - if student.login.present?
-                = ['ja', ldate(student.login.last_sign_in_at)].select(&:present?).join(', ')
+              - if person.login.present?
+                = ['ja', ldate(person.login.last_sign_in_at)].select(&:present?).join(', ')
               - else
                 |  nein
 
