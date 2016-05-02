@@ -3,8 +3,8 @@
     = f.association :time_block
     = f.input :weekday, collection: [['Montag', 1], ['Dienstag', 2], ['Mittwoch', 3], ['Donnerstag', 4], ['Freitag', 5]]
   .col-md-6
-    = f.association :subject
-    = f.association :teacher
-    = f.association :room
+    = f.association :subject, collection: Subject.order(:name)
+    = f.association :teacher, collection: Teacher.joins(:person).order('people.last_name')
+    = f.association :room, collection: Room.order(:name)
 
 = f.input :comments
