@@ -16,8 +16,11 @@ gem 'select2-rails'
 gem 'acts-as-taggable-on', '~> 3.4'
 gem 'axlsx_rails', '0.3.0'
 gem 'paperclip'
-gem 'airbrake', '~> 5.0'
 gem 'pg_search'
+
+group :development, :staging, :production do
+  gem 'airbrake', '~> 5.0'
+end
 
 # group :production do
 #   gem 'rails_12factor'
