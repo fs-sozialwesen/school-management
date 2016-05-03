@@ -3,6 +3,7 @@ module Features
 
     def create_person(scope, attributes, i18n_scope: nil)
       i18n_scope ||= scope
+      click_on 'Mitarbeiter'
       click_on scope
       click_on 'Neu'
       attributes.each do |name, value|
