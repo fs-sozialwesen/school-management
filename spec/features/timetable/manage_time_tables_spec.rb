@@ -4,7 +4,7 @@ feature 'Manage time tables', :devise do
 #   So that the students can see their time table
 
   scenario 'create time table', js: true do
-    skip # heisenbug on codeship
+    # skip # heisenbug on codeship
     student = sign_in_as_student
     sign_out
     # click_on student.name
@@ -26,15 +26,18 @@ feature 'Manage time tables', :devise do
     click_on 'Klassen'
     click_row_with 'Klasse 5a'
 
+    click_on 'Stundenpläne'
     click_on 'Neu'
     click_on 'Speichern'
     expect(page).to have_content('Der Stundenplan konnte nicht gespeichert werden')
     fill_in :Woche, with: '05.05.2016'
     click_on 'Speichern'
     expect(page).to have_content('Stundenplan gespeichert')
+    # click_on 'Stundenpläne'
     expect(page).to have_content('02.05. - 06.05.')
 
     click_on 'Klasse 5a'
+    click_on 'Stundenpläne'
     expect(page).to have_content('Mo 02.05 - Fr 06.05')
 
     click_row_with 'Mo 02.05 - Fr 06.05'
