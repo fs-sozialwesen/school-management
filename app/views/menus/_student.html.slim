@@ -1,4 +1,4 @@
-- if policy_scope(TimeTable).any?
-  li class=('active' if params[:controller] == 'my_time_tables')
-    = link_to 'Stundenplan', my_time_tables_url
-= menu_item_for InternshipPosition
+li class=('active' if params[:controller] == 'my_time_tables')
+  = link_to 'Stundenplan', my_time_tables_url
+li class=('active' if params[:controller] == 'internship_positions')
+  = link_to 'Praktikumsplätze', internship_positions_url
