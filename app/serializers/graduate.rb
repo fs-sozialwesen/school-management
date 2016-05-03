@@ -4,7 +4,6 @@ class Graduate < JsonSerializer
   attribute :proved,     Boolean, default: false
   
   def complete?
-    return true if graduate.blank?
-    proved
+    graduate.blank? || proved
   end
 end

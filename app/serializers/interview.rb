@@ -22,29 +22,4 @@ class Interview < JsonSerializer
     result == 'rejected'
   end
 
-  # def accept!
-  #   self.result = 'accepted'
-  # end
-  #
-  # def reject!
-  #   self.result = 'rejected'
-  # end
-  #
-  # def repeat!
-  #   self.result = 'open'
-  #   comments << "\n" unless comments.blank?
-  #   comments << attributes_to_text
-  #   self.date = nil
-  #   self.reason = ''
-  # end
-  #
-  # private
-  #
-  # def attributes_to_text
-  #   "Vergangenes KLT:\n" \
-  #     "Datum: #{date.present? ? I18n.l(date) : ''}\n" \
-  #     "Eingeladen: #{invited ? 'ja' : 'nein'}\n" \
-  #     "Rückmeldung: #{answer}\n" \
-  #     "Begründung: #{reason}\n"
-  # end
 end

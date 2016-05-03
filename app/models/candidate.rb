@@ -43,18 +43,18 @@ class Candidate < ActiveRecord::Base
       contact: contact
     }
   end
+
   def documents_complete?
-    police_certificate and school_graduate.complete? and
-      profession_graduate.complete? and internships_complete?
+    police_certificate && school_graduate.complete? &&
+      profession_graduate.complete? && internships_complete?
   end
 
   def internships_complete?
-    return true if internships.blank?
-    internships_proved
+    internships.blank? || internships_proved
   end
 
   def contracts_complete?
-    [education_contract_received, internship_contract_received].all? &:present?
+    education_contract_received.present? && internship_contract_received.present?
   end
 
 end
