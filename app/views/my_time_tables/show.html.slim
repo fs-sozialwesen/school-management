@@ -22,7 +22,6 @@
               - lessons_by_weekday = time_block_lessons.group_by(&:weekday)
               - 1.upto(5) do |weekday|
                 - lessons = lessons_by_weekday[weekday] || []
-                - lessons.reject!(&:empty?)
                 td class=('danger' if lessons.size > 1)
                   - lessons.each do |lesson|
                     p.subject = lesson.subject.name
