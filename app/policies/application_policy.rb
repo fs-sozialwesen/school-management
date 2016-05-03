@@ -74,8 +74,8 @@ class ApplicationPolicy
       @scope = scope
     end
 
-    # def resolve
-    #   scope
-    # end
+    def resolve
+      scope
+    end
   end
 end
