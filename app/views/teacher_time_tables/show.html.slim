@@ -24,7 +24,7 @@
                 - time_block_lessons = lessons_by_time_block[time_block] || []
                 - lessons_by_weekday = time_block_lessons.group_by(&:weekday)
                 - 1.upto(5) do |weekday|
-                  - lessons = (lessons_by_weekday[weekday] || []).reject(&:empty?)
+                  - lessons = (lessons_by_weekday[weekday] || [])
                   td class=('danger' if lessons.size > 1)
                     - lessons.each do |lesson|
                       p: strong = lesson.subject.name
