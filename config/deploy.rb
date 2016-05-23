@@ -44,6 +44,9 @@ set :nginx_conf, -> { "#{shared_path}/nginx_#{fetch(:nginx_config_name)}.conf" }
 # set :nginx_use_ssl, false
 set :nginx_use_ssl, true
 
+set :rollbar_token, ENV['ROLLBAR_TOKEN']
+set :rollbar_env, Proc.new { fetch :stage }
+set :rollbar_role, Proc.new { :app }
 
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
 # set :keep_releases, 5
