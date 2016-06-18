@@ -33,15 +33,16 @@ class Candidate < ActiveRecord::Base
   end
 
   def generate_student
-    create_student! person_attributes: {
-      first_name: first_name,
-      last_name: last_name,
-      gender: gender,
-      date_of_birth: date_of_birth,
-      place_of_birth: place_of_birth,
-      address: address,
-      contact: contact
-    }
+    create_student! active: true,
+      person_attributes: {
+        first_name: first_name,
+        last_name: last_name,
+        gender: gender,
+        date_of_birth: date_of_birth,
+        place_of_birth: place_of_birth,
+        address: address,
+        contact: contact
+      }
   end
 
   def documents_complete?
