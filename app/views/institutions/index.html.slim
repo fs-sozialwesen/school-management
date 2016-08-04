@@ -13,15 +13,17 @@
   table.table.table-striped.table-bordered.table-hover.table-clickable
     thead
       tr
-        th = Institution.human_attribute_name(:name)
-        th = Institution.human_attribute_name(:organisation)
-        th = Institution.human_attribute_name(:work_area)
+        th = link_to Institution.human_attribute_name(:name), institutions_path(sort: 'institution_name')
+        th = link_to t('attributes.city'), institutions_path(sort: 'institution_city')
+        th = link_to Institution.human_attribute_name(:organisation), institutions_path(sort: 'organisation_name')
+        th = link_to Institution.human_attribute_name(:work_area), institutions_path(sort: 'work_area')
         th Unterkunft
         th = Institution.human_attribute_name(:in_search)
     tbody
       - @institutions.each do | institution |
         tr data = {url: url_for(institution)}
           td = institution.name
+          td = institution.address.city
           td = institution.organisation.name
           td = institution.work_area
           td = bool_icon institution.housing.provided

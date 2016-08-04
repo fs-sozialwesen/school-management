@@ -5,7 +5,7 @@ class InstitutionsController < ApplicationController
 
   def index
     authorize Institution
-    @institutions = Institution.includes(:organisation).order(:name).all
+    @institutions = Institution.joins(:organisation).order(order_option).all
 
     respond_to do |format|
       format.html
@@ -52,6 +52,16 @@ class InstitutionsController < ApplicationController
   end
 
   private
+
+  def order_option
+    case params[:sort]
+    when 'institution_name'  then 'institutions.name'
+    when 'institution_city'  then "institutions.address ->> 'city'"
+    when 'organisation_name' then 'organisations.name'
+    when 'work_area'         then 'institutions.work_area'
+    else 'institutions.name'
+    end
+  end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_institution
