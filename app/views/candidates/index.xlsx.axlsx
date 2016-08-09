@@ -14,7 +14,7 @@ wb.styles do |s|
                 E-Mail Telefon Mobil
                 Schulausbildung bestät. Berufsausb bestät. sonstiges Praktika bestät. Führungszeugnis
                 KLT Eingeladen Rueckmeldung ErgebnisKLT
-                AusbVertr_gesendet zurück PraktVertr_gesendet zurück)
+                AusbVertr_gesendet zurück PraktVertr_gesendet zurück Notizen)
     sheet.add_row header, style: bold
 
     @candidates.each do |candidate|
@@ -53,23 +53,25 @@ wb.styles do |s|
       styles += [nil,     nil,     nil]
       types  += [nil,     :string, :string]
 
-      row    += [candidate.school_graduate.graduate, bool(candidate.school_graduate.proved)]
-      styles += [nil,                                nil]
+      row    += [p.school_graduate.graduate, bool(p.school_graduate.proved)]
+      styles += [nil,                        nil]
 
       row    += [prof_grad.graduate, prof_proved, prof_grad.comments]
       styles += [nil,                nil,         nil]
 
-      row    += [internships, intern_proved, bool(candidate.police_certificate)]
+      row    += [internships, intern_proved, bool(p.police_certificate)]
       styles += [date,        nil,           nil]
 
       row    += [i.date, bool(i.invited), human_answer_name(i.answer), human_result_name(i.result)]
       styles += [date,   nil,             nil,                         nil]
 
-      row    += [candidate.education_contract_sent, candidate.education_contract_received]
-      styles += [date,                              date]
+      row    += [p.education_contract_sent, p.education_contract_received]
+      styles += [date,                      date]
 
-      row    += [candidate.internship_contract_sent, candidate.internship_contract_received]
-      styles += [date,                               date]
+      row    += [p.internship_contract_sent, p.internship_contract_received]
+      styles += [date,                       date]
+
+      row    += [p.notes.gsub(/(?:\n\r?|\r\n?)/, ', ')]
 
       sheet.add_row row, style: styles, types: types
     end
