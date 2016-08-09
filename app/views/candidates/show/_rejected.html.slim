@@ -1,7 +1,12 @@
 - if @candidate.rejected? or @candidate.canceled?
   .panel.panel-danger.rejected
     .panel-heading
-      h4.panel-title Absage
+      h4.panel-title
+        |  Absage
+        ul.list-inline.pull-right
+          li = link_to reject_candidate_path(@candidate), class: 'btn btn-default btn-xs' do
+            span.glyphicon.glyphicon-cog>
+            | Bearbeiten
     .panel-body
       .row
         .col-md-3
