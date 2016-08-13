@@ -5,7 +5,7 @@ set :repo_url, 'git@github.com:fs-sozialwesen/school-management.git'
 
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }
 
-set :chruby_ruby, 'ruby-2.3.0'
+set :chruby_ruby, 'ruby-2.3.1'
 
 # set :deploy_to, '/var/www/school-management'
 set :scm, :git
