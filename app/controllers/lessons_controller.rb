@@ -62,7 +62,7 @@ class LessonsController < ApplicationController
   end
 
   def render_time_table_body(time_table)
-    locals = { time_table: time_table, time_blocks: TimeBlock.all }
+    locals = { time_table: time_table, time_blocks: TimeBlock.order(:start_time).all }
     render partial: 'time_tables/table_body', locals: locals
   end
 end

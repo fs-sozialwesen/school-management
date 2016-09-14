@@ -13,7 +13,7 @@ class TeacherTimeTablesController < ApplicationController
     @date                = Date.parse params[:id]
     @lessons             = teacher.lessons_at @date
     @weeks               = teacher.time_table_dates
-    @time_blocks         = TimeBlock.all
+    @time_blocks         = TimeBlock.order(:start_time).all
     @timetable_documents = TimetableDocument.order(:year, :start_date).all
   end
 

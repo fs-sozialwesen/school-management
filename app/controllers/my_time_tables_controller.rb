@@ -13,6 +13,6 @@ class MyTimeTablesController < ApplicationController
     @time_tables = policy_scope(TimeTable).order(start_date: :desc).limit(10).all
     @time_table = TimeTable.includes(lessons: [:subject, :room, teacher: :person]).find(params[:id])
     authorize @time_table
-    @time_blocks = TimeBlock.all
+    @time_blocks = TimeBlock.order(:start_time).all
   end
 end
