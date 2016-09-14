@@ -26,11 +26,11 @@ class TimeTablesController < ApplicationController
   end
 
   def show
-    @time_blocks = TimeBlock.all
+    @time_blocks = TimeBlock.order(:start_time).all
   end
 
   def edit
-    @time_blocks = TimeBlock.all
+    @time_blocks = TimeBlock.order(:start_time).all
     @teachers = Teacher.all
     @subjects = Subject.all
     @rooms = Room.all
