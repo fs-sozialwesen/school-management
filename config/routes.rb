@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   devise_for :logins
   resources :people, except: :index do
     resource(:login, only: %i(new create destroy)) { patch :toggle }
+    post :add_role
     collection do
       get :managers
       get :teachers

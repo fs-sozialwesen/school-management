@@ -78,6 +78,14 @@ class PeopleController < ApplicationController
     end
   end
 
+  def add_role
+    role = params[:role]
+    @person = Person.find(params[:person_id])
+    authorize @person
+    @person.send "create_as_#{role}" if role.in?(%w(teacher manager mentor))
+    redirect_to @person
+  end
+
   private
 
   def set_scope

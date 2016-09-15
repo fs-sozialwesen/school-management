@@ -32,6 +32,10 @@ class PersonPolicy < ApplicationPolicy
     end
   end
 
+  def add_role?
+    manager?
+  end
+
   def person
     record
   end

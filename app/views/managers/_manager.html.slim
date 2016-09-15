@@ -1,2 +1,2 @@
 - if !manager.person.teacher?
-  = link_to 'Lehrerrechte hinzufügen', new_person_path(manager, scope: 'manager'), class: 'btn btn-default'
+  = link_to 'Lehrerrechte hinzufügen', person_add_role_path(manager.person, role: 'teacher'), method: :post, class: 'btn btn-default'
