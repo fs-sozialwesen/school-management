@@ -9,7 +9,10 @@
   - if params[:part] == 'person' or params[:part].blank?
     - if @candidate.new_record?
       = panel_box title: 'Bewerbung' do
-        = f.input :date, as: :string, input_html:{ class: :date }
+        .row
+          .col-md-6 = f.input :date, as: :string, input_html:{ class: :date }
+          - year = Date.current.year
+          .col-md-6 = f.input :year, collection: (year..(year + 3)).to_a
     = render 'candidates/form/person', f: f
     .row: .col-md-12 = f.input :notes, input_html: { rows: 5 }
   - if params[:part] == 'documents'

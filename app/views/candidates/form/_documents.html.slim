@@ -2,7 +2,7 @@
   .col-md-4 = panel_box title: 'Bewerbung', css_class: 'candidation' do
     = f.input :date, as: :string, input_html:{ class: :date }, required: true
     - year = Date.current.year
-    = f.input :year, collection: (year..(year + 2)).to_a
+    = f.input :year, collection: (year..(year + 3)).to_a
 
   .col-md-4 = panel_box title: 'Schulabschluss', css_class: 'education-graduate' do
     = f.simple_fields_for :school_graduate, f.object.school_graduate do |s|
