@@ -13,7 +13,7 @@ class LoginGenerator
     login = person.create_login email: email, password: password, password_confirmation: password
     if login.valid?
       login.confirm if confirm
-      LoginMailer.create_password_email(login, password).deliver_later if send_email
+      LoginMailer.create_password_email(login, password).deliver_now if send_email
     end
     login
   end
