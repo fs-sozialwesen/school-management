@@ -82,7 +82,10 @@ Rails.application.configure do
   }
 
   # ActionMailer Config
-  config.action_mailer.default_url_options = { host: Rails.application.secrets.domain_name }
+  config.action_mailer.default_url_options = {
+    host: Rails.application.secrets.domain_name,
+    protocol: 'https'
+  }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = false
