@@ -12,7 +12,7 @@ class CandidatesFilter
     @answer                      = params[:interview_answer]
     @result                      = params[:interview_result]
     @date                        = params[:interview_date]
-    @year                        = params[:year]
+    @year                        = (params[:year] || Date.current.year).to_i
     @education_contract_received = { 'yes' => true, 'no' => false }[params[:education_contract_received]]
     @career_changer              = { 'yes' => true, 'no' => false }[params[:career_changer]]
   end

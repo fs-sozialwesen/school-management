@@ -18,6 +18,11 @@
     - if @grouped
       small< gruppiert
 
+ul.nav.nav-tabs
+  - @years.reverse.each do |year|
+    li class=('active' if year == @filter.year)
+      = link_to year, candidates_path(year: year)
+br
 
 - if @grouped
   = render 'candidates/index/grouped'

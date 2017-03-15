@@ -19,7 +19,7 @@ class Candidate < ActiveRecord::Base
   serialize :profession_graduate, Graduate
   serialize :interview, Interview
 
-  validates :first_name, :last_name, :date, presence: true
+  validates :first_name, :last_name, :date, :year, presence: true
 
   has_paper_trail
 
