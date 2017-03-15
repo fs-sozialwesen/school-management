@@ -48,8 +48,8 @@ feature 'Manage candidates', :devise do
     click_row_with 'Frank'
     within('.panel.documents') { click_on 'Bearbeiten' }
     within('.panel.candidation') do
-      fill_in :Eingangsdatum, with: '01.02.2016'
-      select '2016', from: :Jahr
+      fill_in :Eingangsdatum, with: '01.02.2017'
+      select '2017', from: :Jahr
     end
     within('.panel.education-graduate') do
       check 'Beglaubigte Kopie liegt vor'

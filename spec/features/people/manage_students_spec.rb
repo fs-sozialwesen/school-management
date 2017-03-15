@@ -7,7 +7,7 @@ feature 'Manage students', :devise do
     sign_in_as_manager
 
     create_course Name: 'Active Course', Klassenlehrer: 'Frank Meyer',
-                  Beginn: '01.01.2014', Ende: '01.01.2017'
+                  Beginn: '01.01.2014', Ende: '01.01.2050'
 
     create_student Vorname: 'Frank', Nachname: 'Meyer', Anrede: 'Herr', Klasse: 'Active Course'
 
@@ -42,7 +42,7 @@ feature 'Manage students', :devise do
   scenario 'create new student' do
     sign_in_as_manager
     create_course Name: 'Active Course', Klassenlehrer: 'Frank Meyer',
-                  Beginn: '01.01.2014', Ende: '01.01.2017'
+                  Beginn: '01.01.2014', Ende: '01.01.2050'
 
     click_on 'Auszubildende'
     click_on 'Neu'
@@ -60,7 +60,7 @@ feature 'Manage students', :devise do
   scenario 'edit student' do
     sign_in_as_manager
     create_course Name: 'Active Course', Klassenlehrer: 'Frank Meyer',
-                  Beginn: '01.01.2014', Ende: '01.01.2017'
+                  Beginn: '01.01.2014', Ende: '01.01.2050'
 
     create_student Vorname: 'Frank', Nachname: 'Meyer', Anrede: 'Herr', Klasse: 'Active Course'
     click_row_with 'Frank'
@@ -84,7 +84,7 @@ feature 'Manage students', :devise do
   scenario 'delete student' do
     sign_in_as_manager
     create_course Name: 'Active Course', Klassenlehrer: 'Frank Meyer',
-                  Beginn: '01.01.2014', Ende: '01.01.2017'
+                  Beginn: '01.01.2014', Ende: '01.01.2050'
 
     create_student Vorname: 'Frank', Nachname: 'Meyer', Anrede: 'Herr', Klasse: 'Active Course'
     expect do
@@ -97,7 +97,7 @@ feature 'Manage students', :devise do
   scenario 'create login for student' do
     sign_in_as_manager
     create_course Name: 'Active Course', Klassenlehrer: 'Frank Meyer',
-                  Beginn: '01.01.2014', Ende: '01.01.2017'
+                  Beginn: '01.01.2014', Ende: '01.01.2050'
 
     create_student Vorname: 'Frank', Nachname: 'Meyer', Anrede: 'Herr', Klasse: 'Active Course'
 
