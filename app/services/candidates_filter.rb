@@ -36,7 +36,12 @@ class CandidatesFilter
   end
 
   def filter_invited
-    @scope = filter_interview(invited: invited) if invited.in?([true, false])
+    return unless invited.in?([true, false])
+    @scope = if invited
+      filter_interview(invited: invited)
+    else
+      scope.where.not('interview @> ?', {invited: true}.to_json)
+    end
   end
 
   def filter_answer
