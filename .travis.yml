@@ -1,6 +1,6 @@
 language: ruby
 rvm:
- - "2.2.3"
+ - '2.3.1'
 # uncomment this line if your project needs to run something other than `rake`:
 #script: bundle exec rspec spec
 script:
@@ -10,7 +10,7 @@ script:
 services:
   - postgresql
 addons:
-  postgresql: "9.4"
+  postgresql: "9.6"
 
 before_script:
   - psql -c 'create database travis_ci_test;' -U postgres
