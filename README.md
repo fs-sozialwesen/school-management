@@ -1,5 +1,3 @@
-[![Build Status](https://travis-ci.org/fs-sozialwesen/school-management.svg)](https://travis-ci.org/fs-sozialwesen/school-management)
-
 [![Code Climate](https://codeclimate.com/github/fs-sozialwesen/school-management/badges/gpa.svg)](https://codeclimate.com/github/fs-sozialwesen/school-management)
 
 [ ![Codeship Status for fs-sozialwesen/school-management](https://codeship.com/projects/fc98f820-9586-0133-e82d-62bdc932bc9b/status?branch=master)](https://codeship.com/projects/125209)
