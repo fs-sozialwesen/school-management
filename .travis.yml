@@ -10,12 +10,7 @@ script:
 services:
   - postgresql
 addons:
-  postgresql: "9.6"
-before_install:
-  - sudo apt-get update
-  - sudo apt-get install language-pack-en
-  - sudo /etc/init.d/postgresql stop
-  - sudo /etc/init.d/postgresql start 9.6
+  postgresql: "9.5"
 before_script:
   - psql -c 'create database travis_ci_test;' -U postgres
   - gem install bundler
