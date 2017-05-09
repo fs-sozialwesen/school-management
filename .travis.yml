@@ -1,3 +1,5 @@
+sudo: required
+dist: precise
 language: ruby
 cache: bundler
 bundler_args: --without production
@@ -10,7 +12,7 @@ script:
 services:
   - postgresql
 addons:
-  postgresql: "9.5"
+  postgresql: 9.6
 before_script:
   - psql -c 'create database travis_ci_test;' -U postgres
   - gem install bundler
