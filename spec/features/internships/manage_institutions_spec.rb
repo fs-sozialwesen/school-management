@@ -5,7 +5,6 @@ feature 'Manage institutions', :devise do
 
   scenario 'create institution' do
     sign_in_as_manager
-
     create_institution 'Einrichtung1'
   end
 
