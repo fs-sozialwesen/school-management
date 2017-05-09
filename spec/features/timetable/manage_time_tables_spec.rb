@@ -4,7 +4,6 @@ feature 'Manage time tables', :devise do
 #   So that the students can see their time table
 
   scenario 'create time table', js: true do
-    # skip 'heisenbug on codeship'
     student = sign_in_as_student
     sign_out
     # click_on student.name
