@@ -15,9 +15,9 @@ set :stage, :production
 # definition into the server list. The second argument
 # something that quacks like a hash can be used to set
 # extended properties on the server.
-server 'fs-sozialwesen.de', user: 'deploy', roles: %w{web app db}
+server ENV['PRODUCTION_SERVER'], user: 'deploy', roles: %w{web app db}
 
-set :nginx_server_name, 'fs-sozialwesen.de'
+set :nginx_server_name, ENV['PRODUCTION_SERVER']
 
 # you can set custom ssh options
 # it's possible to pass any option but you need to keep in mind that net/ssh understand limited list of options

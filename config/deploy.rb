@@ -2,10 +2,11 @@
 
 set :application, 'school'
 set :repo_url, 'git@github.com:fs-sozialwesen/school-management.git'
+set :branch, ENV['DEPLOY_BRANCH'] if ENV['DEPLOY_BRANCH']
 
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }
 
-set :chruby_ruby, 'ruby-2.3.1'
+set :chruby_ruby, proc { `cat .ruby-version`.strip }
 
 # set :deploy_to, '/var/www/school-management'
 set :scm, :git

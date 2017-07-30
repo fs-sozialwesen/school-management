@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.3.1'
+# ruby '2.3.4'
 
 gem 'rails', '4.2.7.1'
 gem 'sass-rails', '~> 5.0'
@@ -90,5 +90,5 @@ group :test do
   gem 'selenium-webdriver'
   # gem "codeclimate-test-reporter", require: nil
   gem 'simplecov', require: false
-  gem 'codeclimate-test-reporter', '~> 1.0.0'
+  gem 'codeclimate-test-reporter', '~> 1.0.0', require: nil
 end
