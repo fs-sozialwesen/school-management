@@ -13,6 +13,7 @@ Rails.application.routes.draw do
     end
   end
   resources :courses, shallow: true do
+    get :reset_db_id, on: :collection 
     match :generate_logins, via: [:get, :patch], on: :member
     resources :time_tables do
       resources :lessons, only: %i(new create edit update destroy) do
