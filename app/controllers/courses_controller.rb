@@ -3,6 +3,10 @@ class CoursesController < ApplicationController
   after_action :verify_authorized
   before_action :set_course, only: [:show, :edit, :update, :destroy, :generate_logins]
 
+  def reset_db_id
+    
+  end
+  
   def index
     authorize Course
     @courses = Course.includes(:students, :time_tables, teacher: :person).order(:name)
