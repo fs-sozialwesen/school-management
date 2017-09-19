@@ -11,8 +11,6 @@ class Person < ActiveRecord::Base
   # has_many :contracts, as: :first_party
 
   validates :first_name, :last_name, presence: true
-  # validates :date_of_birth, :place_of_birth, presence: true#, if: :candidate?
-  # validate :student_has_no_other_roles
 
   has_one :as_admin,     class_name: 'Admin'
   has_one :as_manager,   class_name: 'Manager', dependent: :destroy
@@ -42,26 +40,8 @@ class Person < ActiveRecord::Base
     AS_ROLES.map { |role| send role }.compact
   end
 
-  # def employee?
-  #   manager? or teacher?
-  # end
-
   def name
     "#{first_name} #{last_name}"
   end
 
-  # def female?
-  #   gender == 'f'
-  # end
-  #
-  # def male?
-  #   gender == 'm'
-  # end
-
-
-  # private
-  #
-  # def student_has_no_other_roles
-  #   errors.add :base, I18n.t(:student_cant_have_other_roles) if student? && roles.count > 0
-  # end
 end

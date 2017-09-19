@@ -32,9 +32,21 @@ module Features
 
     def create_student(attributes)
       course = attributes.delete :Klasse
-      create_person 'Auszubildende', attributes, i18n_scope: 'Auszubildende(r)' do
-        select course, from: 'person[as_student_attributes][course_id]'
+
+      click_on 'Auszubildende'
+      click_on 'Neu'
+      attributes.each do |name, value|
+        if name.in?(%i(Anrede))
+          select value, from: name
+        else
+          fill_in name, with: value
+        end
       end
+      select course, from: 'student[course_id]'
+      click_on 'Speichern'
+      expect(page).to have_content 'Auszubildende(r) gespeichert'
+      attributes.values.each { |value| expect(page).to have_content value }
+      click_on 'Liste'
     end
     alias :given_student :create_student
 

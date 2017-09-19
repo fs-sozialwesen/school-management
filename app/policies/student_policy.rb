@@ -1,0 +1,3 @@
+class StudentPolicy < ApplicationPolicy
+
+end

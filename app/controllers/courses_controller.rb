@@ -25,9 +25,9 @@ class CoursesController < ApplicationController
       @block = params[:block]
       @students = @course.students
         .joins(:internships)
-        .includes(:person, internships: [:institution, :mentor])
+        .includes(internships: [:institution, :mentor])
         .where('internships.block' => @block)
-        .order('people.last_name')
+        .order(:last_name)
       render 'show_internships'
     end
   end
@@ -59,11 +59,6 @@ class CoursesController < ApplicationController
     end
   end
 
-  # def destroy
-  #   @course.destroy
-  #   redirect_to courses_url, notice: t('.success')
-  # end
-
   def generate_logins
     @students = @course.students_without_login
     return if request.get?
@@ -90,8 +85,8 @@ class CoursesController < ApplicationController
   end
 
   def generate_logins_for(students)
-    students.each_with_object([]) do | student, errors |
-      login = LoginGenerator.new(student.person).call
+    students.each_with_object([]) do |student, errors|
+      login = LoginGenerator.new(student.person, email: student.contact.email).call
       errors << login unless login.valid?
     end
   end

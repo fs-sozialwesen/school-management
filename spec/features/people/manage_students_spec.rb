@@ -22,7 +22,7 @@ feature 'Manage students', :devise do
     fill_in 'Telefon',        with: '09876'
     fill_in 'Mobiltelefon',   with: '01234567'
     click_on 'Speichern'
-    expect(page).to have_content 'Personendaten konnten nicht gespeichert werden'
+    expect(page).to have_content 'Auszubildende(r) konnte nicht gespeichert werden'
     fill_in 'Vorname', with: 'Rodriges'
     fill_in 'Nachname', with: 'Gonzales'
     click_on 'Speichern'
@@ -47,7 +47,7 @@ feature 'Manage students', :devise do
     click_on 'Auszubildende'
     click_on 'Neu'
     click_on 'Speichern'
-    expect(page).to have_content('Personendaten konnten nicht gespeichert werden')
+    expect(page).to have_content('Auszubildende(r) konnte nicht gespeichert werden')
 
     click_on 'Auszubildende'
     expect do
@@ -73,7 +73,7 @@ feature 'Manage students', :devise do
     fill_in 'Telefon',        with: '09876'
     fill_in 'Mobiltelefon',   with: '01234567'
     click_on 'Speichern'
-    expect(page).to have_content 'Personendaten konnten nicht gespeichert werden'
+    expect(page).to have_content 'Auszubildende(r) konnte nicht gespeichert werden'
     fill_in 'Vorname', with: 'Rodriges'
     fill_in 'Nachname', with: 'Gonzales'
     click_on 'Speichern'
@@ -96,9 +96,7 @@ feature 'Manage students', :devise do
 
   scenario 'create login for student' do
     sign_in_as_manager
-    create_course Name: 'Active Course', Klassenlehrer: 'Frank Meyer',
-                  Beginn: '01.01.2014', Ende: '01.01.2050'
-
+    create_course Name: 'Active Course', Klassenlehrer: 'Frank Meyer', Beginn: '01.01.2014', Ende: '01.01.2050'
     create_student Vorname: 'Frank', Nachname: 'Meyer', Anrede: 'Herr', Klasse: 'Active Course'
 
     click_row_with 'Frank'

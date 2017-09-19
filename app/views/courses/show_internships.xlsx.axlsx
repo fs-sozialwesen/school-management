@@ -18,16 +18,15 @@ wb.styles do |s|
                 Ansprechpartner E-Mail Telefon Fax Mobil Praxisanleiter)
     sheet.add_row header, style: bold
 
-    @students.each do |student|
+    @students.each do |s|
       row = []
       styles = []
       types = []
 
-      p = student.person
-      salut = gt(:salut, p)
-      internship = student.internships.order(:start_date).last
+      salut = gt(:salut, s)
+      internship = s.internships.order(:start_date).last
 
-      row    += [salut, p.first_name, p.last_name, p.contact.email, p.contact.phone]
+      row    += [salut, s.first_name, s.last_name, s.contact.email, s.contact.phone]
       styles += [nil,   nil,          nil,         nil,             nil]
       types  += [nil,   nil,          nil,         nil,             :string]
 

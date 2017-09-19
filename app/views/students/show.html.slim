@@ -1,0 +1,57 @@
+.page-header
+  = link_to Student, class: 'btn btn-default' do
+    span.glyphicon.glyphicon-list-alt
+    |  Liste
+  => link_to @student, method: :delete, data: { confirm: t('.confirm_delete') }, class: 'btn btn-danger' do
+    span.glyphicon.glyphicon-remove
+    |  Löschen
+  => link_to edit_student_path(@student), class: 'btn btn-primary' do
+    span.glyphicon.glyphicon-pencil
+    |  Bearbeiten
+  h2
+    => @student.name
+    small = gt(:student, @student)
+
+
+.row
+  .col-md-8
+    = panel_box title: 'Personendaten' do
+      .row
+        .col-md-4
+          p = gt(:salut, @student)
+          p = @student.name
+          p
+            label geb.
+            =< ldate @student.date_of_birth
+            - if @student.place_of_birth.present?
+              |  in #{@student.place_of_birth}
+
+        .col-md-4
+          - address = @student.address
+          p = address.street
+          p #{address.zip} #{address.city}
+
+        .col-md-4
+          p
+            label.icon
+              span.glyphicon.glyphicon-envelope
+            - email = @student.contact.email
+            - if email.present?
+              =< link_to email, "mailto:#{email}"
+          p
+            label.icon
+              span.glyphicon.glyphicon-earphone
+            =< @student.contact.phone
+          p
+            label.icon
+              span.glyphicon.glyphicon-phone
+            =< @student.contact.mobile
+  .col-md-4
+    - if @student.login
+      = render @student.login
+    - else
+      = panel_box title: 'Login' do
+        = link_to 'Login erstellen', new_person_login_path(@student.person)
+
+= render @student
+= render @student.candidate if @student.candidate.present?

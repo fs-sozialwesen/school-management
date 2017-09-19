@@ -18,8 +18,8 @@
               th Ansprechpartner
               th Praxisanleiter
             tbody
-              - @course.students.joins(:internships).includes(:person, internships: [:institution, :mentor]).where('internships.block' => block).order('people.last_name').each do | student |
-                - contact = student.person.contact
+              - @course.students.joins(:internships).includes(internships: [:institution, :mentor]).where('internships.block' => block).order(:last_name).each do |student|
+                - contact = student.contact
                 - internship = student.internships.last
                 tr data=(internship ? { url: url_for(internship) } : nil )
                   td = student.first_name
