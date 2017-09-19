@@ -1,7 +1,8 @@
 FactoryGirl.define do
   factory :student do
-    person nil
-active false
+    first_name "MyString"
+last_name "MyString"
+gender "MyString"
   end
 
 end

@@ -15,16 +15,6 @@ class PeopleController < ApplicationController
     @teachers = Person.teachers.includes(:login, as_teacher: :courses).order(:last_name).all
   end
 
-  def students
-    authorize Person
-    @students = Person.students.includes(:login, as_student: :course).order(:last_name)
-      .where(filter)
-    respond_to do |format|
-      format.html { @students = @students.all }
-      format.csv  { @students = @students.order('courses.name, last_name').all }
-    end
-  end
-
   def mentors
     authorize Person
     @mentors = Person.mentors.includes(as_mentor: :organisation).order(:last_name)
@@ -57,6 +47,7 @@ class PeopleController < ApplicationController
   end
 
   def show
+    redirect_to @person.as_student if @person.student?
   end
 
   def edit

@@ -12,9 +12,20 @@ class Student < ActiveRecord::Base
   # has_one :school, through: :education_subject
   has_one :candidate, inverse_of: :student
 
+  validates :first_name, :last_name, presence: true
+
   accepts_nested_attributes_for :person
-  delegate :first_name, :last_name, :name, to: :person, allow_nil: true
+
+  include PgSearch
+  multisearchable against: %i[first_name last_name address contact]
+
+  acts_as_addressable
+  acts_as_contactable
 
   has_paper_trail
+
+  def name
+    [first_name, last_name].join ' '
+  end
 
 end

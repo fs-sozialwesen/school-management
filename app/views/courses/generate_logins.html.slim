@@ -11,14 +11,12 @@ h2 Logins generieren für Klasse #{ @course.name }
           th E-Mail
           th
         tbody
-          - @students.each do | student |
-            - has_email = student.person.contact.email.present?
-            - row_class = has_email ? 'success' : 'danger'
-            tr data={ url: url_for(student.person) } class=row_class
+          - @students.each do |student|
+            tr data={ url: url_for(student) } class=(student.contact.email.present? ? 'success' : 'danger')
               td = student.name
-              td = student.person.contact.email
+              td = student.contact.email
               td
-                - if has_email
+                - if student.contact.email.present?
                   span.glyphicon.glyphicon-ok-sign
                 - else
                   |  keine E-Mail-Adresse

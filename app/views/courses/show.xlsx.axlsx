@@ -16,17 +16,16 @@ wb.styles do |s|
                 E-Mail Telefon Mobil)
     sheet.add_row header, style: bold
 
-    @course.students.includes(:person).order('people.last_name').each do |student|
-      row = []
+    @course.students.order(:last_name).each do |s|
+      row    = []
       styles = []
-      types = []
+      types  = []
 
-      p = student.person
-      a = p.address
-      c = p.contact
-      salut = gt(:salut, p)
+      a = s.address
+      c = s.contact
+      salut = gt(:salut, s)
 
-      row    += [salut, p.first_name, p.last_name, ldate(p.date_of_birth), p.place_of_birth]
+      row    += [salut, s.first_name, s.last_name, ldate(s.date_of_birth), s.place_of_birth]
       styles += [nil,   nil,          nil,         date,                   nil]
       types  += [nil,   nil,          nil,         nil,                    nil]
 

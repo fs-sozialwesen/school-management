@@ -20,8 +20,8 @@ class Contact < JsonSerializer
         serialize :contact, ::Contact
 
         ::Contact.attribute_set.each do |attribute|
-          delegate attribute.name, to: :contact
-          delegate "#{attribute.name}=", to: :contact
+          delegate attribute.name, to: :contact, prefix: true
+          delegate "#{attribute.name}=", to: :contact, prefix: true
         end
 
       end

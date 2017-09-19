@@ -22,7 +22,7 @@ module Features
 
     def sign_in_as_student
       @current_user = student = FactoryGirl.create(:person)
-      student.create_as_student!
+      student.create_as_student! student.attributes.slice('first_name', 'last_name')
       sign_in(student.login.email, '12341234')
       student
     end

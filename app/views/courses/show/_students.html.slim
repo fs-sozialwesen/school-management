@@ -14,8 +14,7 @@ table.table.table-condensed.table-hover.table-striped.table-clickable
     th Ort
     th Login
   tbody
-    - @course.students.includes(person: :login).order('people.last_name').each do | student |
-      - student = student.person
+    - @course.students.includes(:login).order(:last_name).each do |student|
       - contact = student.contact
       tr data={ url: url_for(student) }
         td = student.first_name

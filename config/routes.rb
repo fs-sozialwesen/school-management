@@ -8,10 +8,12 @@ Rails.application.routes.draw do
     collection do
       get :managers
       get :teachers
-      get :students
       get :mentors
     end
   end
+
+  resources :students
+
   resources :courses, shallow: true do
     get :reset_db_id, on: :collection 
     match :generate_logins, via: [:get, :patch], on: :member

@@ -19,21 +19,6 @@ class LoginsController < ApplicationController
     end
   end
 
-  # def edit
-  #   @login = @person.login
-  #   authorize @login
-  # end
-  #
-  # def update
-  #   @login = @person.login
-  #   authorize @login
-  #   if @login.update_attributes(login_params)
-  #     redirect_to @person, notice: t(:updated, model: Login.model_name.human)
-  #   else
-  #     render :edit
-  #   end
-  # end
-
   def destroy
     login = @person.login
     authorize login
