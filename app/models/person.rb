@@ -6,7 +6,8 @@ class Person < ActiveRecord::Base
   acts_as_addressable
   acts_as_contactable
 
-  has_one :login, inverse_of: :person, dependent: :destroy
+  # has_one :login, inverse_of: :person, dependent: :destroy
+  has_one :login, as: :user, dependent: :destroy
   # has_many :roles, dependent: :destroy, inverse_of: :person
   # has_many :contracts, as: :first_party
 

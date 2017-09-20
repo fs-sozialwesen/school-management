@@ -3,7 +3,6 @@ Rails.application.routes.draw do
   root to: 'visitors#index'
   devise_for :logins
   resources :people, except: :index do
-    resource(:login, only: %i(new create destroy)) { patch :toggle }
     post :add_role
     collection do
       get :managers
@@ -12,6 +11,7 @@ Rails.application.routes.draw do
     end
   end
 
+  resources(:logins, only: %i(new create destroy)) { patch :toggle, on: :member }
   resources :students
 
   resources :courses, shallow: true do

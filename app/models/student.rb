@@ -1,6 +1,9 @@
 class Student < ActiveRecord::Base
   belongs_to :person, validate: true, inverse_of: :as_student
-  has_one :login, through: :person
+  # has_one :login, through: :person
+
+  has_one :login, as: :user, dependent: :destroy
+
   belongs_to :course, inverse_of: :students, counter_cache: true
   has_many :internships, inverse_of: :student
 

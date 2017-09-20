@@ -19,6 +19,10 @@ FactoryGirl.define do
       association :as_admin, factory: :role_admin
     end
 
+    trait :as_manager do
+      association :as_manager, factory: :manager
+    end
+
     trait :student do
       association :as_student, factory: :role_student
     end

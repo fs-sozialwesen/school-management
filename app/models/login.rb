@@ -1,6 +1,7 @@
 class Login < ActiveRecord::Base
 
-  belongs_to :person, inverse_of: :login
+  # belongs_to :person, inverse_of: :login
+  belongs_to :user, polymorphic: true
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
