@@ -102,7 +102,7 @@ module ImporterDrbck
       student[:contact] = { email: student.delete('email'), phone: student.delete('phone') }
       student[:address] = address(student)
       student.delete 'start'
-      students[id] = Person.create!(student).create_as_student!(course: courses[course_id], active: true)
+      students[id] = Student.create!(student.merge(course: courses[course_id], active: true))
     end
 
     ActiveRecord::Base.connection.reset_pk_sequence!(Person.table_name)

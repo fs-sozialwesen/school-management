@@ -29,18 +29,6 @@
         = c.input :phone
         = c.input :mobile
 
-  - if @person.student?
-    .row
-      .col-md-6 = panel_box title: 'Klasse' do
-        = f.simple_fields_for :as_student do |s|
-          = s.association :course, label: false, include_blank: 'keine',
-            as: :grouped_select,
-            collection: { 'Aktive' => Course.active, 'Archiv' => Course.inactive },
-            group_method: :last,
-            label_method: :name,
-            value_method: :id
-          = s.input :active, hint: 'kein Haken heißt Dropout'
-
   - if @person.mentor?
     .row
       .col-md-6 = panel_box title: 'Träger' do

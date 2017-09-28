@@ -10,13 +10,13 @@ class LoginsController < ApplicationController
   end
 
   def create
-    @login = Login.new login_params
-    authorize @login
+    login = Login.new login_params
+    authorize Login
 
-    LoginGenerator.new(@login).call
+    @login = LoginGenerator.(login.user, email: login.email)
 
     if @login.valid?
-      redirect_to @person, notice: t(:created, model: Login.model_name.human)
+      redirect_to @login.user, notice: t(:created, model: Login.model_name.human)
     else
       render 'new'
     end
@@ -39,7 +39,7 @@ class LoginsController < ApplicationController
   private
 
   def login_params
-    params.require(:login).permit(:email, :password, :password_confirmation, :user_type, :user_id)
+    params.require(:login).permit(:email, :user_type, :user_id)
   end
 
 end

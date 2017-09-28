@@ -31,4 +31,24 @@ class Student < ActiveRecord::Base
     [first_name, last_name].join ' '
   end
 
+  def student?
+    true
+  end
+
+  def manager?
+    false
+  end
+
+  def teacher?
+    false
+  end
+
+  def admin?
+    false
+  end
+
+  def mentor?
+    false
+  end
+
 end
