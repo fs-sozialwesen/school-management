@@ -86,7 +86,7 @@ class PeopleController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_person
-    @person = Person.includes(:as_manager, :as_teacher, :as_student).find(params[:id])
+    @person = Person.includes(:as_manager, :as_teacher).find(params[:id])
     authorize @person
   end
 
@@ -111,7 +111,6 @@ class PeopleController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   def person_params
     permit = %i(id first_name last_name gender date_of_birth place_of_birth) + contact_params
-    permit += [as_student_attributes: [:id, :course_id, :active]] #if student?
     permit += [as_mentor_attributes: [:id, :organisation_id, :qualified]] #if mentor?
     params.require(:person).permit(permit)
   end

@@ -2,17 +2,16 @@ require "rails_helper"
 
 RSpec.describe LoginMailer, type: :mailer do
   describe 'create_password_email' do
-    let(:person) {FactoryGirl.build_stubbed :person }
-    let(:login) { FactoryGirl.build_stubbed :login, person: person }
+    let(:person)   { create :person }
     let(:password) { '12341234' }
-    let(:mail) { LoginMailer.create_password_email(login, password) }
+    let(:mail)     { LoginMailer.create_password_email(person.login, password) }
 
     it 'renders the subject' do
       expect(mail.subject).to eql('Passwort zu deinem Account')
     end
 
     it 'renders the receiver email' do
-      expect(mail.to).to eql([login.email])
+      expect(mail.to).to eql([person.login.email])
     end
 
     it 'renders the sender email' do

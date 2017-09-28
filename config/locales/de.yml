@@ -172,6 +172,8 @@ de:
   student_f: Auszubildende
   student_m: Auszubildender
   students:
+    new:
+      title: Auszubildende(n) anlegen
     create:
       success: Auszubildende(r) gespeichert.
     update:

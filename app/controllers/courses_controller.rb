@@ -60,11 +60,11 @@ class CoursesController < ApplicationController
   end
 
   def generate_logins
-    @students = @course.students_without_login
+    @students = @course.students.includes(:login).order(:last_name).where('logins.id' => nil)
     return if request.get?
     errors = generate_logins_for(@students)
     if errors.any?
-      messages = errors.map { |l| "#{l.person.name}: #{l.errors.full_messages.join('. ')}" }
+      messages = errors.map { |l| "#{l.user.name}: #{l.errors.full_messages.join('. ')}" }
       redirect_to @course, alert: t('.error', messages: messages.join(' '))
     else
       redirect_to @course, notice: t(:success, model: Course.model_name.human)
@@ -86,7 +86,7 @@ class CoursesController < ApplicationController
 
   def generate_logins_for(students)
     students.each_with_object([]) do |student, errors|
-      login = LoginGenerator.new(student.person, email: student.contact.email).call
+      login = LoginGenerator.(student, email: student.contact.email)
       errors << login unless login.valid?
     end
   end

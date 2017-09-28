@@ -51,7 +51,8 @@
       = render @student.login
     - else
       = panel_box title: 'Login' do
-        = link_to 'Login erstellen', new_person_login_path(@student.person)
+        - login = @student.build_login
+        = link_to 'Login erstellen', new_login_path(user_type: login.user_type, user_id: login.user_id)
 
 = render @student
 = render @student.candidate if @student.candidate.present?

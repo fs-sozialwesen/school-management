@@ -2,10 +2,10 @@ require 'rails_helper'
 
 describe CoursePolicy do
 
-  let(:user) { Person.new }
+  let(:user)    { Person.new }
   let(:manager) { Person.new.tap { | p | p.build_as_manager } }
   let(:teacher) { Person.new.tap { | p | p.build_as_teacher } }
-  let(:student) { Person.new.tap { | p | p.build_as_student } }
+  let(:student) { Student.new}
   let(:course)  { Course.new }
 
   subject { described_class }
