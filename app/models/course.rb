@@ -22,10 +22,6 @@ class Course < ActiveRecord::Base
     end_date > Date.current
   end
 
-  def students_without_login
-    students.includes(:login).order('people.last_name').where('logins.id' => nil)
-  end
-
   # def remove_all_logins
   #   students.each { | student | student.login.destroy if student.login }
   # end

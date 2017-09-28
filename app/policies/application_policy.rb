@@ -62,9 +62,9 @@ class ApplicationPolicy
     teacher? && user.as_teacher
   end
 
-  def student
-    student? && user.as_student
-  end
+  # def student
+  #   student? && user.as_student
+  # end
 
   class Scope
     attr_reader :user, :scope

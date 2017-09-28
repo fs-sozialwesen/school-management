@@ -1,9 +1,14 @@
 Rails.application.routes.draw do
 
   root to: 'visitors#index'
+
   devise_for :logins
+
+  resources :logins, path: 'login', only: %i(new create destroy) do
+    patch :toggle, on: :member
+  end
+
   resources :people, except: :index do
-    resource(:login, only: %i(new create destroy)) { patch :toggle }
     post :add_role
     collection do
       get :managers
@@ -11,7 +16,6 @@ Rails.application.routes.draw do
       get :mentors
     end
   end
-
   resources :students
 
   resources :courses, shallow: true do

@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
   private
 
   def current_user
-    current_login && current_login.person
+    current_login&.user
   end
 
   def user_not_authorized
