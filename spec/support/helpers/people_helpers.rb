@@ -66,5 +66,14 @@ module Features
       attributes.values.each { |value| expect(page).to have_content value }
       click_on 'Liste'
     end
+
+    # def select_course(scope = :active)
+    #   option = case scope
+    #   when :active   then 'optgroup[1]/option[2]'
+    #   when :archived then 'optgroup[2]/option[2]'
+    #   when :no       then 'option[1]'
+    #   end
+    #   find('.person_as_student_course select').find(:xpath, option).select_option
+    # end
   end
 end

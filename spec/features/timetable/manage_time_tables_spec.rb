@@ -87,7 +87,7 @@ feature 'Manage time tables', :devise do
     click_on 'ohne Klasse'
     click_row_with student.last_name
     click_on 'Bearbeiten'
-    select 'Klasse 5a', from: 'Klasse'
+    select 'Klasse 5a', from: 'person[as_student_attributes][course_id]'
     click_on 'Speichern'
 
     sign_out

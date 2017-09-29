@@ -162,6 +162,7 @@ de:
         as_manager: Manager
         as_teacher: Lehrer
         as_mentor: Praxisanleiter
+        as_student: Auszubildende(r)
         roles: Rollen
       candidate:
         status: Status
