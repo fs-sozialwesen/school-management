@@ -70,4 +70,5 @@ ul.nav.nav-tabs
                 |  nein
 
 coffee:
-  $ -> window.onhashchange = -> window.scrollTo(0, window.scrollY - 80)
+  $(document).on 'turbolinks:load', ->
+    window.onhashchange = -> window.scrollTo(0, window.scrollY - 80)

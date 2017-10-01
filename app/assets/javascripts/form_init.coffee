@@ -1,4 +1,4 @@
-$ ->
+$(document).on 'turbolinks:load', ->
   $('input.date').each (i, input) ->
     $input = $(input)
     date = $input.val()
