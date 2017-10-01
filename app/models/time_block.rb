@@ -1,4 +1,4 @@
-class TimeBlock < ActiveRecord::Base
+class TimeBlock < ApplicationRecord
 
   has_many :lessons
 

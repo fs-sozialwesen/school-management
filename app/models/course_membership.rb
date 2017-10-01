@@ -1,4 +1,4 @@
-class CourseMembership < ActiveRecord::Base
+class CourseMembership < ApplicationRecord
   belongs_to :student, required: true
   belongs_to :course, required: true
 

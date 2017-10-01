@@ -1,4 +1,4 @@
-class Student < ActiveRecord::Base
+class Student < ApplicationRecord
   belongs_to :person, validate: true, inverse_of: :as_student
   # has_one :login, through: :person
 

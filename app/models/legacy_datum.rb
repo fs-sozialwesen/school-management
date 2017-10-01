@@ -1,4 +1,4 @@
-class LegacyDatum < ActiveRecord::Base
+class LegacyDatum < ApplicationRecord
   serialize :data, Hash
 
 end

@@ -1,3 +1,3 @@
-class Admin < ActiveRecord::Base
+class Admin < ApplicationRecord
   belongs_to :person
 end

@@ -1,4 +1,4 @@
-class Mentor < ActiveRecord::Base
+class Mentor < ApplicationRecord
   belongs_to :person
   belongs_to :organisation, required: true, inverse_of: :mentors
   has_many :internships

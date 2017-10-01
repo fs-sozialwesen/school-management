@@ -1,4 +1,4 @@
-class TimeTable < ActiveRecord::Base
+class TimeTable < ApplicationRecord
   belongs_to :course, inverse_of: :time_tables, required: true, counter_cache: true
 
   has_many :lessons, inverse_of: :time_table, dependent: :delete_all

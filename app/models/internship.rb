@@ -1,4 +1,4 @@
-class Internship < ActiveRecord::Base
+class Internship < ApplicationRecord
   belongs_to :student, required: true, inverse_of: :internships
   belongs_to :institution, required: true, inverse_of: :internships
   belongs_to :internship_position #, required: true

@@ -1,4 +1,4 @@
-class Organisation < ActiveRecord::Base
+class Organisation < ApplicationRecord
 
   acts_as_addressable
   acts_as_contactable

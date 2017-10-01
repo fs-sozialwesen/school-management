@@ -1,4 +1,4 @@
-class Teacher < ActiveRecord::Base
+class Teacher < ApplicationRecord
   belongs_to :person, validate: true, inverse_of: :as_teacher
   has_one :login, through: :person
   has_many :courses, inverse_of: :teacher

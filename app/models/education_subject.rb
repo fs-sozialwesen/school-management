@@ -1,4 +1,4 @@
-class EducationSubject < ActiveRecord::Base
+class EducationSubject < ApplicationRecord
 
   validates :name, presence: true
 

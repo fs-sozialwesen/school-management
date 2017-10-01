@@ -1,5 +1,5 @@
 # class Course
-class Course < ActiveRecord::Base
+class Course < ApplicationRecord
   belongs_to :teacher, required: true, inverse_of: :courses
   has_many :course_memberships
   has_many :active_course_memberships, -> { where active: true }, class_name: 'CourseMembership'

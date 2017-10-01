@@ -1,4 +1,4 @@
-class Institution < ActiveRecord::Base
+class Institution < ApplicationRecord
   belongs_to :organisation, inverse_of: :institutions, required: true
   has_many :internships, inverse_of: :institution
   # belongs_to :education_subject, required: true

@@ -1,4 +1,4 @@
-class Lesson < ActiveRecord::Base
+class Lesson < ApplicationRecord
   belongs_to :time_table, inverse_of: :lessons, required: true
   belongs_to :teacher, required: true
   belongs_to :subject, required: true

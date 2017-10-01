@@ -1,4 +1,4 @@
-class Manager < ActiveRecord::Base
+class Manager < ApplicationRecord
   belongs_to :person, validate: true, inverse_of: :as_manager
   has_one :login, through: :person
 

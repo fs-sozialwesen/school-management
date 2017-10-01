@@ -1,5 +1,5 @@
 # class Person
-class Person < ActiveRecord::Base
+class Person < ApplicationRecord
   ROLES = %w(admin manager teacher student mentor).freeze
   AS_ROLES = ROLES.map { |role| "as_#{role}".to_sym }.freeze
 

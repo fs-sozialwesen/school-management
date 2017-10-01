@@ -1,4 +1,4 @@
-class Enum < ActiveRecord::Base
+class Enum < ApplicationRecord
 
   TYPES = %w(school_graduate profession_graduate work_area cooperation internship_block)
 

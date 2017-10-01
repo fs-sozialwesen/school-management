@@ -1,4 +1,4 @@
-class Candidate < ActiveRecord::Base
+class Candidate < ApplicationRecord
   enum status: {
     rejected: -1,
     canceled: -2,
