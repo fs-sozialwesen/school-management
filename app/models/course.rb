@@ -8,7 +8,6 @@ class Course < ApplicationRecord
   has_many :lessons, through: :time_tables
 
   has_paper_trail
-  acts_as_taggable_on :education_subjects
 
   include PgSearch
   multisearchable against: [:name]
