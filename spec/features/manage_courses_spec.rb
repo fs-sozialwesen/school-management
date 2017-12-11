@@ -51,7 +51,7 @@ feature 'Manage courses', :devise do
 
     click_on 'Logins erstellen'
     expect(page).to have_content('Aktive Klasse')
-    expect(page).to have_content(
-      'Es konnten nicht alle Logins für diese Klasse erstellt werden. Clara Schanz: E-Mail muss ausgefüllt werden')
+    expect(page).to have_content('Es konnten nicht alle Logins für diese Klasse erstellt werden.')
+    expect(page).to have_content('E-Mail muss ausgefüllt werden')
   end
 end

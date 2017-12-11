@@ -10,7 +10,7 @@ class Login < ActiveRecord::Base
 
   has_paper_trail
 
-  validates :password, presence: true, length: { minimum: 8 }, confirmation: true
+  validates :password, presence: true, length: { minimum: 8 }, confirmation: true, on: :create
 
   attr_accessor :generate_password
 
