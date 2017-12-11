@@ -10,6 +10,16 @@
           span.sr-only Close
         h4 = t('.error')
     = f.input :email
+    = f.input :generate_password, as: :boolean, input_html: { data: { behavior: :toggle_passwords } }
+    .passwords
+      = f.input :password
+      = f.input :password_confirmation
     p Es wird ein zufälliges Passwort generiert. Der Nutzer erhält eine E-Mail.
 
     = f.submit 'Erstellen', class: 'button right'
+
+coffee:
+  $ ->
+    $('input[data-behavior=toggle_passwords]').change ->
+      $('.passwords input').attr('disabled', $(this).prop('checked'))
+    $('input[data-behavior=toggle_passwords]').change()

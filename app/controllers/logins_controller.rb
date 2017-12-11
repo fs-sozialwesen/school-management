@@ -5,15 +5,14 @@ class LoginsController < ApplicationController
   def new
     raise 'unpermitted user type' unless params[:user_type].in? %w(Student Person)
     @login = Login.new params.permit(:user_type, :user_id)
+    @login.generate_password = true
     @login.email = @login.user.contact.email
     authorize @login
   end
 
   def create
-    login = Login.new login_params
+    @login = LoginGenerator.(login_params)
     authorize Login
-
-    @login = LoginGenerator.(login.user, email: login.email)
 
     if @login.valid?
       redirect_to @login.user, notice: t(:created, model: Login.model_name.human)
@@ -39,7 +38,7 @@ class LoginsController < ApplicationController
   private
 
   def login_params
-    params.require(:login).permit(:email, :user_type, :user_id)
+    params.require(:login).permit(:email, :password, :password_confirmation, :user_type, :user_id, :generate_password)
   end
 
 end

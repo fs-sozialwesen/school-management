@@ -69,6 +69,7 @@ de:
         password: Passwort
         password_confirmation: Passwort wiederholen
         current_password: aktuelles Passwort
+        generate_password: Passwort generieren
     hints:
       user:
         username: 'User name to sign in.'

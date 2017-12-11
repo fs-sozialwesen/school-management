@@ -10,6 +10,14 @@ class Login < ActiveRecord::Base
 
   has_paper_trail
 
+  validates :password, presence: true, length: { minimum: 8 }, confirmation: true
+
+  attr_accessor :generate_password
+
+  def generate_password?
+    generate_password.in? ['1', true]
+  end
+
   def confirmation_required?
     # !confirmed?
     # don't send confirmation mail
