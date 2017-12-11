@@ -86,7 +86,7 @@ class CoursesController < ApplicationController
 
   def generate_logins_for(students)
     students.each_with_object([]) do |student, errors|
-      login = LoginGenerator.(student, email: student.contact.email)
+      login = LoginGenerator.(email: student.contact.email, user: student)
       errors << login unless login.valid?
     end
   end

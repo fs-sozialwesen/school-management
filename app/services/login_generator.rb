@@ -1,11 +1,11 @@
 class LoginGenerator
 
-  def self.call(user, email:, password: nil, confirm: true, send_email: true)
-    password ||= generate_password
-    login = user.build_login email: email, password: password, password_confirmation: password
+  def self.call(login_params)
+    login = Login.new login_params
+    login.password = login.password_confirmation = generate_password if login.generate_password?
     if login.save
-      login.confirm if confirm
-      LoginMailer.create_password_email(login, password).deliver_now if send_email
+      login.confirm
+      LoginMailer.create_password_email(login, login.password).deliver_now if login.generate_password?
     end
     login
   end

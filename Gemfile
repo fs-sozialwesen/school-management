@@ -18,6 +18,10 @@ gem 'axlsx_rails', '0.3.0'
 gem 'paperclip'
 gem 'pg_search'
 gem 'rollbar'
+gem 'rack-mini-profiler'
+gem 'memory_profiler'
+gem 'flamegraph'
+gem 'stackprof'
 
 # group :development, :staging, :production do
 #   gem 'airbrake', '~> 5.0'
