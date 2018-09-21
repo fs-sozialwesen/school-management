@@ -1,0 +1,31 @@
+.page-header
+  - confirm = { confirm: t(:confirm_delete, model: InternshipBlock.model_name.human) }
+  / => link_to @internship_block, method: :delete, data: confirm, class: 'btn btn-danger' do
+    span.glyphicon.glyphicon-remove
+    =< t(:delete)
+  h2
+    => @internship_block.name
+    small = InternshipBlock.model_name.human
+
+= render 'form'
+
+h2 Praktika in diesem Block
+
+table.table.table-striped.table-bordered.table-condensed.table-clickable
+  thead
+    tr
+      th Klasse
+      th Auszubildende
+      th Einrichtung
+      th Praxisanleiter*in
+  - @internship_block.courses.order(:name).each do |course|
+    thead
+      tr
+        th colspan=4 = course.name
+    tbody
+      - @internship_block.internships.order('students.last_name', 'students.first_name').joins(:institution, student: :course).where( 'courses.id' => course.id ).each do |internship|
+        tr data={ url: url_for(internship) }
+          td
+          td = internship.student.name
+          td = internship.institution&.name
+          td = internship.mentor&.name

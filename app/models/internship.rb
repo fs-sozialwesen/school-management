@@ -4,6 +4,6 @@ class Internship < ActiveRecord::Base
   belongs_to :internship_position #, required: true
   has_one :organisation, through: :institution
   belongs_to :mentor
+  belongs_to :internship_block, inverse_of: :internships, required: true
 
-  validates :block, :start_date, :end_date, presence: true
 end

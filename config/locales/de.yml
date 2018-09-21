@@ -89,6 +89,11 @@ de:
       title: Neues Praktikum anlegen
     show:
       confirm_delete: Wirklich löschen?
+  internship_blocks:
+    new:
+      title: Praktikumsblock erstellen
+    form:
+      error: Der Praktikumsblock konnte nicht gespeichert werden.
   organisations:
     create:
       success: Träger gespeichert.

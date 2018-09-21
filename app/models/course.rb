@@ -22,6 +22,10 @@ class Course < ActiveRecord::Base
     end_date > Date.current
   end
 
+  def internship_blocks
+    InternshipBlock.where(course_year: start_date.year)
+  end
+
   # def remove_all_logins
   #   students.each { | student | student.login.destroy if student.login }
   # end
