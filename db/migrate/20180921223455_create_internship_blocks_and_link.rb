@@ -7,7 +7,6 @@ class CreateInternshipBlocksAndLink < ActiveRecord::Migration
 
     new_blocks = []
     courses_blocks.each do |course, blocks|
-      # course = Course.find_by name: course
       blocks.each do |block|
         year = course.first(6)
         internships = Internship.joins(student: :course).where('courses.name' => course, 'internships.block' => block)
@@ -16,16 +15,20 @@ class CreateInternshipBlocksAndLink < ActiveRecord::Migration
         new_blocks << { name: "#{year}#{block}", course_year: year.last(4), start_date: start_date, end_date: end_date }
       end
     end
-    InternshipBlock.create! new_blocks.uniq
+    blocks = InternshipBlock.create! new_blocks.uniq
+    say "#{blocks.count} internship blocks created"
 
-    Internship.includes(student: :course).all.each do |internship|
+    count = 0
+    Internship.joins(student: :course).where.not('courses.name' => 'Dropouts').includes(student: :course).all.each do |internship|
       name = internship.student.course.name.first(6)
-      name += internship.block
+      # puts "name: '#{name}', block: '#{internship.block}'"
+      name += internship.block || 'P1'
       block = InternshipBlock.find_by name: name
       next unless block
-      internship.update internship_block_id: block.id
+      count += 1 if internship.update(internship_block_id: block.id)
     end
 
+    say "#{count} internships linked to blocks"
   end
 
   def down
