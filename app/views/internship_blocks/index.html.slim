@@ -23,6 +23,6 @@
         - @internship_blocks.where(course_year: year).each do |internship_block|
           tr data = {url: edit_internship_block_url(internship_block)}
             td = internship_block.name
-            td = l internship_block.start_date
-            td = l internship_block.end_date
+            td = ldate internship_block.start_date
+            td = ldate internship_block.end_date
             td = internship_block.internships.count

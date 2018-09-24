@@ -47,7 +47,9 @@ Rails.application.routes.draw do
   resources :organisations
   resources :internship_positions, only: [:index, :show]
   resources :institutions
-  resources :internships
+  resources :internships do
+    get :copy, on: :member
+  end
   resources :internship_blocks, except: :show
 
   resources :enums, only: [:index, :edit, :update]

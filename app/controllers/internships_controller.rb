@@ -1,12 +1,19 @@
 class InternshipsController < ApplicationController
   before_action :authenticate_login!
   after_action :verify_authorized
-  before_action :set_internship, only: [:show, :edit, :update, :destroy]
+  before_action :set_internship, only: [:show, :edit, :update, :destroy, :copy]
 
   def index
     authorize Internship
-    @internships = Internship.includes(student: :person, institution: :organisation, mentor: :person).
-      order('people.last_name').all
+    @internships = Internship.includes(student: :course, institution: :organisation).order('students.last_name')
+    @block = InternshipBlock.find_by id: params[:block_id]
+    @course = Course.find_by id: params[:course_id]
+    @internships = @internships.where(internship_block: @block, student_id: @course.students.select(:id))
+
+    respond_to do |format|
+      format.html
+      format.xlsx
+    end
   end
 
   def show
@@ -14,10 +21,10 @@ class InternshipsController < ApplicationController
 
   def new
     authorize Internship
-    options           = {}
-    options[:student] = Student.find params[:student_id] #if params[:student_id].present?
-    @internship       = Internship.new options
-    @students         = Student.order(:first_name, :last_name)
+    student     = Student.find params[:student_id]
+    block       = InternshipBlock.find params[:block_id]
+    @internship = Internship.new student: student, internship_block: block
+    @students   = Student.order(:first_name, :last_name)
   end
 
   def edit
@@ -28,7 +35,7 @@ class InternshipsController < ApplicationController
     @internship = Internship.new internship_params
 
     if @internship.save
-      redirect_to @internship, notice: t(:created, model: Internship.model_name.human)
+      redirect_to @internship.student.course, notice: t(:created, model: Internship.model_name.human)
     else
       render :new
     end
@@ -36,7 +43,7 @@ class InternshipsController < ApplicationController
 
   def update
     if @internship.update internship_params
-      redirect_to @internship, notice: t(:updated, model: Internship.model_name.human)
+      redirect_to @internship.student.course, notice: t(:updated, model: Internship.model_name.human)
     else
       render :edit
     end
@@ -45,6 +52,12 @@ class InternshipsController < ApplicationController
   def destroy
     @internship.destroy
     redirect_to internships_url, notice: t(:destroyed, model: Internship.model_name.human)
+  end
+
+  def copy
+    @existing_internship = @internship
+    @internship = Internship.new @existing_internship.attributes.except 'id'
+    render :new
   end
 
   private

@@ -22,11 +22,11 @@
 
     .col-md-6
       = panel_box title: 'Zeitraum' do
-        - label = ->(block){ "#{block.name} (#{l block.start_date} - #{l block.end_date})" }
+        - label = ->(block){ "#{block.name} (#{ldate block.start_date} - #{ldate block.end_date})" }
         = f.association :internship_block, collection: InternshipBlock.order(:name).all, label_method: label, include_blank: false
         = f.input :block, collection: Enum.internship_blocks, disabled: true
-        = f.input :start_date, as: :string, input_html:{ class: :date }, disabled: true
-        = f.input :end_date, as: :string, input_html:{ class: :date }, disabled: true
+        = f.input :start_date, as: :string, input_html:{ class: :date }, hint: 'nur eintragen wenn verschiden von Praktikumsblock'
+        = f.input :end_date, as: :string, input_html:{ class: :date }, hint: 'nur eintragen wenn verschiden von Praktikumsblock'
 
       = f.input :comments
 
