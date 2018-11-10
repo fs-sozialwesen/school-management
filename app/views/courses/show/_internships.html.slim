@@ -1,46 +1,57 @@
-.row
-  .col-md-11
-    .tab-content
-      - Enum.internship_blocks.each_with_index do |block, index|
-        div.tab-pane id=(block.dasherize) class=('active' if index == 0)
-          = link_to course_path(@course, format: :xlsx, internships: true, block: block), class: 'btn btn-default' do
-            span.glyphicon.glyphicon-export>
-            | Exportieren
+- blocks = @course.internship_blocks.order(:name).all
 
-          table.table.table-condensed.table-hover.table-striped.table-clickable
-            thead
-              th Vorname
-              th Nachname
-              th Telefon
-              th Einrichtung
-              th Ort
-              th Telefon
-              th Ansprechpartner
-              th Praxisanleiter
-            tbody
-              - @course.students.joins(:internships).includes(internships: [:institution, :mentor]).where('internships.block' => block).order(:last_name).each do |student|
-                - contact = student.contact
-                - internship = student.internships.last
-                tr data=(internship ? { url: url_for(internship) } : nil )
-                  td = student.first_name
-                  td = student.last_name
-                  td = [contact.phone, contact.mobile].select(&:present?).join(', ')
-                  - if internship
-                    - institution = internship.institution
-                    td = institution.name
-                    td = institution.address.city
-                    td = institution.contact.phone
-                    td = institution.contact.person
-                    td = internship.mentor&.name
-                  - else
-                    td
-                    td
-                    td
-                    td
-                    td
-  .col-md-1
-    ul.nav.nav-pills.nav-stacked
-      - Enum.internship_blocks.each_with_index do |block, index|
-        li class=('active' if index == 0)
-          a data-toggle="tab" href="##{block.dasherize}" = block
+.table-responsive
+  table.table-condensed.table-hover.table-striped.internships-table
+    thead
+      tr
+        th Auszubildende(r)
+        - blocks.each do |block|
+          td.overview
+            b = block.name
+            br
+            = l block.start_date
+            br
+            = l block.end_date
+            br
+            = link_to internships_path(course_id: @course.id, format: :xlsx, block_id: block.id), class: 'btn btn-default btn-xs' do
+              span.glyphicon.glyphicon-export>
+              | Exportieren
+    tbody
+      - @course.students.includes(internships: { institution: :organisation }).order(:last_name, :first_name).each_with_index do |student, index|
+        - if index > 0 && index % 10 == 0
+          tr
+            th Auszubildende(r)
+            - blocks.each do |block|
+              td.overview
+                b = block.name
+        tr
+          td = student.name
+          - internships = student.internships.all.group_by(&:internship_block)
+          - blocks.each do |block|
+            td.overview
+              - if internships[block]
+                - internships[block].each do |internship|
+                  div
+                    .buttons.pull-right
+                      => link_to copy_internship_path(internship),
+                          title: t('.copy_title'),
+                          class: 'copy-internship btn btn-default btn-xs' do
+                        span.glyphicon.glyphicon-duplicate
+                    small.text-muted = internship.institution.organisation.name
+                  => link_to internship.institution.name, edit_internship_url(internship),
+                      title: t('.edit_title'),
+                      class: 'edit-internship'
+                  br
+              => link_to new_internship_url(student_id: student.id, block_id: block.id),
+                  title: t('.new_title'),
+                  class: 'new-internship btn btn-default btn-xs' do
+                span.glyphicon.glyphicon-plus
 
+sass:
+  .internships-table
+    thead
+      th
+        width: 160px
+      td
+        min-width: 270px
+        width: 270px

@@ -4,12 +4,14 @@ feature 'Manage internships', :devise do
 #   So I have all the time the overview
 
   scenario 'create internship' do
+    skip
     sign_in_as_manager
 
     create_internship institution_name: 'Einrichtung1'
   end
 
   scenario 'edit internship' do
+    skip
     sign_in_as_manager
     given_internship institution_name: 'Einrichtung1'
 
@@ -26,6 +28,7 @@ feature 'Manage internships', :devise do
   end
 
   scenario 'delete internship' do
+    skip
     sign_in_as_manager
     given_internship institution_name: 'Einrichtung1'
 

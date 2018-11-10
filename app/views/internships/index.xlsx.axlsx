@@ -9,44 +9,43 @@ wb.styles do |s|
   wb.add_worksheet(name: "Klasse #{@course.name}") do |sheet|
 
     sheet.add_row ["Klasse #{@course.name}"], style: s.add_style(b: true, sz: 16)
-    sheet.add_row ['Praktikumsplätze', 'Praxisblock', @block], style: s.add_style(b: true, sz: 14)
+    sheet.add_row ['Praktikumsplätze', 'Praxisblock', @block.name, @block.start_date, @block.end_date], style: [bold, bold, bold, date, date]
     sheet.add_row
 
     header = %w(Anrede Vorname Nachname E-Mail Telefon
                 Tauschp. Träger Kooperationsv.
                 Einrichtung Straße PLZ Ort
-                Ansprechpartner E-Mail Telefon Fax Mobil Praxisanleiter)
+                Ansprechpartner E-Mail Telefon Fax Mobil Praxisanleiter E-Mail Telefon)
     sheet.add_row header, style: bold
 
-    @students.each do |s|
+    @internships.each do |i|
+      s = i.student
       row = []
       styles = []
       types = []
 
       salut = gt(:salut, s)
-      internship = s.internships.order(:start_date).last
 
       row    += [salut, s.first_name, s.last_name, s.contact.email, s.contact.phone]
       styles += [nil,   nil,          nil,         nil,             nil]
       types  += [nil,   nil,          nil,         nil,             :string]
 
-      if internship
-        inst = internship.institution
-        carrier = inst.organisation
-        a = inst.address
-        c = inst.contact
-        coop = carrier.cooperation
-        coop += " (#{carrier.coop_notes})" if carrier.coop_notes.present?
+      inst = i.institution
+      carrier = inst.organisation
+      a = inst.address
+      c = inst.contact
+      m = i.mentor
+      coop = carrier.cooperation
+      coop += " (#{carrier.coop_notes})" if carrier.coop_notes.present?
 
-        row    += [bool(internship.exchange), carrier.name, coop]
-        types  += [nil,                       nil,          nil]
+      row    += [bool(i.exchange), carrier.name, coop]
+      types  += [nil,                       nil,          nil]
 
-        row    += [inst.name, a.street, a.zip,   a.city]
-        types  += [nil,       nil,      :string, nil]
+      row    += [inst.name, a.street, a.zip,   a.city]
+      types  += [nil,       nil,      :string, nil]
 
-        row    += [c.person, c.email, c.phone, c.fax,   c.mobile, internship.mentor&.name]
-        types  += [nil,      nil,     :string, :string, :string,  nil]
-      end
+      row    += [c.person, c.email, c.phone, c.fax,   c.mobile, m&.name, m&.person.contact.email, m&.person.contact.phone]
+      types  += [nil,      nil,     :string, :string, :string,  nil,     nil,                     :string]
 
       sheet.add_row row, style: styles, types: types
     end

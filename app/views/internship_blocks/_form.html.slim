@@ -1,0 +1,19 @@
+= simple_form_for(@internship_block, html: { role: "form" }, defaults: { include_blank: false }) do |f|
+  - if @internship_block.errors.any?
+    .alert.alert-danger.alert-dismissable@alert
+      button.close type="button" data-dismiss="alert"
+        span aria-hidden="true" &times;
+        span.sr-only Close
+      h4 = t('.error')
+
+  .row
+    .col-md-3 = f.input :name
+    .col-md-3 = f.input :course_year
+    .col-md-3 = f.input :start_date, as: :string, input_html: { class: :date }
+    .col-md-3 = f.input :end_date,   as: :string, input_html: { class: :date }
+
+  .row.action-buttons
+    .col-md-12
+      .pull-right
+        => link_to t(:cancel), 'javascript: window.history.back();', class: 'btn btn-default'
+        = f.submit t(:save), class: 'btn btn-primary'

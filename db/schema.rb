@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170919190356) do
+ActiveRecord::Schema.define(version: 20180921223455) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -124,21 +124,32 @@ ActiveRecord::Schema.define(version: 20170919190356) do
 
   add_index "institutions", ["organisation_id"], name: "index_institutions_on_organisation_id", using: :btree
 
+  create_table "internship_blocks", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "course_year"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
   create_table "internships", force: :cascade do |t|
     t.integer  "student_id"
     t.date     "start_date"
     t.date     "end_date"
     t.text     "comments"
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
     t.integer  "mentor_id"
     t.integer  "institution_id"
-    t.boolean  "exchange",        default: false
+    t.boolean  "exchange",            default: false
     t.boolean  "contract_proved"
     t.string   "block"
+    t.integer  "internship_block_id"
   end
 
   add_index "internships", ["institution_id"], name: "index_internships_on_institution_id", using: :btree
+  add_index "internships", ["internship_block_id"], name: "index_internships_on_internship_block_id", using: :btree
   add_index "internships", ["mentor_id"], name: "index_internships_on_mentor_id", using: :btree
   add_index "internships", ["student_id"], name: "index_internships_on_student_id", using: :btree
 
@@ -363,6 +374,7 @@ ActiveRecord::Schema.define(version: 20170919190356) do
   add_foreign_key "courses", "teachers"
   add_foreign_key "institutions", "organisations"
   add_foreign_key "internships", "institutions"
+  add_foreign_key "internships", "internship_blocks"
   add_foreign_key "internships", "mentors"
   add_foreign_key "internships", "students"
   add_foreign_key "lessons", "rooms"

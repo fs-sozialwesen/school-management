@@ -19,7 +19,7 @@ Rails.application.routes.draw do
   resources :students
 
   resources :courses, shallow: true do
-    get :reset_db_id, on: :collection 
+    get :reset_db_id, on: :collection
     match :generate_logins, via: [:get, :patch], on: :member
     resources :time_tables do
       resources :lessons, only: %i(new create edit update destroy) do
@@ -47,7 +47,10 @@ Rails.application.routes.draw do
   resources :organisations
   resources :internship_positions, only: [:index, :show]
   resources :institutions
-  resources :internships
+  resources :internships do
+    get :copy, on: :member
+  end
+  resources :internship_blocks, except: :show
 
   resources :enums, only: [:index, :edit, :update]
 

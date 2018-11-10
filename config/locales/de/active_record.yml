@@ -61,6 +61,9 @@ de:
       internship:
         one:   Praktikum
         other: Praktika
+      internship_block:
+        one:   Praktikumsblock
+        other: Praktikumsblöcke
       internship_position:
         one:   Praktikumsplatz
         other: Praktikumsplätze
@@ -116,6 +119,9 @@ de:
         contract_proved: Vertrag liegt vor
         exchange: Tauschpraktikum
         status:     Status
+        internship_block: Praxisblock
+      internship_block:
+        course_year: Jahrgang
       internship_position:
         applying: Bewerbung
         applying_by_mail: per Post

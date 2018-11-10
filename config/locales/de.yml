@@ -43,6 +43,11 @@ de:
       success: Logins für alle Auszubildenden dieser Klasse erstellt.
     form:
       error: Klasse konnte nicht gespeichert werden.
+    show:
+      internships:
+        copy_title: "Praktikum kopieren"
+        edit_title: "Praktikum bearbeiten"
+        new_title: "Neues Praktikum anlegen"
   enum:
     cooperation: Kooperation
     internship_block: Praxisblock
@@ -87,8 +92,14 @@ de:
       error: Praktikum konnte nicht gespeichert werden.
     new:
       title: Neues Praktikum anlegen
+      copy: "Praktikum kopieren"
     show:
       confirm_delete: Wirklich löschen?
+  internship_blocks:
+    new:
+      title: Praktikumsblock erstellen
+    form:
+      error: Der Praktikumsblock konnte nicht gespeichert werden.
   organisations:
     create:
       success: Träger gespeichert.

@@ -7,7 +7,7 @@ class CoursesController < ApplicationController
     authorize Course
     ActiveRecord::Base.connection.reset_pk_sequence!(Course.table_name)
   end
-  
+
   def index
     authorize Course
     @courses = Course.includes(:students, :time_tables, teacher: :person).order(:name)
@@ -21,15 +21,6 @@ class CoursesController < ApplicationController
   end
 
   def show
-    if params[:internships]
-      @block = params[:block]
-      @students = @course.students
-        .joins(:internships)
-        .includes(internships: [:institution, :mentor])
-        .where('internships.block' => @block)
-        .order(:last_name)
-      render 'show_internships'
-    end
   end
 
   def new

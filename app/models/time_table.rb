@@ -11,6 +11,10 @@ class TimeTable < ActiveRecord::Base
   before_validation :make_start_date_a_monday, on: :create
 
   def name
+    st = I18n.l(start_date, format: :wday_short)
+    en = I18n.l(end_date, format: :wday_short)
+    year = start_date.year
+    "#{st} - #{en} #{year}"
   end
 
   def end_date

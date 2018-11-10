@@ -12,19 +12,21 @@
   .row
     .col-md-6
       = panel_box title: 'Auszubildende(r)' do
-        = f.association :student, collection: students, include_blank: false, label: false
+        = f.association :student, collection: students, include_blank: false, label: false, readonly: true
         = f.input :contract_proved
       = panel_box title: 'Einrichtung' do
-        = f.input :organisation, collection: organisations, selected: @internship&.organisation&.id, include_blank: true
-        = f.association :institution, include_blank: true
-        = f.association :mentor, collection: Mentor.joins(:person).order('people.last_name'), include_blank: true
+        = f.input :organisation, collection: organisations, selected: @internship&.organisation&.id, include_blank: true, input_html:{ class: :select2 }
+        = f.association :institution, include_blank: true, input_html:{ class: :select2 }
+        = f.association :mentor, collection: Mentor.joins(:person).order('people.last_name'), include_blank: true, input_html:{ class: :select2 }
         = f.input :exchange
 
     .col-md-6
       = panel_box title: 'Zeitraum' do
-        = f.input :block, collection: Enum.internship_blocks
-        = f.input :start_date, as: :string, input_html:{ class: :date }
-        = f.input :end_date, as: :string, input_html:{ class: :date }
+        - label = ->(block){ "#{block.name} (#{ldate block.start_date} - #{ldate block.end_date})" }
+        = f.association :internship_block, collection: InternshipBlock.order(:name).all, label_method: label, include_blank: false
+        = f.input :block, collection: Enum.internship_blocks, disabled: true
+        = f.input :start_date, as: :string, input_html:{ class: :date }, hint: 'nur eintragen wenn verschiden von Praktikumsblock'
+        = f.input :end_date, as: :string, input_html:{ class: :date }, hint: 'nur eintragen wenn verschiden von Praktikumsblock'
 
       = f.input :comments
 
@@ -49,3 +51,4 @@ coffee:
         $('#internship_institution_id').append $("<option value='#{id}'>#{name}</option>")
       for id, name of orga.mentors
         $('#internship_mentor_id').append $("<option value='#{id}'>#{name}</option>")
+

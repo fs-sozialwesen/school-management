@@ -1,5 +1,5 @@
 .page-header
-  = link_to internships_path, class: 'btn btn-default' do 
+  = link_to internships_path, class: 'btn btn-default' do
     span.glyphicon.glyphicon-list-alt
     =< t(:list)
   = link_to edit_internship_path(@internship), class: 'btn btn-primary' do
@@ -38,14 +38,16 @@
 
   .col-md-4 = panel_box title: 'Zeitraum' do
     .row
-      label.col-md-4 = Internship.human_attribute_name(:block)
-      p.col-md-8 = @internship.block
-    .row
-      label.col-md-4 = Internship.human_attribute_name(:start_date)
-      p.col-md-8 = ldate @internship.start_date
-    .row
-      label.col-md-4 = Internship.human_attribute_name(:end_date)
-      p.col-md-8 = ldate @internship.end_date
+      label.col-md-4 = Internship.human_attribute_name(:internship_block)
+      p.col-md-8
+        - if @internship.internship_block.present?
+          = link_to @internship.internship_block.name, edit_internship_block_path(@internship.internship_block)
+    / .row
+    /   label.col-md-4 = Internship.human_attribute_name(:start_date)
+    /   p.col-md-8 = ldate @internship.start_date
+    / .row
+    /   label.col-md-4 = Internship.human_attribute_name(:end_date)
+    /   p.col-md-8 = ldate @internship.end_date
 
   .col-md-4 = panel_box title: 'Bemerkungen' do
     p = @internship.comments

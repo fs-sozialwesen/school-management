@@ -12,3 +12,8 @@ $(document).on 'turbolinks:load', ->
       startView: startView
       language: "de"
       todayHighlight: true
+
+  $('select.select2').each (i, input) ->
+    $input = $(input)
+    $input.select2
+      theme: "bootstrap"

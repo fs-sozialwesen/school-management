@@ -1,4 +1,8 @@
 .page-header
-  h2 = t(".title")
+  h2
+    - if @existing_internship
+      = t(".copy")
+    - else
+      = t(".title")
 
 = render 'form'
