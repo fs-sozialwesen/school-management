@@ -1,48 +1,57 @@
 - blocks = @course.internship_blocks.order(:name).all
 
-table.table.table-condensed.table-hover.table-striped.internships-table
-  thead
-    th Auszubildende(r)
-    - blocks.each do |block|
-      td.overview
-        b = block.name
-        br
-        = l block.start_date
-        br
-        = l block.end_date
-        br
-        = link_to internships_path(course_id: @course.id, format: :xlsx, block_id: block.id), class: 'btn btn-default btn-xs' do
-          span.glyphicon.glyphicon-export>
-          | Exportieren
-  tbody
-    - @course.students.includes(internships: { institution: :organisation }).order(:last_name, :first_name).each do |student|
+.table-responsive
+  table.table-condensed.table-hover.table-striped.internships-table
+    thead
       tr
-        td = student.name
-        - internships = student.internships.all.group_by(&:internship_block)
+        th Auszubildende(r)
         - blocks.each do |block|
           td.overview
-            - if internships[block]
-              - internships[block].each do |internship|
-                div
-                  .buttons.pull-right
-                    => link_to copy_internship_path(internship),
-                        title: t('.copy_title'),
-                        class: 'copy-internship btn btn-default btn-xs' do
-                      span.glyphicon.glyphicon-duplicate
-                  small.text-muted = internship.institution.organisation.name
-                => link_to internship.institution.name, edit_internship_url(internship),
-                    title: t('.edit_title'),
-                    class: 'edit-internship'
-                br
-            => link_to new_internship_url(student_id: student.id, block_id: block.id),
-                title: t('.new_title'),
-                class: 'new-internship btn btn-default btn-xs' do
-              span.glyphicon.glyphicon-plus
+            b = block.name
+            br
+            = l block.start_date
+            br
+            = l block.end_date
+            br
+            = link_to internships_path(course_id: @course.id, format: :xlsx, block_id: block.id), class: 'btn btn-default btn-xs' do
+              span.glyphicon.glyphicon-export>
+              | Exportieren
+    tbody
+      - @course.students.includes(internships: { institution: :organisation }).order(:last_name, :first_name).each_with_index do |student, index|
+        - if index > 0 && index % 10 == 0
+          tr
+            th Auszubildende(r)
+            - blocks.each do |block|
+              td.overview
+                b = block.name
+        tr
+          td = student.name
+          - internships = student.internships.all.group_by(&:internship_block)
+          - blocks.each do |block|
+            td.overview
+              - if internships[block]
+                - internships[block].each do |internship|
+                  div
+                    .buttons.pull-right
+                      => link_to copy_internship_path(internship),
+                          title: t('.copy_title'),
+                          class: 'copy-internship btn btn-default btn-xs' do
+                        span.glyphicon.glyphicon-duplicate
+                    small.text-muted = internship.institution.organisation.name
+                  => link_to internship.institution.name, edit_internship_url(internship),
+                      title: t('.edit_title'),
+                      class: 'edit-internship'
+                  br
+              => link_to new_internship_url(student_id: student.id, block_id: block.id),
+                  title: t('.new_title'),
+                  class: 'new-internship btn btn-default btn-xs' do
+                span.glyphicon.glyphicon-plus
 
 sass:
   .internships-table
     thead
       th
-        width: 180px
+        width: 160px
       td
-        width: 20%
+        min-width: 270px
+        width: 270px

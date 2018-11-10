@@ -51,7 +51,7 @@ class InternshipsController < ApplicationController
 
   def destroy
     @internship.destroy
-    redirect_to internships_url, notice: t(:destroyed, model: Internship.model_name.human)
+    redirect_to @internship.student.course, notice: t(:destroyed, model: Internship.model_name.human)
   end
 
   def copy

@@ -16,7 +16,7 @@ html
   body
     .page-wrapper
       = render 'layouts/navigation'
-      .container
+      div class=(@wide_screen ? 'container-fluid' : 'container')
         = render 'layouts/messages'
         = yield
       footer style="height: 60px;"
