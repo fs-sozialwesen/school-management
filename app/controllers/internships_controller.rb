@@ -7,7 +7,7 @@ class InternshipsController < ApplicationController
     authorize Internship
     @internships = Internship.includes(student: :course, institution: :organisation).order('students.last_name')
     @block = InternshipBlock.find_by id: params[:block_id]
-    @course = Course.find_by id: params[:course_id]
+    @course = Course.find_by(id: params[:course_id]) || Course.order(end_date: :desc).active.first
     @internships = @internships.where(internship_block: @block, student_id: @course.students.select(:id))
 
     respond_to do |format|
