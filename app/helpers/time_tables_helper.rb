@@ -4,8 +4,10 @@ module TimeTablesHelper
   end
 
   def day_span_title(start_date, end_date)
+    year = start_date.year
     start_date = ldate(start_date, format: '%d.%m.')
     end_date = ldate(end_date, format: '%d.%m.')
-    [start_date, end_date].join(' - ')
+    dates = [start_date, end_date].join(' - ')
+    "#{dates}#{year}"
   end
 end
