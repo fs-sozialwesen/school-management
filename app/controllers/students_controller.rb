@@ -28,7 +28,6 @@ class StudentsController < ApplicationController
   def create
     authorize Student
     @student = Student.new student_params
-    @student.build_person @student.attributes.slice('first_name', 'last_name')
 
     if @student.save
       redirect_to @student, notice: t(:created, model: Student.model_name.human)

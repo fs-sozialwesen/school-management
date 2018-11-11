@@ -1,6 +1,4 @@
 class Student < ActiveRecord::Base
-  belongs_to :person, validate: true, inverse_of: :as_student
-  # has_one :login, through: :person
 
   has_one :login, as: :user, dependent: :destroy
 
@@ -10,8 +8,6 @@ class Student < ActiveRecord::Base
   has_one :candidate, inverse_of: :student
 
   validates :first_name, :last_name, presence: true
-
-  accepts_nested_attributes_for :person
 
   include PgSearch
   multisearchable against: %i[first_name last_name address contact]

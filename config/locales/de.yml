@@ -91,7 +91,7 @@ de:
     form:
       error: Praktikum konnte nicht gespeichert werden.
     new:
-      title: Neues Praktikum anlegen
+      title: Neues Praktikum anlegen für %{student}
       copy: "Praktikum kopieren"
     show:
       confirm_delete: Wirklich löschen?

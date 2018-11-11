@@ -44,7 +44,7 @@ wb.styles do |s|
       row    += [inst.name, a.street, a.zip,   a.city]
       types  += [nil,       nil,      :string, nil]
 
-      row    += [c.person, c.email, c.phone, c.fax,   c.mobile, m&.name, m&.person.contact.email, m&.person.contact.phone]
+      row    += [c.person, c.email, c.phone, c.fax,   c.mobile, m&.name, m&.person&.contact&.email, m&.person&.contact&.phone]
       types  += [nil,      nil,     :string, :string, :string,  nil,     nil,                     :string]
 
       sheet.add_row row, style: styles, types: types

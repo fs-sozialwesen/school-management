@@ -1,7 +1,7 @@
-- students = Student.joins(:person).includes(:person).order('people.first_name, people.last_name')
 - organisations = Organisation.includes(:institutions).order(:name)
 
 = simple_form_for(@internship, html: { role: 'form' }) do |f|
+  = f.input :student_id, as: :hidden
   - if @internship.errors.any?
     .alert.alert-danger.alert-dismissable@alert
       button.close type="button" data-dismiss="alert"
@@ -11,8 +11,7 @@
 
   .row
     .col-md-6
-      = panel_box title: 'Auszubildende(r)' do
-        = f.association :student, collection: students, include_blank: false, label: false, readonly: true
+      = panel_box title: 'Vertrag' do
         = f.input :contract_proved
       = panel_box title: 'Einrichtung' do
         = f.input :organisation, collection: organisations, selected: @internship&.organisation&.id, include_blank: true, input_html:{ class: :select2 }
@@ -24,9 +23,9 @@
       = panel_box title: 'Zeitraum' do
         - label = ->(block){ "#{block.name} (#{ldate block.start_date} - #{ldate block.end_date})" }
         = f.association :internship_block, collection: InternshipBlock.order(:name).all, label_method: label, include_blank: false
-        = f.input :block, collection: Enum.internship_blocks, disabled: true
         = f.input :start_date, as: :string, input_html:{ class: :date }, hint: 'nur eintragen wenn verschiden von Praktikumsblock'
         = f.input :end_date, as: :string, input_html:{ class: :date }, hint: 'nur eintragen wenn verschiden von Praktikumsblock'
+        = f.input :block, collection: Enum.internship_blocks, disabled: true, label: 'vormals Praktikumsblock'
 
       = f.input :comments
 
