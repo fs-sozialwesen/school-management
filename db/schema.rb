@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180921223455) do
+ActiveRecord::Schema.define(version: 20181111192226) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -64,19 +64,6 @@ ActiveRecord::Schema.define(version: 20180921223455) do
 
   add_index "candidates", ["person_id"], name: "index_candidates_on_person_id", using: :btree
   add_index "candidates", ["student_id"], name: "index_candidates_on_student_id", using: :btree
-
-  create_table "course_memberships", force: :cascade do |t|
-    t.integer  "student_id"
-    t.integer  "course_id"
-    t.date     "start_date"
-    t.date     "end_date"
-    t.boolean  "active"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  add_index "course_memberships", ["course_id"], name: "index_course_memberships_on_course_id", using: :btree
-  add_index "course_memberships", ["student_id"], name: "index_course_memberships_on_student_id", using: :btree
 
   create_table "courses", force: :cascade do |t|
     t.string   "name",              null: false
@@ -370,7 +357,6 @@ ActiveRecord::Schema.define(version: 20180921223455) do
   add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
 
   add_foreign_key "admins", "people"
-  add_foreign_key "course_memberships", "courses"
   add_foreign_key "courses", "teachers"
   add_foreign_key "institutions", "organisations"
   add_foreign_key "internships", "institutions"

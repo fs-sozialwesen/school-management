@@ -1,8 +1,7 @@
 # class Course
 class Course < ActiveRecord::Base
+
   belongs_to :teacher, required: true, inverse_of: :courses
-  has_many :course_memberships
-  has_many :active_course_memberships, -> { where active: true }, class_name: 'CourseMembership'
   has_many :students, inverse_of: :course
   has_many :time_tables, inverse_of: :course
   has_many :lessons, through: :time_tables
