@@ -8,11 +8,16 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   helper_method :current_user
+  helper_method :current_school
 
   private
 
   def current_user
     current_login&.user
+  end
+
+  def current_school
+    current_user&.school
   end
 
   def user_not_authorized

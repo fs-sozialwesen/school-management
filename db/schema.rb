@@ -259,6 +259,12 @@ ActiveRecord::Schema.define(version: 20181111192226) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "schools", force: :cascade do |t|
+    t.string "name"
+    t.jsonb  "address", default: {}
+    t.jsonb  "contact", default: {}
+  end
+
   create_table "students", force: :cascade do |t|
     t.integer  "person_id"
     t.integer  "course_id"
