@@ -206,7 +206,7 @@ module Importer
     end
 
     ActiveRecord::Base.connection.reset_pk_sequence!(Person.table_name)
-    ActiveRecord::Base.connection.reset_pk_sequence!(CourseMembership.table_name)
+    # ActiveRecord::Base.connection.reset_pk_sequence!(CourseMembership.table_name)
   end
 
   def self.import_carriers
