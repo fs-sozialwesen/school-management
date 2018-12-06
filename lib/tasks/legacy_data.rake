@@ -6,7 +6,7 @@ namespace :legacy_data do
     [
       # Login,
       InternshipPosition,
-      CourseMembership,
+      # CourseMembership,
       Course,
       Contract,
       Role,

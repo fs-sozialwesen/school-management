@@ -9,15 +9,12 @@ class Candidate < ActiveRecord::Base
 
   belongs_to :student, inverse_of: :candidate
 
-  # acts_as_addressable
-  # acts_as_contactable
-
   serialize :address, ::Address
   serialize :contact, ::Contact
 
-  serialize :school_graduate, Graduate
+  serialize :school_graduate,     Graduate
   serialize :profession_graduate, Graduate
-  serialize :interview, Interview
+  serialize :interview,           Interview
 
   validates :first_name, :last_name, :date, :year, presence: true
 
@@ -41,16 +38,7 @@ class Candidate < ActiveRecord::Base
       date_of_birth: date_of_birth,
       place_of_birth: place_of_birth,
       address: address,
-      contact: contact,
-      person_attributes: {
-        first_name: first_name,
-        last_name: last_name,
-        gender: gender,
-        date_of_birth: date_of_birth,
-        place_of_birth: place_of_birth,
-        address: address,
-        contact: contact
-      }
+      contact: contact
     )
   end
 

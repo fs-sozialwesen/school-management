@@ -7,13 +7,12 @@ CSV.generate(encoding: 'UTF-8', col_sep: ';', force_quotes: true) do |csv|
             Anrede Vorname Nachname Geburtsdatum Geburtsort
             Straße PLZ Ort
             E-Mail Telefon Mobil)
-  @teachers.each do | teacher |
-    person         = teacher.person
-    address        = person.address
-    contact        = person.contact
+  @teachers.each do |person|
+    address = person.address
+    contact = person.contact
 
     csv << [
-      teacher.courses.pluck(:name).join(', '),
+      person.as_teacher.courses.pluck(:name).join(', '),
 
       gt(:salut, person),
       person.first_name,
