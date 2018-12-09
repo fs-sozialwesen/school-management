@@ -1,0 +1,45 @@
+- colors = { Pente::P1 => 'white', Pente::P2 => 'black' }
+h1 Pente
+
+.row
+  .col-md-9
+    table
+      - Pente::FIELD_SIZE.times do |x|
+        tr
+          - Pente::FIELD_SIZE.times do |y|
+            - stone = @game.stone_at x, y
+            td.field data-stone=stone class="player-#{stone}"
+              - if stone
+                = link_to '#' do
+                  = image_tag "cross-#{colors[stone]}.svg", width: 40
+              - else
+                = link_to set_stone_url(x: x, y: y) do
+                  = image_tag 'cross.svg', width: 40
+  .col-md-3.players
+    =< link_to 'Neues Spiel', game_start_url, class: 'btn btn-primary'
+
+    - @game.players.each do |player|
+      h3 class=('winner' if @game.winner == player) class=('current' if @game.turn == player && !@game.winner)
+        => image_tag "#{colors[player]}-dot.svg"
+        | Player #{player + 1}
+      p
+        - (@game.captured[player] / 2).times do
+          = image_tag "#{colors[1 - player]}-dot.svg", width: 30
+          = image_tag "#{colors[1 - player]}-dot.svg", width: 30, class: :second
+    / pre = @game.inspect
+sass:
+  .players
+    h3
+      padding: 4px
+      border-radius: 30px
+      &.winner
+        border: 5px solid red
+      &.current
+        border: 2px solid green
+    img
+      display: inline
+      &.second
+        position: relative
+        left: -15px
+
+

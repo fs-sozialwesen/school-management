@@ -56,4 +56,9 @@ Rails.application.routes.draw do
 
   get 'search', to: 'search#index', as: :search
 
+  get 'pente' => 'pente#index'
+  get 'pente/start', as: :game_start
+  get 'pente/set_stone', as: :set_stone
+  get 'pente/board', as: :board
+
 end
