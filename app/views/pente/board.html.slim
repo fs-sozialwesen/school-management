@@ -2,19 +2,15 @@
 h1 Pente
 
 .row
-  .col-md-9
-    table
-      - Pente::FIELD_SIZE.times do |x|
+  .col-md-12
+    table#board
+      - Pente::FIELD_SIZE.times do |y|
         tr
-          - Pente::FIELD_SIZE.times do |y|
-            - stone = @game.stone_at x, y
-            td.field data-stone=stone class="player-#{stone}"
-              - if stone
-                = link_to '#' do
-                  = image_tag "cross-#{colors[stone]}.svg", width: 40
-              - else
-                = link_to set_stone_url(x: x, y: y) do
-                  = image_tag 'cross.svg', width: 40
+          - Pente::FIELD_SIZE.times do |x|
+            td.field data-x=x data-y=y
+              = image_tag 'cross.svg'
+              span.dot.player0 = image_tag 'white-dot.svg', width: 30
+              span.dot.player1 = image_tag 'black-dot.svg', width: 30
   .col-md-3.players
     =< link_to 'Neues Spiel', game_start_url, class: 'btn btn-primary'
 
@@ -27,7 +23,24 @@ h1 Pente
           = image_tag "#{colors[1 - player]}-dot.svg", width: 30
           = image_tag "#{colors[1 - player]}-dot.svg", width: 30, class: :second
     / pre = @game.inspect
+coffee:
+  $ -> window.pente = new Pente()
 sass:
+  #board
+    td
+      position: relative
+      border: 1px solid grey
+      span.dot
+        display: none
+        position: absolute
+        top: 5px
+        left: 5px
+      &.player0
+        span.dot.player0
+          display: inline
+      &.player1
+        span.dot.player1
+          display: inline
   .players
     h3
       padding: 4px
