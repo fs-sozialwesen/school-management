@@ -1,73 +1,58 @@
-- colors = { Pente::P1 => 'white', Pente::P2 => 'black' }
 h1 Pente
 
-#board2 style="display: inline-grid; grid-template-columns: repeat(#{Pente::FIELD_SIZE}, 40px); grid-template-rows: repeat(#{Pente::FIELD_SIZE}, 40px); "
-  - Pente::FIELD_SIZE.times do |y|
-    - Pente::FIELD_SIZE.times do |x|
-      .field style="grid-column: #{y+1}; grid-row: #{x+1};" = [x, y].join(':')
-p
-/ .row
-  .col-md-12
-    table#board
-      - Pente::FIELD_SIZE.times do |y|
-        tr
-          - Pente::FIELD_SIZE.times do |x|
-            td.field data-x=x data-y=y
-              = image_tag 'cross.svg'
-              span.dot.player0 = image_tag 'white-dot.svg', width: 30
-              span.dot.player1 = image_tag 'black-dot.svg', width: 30
-  .col-md-3.players
-    =< link_to 'Neues Spiel', game_start_url, class: 'btn btn-primary'
+#pente
 
-    - @game.players.each do |player|
-      h3 class=('winner' if @game.winner == player) class=('current' if @game.turn == player && !@game.winner)
-        => image_tag "#{colors[player]}-dot.svg"
-        | Player #{player + 1}
-      p
-        - (@game.captured[player] / 2).times do
-          = image_tag "#{colors[1 - player]}-dot.svg", width: 30
-          = image_tag "#{colors[1 - player]}-dot.svg", width: 30, class: :second
-    / pre = @game.inspect
-ruby:
-  images = {
-    field_image_url: image_url('cross.svg'),
-    p0_stone_url:    image_url('white-dot.svg'),
-    p1_stone_url:    image_url('black-dot.svg')
-  }
-#pente data=images
 coffee:
   $ -> window.pente = new Pente('#pente')
-sass:
-  #board2
-    border-bottom: 1px solid red
-    border-right: 1px solid red
 
-    .field
-      background-color: #3c763d
-      border-left: 1px solid red
-      border-top: 1px solid red
-      /*justify-self: center*/
+sass:
+  span.stone
+    &.player0
+      background: url('/assets/white-dot.svg') no-repeat center center
+    &.player1
+      background: url('/assets/black-dot.svg') no-repeat center center
 
   #board
-    td
+    border-bottom: 1px solid grey
+    border-right: 1px solid grey
+    &.player0
+      cursor: url('/assets/white-dot.svg') 15 15, auto
+    &.player1
+      cursor: url('/assets/black-dot.svg') 15 15, auto
+
+    .field
       position: relative
-      border: 1px solid grey
-      span
+      background-color: #E6C36A
+      border-left: 1px solid grey
+      border-top: 1px solid grey
+
+      span.stone
         position: absolute
-        top: 15px
-        left: 15px
-  .players
+        width: 40px
+        height: 40px
+
+  #players
+    float: right
+    width: 320px
     h3
       padding: 4px
       border-radius: 30px
-      &.winner
+      font-weight: normal
+
+    .winner
+      h3
         border: 5px solid red
-      &.current
-        border: 2px solid green
-    img
-      display: inline
+        &::after
+          content: ": !!! SIEGER !!!"
+    .current
+      h3
+        font-weight: bold
+
+    span.stone
+      width: 25px
+      height: 25px
+      display: inline-block
+
       &.second
         position: relative
         left: -15px
-
-
