@@ -6,7 +6,7 @@ wb.styles do |s|
   bold = s.add_style b: true, sz: 12, alignment: { horizontal: :center }
 
   wb.add_worksheet(name: 'Träger') do |sheet|
-    header = %w(Name Bemerkungen Straße PLZ Ort Ansprechpartner E-Mail Telefon Fax Mobil Homepage)
+    header = %w(Name Kooperation Notizen Bemerkungen Straße PLZ Ort Ansprechpartner E-Mail Telefon Fax Mobil Homepage)
     sheet.add_row header, style: bold
 
     @organisations.each do |organisation|
@@ -16,8 +16,8 @@ wb.styles do |s|
       row = []
       types = []
 
-      row   += [organisation.name, organisation.comments]
-      types += [nil,               nil]
+      row   += [organisation.name, organisation.cooperation, organisation.coop_notes, organisation.comments]
+      types += [nil,               nil,                      nil,                     nil]
 
       row   += [a.street, a.zip.to_s, a.city]
       types += [nil,      :string,    nil]
