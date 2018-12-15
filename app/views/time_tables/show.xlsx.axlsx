@@ -1,0 +1,29 @@
+response.headers['Content-Disposition'] = %Q(attachment; filename="Stundenplan-#{@time_table.course.name}-#{time_table_title_for(@time_table)}.xlsx")
+
+wb = xlsx_package.workbook
+
+wb.styles do |s|
+  bold = s.add_style b: true, sz: 12, alignment: { horizontal: :center }
+
+  wb.add_worksheet(name: "Stundenplan #{@time_table.course.name}") do |sheet|
+    sheet.add_row [time_table_title_for(@time_table)], style: bold
+    header = %w(Zeit Montag Dienstag Mittwoch Donnerstag Freitag)
+    sheet.add_row header, style: bold
+
+    lessons_by_time_block = @time_table.lessons.group_by(&:time_block)
+    @time_blocks.each do |time_block|
+      row = [time_block.name]
+      time_block_lessons = lessons_by_time_block[time_block] || []
+
+      row += (1..5).map do |weekday|
+        lesson = time_block_lessons.find { |lesson| lesson.weekday == weekday }
+        next '' unless lesson
+        [
+          lesson.subject.name, lesson.teacher_name, lesson.room&.name, lesson.comments
+        ].select(&:present?).join("\n")
+      end
+      sheet.add_row row
+    end
+
+  end
+end

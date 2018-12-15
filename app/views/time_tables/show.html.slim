@@ -9,6 +9,9 @@
   => link_to @time_table, method: :delete, data: confirm, class: 'btn btn-danger' do
     span.glyphicon.glyphicon-remove
     =< t(:delete)
+  = link_to time_table_path(format: :xlsx), id: 'export-button', class: 'btn btn-default' do
+    span.glyphicon.glyphicon-export
+    =< t(:export)
   h2
     => TimeTable.model_name.human
     small
