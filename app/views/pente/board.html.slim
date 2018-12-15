@@ -1,7 +1,12 @@
 - colors = { Pente::P1 => 'white', Pente::P2 => 'black' }
 h1 Pente
 
-.row
+#board2 style="display: inline-grid; grid-template-columns: repeat(#{Pente::FIELD_SIZE}, 40px); grid-template-rows: repeat(#{Pente::FIELD_SIZE}, 40px); "
+  - Pente::FIELD_SIZE.times do |y|
+    - Pente::FIELD_SIZE.times do |x|
+      .field style="grid-column: #{y+1}; grid-row: #{x+1};" = [x, y].join(':')
+p
+/ .row
   .col-md-12
     table#board
       - Pente::FIELD_SIZE.times do |y|
@@ -23,24 +28,34 @@ h1 Pente
           = image_tag "#{colors[1 - player]}-dot.svg", width: 30
           = image_tag "#{colors[1 - player]}-dot.svg", width: 30, class: :second
     / pre = @game.inspect
+ruby:
+  images = {
+    field_image_url: image_url('cross.svg'),
+    p0_stone_url:    image_url('white-dot.svg'),
+    p1_stone_url:    image_url('black-dot.svg')
+  }
+#pente data=images
 coffee:
-  $ -> window.pente = new Pente()
+  $ -> window.pente = new Pente('#pente')
 sass:
+  #board2
+    border-bottom: 1px solid red
+    border-right: 1px solid red
+
+    .field
+      background-color: #3c763d
+      border-left: 1px solid red
+      border-top: 1px solid red
+      /*justify-self: center*/
+
   #board
     td
       position: relative
       border: 1px solid grey
-      span.dot
-        display: none
+      span
         position: absolute
-        top: 5px
-        left: 5px
-      &.player0
-        span.dot.player0
-          display: inline
-      &.player1
-        span.dot.player1
-          display: inline
+        top: 15px
+        left: 15px
   .players
     h3
       padding: 4px
