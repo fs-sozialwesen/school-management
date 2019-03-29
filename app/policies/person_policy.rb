@@ -13,15 +13,19 @@ class PersonPolicy < ApplicationPolicy
   end
 
   def mentors?
-    manager?
+    manager? or intern_manager?
   end
 
   def show?
-    manager? or user == person
+    manager? or (intern_manager? && person.mentor?) or user == person
   end
 
   alias :edit? :show?
   alias :update? :show?
+
+  def create?
+    manager? or intern_manager?
+  end
 
   def destroy?
     if record.manager?

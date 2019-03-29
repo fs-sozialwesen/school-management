@@ -19,6 +19,7 @@
         th E-Mail
         th Telefon
         - if scope == :teacher
+          th Praxislehrer
           th Klassen
         th Login (letzte Anmeld.)
     tbody
@@ -32,6 +33,7 @@
               =< link_to email, "mailto:#{email}"
           td = person.contact.phone
           - if scope == :teacher
+            td = bool_icon person.as_teacher.intern_manager?
             td
               - courses = person.as_teacher.courses.order(:name).map do | course |
                 - link_to course.name, course, class: ('text-muted' unless course.active?)
