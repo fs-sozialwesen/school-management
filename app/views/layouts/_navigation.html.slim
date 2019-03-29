@@ -17,10 +17,7 @@
           - if current_user.student?
             = render 'menus/student'
           - else
-            - if current_user.manager?
-              = render 'menus/manager'
-            - if current_user.teacher?
-              = render 'menus/teacher'
+            = render 'menus/employee'
 
         ul.nav.navbar-nav.navbar-right
           li.dropdown

@@ -46,6 +46,10 @@ class ApplicationPolicy
     user.teacher?
   end
 
+  def intern_manager?
+    teacher && teacher.intern_manager?
+  end
+
   # def employee?
   #   user.employee?
   # end

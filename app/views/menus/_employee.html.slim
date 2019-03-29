@@ -1,0 +1,39 @@
+= menu_item_for Course
+= menu_item_for Student
+
+- if current_user.manager?
+  li.dropdown
+    a.dropdown-toggle@button href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+      |  Mitarbeiter <span class="caret"></span>
+    ul.dropdown-menu
+      = menu_item_for :managers
+      = menu_item_for :teachers
+
+li.dropdown
+  a.dropdown-toggle@button href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+    |  Praktikum <span class="caret"></span>
+  ul.dropdown-menu
+    = menu_item_for Organisation
+    /= menu_item_for InternshipPosition
+    = menu_item_for Institution
+    = menu_item_for :mentors
+    = menu_item_for Internship
+    = menu_item_for InternshipBlock
+
+- if current_user.manager?
+  = menu_item_for Candidate
+
+- if current_user.manager?
+  li.dropdown
+    a.dropdown-toggle@button href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+      |  Verwaltung <span class="caret"></span>
+    ul.dropdown-menu
+      = menu_item_for Room
+      = menu_item_for Subject
+      = menu_item_for TimeBlock
+      = menu_item_for TimetableDocument
+      = menu_item_for Enum
+
+- if current_user.teacher?
+  li class=('active' if params[:controller] == 'teacher_time_tables')
+    = link_to 'Stundenplan', teacher_time_tables_url
