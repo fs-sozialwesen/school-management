@@ -1,0 +1,18 @@
+response.headers['Content-Disposition'] = %Q(attachment; filename="Praktika nach Träger.xlsx")
+
+wb = xlsx_package.workbook
+
+wb.styles do |s|
+  bold = s.add_style b: true, sz: 12, alignment: { horizontal: :center }
+
+  wb.add_worksheet(name: 'Praktika') do |sheet|
+    header = %w(Träger) + @years
+    sheet.add_row header, style: bold
+
+    @internships.each do |name, counts|
+      row = [name]
+      @years.each { |year| row << counts[year] }
+      sheet.add_row row
+    end
+  end
+end

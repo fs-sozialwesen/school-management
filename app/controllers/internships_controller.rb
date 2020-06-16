@@ -16,6 +16,24 @@ class InternshipsController < ApplicationController
     end
   end
 
+  def report
+    authorize Internship
+    internships = Internship.
+      joins(:internship_block, institution: :organisation).
+      order('organisations.name', 'internship_blocks.course_year').
+      group('internship_blocks.course_year', 'organisations.name').
+      where('internship_blocks.course_year > 2015').
+      count
+    @years = internships.keys.map(&:first).uniq.compact.sort
+    @internships = {}
+    internships.each { |(year, name), number| (@internships[name] ||= {})[year] = number  }
+
+    respond_to do |format|
+      format.html
+      format.xlsx
+    end
+  end
+
   def show
   end
 
