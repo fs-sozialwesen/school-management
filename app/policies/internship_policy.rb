@@ -11,4 +11,8 @@ class InternshipPolicy < ApplicationPolicy
   def copy?
     create?
   end
+
+  def report?
+    index?
+  end
 end
