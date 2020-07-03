@@ -1,4 +1,4 @@
-response.headers['Content-Disposition'] = %Q(attachment; filename="praktikumsplätze-#{@course.name}-#{Time.now}.xlsx")
+response.headers['Content-Disposition'] = %Q(attachment; filename="praktika-#{Time.now}.xlsx")
 
 wb = xlsx_package.workbook
 
@@ -6,14 +6,14 @@ wb.styles do |s|
   bold = s.add_style b: true, sz: 12, alignment: { horizontal: :center }
   date = s.add_style(format_code: 'dd.mm.yyyy')
 
-  wb.add_worksheet(name: "Klasse #{@course.name}") do |sheet|
-
-    sheet.add_row ["Klasse #{@course.name}"], style: s.add_style(b: true, sz: 16)
-    sheet.add_row ['Praktikumsplätze', 'Praxisblock', @block.name, @block.start_date, @block.end_date], style: [bold, bold, bold, date, date]
-    sheet.add_row
+  wb.add_worksheet(name: "Praktika") do |sheet|
 
     fields = {
-      'Anrede'          => { value: ->(i) { gt(:salut, i.student) } },
+      'ID'              => { value: ->(i) { i.id } },
+      'Block'           => { value: ->(i) { i.internship_block.name } },
+      'Vom'             => { value: ->(i) { i.internship_block.start_date }, style: date },
+      'Bis'             => { value: ->(i) { i.internship_block.end_date }, style: date },
+      'Schüler-ID'      => { value: ->(i) { i.student.id } },
       'Vorname'         => { value: ->(i) { i.student.first_name } },
       'Nachname'        => { value: ->(i) { i.student.last_name } },
       'E-Mail'          => { value: ->(i) { i.student.contact.email } },
@@ -38,15 +38,17 @@ wb.styles do |s|
 
     sheet.add_row fields.keys, style: bold
 
-    @internships.each do |i|
+    @internships.order('internship_blocks.start_date').each do |i|
       row = []
+      styles = []
       types = []
       fields.each do |_, field|
         row << field[:value].call(i)
+        styles << field[:style]
         types << field[:type]
       end
 
-      sheet.add_row row, types: types
+      sheet.add_row row, style: styles, types: types
     end
   end
 end

@@ -1,5 +1,5 @@
 .page-header
-  = link_to internships_path(format: :csv), id: 'export-csv-button', class: 'btn btn-default' do
+  = link_to export_internships_path(format: :xlsx), id: 'export-csv-button', class: 'btn btn-default' do
     span.glyphicon.glyphicon-export
     =< t(:export)
   = link_to new_internship_path, class: 'btn btn-primary' do
@@ -23,14 +23,15 @@
         th = Internship.human_attribute_name(:exchange)
         th = Internship.human_attribute_name(:contract_proved)
     tbody
-      - @internships.each do | internship |
+      - @internships.order('internship_blocks.start_date, internship_blocks.name').each do |internship|
+        - block = internship.internship_block
         tr data = {url: url_for(internship)}
           td = internship.student.name
           td = internship.institution.name
           td = internship.institution.organisation.name
           td = internship.mentor.try :name
-          td = internship.block
-          td = ldate internship.start_date
-          td = ldate internship.end_date
+          td = block.name
+          td = ldate block.start_date
+          td = ldate block.end_date
           td = bool_icon internship.exchange
           td = bool_icon internship.contract_proved
