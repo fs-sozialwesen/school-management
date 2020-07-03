@@ -5,10 +5,40 @@ class InternshipsController < ApplicationController
 
   def index
     authorize Internship
-    @internships = Internship.includes(student: :course, institution: :organisation).order('students.last_name')
-    @block = InternshipBlock.find_by id: params[:block_id]
-    @course = Course.find_by(id: params[:course_id]) || Course.order(end_date: :desc).active.first
-    @internships = @internships.where(internship_block: @block, student_id: @course.students.select(:id))
+
+    respond_to do |format|
+      format.html {
+        @internships = Internship.
+          joins(:internship_block).
+          includes(:internship_block, student: :course, institution: :organisation)
+      }
+      format.xlsx {
+        @internships = Internship.includes(student: :course, institution: :organisation).order('students.last_name')
+          @block = InternshipBlock.find_by id: params[:block_id]
+          @course = Course.find_by(id: params[:course_id]) || Course.order(end_date: :desc).active.first
+          @internships = @internships.where(internship_block: @block, student_id: @course.students.select(:id))
+      }
+    end
+  end
+
+  def export
+    authorize Internship
+    @internships = Internship.
+      joins(:internship_block).
+      includes(:internship_block, student: :course, institution: :organisation)
+  end
+
+  def report
+    authorize Internship
+    internships = Internship.
+      joins(:internship_block, institution: :organisation).
+      order('organisations.name', 'internship_blocks.course_year').
+      group('internship_blocks.course_year', 'organisations.name').
+      where('internship_blocks.course_year > 2015').
+      count
+    @years = internships.keys.map(&:first).uniq.compact.sort
+    @internships = {}
+    internships.each { |(year, name), number| (@internships[name] ||= {})[year] = number  }
 
     respond_to do |format|
       format.html
