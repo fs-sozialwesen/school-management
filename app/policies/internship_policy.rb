@@ -15,4 +15,8 @@ class InternshipPolicy < ApplicationPolicy
   def report?
     index?
   end
+
+  def export?
+    index?
+  end
 end

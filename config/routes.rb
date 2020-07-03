@@ -49,7 +49,7 @@ Rails.application.routes.draw do
   resources :institutions
   resources :internships do
     get :copy, on: :member
-    get :report, on: :collection
+    get :export, :report, on: :collection
   end
   resources :internship_blocks, except: :show
 
