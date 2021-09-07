@@ -1,7 +1,7 @@
 .authform
   = simple_form_for(resource, as: resource_name, url: session_path(resource_name), html: { role: 'form'}) do |f|
     h3 = t('devise.sessions.new.sign_in')
-    = devise_error_messages!
+    = render "devise/shared/error_messages", resource: resource
     = f.input :email
     = f.input :password
     = f.submit t('.sign_in'), class: 'button right'
