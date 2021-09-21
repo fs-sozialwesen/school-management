@@ -7,6 +7,9 @@ class Student < ActiveRecord::Base
 
   has_one :candidate, inverse_of: :student
 
+  scope :active, -> { where active: true }
+  scope :inactive, -> { where.not active: true }
+
   validates :first_name, :last_name, presence: true
 
   include PgSearch

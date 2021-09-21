@@ -14,7 +14,7 @@ table.table.table-condensed.table-hover.table-striped.table-clickable
     th Ort
     th Login
   tbody
-    - @course.students.includes(:login).order(:last_name).each do |student|
+    - @course.students.active.includes(:login).order(:last_name).each do |student|
       - contact = student.contact
       tr data={ url: url_for(student) }
         td = student.first_name
@@ -23,3 +23,21 @@ table.table.table-condensed.table-hover.table-striped.table-clickable
         td = [contact.phone, contact.mobile].select(&:present?).join(', ')
         td = student.address.city
         td = student.login.present? ? 'ja' : 'nein'
+
+h4 Dropouts
+table.table.table-condensed.table-hover.table-striped.table-clickable
+  thead
+    th Vorname
+    th Nachname
+    th E-Mail
+    th Telefon
+    th Ort
+  tbody
+    - @course.students.inactive.order(:last_name).each do |student|
+      - contact = student.contact
+      tr.danger data={ url: url_for(student) }
+        td = student.first_name
+        td = student.last_name
+        td = contact.email
+        td = [contact.phone, contact.mobile].select(&:present?).join(', ')
+        td = student.address.city
