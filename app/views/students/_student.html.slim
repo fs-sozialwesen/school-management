@@ -2,11 +2,11 @@
   .col-md-4 = panel_box title: 'Klasse' do
     - if student.course.present?
       p = link_to student.course.name, student.course
-    p
-      label> aktiv
-      => bool_icon student.active
-      - unless student.active
-        |  Dropout
+    / p
+    /   label> aktiv
+    /   => bool_icon student.active
+    /   - unless student.active
+    /     |  Dropout
   .col-md-8
     .panel.panel-default
       .panel-heading

@@ -6,6 +6,7 @@ class Student < ActiveRecord::Base
   has_many :internships, inverse_of: :student
 
   has_one :candidate, inverse_of: :student
+  has_one :contract_termination, inverse_of: :student
 
   scope :active, -> { where active: true }
   scope :inactive, -> { where.not active: true }

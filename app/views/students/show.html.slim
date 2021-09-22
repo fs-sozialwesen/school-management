@@ -56,3 +56,12 @@
 
 = render @student
 = render @student.candidate if @student.candidate.present?
+
+= panel_box title: 'Vertragskündigung', css_class: 'panel-danger' do
+  - if @student.contract_termination
+    = render @student.contract_termination
+  - else
+    p Der Vertrag läuft noch.
+    =< link_to new_student_contract_termination_path(@student), class: 'btn btn-danger' do
+      span.glyphicon.glyphicon-remove
+      |  Vertragskündigung vermerken

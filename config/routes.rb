@@ -16,7 +16,9 @@ Rails.application.routes.draw do
       get :mentors
     end
   end
-  resources :students
+  resources :students, shallow: true do
+    resources :contract_terminations, only: %i(new create), module: :student
+  end
 
   resources :courses, shallow: true do
     get :reset_db_id, on: :collection

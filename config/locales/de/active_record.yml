@@ -91,6 +91,9 @@ de:
       student:
         one:   Auszubildende(r)
         other: Auszubildende
+      student_contract_termination:
+        one: Vertragskündigung
+        other: Vertragskündigungen
       teacher: Lehrer
       room:
         one:   Raum
@@ -193,6 +196,10 @@ de:
           result/wait: Warteliste
       student:
         year: Jahrgang
+      student_contract_termination:
+        date: gekündigt zum
+        notes: Bemerkungen
+        terminated_by: gekündigt durch
       subject:
         lessons: Unterichtsstunden
       teacher:
