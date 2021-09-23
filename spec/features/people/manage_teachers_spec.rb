@@ -23,7 +23,7 @@ feature 'Manage teachers', :devise do
     fill_in 'Vorname', with: 'Rodriges'
     fill_in 'Nachname', with: 'Gonzales'
     click_on 'Speichern'
-    expect(page).to have_content 'Lehrer gespeichert'
+    expect(page).to have_content 'Lehrer*in gespeichert'
     expect(page).to have_content 'Rodriges Gonzales'
 
     # delete teacher
@@ -44,7 +44,7 @@ feature 'Manage teachers', :devise do
     sign_in_as_manager
     create_teacher Vorname: 'Frank', Nachname: 'Meyer', Anrede: 'Herr'
 
-    click_on 'Lehrer'
+    click_on 'Lehrer*innen'
     click_row_with 'Frank'
     click_on 'Bearbeiten'
     select 'Herr',            from: 'Anrede'
@@ -59,7 +59,7 @@ feature 'Manage teachers', :devise do
     fill_in 'Vorname', with: 'Rodriges'
     fill_in 'Nachname', with: 'Gonzales'
     click_on 'Speichern'
-    expect(page).to have_content 'Lehrer gespeichert'
+    expect(page).to have_content 'Lehrer*in gespeichert'
     expect(page).to have_content 'Rodriges Gonzales'
   end
 

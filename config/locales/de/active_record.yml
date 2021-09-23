@@ -6,9 +6,9 @@ de:
     city:                 Ort
     comments:             Bemerkungen
     contact:              Kontaktdaten
-    contact_person:       Ansprechpartner
+    contact_person:       Ansprechpartner*in
     course:               Klasse
-    course_teacher:       Klassenlehrer
+    course_teacher:       Klassenlehrer*in
     created_at:           Angelegt
     date:                 Datum
     date_of_birth:        Geburtsdatum
@@ -26,8 +26,8 @@ de:
     institutions:         Einrichtungen
     last_name:            Nachname
     lessons:              Unterrichtsstunden
-    mentor:               Praxisanleiter
-    mentors:              Praxisanleiter
+    mentor:               Praxisanleiter*in
+    mentors:              Praxisanleiter*innen
     mobile:               Mobil
     organisation:         Träger
     phone:                Telefon
@@ -36,7 +36,7 @@ de:
     start_date:           Beginn
     start_time:           Beginn
     street:               Straße/Nr
-    student:              Auszubildende(r)
+    student:              Auszubildende*r
     students:             Auszubildende
     team:                 Klasse
     time_block:           Zeit
@@ -84,17 +84,23 @@ de:
         one:   Administrator
         other: Administratoren
       candidate:
-        one:   Bewerber(in)
-        other: Bewerber
-      manager: Manager
-      mentor: Praxisanleiter
+        one:   Bewerber*in
+        other: Bewerber*innen
+      manager:
+        one: Manager*in
+        other: Manager*innen
+      mentor:
+        one:   Praxisanleiter*in
+        other: Praxisanleiter*innen
       student:
-        one:   Auszubildende(r)
+        one:   Auszubildende*r
         other: Auszubildende
       student_contract_termination:
         one: Vertragskündigung
         other: Vertragskündigungen
-      teacher: Lehrer
+      teacher:
+        one: Lehrer*in
+        other: Lehrer*innen
       room:
         one:   Raum
         other: Räume
@@ -112,7 +118,7 @@ de:
         other: Stundenplan Downloads
     attributes:
       course:
-        teacher: Klassenlehrer
+        teacher: Klassenlehrer*in
       education_subject:
         short_name: Kürzel
       enum:
@@ -136,7 +142,7 @@ de:
         housing_provided: bereitgestellt
         name: Name der Einrichtung
         organisation: Träger
-        person: Ansprechpartner
+        person: Ansprechpartner*in
         positions_count: Anzahl Plätze
       institution:
         applying: Bewerbung
@@ -150,11 +156,11 @@ de:
         in_search: In der Suche anzeigen
         name: Name
         organisation: Träger
-        person: Ansprechpartner
+        person: Ansprechpartner*in
         positions_count: Anzahl Plätze
       lesson:
         time_table: Stundenplan
-        teacher: Lehrer
+        teacher: Lehrer*in
         subject: Fach
         room: Raum
         start_time: Start
@@ -167,11 +173,11 @@ de:
         qualified: qualifiziert
       person:
         as_admin: Admin
-        as_candidate: Bewerber(in)
-        as_manager: Manager
-        as_teacher: Lehrer
-        as_mentor: Praxisanleiter
-        as_student: Auszubildende(r)
+        as_candidate: Bewerber*in
+        as_manager: Manager*in
+        as_teacher: Lehrer*in
+        as_mentor: Praxisanleiter*in
+        as_student: Auszubildende*r
         roles: Rollen
       candidate:
         status: Status
@@ -180,18 +186,18 @@ de:
         status/invited: eingeladen
         status/interview: KLT
         status/contracts_back: Vertäge
-        status/student: Student
+        status/student: Student*in
         status/rejected: Schule abgesagt
-        status/canceled: Bewerber abgesagt
-        career_changer: Quereinsteiger
+        status/canceled: Bewerber*in abgesagt
+        career_changer: Quereinsteiger*in
         rank: Ranking
         interview:
           answer/open: offen
           answer/accepted: Zusage
           answer/rejected: Absage
           result/open: offen
-          result/accepted: Bewerber angenommen
-          result/rejected: Bewerber abgelehnt
+          result/accepted: Bewerber*in angenommen
+          result/rejected: Bewerber*in abgelehnt
           result/repeat: Wiederholen
           result/wait: Warteliste
       student:
@@ -203,7 +209,7 @@ de:
       subject:
         lessons: Unterichtsstunden
       teacher:
-        courses: Klassenlehrer von
+        courses: Klassenlehrer*in von
       time_block:
         start_time: Beginn
         end_time: Ende

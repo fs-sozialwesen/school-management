@@ -8,7 +8,7 @@ module Features
       click_on 'Klassen'
       click_on 'Neu'
       attributes.each { |name, value| fill_in name, with: value }
-      select teacher, from: :Klassenlehrer
+      select teacher, from: 'Klassenlehrer*in'
       click_on 'Speichern'
 
       expect(page).to have_content 'Klasse gespeichert'

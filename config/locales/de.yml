@@ -19,18 +19,18 @@ de:
   male: männlich
   candidates:
     create:
-      success: Bewerber(in) gespeichert.
+      success: Bewerber*in gespeichert.
     update:
-      success: Bewerber(in) gespeichert.
+      success: Bewerber*in gespeichert.
     destroy:
-      success: Bewerber(in) gelöscht.
+      success: Bewerber*in gelöscht.
     form:
-      error: Bewerber konnte nicht gespeichert werden.
+      error: Bewerber*in konnte nicht gespeichert werden.
     show:
       documents:
-        confirm_init: Soll der Status des Bewerbers wirklich zurückgesetzt werden?
-      confirm_delete: Soll der Berwerber wirklich gelöscht werden?
-      confirm_accept: Erfüllt der Bewerber alle Zulassungsvoraussetzungen?
+        confirm_init: Soll der Status der Bewerber*in wirklich zurückgesetzt werden?
+      confirm_delete: Soll die Berwerber*in wirklich gelöscht werden?
+      confirm_accept: Erfüllt die Bewerber*in alle Zulassungsvoraussetzungen?
   courses:
     create:
       success: Klasse gespeichert.
@@ -113,12 +113,12 @@ de:
       confirm_delete: Wirklich löschen?
   layouts:
     navigation:
-      candidates: Bewerber
+      candidates: Bewerber*innen
       courses: Klassen
       internship_positions: Praktikumsplätze
-      managers: Manager
+      managers: Manager*innen
       students: Auszubildende
-      teachers: Lehrer
+      teachers: Lehrer*innen
   login_mailer:
     create_password_email:
       subject: Passwort zu deinem Account
@@ -143,26 +143,26 @@ de:
   manager_m: Manager
   managers:
     create:
-      success: Manager gespeichert.
+      success: Manager*in gespeichert.
     update:
-      success: Manager gespeichert.
+      success: Manager*in gespeichert.
     destroy:
-      success: Manager gelöscht.
+      success: Manager*in gelöscht.
     form:
-      error: Manager konnte nicht gespeichert werden.
+      error: Manager*in konnte nicht gespeichert werden.
     show:
       confirm_delete: "Wirklich löschen?"
   mentor_f: Praxisanleiterin
   mentor_m: Praxisanleiter
   people:
     employees:
-      manager: Manager
-      teacher: Lehrer
+      manager: Manager*innen
+      teacher: Lehrer*innen
     new:
-      title_manager: Neue(n) Manager(in) anlegen
-      title_teacher: Neue(n) Lehrer(in) anlegen
-      title_student: Neue(n) Auszubildende(n) anlegen
-      title_mentor: Neue(n) Praxisanleiter(in) anlegen
+      title_manager: Manager*in anlegen
+      title_teacher: Lehrer*in anlegen
+      title_student: Auszubildende*n anlegen
+      title_mentor: Praxisanleiter*in anlegen
     create:
       success: Personendaten gespeichert.
     update:
@@ -177,33 +177,29 @@ de:
   room_plan: Raumplan
   salut_f: Frau
   salut_m: Herr
-  teacher: Lehrer(in)
-  teacher_f: Lehrerin
-  teacher_m: Lehrer
-  student_f: Auszubildende
-  student_m: Auszubildender
+  teacher: Lehrer*in
   students:
     new:
-      title: Auszubildende(n) anlegen
+      title: Auszubildende*n anlegen
     create:
-      success: Auszubildende(r) gespeichert.
+      success: Auszubildende*r gespeichert.
     update:
-      success: Auszubildende(r) gespeichert.
+      success: Auszubildende*r gespeichert.
     destroy:
-      success: Auszubildende(r) gelöscht.
+      success: Auszubildende*r gelöscht.
     form:
-      error: Auszubildende(r) konnte nicht gespeichert werden.
+      error: Auszubildende*r konnte nicht gespeichert werden.
     show:
       confirm_delete: "Wirklich löschen?"
   teachers:
     create:
-      success: Lehrer(in) gespeichert.
+      success: Lehrer*in gespeichert.
     update:
-      success: Lehrer(in) gespeichert.
+      success: Lehrer*in gespeichert.
     destroy:
-      success: Lehrer(in) gelöscht.
+      success: Lehrer*in gelöscht.
     form:
-      error: Lehrer(in) konnte nicht gespeichert werden.
+      error: Lehrer*in konnte nicht gespeichert werden.
     show:
       confirm_delete: "Wirklich löschen?"
 
@@ -242,5 +238,5 @@ de:
       title_course_html: Stundenplan für Klasse %{course}
       title_teacher_html: Stundenplan für %{teacher}
       title_room_html: "Raumplan: <strong>%{room}</strong>"
-  student_cant_have_other_roles: "Ein Auszubildender kann keine weiteren Rollen haben."
+  student_cant_have_other_roles: "Ein*e Auszubildende*r kann keine weiteren Rollen haben."
   people_index: "Personenverzeichnis"

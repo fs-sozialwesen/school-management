@@ -5,7 +5,7 @@ p Der Ausbildungsvertrag mit <b>#{@student.name}</b> wurde gekündigt.
 
 = simple_form_for @contract_termination do |f|
   = f.input :date, as: :string, input_html:{ class: :date, autocomplete: :off }
-  = f.input :terminated_by, placeholder: 'Schüler oder Fachschule'
+  = f.input :terminated_by, placeholder: 'Auszubildende*r oder Fachschule'
   = f.input :notes
 
   = f.submit 'Speichern', class: 'btn btn-primary'

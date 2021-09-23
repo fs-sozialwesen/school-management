@@ -8,7 +8,7 @@
 
   .col-md-10
     - if @candidates.empty?
-      p Keine Bewerber in dieser Ansicht.
+      p Keine Bewerber*innen in dieser Ansicht.
     - else
       .table-responsive
         table.table.table-striped.table-bordered.table-hover.table-clickable
@@ -21,7 +21,7 @@
               th Eingeladen
               th Rückmeldung
               th Ergebnis KLT
-              th Quereinsteiger
+              th Quereinsteiger*in
               th Ranking
           tbody
             - @candidates.each do | candidate |

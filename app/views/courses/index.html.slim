@@ -1,5 +1,5 @@
 .page-header
-  = link_to new_course_path, class: 'btn btn-primary' do 
+  = link_to new_course_path, class: 'btn btn-primary' do
     span.glyphicon.glyphicon-plus
     =< t(:new)
   = link_to courses_path(format: :xlsx), id: 'export-button', class: 'btn btn-default' do
@@ -14,8 +14,8 @@
     thead
       tr
         th Name
-        th Klassenlehrer
-        th Auszubildende
+        th Klassenlehrer*in
+        th Auszubildende*r
         th Stundenpläne
         th Beginn
         th Ende
@@ -42,8 +42,8 @@ h4 Archiv (#{@inactive_courses.count})
     thead
       tr
         th Name
-        th Klassenlehrer
-        th Auszubildende
+        th Klassenlehrer*in
+        th Auszubildende*r
         th Beginn
         th Ende
         /th

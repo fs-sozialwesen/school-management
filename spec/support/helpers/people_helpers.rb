@@ -3,7 +3,7 @@ module Features
 
     def create_person(scope, attributes, i18n_scope: nil)
       i18n_scope ||= scope
-      click_on 'Mitarbeiter'
+      click_on 'Mitarbeiter*innen'
       click_on scope
       click_on 'Neu'
       attributes.each do |name, value|
@@ -21,12 +21,12 @@ module Features
     end
 
     def create_teacher(attributes)
-      create_person 'Lehrer', attributes
+      create_person 'Lehrer*innen', attributes, i18n_scope: 'Lehrer*in'
     end
     alias :given_teacher :create_teacher
 
     def create_manager(attributes)
-      create_person 'Manager', attributes
+      create_person 'Manager*innen', attributes, i18n_scope: 'Manager*in'
     end
     alias :given_manager :create_manager
 
@@ -44,14 +44,14 @@ module Features
       end
       select course, from: 'student[course_id]'
       click_on 'Speichern'
-      expect(page).to have_content 'Auszubildende(r) gespeichert'
+      expect(page).to have_content 'Auszubildende*r gespeichert'
       attributes.values.each { |value| expect(page).to have_content value }
       click_on 'Liste'
     end
     alias :given_student :create_student
 
     def create_candidate(attributes)
-      click_on 'Bewerber'
+      click_on 'Bewerber*innen'
       click_on 'Neu'
       attributes.each do |name, value|
         if name.in?(%i(Anrede))
@@ -62,7 +62,7 @@ module Features
       end
       yield if block_given?
       click_on 'Speichern'
-      expect(page).to have_content 'Bewerber(in) gespeichert'
+      expect(page).to have_content 'Bewerber*in gespeichert'
       attributes.values.each { |value| expect(page).to have_content value }
       click_on 'Liste'
     end

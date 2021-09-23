@@ -23,7 +23,7 @@
             th Praxisblock
             th Vertrag liegt vor
             th Praktikumsplatz
-            th Praxisanleiter
+            th Praxisanleiter*in
         tbody
           - student.internships.includes(:institution, :mentor).each do |internship|
             tr data={ url: url_for(internship) }

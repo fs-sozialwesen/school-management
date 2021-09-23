@@ -1,5 +1,5 @@
 .page-header
-  = link_to organisations_path, class: 'btn btn-default' do 
+  = link_to organisations_path, class: 'btn btn-default' do
     span.glyphicon.glyphicon-list-alt
     =< t(:list)
   = link_to edit_organisation_path(@organisation), class: 'btn btn-primary' do
@@ -40,7 +40,7 @@
     .panel.panel-default
       .panel-heading
         h4.panel-title
-          |  Praxisanleiter
+          |  Praxisanleiter*in
           ul.list-inline.pull-right
             li = link_to new_person_path(scope: :mentor, organisation_id: @organisation.id), class: 'btn btn-default btn-xs' do
               span.glyphicon.glyphicon-plus>

@@ -10,7 +10,7 @@ feature 'Manage courses', :devise do
     click_on 'Neu'
     click_on 'Speichern'
     expect(page).to have_content('Klasse konnte nicht gespeichert werden')
-    
+
     create_course Name: 'Aktive Klasse', Klassenlehrer: 'Frank Meyer', Beginn: '01.01.2014', Ende: '01.01.2017'
   end
 
