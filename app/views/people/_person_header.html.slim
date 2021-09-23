@@ -4,8 +4,8 @@ h2
     small = gt(:student, @person)
   - else
     - if @person.teacher?
-      small => gt(:teacher, @person)
+      small => t(:teacher)
     - if @person.manager?
-      small = gt(:manager, @person)
+      small = t(:manager)
     - if @person.mentor?
-      small = gt(:mentor, @person)
+      small = t(:mentor)

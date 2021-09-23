@@ -139,8 +139,7 @@ de:
       error: Login konnte nicht gespeichert werden.
     show:
       confirm_delete: "Wirklich löschen?"
-  manager_f: Managerin
-  manager_m: Manager
+  manager: Manager*in
   managers:
     create:
       success: Manager*in gespeichert.
@@ -152,8 +151,7 @@ de:
       error: Manager*in konnte nicht gespeichert werden.
     show:
       confirm_delete: "Wirklich löschen?"
-  mentor_f: Praxisanleiterin
-  mentor_m: Praxisanleiter
+  mentor: Praxisanleiter*in
   people:
     employees:
       manager: Manager*innen
@@ -177,6 +175,7 @@ de:
   room_plan: Raumplan
   salut_f: Frau
   salut_m: Herr
+  student: Auszubildende*r
   teacher: Lehrer*in
   students:
     new:
