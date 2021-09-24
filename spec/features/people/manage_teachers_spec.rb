@@ -26,13 +26,14 @@ feature 'Manage teachers', :devise do
     expect(page).to have_content 'Lehrer*in gespeichert'
     expect(page).to have_content 'Rodriges Gonzales'
 
-    # delete teacher
+    # archive teacher
     click_on 'Liste'
     expect do
       click_row_with 'Rodriges'
-      click_on 'Löschen'
-    end.to change { page.all('tbody tr[data-url]').count }.by(-1)
-    expect(page).to have_content 'gelöscht'
+      click_on 'Archivieren'
+      expect(page).to have_content 'archiviert'
+      click_on 'Liste'
+    end.to change { page.all('.active-teachers tbody tr[data-url]').count }.by(-1)
   end
 
   scenario 'create new teacher' do
@@ -63,14 +64,16 @@ feature 'Manage teachers', :devise do
     expect(page).to have_content 'Rodriges Gonzales'
   end
 
-  scenario 'delete teacher' do
+  scenario 'archive teacher' do
     sign_in_as_manager
     create_teacher Vorname: 'Frank', Nachname: 'Meyer', Anrede: 'Herr'
+    create_teacher Vorname: 'John', Nachname: 'Doe', Anrede: 'Herr'
     expect do
       click_row_with 'Frank'
-      click_on 'Löschen'
-    end.to change { page.all('tbody tr[data-url]').count }.by(-1)
-    expect(page).to have_content 'gelöscht'
+      click_on 'Archivieren'
+      expect(page).to have_content 'archiviert'
+      click_on 'Liste'
+    end.to change { page.all('.active-teachers tbody tr[data-url]').count }.by(-1)
   end
 
 end

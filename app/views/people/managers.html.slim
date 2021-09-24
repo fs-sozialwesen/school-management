@@ -6,7 +6,7 @@
     => @managers.active.count
     => t("people.employees.manager")
 
-= render 'managers/table', managers: @managers.active
+.active-managers = render 'managers/table', managers: @managers.active
 
 h3 = "#{@managers.archived.count} Archivierte"
-= render 'managers/table', managers: @managers.archived
+.archived-managers = render 'managers/table', managers: @managers.archived

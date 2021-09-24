@@ -9,7 +9,7 @@
     => @teachers.active.count
     => t("people.employees.teacher")
 
-= render 'teachers/table', teachers: @teachers.active
+.active-teachers = render 'teachers/table', teachers: @teachers.active
 
 h3 = "#{@teachers.archived.count} Archivierte"
-= render 'teachers/table', teachers: @teachers.archived
+.archived-teachers = render 'teachers/table', teachers: @teachers.archived
