@@ -1,0 +1,33 @@
+
+.table-responsive
+  table.table.table-striped.table-bordered.table-hover.table-clickable
+    thead
+      tr
+        th Vorname
+        th Nachname
+        th E-Mail
+        th Telefon
+        th Praxislehrer
+        th Klassen
+        th Login (letzte Anmeld.)
+    tbody
+      - teachers.each do |person|
+        tr data={url: url_for(person)} class=('danger' if person.archived?)
+          td = person.first_name
+          td = person.last_name
+          td
+            - email = person.contact.email
+            - if email.present?
+              =< link_to email, "mailto:#{email}"
+          td = person.contact.phone
+          td = bool_icon person.as_teacher.intern_manager?
+          td
+            - courses = person.as_teacher.courses.order(:name).map do | course |
+              - link_to course.name, course, class: ('text-muted' unless course.active?)
+            = courses.join(', ').html_safe
+          td
+            - if person.login.present?
+              = ['ja', ldate(person.login.last_sign_in_at)].select(&:present?).join(', ')
+            - else
+              |  nein
+

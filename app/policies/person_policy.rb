@@ -35,6 +35,7 @@ class PersonPolicy < ApplicationPolicy
       manager?
     end
   end
+  alias :toggle_archived? :destroy?
 
   def add_role?
     manager?

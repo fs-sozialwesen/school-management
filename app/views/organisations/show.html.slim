@@ -48,7 +48,7 @@
       table.table.table-condensed.table-striped.table-hover.table-clickable
         tbody
           - @organisation.mentors.each do |mentor|
-            tr data={ url: url_for(mentor.person) }
+            tr data={ url: url_for(mentor.person) } class=('danger' if mentor.archived?)
               td = mentor.name
     - if @organisation.comments.present?
       .panel.panel-default

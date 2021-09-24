@@ -1,0 +1,18 @@
+.table-responsive
+  table.table.table-striped.table-bordered.table-hover.table-clickable
+    thead
+      tr
+        th Vorname
+        th Nachname
+        th Träger
+        th Betreute Praktika
+        th Qualifiziert
+    tbody
+      - mentors.each do |person|
+        - mentor = person.as_mentor
+        tr data={ url: url_for(person) } class=('danger' if person.archived?)
+          td = mentor.first_name
+          td = mentor.last_name
+          td = mentor.organisation.name
+          td = mentor.internships.count
+          td = bool_icon mentor.qualified

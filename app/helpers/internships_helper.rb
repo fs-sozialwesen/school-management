@@ -8,7 +8,7 @@ module InternshipsHelper
       o.institutions.each { |ip| institutions[ip.id] = ip.name }
 
       mentors = json_organisations[o.id][:mentors] = {}
-      o.mentors.each { |mentor| mentors[mentor.id] = mentor.name }
+      o.mentors.active.each { |mentor| mentors[mentor.id] = mentor.name }
     end
     json_organisations
   end

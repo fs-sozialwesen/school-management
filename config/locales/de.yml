@@ -4,12 +4,14 @@ de:
   list: Liste
   edit: Bearbeiten
   delete: Löschen
+  archive: Archivieren
   cancel: Abbrechen
   save: Speichern
 
   created: "%{model} gespeichert."
   updated: "%{model} gespeichert."
   destroyed: "%{model} gelöscht."
+  archived: "%{model} archiviert."
   confirm_delete: "%{model} löschen?"
 
   basic_data: Stammdaten

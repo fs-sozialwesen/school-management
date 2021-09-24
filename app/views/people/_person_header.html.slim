@@ -1,11 +1,10 @@
 h2
   => @person.name
-  - if @person.student?
-    small = gt(:student, @person)
-  - else
-    - if @person.teacher?
-      small => t(:teacher)
-    - if @person.manager?
-      small = t(:manager)
-    - if @person.mentor?
-      small = t(:mentor)
+  - if @person.teacher?
+    small => t(:teacher)
+  - if @person.manager?
+    small = t(:manager)
+  - if @person.mentor?
+    small = t(:mentor)
+  - if @person.archived?
+    small: span.label.label-danger archiviert
