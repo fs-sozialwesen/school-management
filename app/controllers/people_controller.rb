@@ -74,9 +74,14 @@ class PeopleController < ApplicationController
     @person = Person.find(params[:person_id])
     authorize @person
     @person.send "create_as_#{role}" if role.in?(%w(teacher manager mentor))
-    @person.as_teacher.update intern_manager: true if role == 'intern_manager'
-    @person.as_teacher.update intern_manager: false if role == 'no_intern_manager'
     redirect_to @person
+  end
+
+  def toggle_intern_manager
+    @person = Person.find(params[:person_id])
+    authorize @person
+    @person.as_teacher.update(intern_manager: !@person.as_teacher.intern_manager)
+    redirect_to @person, notice: 'Praxislehrerrechte geändert'
   end
 
   private

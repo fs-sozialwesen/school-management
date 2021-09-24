@@ -10,6 +10,7 @@ Rails.application.routes.draw do
 
   resources :people, except: :index do
     post :add_role
+    post :toggle_intern_manager
     collection do
       get :managers
       get :teachers

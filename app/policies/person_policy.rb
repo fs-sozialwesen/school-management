@@ -39,6 +39,7 @@ class PersonPolicy < ApplicationPolicy
   def add_role?
     manager?
   end
+  alias :toggle_intern_manager? :add_role?
 
   def person
     record

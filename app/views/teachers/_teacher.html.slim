@@ -25,5 +25,5 @@
 
 label Praxislehrer:
 =<> bool_icon teacher.intern_manager?
-- label, role = teacher.intern_manager? ? ['Praxislehrerrechte entfernen', 'no_intern_manager'] : ['Praxislehrerrechte hinzufügen', 'intern_manager']
-= link_to label, person_add_role_path(teacher.person, role: role), method: :post, class: 'btn btn-default'
+- label = teacher.intern_manager? ? 'Praxislehrerrechte entfernen' : 'Praxislehrerrechte hinzufügen'
+= link_to label, person_toggle_intern_manager_path(teacher.person), method: :post, class: 'btn btn-default'
