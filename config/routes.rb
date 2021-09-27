@@ -15,7 +15,7 @@ Rails.application.routes.draw do
     collection do
       get :managers
       get :teachers
-      get :mentors
+      # get :mentors
     end
   end
   resources :students, shallow: true do
@@ -52,6 +52,9 @@ Rails.application.routes.draw do
   resources :internship_positions, only: [:index, :show]
   resources :institutions
   resources :internships do
+  resources :mentors do
+    post :toggle_archived
+  end
     get :copy, on: :member
     get :export, :report, on: :collection
   end

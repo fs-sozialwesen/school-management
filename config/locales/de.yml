@@ -241,3 +241,6 @@ de:
       title_room_html: "Raumplan: <strong>%{room}</strong>"
   student_cant_have_other_roles: "Ein*e Auszubildende*r kann keine weiteren Rollen haben."
   people_index: "Personenverzeichnis"
+  mentors:
+    form:
+      error: "Fehler beim Speichern."

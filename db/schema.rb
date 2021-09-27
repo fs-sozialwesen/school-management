@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20210924125731) do
+ActiveRecord::Schema.define(version: 20210925202921) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -210,6 +210,12 @@ ActiveRecord::Schema.define(version: 20210924125731) do
     t.datetime "created_at",                      null: false
     t.datetime "updated_at",                      null: false
     t.boolean  "qualified",       default: false
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "gender"
+    t.jsonb    "address",         default: {}
+    t.jsonb    "contact",         default: {}
+    t.boolean  "archived",        default: false
   end
 
   add_index "mentors", ["organisation_id"], name: "index_mentors_on_organisation_id", using: :btree

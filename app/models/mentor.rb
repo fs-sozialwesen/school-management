@@ -1,11 +1,18 @@
 class Mentor < ActiveRecord::Base
-  belongs_to :person
+  belongs_to :person # remove after deployment, needed for migration
   belongs_to :organisation, required: true, inverse_of: :mentors
   has_many :internships
 
-  scope :with_person, -> { joins(:person).order('people.last_name') }
-  scope :active, -> { with_person.where(people: {archived: false}) }
+  scope :active,   -> { where.not archived: true }
+  scope :archived, -> { where archived: true }
 
-  delegate :first_name, :last_name, :name, :archived?, to: :person, allow_nil: true
+  acts_as_addressable
+  acts_as_contactable
+
+  validates :first_name, :last_name, presence: true
+
+  def name
+    "#{first_name} #{last_name}"
+  end
 
 end
