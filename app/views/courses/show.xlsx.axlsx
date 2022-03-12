@@ -16,7 +16,7 @@ wb.styles do |s|
                 E-Mail Telefon Mobil)
     sheet.add_row header, style: bold
 
-    @course.students.order(:last_name).each do |s|
+    @course.students.active.order(:last_name).each do |s|
       row    = []
       styles = []
       types  = []

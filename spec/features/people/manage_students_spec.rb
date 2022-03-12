@@ -22,11 +22,11 @@ feature 'Manage students', :devise do
     fill_in 'Telefon',        with: '09876'
     fill_in 'Mobiltelefon',   with: '01234567'
     click_on 'Speichern'
-    expect(page).to have_content 'Auszubildende(r) konnte nicht gespeichert werden'
+    expect(page).to have_content 'Auszubildende*r konnte nicht gespeichert werden'
     fill_in 'Vorname', with: 'Rodriges'
     fill_in 'Nachname', with: 'Gonzales'
     click_on 'Speichern'
-    expect(page).to have_content 'Auszubildende(r) gespeichert'
+    expect(page).to have_content 'Auszubildende*r gespeichert'
     expect(page).to have_content 'Rodriges Gonzales'
 
     # delete student
@@ -47,7 +47,7 @@ feature 'Manage students', :devise do
     click_on 'Auszubildende'
     click_on 'Neu'
     click_on 'Speichern'
-    expect(page).to have_content('Auszubildende(r) konnte nicht gespeichert werden')
+    expect(page).to have_content('Auszubildende*r konnte nicht gespeichert werden')
 
     click_on 'Auszubildende'
     expect do
@@ -73,11 +73,11 @@ feature 'Manage students', :devise do
     fill_in 'Telefon',        with: '09876'
     fill_in 'Mobiltelefon',   with: '01234567'
     click_on 'Speichern'
-    expect(page).to have_content 'Auszubildende(r) konnte nicht gespeichert werden'
+    expect(page).to have_content 'Auszubildende*r konnte nicht gespeichert werden'
     fill_in 'Vorname', with: 'Rodriges'
     fill_in 'Nachname', with: 'Gonzales'
     click_on 'Speichern'
-    expect(page).to have_content 'Auszubildende(r) gespeichert'
+    expect(page).to have_content 'Auszubildende*r gespeichert'
     expect(page).to have_content 'Rodriges Gonzales'
   end
 

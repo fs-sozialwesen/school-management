@@ -23,16 +23,18 @@ feature 'Manage managers', :devise do
     fill_in 'Vorname', with: 'Rodriges'
     fill_in 'Nachname', with: 'Gonzales'
     click_on 'Speichern'
-    expect(page).to have_content 'Manager gespeichert'
+    expect(page).to have_content 'Manager*in gespeichert'
     expect(page).to have_content 'Rodriges Gonzales'
 
-    # delete manager
+    # archive manager
     click_on 'Liste'
     expect do
       click_row_with 'Rodriges'
-      click_on 'Löschen'
-    end.to change { page.all('tbody tr[data-url]').count }.by(-1)
-    expect(page).to have_content 'gelöscht'
+      click_on 'Archivieren'
+      expect(page).to have_content 'archiviert'
+      click_on 'Liste'
+    end.to change { page.all('.active-managers tbody tr[data-url]').count }.by(-1)
+
   end
 
   scenario 'create new manager' do
@@ -42,9 +44,9 @@ feature 'Manage managers', :devise do
 
   scenario 'edit manager' do
     sign_in_as_manager
-    click_on 'Manager'
+    click_on 'Manager*innen'
     click_on_first_row
-    expect(page).to have_content 'Manager'
+    expect(page).to have_content 'Manager*in'
     click_on 'Bearbeiten'
     fill_in 'Vorname',        with: ''
     fill_in 'Geburtsdatum',   with: '1.1.1996'
@@ -57,23 +59,24 @@ feature 'Manage managers', :devise do
     fill_in 'Vorname', with: 'Rodriges'
     fill_in 'Nachname', with: 'Gonzales'
     click_on 'Speichern'
-    expect(page).to have_content 'Manager gespeichert'
+    expect(page).to have_content 'Manager*in gespeichert'
     expect(page).to have_content 'Rodriges Gonzales'
   end
 
-  scenario 'delete other manager' do
+  scenario 'archive other manager' do
     sign_in_as_manager
     create_manager Vorname: 'Frank', Nachname: 'Meyer', Anrede: 'Herr'
     expect do
       click_row_with 'Frank'
-      click_on 'Löschen'
-    end.to change { page.all('tbody tr[data-url]').count }.by(-1)
-    expect(page).to have_content 'gelöscht'
+      click_on 'Archivieren'
+      expect(page).to have_content 'archiviert'
+      click_on 'Liste'
+    end.to change { page.all('.active-managers tbody tr[data-url]').count }.by(-1)
   end
 
   scenario 'can not delete myself' do
     sign_in_as_manager
-    click_on 'Manager'
+    click_on 'Manager*innen'
     click_row_with @current_user.last_name
     click_on 'Löschen', match: :first
     expect(page).to have_content('nicht berechtigt')

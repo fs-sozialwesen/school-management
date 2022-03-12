@@ -35,10 +35,12 @@ class PersonPolicy < ApplicationPolicy
       manager?
     end
   end
+  alias :toggle_archived? :destroy?
 
   def add_role?
     manager?
   end
+  alias :toggle_intern_manager? :add_role?
 
   def person
     record

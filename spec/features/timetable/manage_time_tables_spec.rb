@@ -45,7 +45,7 @@ feature 'Manage time tables', :devise do
     # add a lesson
     click_on 'Neue Stunde', match: :first
     select 'Mathe', from: 'Fach'
-    select 'John Meier', from: 'Lehrer'
+    select 'John Meier', from: 'Lehrer*in'
     click_on 'Speichern'
     expect(page).to have_content('J. Meier')
     expect(page).to have_content('Mathe')
@@ -66,7 +66,7 @@ feature 'Manage time tables', :devise do
     # save_and_open_page
     # binding.pry
     select 'Sport', from: 'Fach'
-    select 'Sabine Strohmann', from: 'Lehrer'
+    select 'Sabine Strohmann', from: 'Lehrer*in'
     select 'Room1', from: 'Raum'
     fill_in :Bemerkungen, with: 'Remember'
     click_on 'Speichern'

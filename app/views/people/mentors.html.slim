@@ -6,26 +6,13 @@
     span.glyphicon.glyphicon-export
     |  Exportieren
 
-  h2 #{@mentors.count} Praxisanleiter
+  h2 #{@mentors.active.count} Praxisanleiter*innen
 
-.table-responsive
-  table.table.table-striped.table-bordered.table-hover.table-clickable
-    thead
-      tr
-        th Vorname
-        th Nachname
-        th Träger
-        th Betreute Praktika
-        th Qualifiziert
-    tbody
-      - @mentors.each do |person|
-        - mentor = person.as_mentor
-        tr data={ url: url_for(person) }
-          td = mentor.first_name
-          td = mentor.last_name
-          td = mentor.organisation.name
-          td = mentor.internships.count
-          td = bool_icon mentor.qualified
+= render 'mentors/table', mentors: @mentors.active
+
+h3 #{@mentors.archived.count} Archivierte
+= render 'mentors/table', mentors: @mentors.archived
 
 coffee:
   $ -> window.onhashchange = -> window.scrollTo(0, window.scrollY - 80 )
+

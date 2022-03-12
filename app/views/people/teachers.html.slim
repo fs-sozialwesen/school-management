@@ -1,1 +1,15 @@
-= render 'employees', scope: :teacher, people: @teachers
+.page-header
+  = link_to new_person_path(scope: :teacher), class: 'btn btn-primary' do
+    span.glyphicon.glyphicon-plus
+    |  Neu
+  = link_to teachers_people_path(format: :csv), id: 'export-csv-button', class: 'btn btn-default' do
+    span.glyphicon.glyphicon-export
+    |  Exportieren
+  h2
+    => @teachers.active.count
+    => t("people.employees.teacher")
+
+.active-teachers = render 'teachers/table', teachers: @teachers.active
+
+h3 = "#{@teachers.archived.count} Archivierte"
+.archived-teachers = render 'teachers/table', teachers: @teachers.archived

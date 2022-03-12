@@ -59,9 +59,10 @@ class StudentsController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def student_params
-    params.require(:student).permit(%i(id first_name last_name gender date_of_birth place_of_birth course_id active) + [
-      address: %i(street zip city), contact: %i(email phone mobile)
-    ])
+    params.require(:student).permit(
+      %i(id first_name last_name gender date_of_birth place_of_birth course_id) +
+        [address: %i(street zip city), contact: %i(email phone mobile)]
+    )
   end
 
   def filter(course)

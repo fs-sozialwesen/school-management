@@ -50,7 +50,7 @@ class CandidatesController < ApplicationController
 
   def accept
     @candidate.accept!
-    redirect_to @candidate, notice: 'Bewerber aufgenommen!'
+    redirect_to @candidate, notice: 'Bewerber*in aufgenommen!'
   end
 
   def reject
