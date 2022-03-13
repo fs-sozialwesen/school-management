@@ -5,6 +5,7 @@
   = link_to teachers_people_path(format: :csv), id: 'export-csv-button', class: 'btn btn-default' do
     span.glyphicon.glyphicon-export
     |  Exportieren
+  = link_to Manager.model_name.human(count: 2), managers_people_path, class: 'btn btn-default'
   h2
     => @teachers.active.count
     => t("people.employees.teacher")

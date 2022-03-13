@@ -2,6 +2,7 @@
   = link_to new_person_path(scope: :manager), class: 'btn btn-primary' do
     span.glyphicon.glyphicon-plus
     |  Neu
+  = link_to Teacher.model_name.human(count: 2), teachers_people_path, class: 'btn btn-default'
   h2
     => @managers.active.count
     => t("people.employees.manager")

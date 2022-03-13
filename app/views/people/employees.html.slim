@@ -1,0 +1,15 @@
+.page-header
+  = link_to new_person_path(scope: :teacher), class: 'btn btn-primary' do
+    span.glyphicon.glyphicon-plus
+    |  Neu
+  = link_to employees_people_path(format: :csv), id: 'export-csv-button', class: 'btn btn-default' do
+    span.glyphicon.glyphicon-export
+    |  Exportieren
+  h2
+    => @employees.active.count
+    | Mitarbeiter*innen
+
+.active-employees = render 'table', employees: @employees.active
+
+h3 = "#{@employees.archived.count} Archivierte"
+.archived-employees = render 'table', employees: @employees.archived
