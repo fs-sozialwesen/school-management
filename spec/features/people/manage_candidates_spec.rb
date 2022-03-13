@@ -6,12 +6,12 @@ feature 'Manage candidates', :devise do
   scenario 'create new candidate' do
     sign_in_as_manager
 
-    click_on 'Bewerber'
+    click_on 'Bewerber*innen'
     click_on 'Neu'
     click_on 'Speichern'
-    expect(page).to have_content('Bewerber konnte nicht gespeichert werden')
+    expect(page).to have_content('Bewerber*in konnte nicht gespeichert werden')
 
-    click_on 'Bewerber'
+    click_on 'Bewerber*in'
     expect do
       create_candidate Vorname: 'Frank', Nachname: 'Meyer', Anrede: 'Herr'
     end.to change { page.all('tbody tr[data-url]').count }.by(1)
@@ -33,11 +33,11 @@ feature 'Manage candidates', :devise do
     fill_in 'Telefon',        with: '09876'
     fill_in 'Mobiltelefon',   with: '01234567'
     click_on 'Speichern'
-    expect(page).to have_content 'Bewerber konnte nicht gespeichert werden'
+    expect(page).to have_content 'Bewerber*in konnte nicht gespeichert werden'
     fill_in 'Vorname', with: 'Rodriges'
     fill_in 'Nachname', with: 'Gonzales'
     click_on 'Speichern'
-    expect(page).to have_content 'Bewerber(in) gespeichert'
+    expect(page).to have_content 'Bewerber*in gespeichert'
     expect(page).to have_content 'Rodriges Gonzales'
   end
 
@@ -63,7 +63,7 @@ feature 'Manage candidates', :devise do
       check 'Beglaubigte Kopien liegen vor'
     end
     click_on 'Speichern'
-    expect(page).to have_content 'Bewerber(in) gespeichert'
+    expect(page).to have_content 'Bewerber*in gespeichert'
   end
 
   scenario 'edit interview' do
@@ -77,7 +77,7 @@ feature 'Manage candidates', :devise do
     select 'Zusage', from: 'Rückmeldung'
     select 'Wiederholen', from: 'Ergebnis'
     click_on 'Speichern'
-    expect(page).to have_content 'Bewerber(in) gespeichert'
+    expect(page).to have_content 'Bewerber*in gespeichert'
     expect(page).to have_content '01.07.2016'
   end
 
@@ -100,7 +100,7 @@ feature 'Manage candidates', :devise do
       fill_in 'Notizen', with: 'Contract notes'
     end
     click_on 'Speichern'
-    expect(page).to have_content 'Bewerber(in) gespeichert'
+    expect(page).to have_content 'Bewerber*in gespeichert'
     expect(page).to have_content '01.08.2016'
     expect(page).to have_content '03.08.2016'
     expect(page).to have_content '01.09.2016'
@@ -125,8 +125,8 @@ feature 'Manage candidates', :devise do
     create_candidate Vorname: 'Frank', Nachname: 'Meyer', Anrede: 'Herr'
     click_row_with 'Frank'
     click_on 'Zulassen'
-    expect(page).to have_content 'Bewerber aufgenommen'
-    expect(page).to have_content 'Bewerber ist zugelassen'
+    expect(page).to have_content 'Bewerber*in aufgenommen'
+    expect(page).to have_content 'Bewerber*in ist zugelassen'
   end
 
   scenario 'reject candidate' do
@@ -138,7 +138,7 @@ feature 'Manage candidates', :devise do
     fill_in :Datum, with: '6.7.2015'
     select 'Schule', from: 'Absage durch'
     click_on :Absagen
-    expect(page).to have_content 'Bewerber(in) gespeichert'
+    expect(page).to have_content 'Bewerber*in gespeichert'
     expect(page).to have_content '06.07.2015'
     expect(page).to have_content 'Absage durch'
     expect(page).to have_content 'Schule'

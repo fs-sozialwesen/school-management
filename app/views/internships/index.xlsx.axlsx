@@ -12,42 +12,41 @@ wb.styles do |s|
     sheet.add_row ['Praktikumsplätze', 'Praxisblock', @block.name, @block.start_date, @block.end_date], style: [bold, bold, bold, date, date]
     sheet.add_row
 
-    header = %w(Anrede Vorname Nachname E-Mail Telefon
-                Tauschp. Träger Kooperationsv.
-                Einrichtung Straße PLZ Ort
-                Ansprechpartner E-Mail Telefon Fax Mobil Praxisanleiter E-Mail Telefon)
-    sheet.add_row header, style: bold
+    fields = {
+      'Anrede'          => { value: ->(i) { gt(:salut, i.student) } },
+      'Vorname'         => { value: ->(i) { i.student.first_name } },
+      'Nachname'        => { value: ->(i) { i.student.last_name } },
+      'E-Mail'          => { value: ->(i) { i.student.contact.email } },
+      'Telefon'         => { value: ->(i) { i.student.contact.phone }, type: :string },
+      'Tauschp.'        => { value: ->(i) { bool(i.exchange) } },
+      'Träger'          => { value: ->(i) { i.institution.organisation.name } },
+      'Kooperationsv.'  => { value: ->(i) { i.institution.organisation.cooperation } },
+      'Bemerkung'       => { value: ->(i) { i.institution.organisation.coop_notes } },
+      'Einrichtung'     => { value: ->(i) { i.institution.name } },
+      'Straße'          => { value: ->(i) { i.institution.address.street } },
+      'PLZ'             => { value: ->(i) { i.institution.address.zip }, type: :string },
+      'Ort'             => { value: ->(i) { i.institution.address.city } },
+      'Ansprechpartner' => { value: ->(i) { i.institution.contact.person } },
+      'E-Mail'          => { value: ->(i) { i.institution.contact.email } },
+      'Telefon'         => { value: ->(i) { i.institution.contact.phone }, type: :string },
+      'Fax'             => { value: ->(i) { i.institution.contact.fax } },
+      'Mobil'           => { value: ->(i) { i.institution.contact.mobile } },
+      'Praxisanleiter'  => { value: ->(i) { i.mentor&.name } },
+      'E-Mail'          => { value: ->(i) { i.mentor&.person&.contact&.email } },
+      'Telefon'         => { value: ->(i) { i.mentor&.person&.contact&.phone }, type: :string },
+    }
+
+    sheet.add_row fields.keys, style: bold
 
     @internships.each do |i|
-      s = i.student
       row = []
-      styles = []
       types = []
+      fields.each do |_, field|
+        row << field[:value].call(i)
+        types << field[:type]
+      end
 
-      salut = gt(:salut, s)
-
-      row    += [salut, s.first_name, s.last_name, s.contact.email, s.contact.phone]
-      styles += [nil,   nil,          nil,         nil,             nil]
-      types  += [nil,   nil,          nil,         nil,             :string]
-
-      inst = i.institution
-      carrier = inst.organisation
-      a = inst.address
-      c = inst.contact
-      m = i.mentor
-      coop = carrier.cooperation
-      coop += " (#{carrier.coop_notes})" if carrier.coop_notes.present?
-
-      row    += [bool(i.exchange), carrier.name, coop]
-      types  += [nil,                       nil,          nil]
-
-      row    += [inst.name, a.street, a.zip,   a.city]
-      types  += [nil,       nil,      :string, nil]
-
-      row    += [c.person, c.email, c.phone, c.fax,   c.mobile, m&.name, m&.person&.contact&.email, m&.person&.contact&.phone]
-      types  += [nil,      nil,     :string, :string, :string,  nil,     nil,                     :string]
-
-      sheet.add_row row, style: styles, types: types
+      sheet.add_row row, types: types
     end
   end
 end

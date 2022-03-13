@@ -1,0 +1,54 @@
+response.headers['Content-Disposition'] = %Q(attachment; filename="praktika-#{Time.now}.xlsx")
+
+wb = xlsx_package.workbook
+
+wb.styles do |s|
+  bold = s.add_style b: true, sz: 12, alignment: { horizontal: :center }
+  date = s.add_style(format_code: 'dd.mm.yyyy')
+
+  wb.add_worksheet(name: "Praktika") do |sheet|
+
+    fields = {
+      'ID'              => { value: ->(i) { i.id } },
+      'Block'           => { value: ->(i) { i.internship_block.name } },
+      'Vom'             => { value: ->(i) { i.internship_block.start_date }, style: date },
+      'Bis'             => { value: ->(i) { i.internship_block.end_date }, style: date },
+      'Schüler-ID'      => { value: ->(i) { i.student.id } },
+      'Vorname'         => { value: ->(i) { i.student.first_name } },
+      'Nachname'        => { value: ->(i) { i.student.last_name } },
+      'E-Mail'          => { value: ->(i) { i.student.contact.email } },
+      'Telefon'         => { value: ->(i) { i.student.contact.phone }, type: :string },
+      'Tauschp.'        => { value: ->(i) { bool(i.exchange) } },
+      'Träger'          => { value: ->(i) { i.institution.organisation.name } },
+      'Kooperationsv.'  => { value: ->(i) { i.institution.organisation.cooperation } },
+      'Bemerkung'       => { value: ->(i) { i.institution.organisation.coop_notes } },
+      'Einrichtung'     => { value: ->(i) { i.institution.name } },
+      'Straße'          => { value: ->(i) { i.institution.address.street } },
+      'PLZ'             => { value: ->(i) { i.institution.address.zip }, type: :string },
+      'Ort'             => { value: ->(i) { i.institution.address.city } },
+      'Ansprechpartner' => { value: ->(i) { i.institution.contact.person } },
+      'E-Mail'          => { value: ->(i) { i.institution.contact.email } },
+      'Telefon'         => { value: ->(i) { i.institution.contact.phone }, type: :string },
+      'Fax'             => { value: ->(i) { i.institution.contact.fax } },
+      'Mobil'           => { value: ->(i) { i.institution.contact.mobile } },
+      'Praxisanleiter'  => { value: ->(i) { i.mentor&.name } },
+      'E-Mail'          => { value: ->(i) { i.mentor&.person&.contact&.email } },
+      'Telefon'         => { value: ->(i) { i.mentor&.person&.contact&.phone }, type: :string },
+    }
+
+    sheet.add_row fields.keys, style: bold
+
+    @internships.order('internship_blocks.start_date').each do |i|
+      row = []
+      styles = []
+      types = []
+      fields.each do |_, field|
+        row << field[:value].call(i)
+        styles << field[:style]
+        types << field[:type]
+      end
+
+      sheet.add_row row, style: styles, types: types
+    end
+  end
+end

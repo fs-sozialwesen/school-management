@@ -22,6 +22,8 @@ class Person < ActiveRecord::Base
   scope :managers, -> { joins(:as_manager).  includes(:as_manager) }
   scope :teachers, -> { joins(:as_teacher).  includes(:as_teacher) }
   scope :mentors,  -> { joins(:as_mentor).   includes(:as_mentor) }
+  scope :active,   -> { where.not archived: true }
+  scope :archived, -> { where archived: true }
 
   include PgSearch
   multisearchable against: [:first_name, :last_name, :address, :contact]

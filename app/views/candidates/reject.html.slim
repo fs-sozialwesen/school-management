@@ -1,4 +1,4 @@
-.page-header: h2 Bewerber #{@candidate.name} absagen
+.page-header: h2 Bewerber*in #{@candidate.name} absagen
 
 nav.navbar.navbar-default
   .navbar-header
@@ -28,7 +28,7 @@ nav.navbar.navbar-default
     .row
       .col-md-4
         = f.input :cancel_date, as: :string, input_html: { class: 'date' }
-        = f.input :status, collection: [%w(Schule rejected), %w(Bewerber canceled)], label: 'Absage durch'
+        = f.input :status, collection: [%w(Schule rejected), %w(Bewerber*in canceled)], label: 'Absage durch'
       .col-md-8
         = f.input :cancel_reason, input_html: { rows: 5 }
 

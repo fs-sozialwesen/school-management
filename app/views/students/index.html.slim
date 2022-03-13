@@ -16,58 +16,63 @@ ul.nav.nav-tabs
   li class=('active' if @course == :archived)
     = link_to 'Archiv', students_path(course: 'archived')
   li class=('active' if @course == :dropouts)
-    = link_to 'Dropouts', students_path(course: 'dropouts')
+    = link_to 'Gekündigt', students_path(course: 'dropouts')
 
-- grouped_students = @students.to_a.group_by { |student| student.last_name[0].upcase }
-- ('A'..'Z').each do |char|
-  - if char.in? grouped_students.keys
-    a href="##{char}" => char
-  - else
-    i => char
-.table-responsive
-  table.table.table-striped.table-bordered.table-hover.table-clickable
+- if @course == :dropouts
+  = render 'dropouts'
+- else
+  - grouped_students = @students.to_a.group_by { |student| student.last_name[0].upcase }
+  - ('A'..'Z').each do |char|
+    - if char.in? grouped_students.keys
+      a href="##{char}" => char
+    - else
+      i => char
+  .table-responsive
+    table.table.table-striped.table-bordered.table-hover.table-clickable
 
-    - grouped_students.each do |char, students|
-      thead
-        tr
-          th colspan="4"
-            h4
-              a name=char = char
-              span.pull-right
-                small: a href="javascript: window.scrollTo(0, 0);" nach oben
+      - grouped_students.each do |char, students|
+        thead
+          tr
+            th colspan="4"
+              h4
+                a name=char = char
+                span.pull-right
+                  small: a href="javascript: window.scrollTo(0, 0);" nach oben
 
-        tr
-          th Vorname
-          th Nachname
-          - if @course.in? [:active, :archived]
-            th Klasse
-          - if @course == :no
-            th Bewerbung
-          th Login (letzte Anmeld.)
-      tbody
-        - students.each do | student |
-          tr data={ url: url_for(student) } class=('danger' unless student.active?)
-            td = student.first_name
-            td = student.last_name
+          tr
+            th Vorname
+            th Nachname
             - if @course.in? [:active, :archived]
-              td = link_to student.course.name, student.course
+              th Klasse
             - if @course == :no
-              td
-                - if candidate = student.candidate
-                  - if candidate.documents_complete? and candidate.contracts_complete?
-                    span.label.label-success vollständig
+              th Bewerbung
+            - if @course.in? [:active, :archived, :no]
+              th Login (letzte Anmeld.)
+        tbody
+          - students.each do | student |
+            tr data={ url: url_for(student) } class=('danger' unless student.active?)
+              td = student.first_name
+              td = student.last_name
+              - if @course.in? [:active, :archived]
+                td = link_to student.course.name, student.course
+              - if @course == :no
+                td
+                  - if candidate = student.candidate
+                    - if candidate.documents_complete? and candidate.contracts_complete?
+                      span.label.label-success vollständig
+                    - else
+                      - unless candidate.documents_complete?
+                        span.label.label-danger> Dokumente unvollständig
+                      - unless candidate.contracts_complete?
+                        span.label.label-danger> Verträge unvollständig
                   - else
-                    - unless candidate.documents_complete?
-                      span.label.label-danger> Dokumente unvollständig
-                    - unless candidate.contracts_complete?
-                      span.label.label-danger> Verträge unvollständig
-                - else
-                  |  -
-            td
-              - if student.login.present?
-                = ['ja', ldate(student.login.last_sign_in_at)].select(&:present?).join(', ')
-              - else
-                |  nein
+                    |  -
+              - if @course.in? [:active, :archived, :no]
+                td
+                  - if student.login.present?
+                    = ['ja', ldate(student.login.last_sign_in_at)].select(&:present?).join(', ')
+                  - else
+                    |  nein
 
 coffee:
   $(document).on 'turbolinks:load', ->

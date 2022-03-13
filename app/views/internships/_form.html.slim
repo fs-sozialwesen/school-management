@@ -16,7 +16,7 @@
       = panel_box title: 'Einrichtung' do
         = f.input :organisation, collection: organisations, selected: @internship&.organisation&.id, include_blank: true, input_html:{ class: :select2 }
         = f.association :institution, include_blank: true, input_html:{ class: :select2 }
-        = f.association :mentor, collection: Mentor.joins(:person).order('people.last_name'), include_blank: true, input_html:{ class: :select2 }
+        = f.association :mentor, collection: Mentor.active, include_blank: true, input_html:{ class: :select2 }
         = f.input :exchange
 
     .col-md-6

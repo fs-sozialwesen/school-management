@@ -1,0 +1,27 @@
+.page-header
+  = link_to report_internships_path(format: :xlsx), id: 'export-csv-button', class: 'btn btn-default' do
+    span.glyphicon.glyphicon-export
+    =< t(:export)
+  h2 Praktika nach Träger
+
+.alert.alert-warning
+  p Achtung! Die Jahre stellen die Jahrgangsstufen der Klassen dar und nicht das Jahr, in dem das Praktikum stattgefunden hat.
+
+.table-responsive
+  table.table.table-striped.table-bordered.table-hover
+    thead
+      tr
+        th Träger
+        - @years.each do |year|
+          th.number = year
+    tbody
+      - @internships.each do |name, counts|
+        tr
+          td = name
+          - @years.each do |year|
+            td.number = counts[year]
+
+sass:
+  td, th
+    &.number
+      text-align: right

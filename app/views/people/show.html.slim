@@ -2,9 +2,9 @@
   = link_to index_path_for(@person), class: 'btn btn-default' do
     span.glyphicon.glyphicon-list-alt
     |  Liste
-  => link_to @person, method: :delete, data: { confirm: t('.confirm_delete') }, class: 'btn btn-danger' do
+  => link_to person_toggle_archived_path(@person), method: :post, class: 'btn btn-danger' do
     span.glyphicon.glyphicon-remove
-    |  Löschen
+    |  Archivieren
   => link_to edit_person_path(@person), class: 'btn btn-primary' do
     span.glyphicon.glyphicon-pencil
     |  Bearbeiten

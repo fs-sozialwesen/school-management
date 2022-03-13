@@ -1,5 +1,5 @@
 - if candidates.nil?
-  label Keine Bewerber in dieser Ansicht
+  label Keine Bewerber*innen in dieser Ansicht
 - else
   - grouped_candidates = candidates.group_by { |cand| cand.interview.date }
   - grouped_candidates.keys.sort.each do |date|
@@ -8,7 +8,7 @@
         h4.panel-title
           a data-toggle="collapse" href="#collapse-#{date}"
             => l(date)
-          span.text-muted.pull-right #{grouped_candidates[date].size} Bewerber
+          span.text-muted.pull-right #{grouped_candidates[date].size} Bewerber*innen
       .panel-collapse.collapse id="collapse-#{date}"
         table.table.table-striped.table-hover.table-condensed.table-clickable
           thead

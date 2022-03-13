@@ -62,11 +62,8 @@ class PeopleController < ApplicationController
   end
 
   def destroy
-    if @person.destroy
-      redirect_to view_context.index_path_for(@person), notice: t(:destroyed, model: model_name(@person))
-    else
-      redirect_to @person, flash: { error: t('.failed')}
-    end
+    @person.update archived: true
+    redirect_to view_context.index_path_for(@person), notice: t(:archived, model: model_name(@person))
   end
 
   def add_role
@@ -74,9 +71,21 @@ class PeopleController < ApplicationController
     @person = Person.find(params[:person_id])
     authorize @person
     @person.send "create_as_#{role}" if role.in?(%w(teacher manager mentor))
-    @person.as_teacher.update intern_manager: true if role == 'intern_manager'
-    @person.as_teacher.update intern_manager: false if role == 'no_intern_manager'
     redirect_to @person
+  end
+
+  def toggle_intern_manager
+    @person = Person.find(params[:person_id])
+    authorize @person
+    @person.as_teacher.update(intern_manager: !@person.as_teacher.intern_manager)
+    redirect_to @person, notice: 'Praxislehrerrechte geändert'
+  end
+
+  def toggle_archived
+    @person = Person.find(params[:person_id])
+    authorize @person
+    @person.update(archived: !@person.archived)
+    redirect_to @person, notice: '👍'
   end
 
   private

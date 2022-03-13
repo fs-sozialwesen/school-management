@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190329213232) do
+ActiveRecord::Schema.define(version: 20210924125731) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -231,15 +231,16 @@ ActiveRecord::Schema.define(version: 20190329213232) do
   add_index "organisations", ["carrier_id"], name: "index_organisations_on_carrier_id", using: :btree
 
   create_table "people", force: :cascade do |t|
-    t.string   "first_name",                  null: false
-    t.string   "last_name",                   null: false
+    t.string   "first_name",                     null: false
+    t.string   "last_name",                      null: false
     t.string   "gender"
     t.date     "date_of_birth"
     t.string   "place_of_birth"
     t.jsonb    "address",        default: {}
     t.jsonb    "contact",        default: {}
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+    t.boolean  "archived",       default: false
   end
 
   create_table "pg_search_documents", force: :cascade do |t|
@@ -258,6 +259,17 @@ ActiveRecord::Schema.define(version: 20190329213232) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "student_contract_terminations", force: :cascade do |t|
+    t.integer  "student_id"
+    t.date     "date",          null: false
+    t.text     "notes"
+    t.string   "terminated_by"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "student_contract_terminations", ["student_id"], name: "index_student_contract_terminations_on_student_id", using: :btree
 
   create_table "students", force: :cascade do |t|
     t.integer  "person_id"
@@ -373,6 +385,7 @@ ActiveRecord::Schema.define(version: 20190329213232) do
   add_foreign_key "managers", "people"
   add_foreign_key "mentors", "organisations"
   add_foreign_key "mentors", "people"
+  add_foreign_key "student_contract_terminations", "students"
   add_foreign_key "students", "courses"
   add_foreign_key "students", "people", on_delete: :cascade
   add_foreign_key "teachers", "people"

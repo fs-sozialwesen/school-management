@@ -2,11 +2,11 @@
   .col-md-4 = panel_box title: 'Klasse' do
     - if student.course.present?
       p = link_to student.course.name, student.course
-    p
-      label> aktiv
-      => bool_icon student.active
-      - unless student.active
-        |  Dropout
+    / p
+    /   label> aktiv
+    /   => bool_icon student.active
+    /   - unless student.active
+    /     |  Dropout
   .col-md-8
     .panel.panel-default
       .panel-heading
@@ -23,7 +23,7 @@
             th Praxisblock
             th Vertrag liegt vor
             th Praktikumsplatz
-            th Praxisanleiter
+            th Praxisanleiter*in
         tbody
           - student.internships.includes(:institution, :mentor).each do |internship|
             tr data={ url: url_for(internship) }

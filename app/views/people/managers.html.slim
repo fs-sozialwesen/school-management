@@ -1,1 +1,12 @@
-= render 'employees', scope: :manager, people: @managers
+.page-header
+  = link_to new_person_path(scope: :manager), class: 'btn btn-primary' do
+    span.glyphicon.glyphicon-plus
+    |  Neu
+  h2
+    => @managers.active.count
+    => t("people.employees.manager")
+
+.active-managers = render 'managers/table', managers: @managers.active
+
+h3 = "#{@managers.archived.count} Archivierte"
+.archived-managers = render 'managers/table', managers: @managers.archived
