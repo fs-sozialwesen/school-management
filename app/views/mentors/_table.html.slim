@@ -8,9 +8,8 @@
         th Betreute Praktika
         th Qualifiziert
     tbody
-      - mentors.each do |person|
-        - mentor = person.as_mentor
-        tr data={ url: url_for(person) } class=('danger' if person.archived?)
+      - mentors.each do |mentor|
+        tr data={ url: url_for(mentor) } class=('danger' if mentor.archived?)
           td = mentor.first_name
           td = mentor.last_name
           td = mentor.organisation.name

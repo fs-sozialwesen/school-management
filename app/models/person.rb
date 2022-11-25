@@ -18,10 +18,11 @@ class Person < ActiveRecord::Base
   has_one :as_teacher,   class_name: 'Teacher', dependent: :destroy
   has_one :as_mentor,    class_name: 'Mentor', dependent: :destroy
 
-  scope :admins,   -> { joins(:as_admin).    includes(:as_admin) }
+  scope :employees, -> { where("id in (?) or id in (?)", Manager.select(:person_id), Teacher.select(:person_id)) }
+  # scope :admins,   -> { joins(:as_admin).    includes(:as_admin) }
   scope :managers, -> { joins(:as_manager).  includes(:as_manager) }
   scope :teachers, -> { joins(:as_teacher).  includes(:as_teacher) }
-  scope :mentors,  -> { joins(:as_mentor).   includes(:as_mentor) }
+  # scope :mentors,  -> { joins(:as_mentor).   includes(:as_mentor) }
   scope :active,   -> { where.not archived: true }
   scope :archived, -> { where archived: true }
 

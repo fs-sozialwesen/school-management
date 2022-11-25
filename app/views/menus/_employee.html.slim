@@ -2,12 +2,13 @@
 = menu_item_for Student
 
 - if current_user.manager?
-  li.dropdown
-    a.dropdown-toggle@button href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-      |  Mitarbeiter*innen <span class="caret"></span>
-    ul.dropdown-menu
-      = menu_item_for :managers
-      = menu_item_for :teachers
+  = menu_item_for :teachers
+  / li.dropdown
+  /   a.dropdown-toggle@button href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+  /     |  Mitarbeiter*innen <span class="caret"></span>
+  /   ul.dropdown-menu
+  /     = menu_item_for :managers
+  /     = menu_item_for :teachers
 
 li.dropdown
   a.dropdown-toggle@button href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
@@ -16,7 +17,7 @@ li.dropdown
     = menu_item_for Organisation
     /= menu_item_for InternshipPosition
     = menu_item_for Institution
-    = menu_item_for :mentors
+    = menu_item_for Mentor
     = menu_item_for Internship
     = menu_item_for InternshipBlock
     / = menu_item label: 'Praktika nach Träger', link: report_internships_url, active: request.path == report_internships_path
@@ -29,6 +30,8 @@ li.dropdown
     a.dropdown-toggle@button href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
       |  Verwaltung <span class="caret"></span>
     ul.dropdown-menu
+      = menu_item_for :managers
+
       = menu_item_for Room
       = menu_item_for Subject
       = menu_item_for TimeBlock

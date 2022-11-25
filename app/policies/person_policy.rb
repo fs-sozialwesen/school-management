@@ -1,5 +1,9 @@
 class PersonPolicy < ApplicationPolicy
 
+  def employees?
+    manager?
+  end
+
   def managers?
     manager?
   end

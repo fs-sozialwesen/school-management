@@ -1,0 +1,19 @@
+.page-header
+  = link_to mentors_path(format: :csv), id: 'export-csv-button', class: 'btn btn-default' do
+    span.glyphicon.glyphicon-export
+    =< t(:export)
+  = link_to new_mentor_path, class: 'btn btn-primary' do
+    span.glyphicon.glyphicon-plus
+    =< t(:new)
+  h2
+    => @mentors.active.count
+    = Mentor.model_name.human count: @mentors.count
+
+= render 'table', mentors: @mentors.active
+
+h3 #{@mentors.archived.count} Archivierte
+= render 'table', mentors: @mentors.archived
+
+coffee:
+  $ -> window.onhashchange = -> window.scrollTo(0, window.scrollY - 80 )
+

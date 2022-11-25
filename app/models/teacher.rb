@@ -1,7 +1,7 @@
 class Teacher < ActiveRecord::Base
   belongs_to :person, validate: true, inverse_of: :as_teacher
   has_one :login, through: :person
-  has_many :courses, inverse_of: :teacher
+  has_many :courses, ->{ order(:name) }, inverse_of: :teacher
   has_many :lessons, inverse_of: :teacher, dependent: :restrict_with_error
 
   scope :with_person, -> { joins(:person).order('people.last_name') }

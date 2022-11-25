@@ -3,8 +3,8 @@ h2
   - if @person.teacher?
     small => t(:teacher)
   - if @person.manager?
-    small = t(:manager)
+    small => t(:manager)
   - if @person.mentor?
-    small = t(:mentor)
+    small => t(:mentor)
   - if @person.archived?
     small: span.label.label-danger archiviert

@@ -5,6 +5,11 @@ class PeopleController < ApplicationController
   before_action :set_person, only: [:show, :edit, :update, :destroy]
   before_action :set_course_filter, only: :students
 
+  def employees
+    authorize Person
+    @employees = Person.employees.includes(:login, :as_manager, as_teacher: :courses).order(:last_name)
+  end
+
   def managers
     authorize Person
     @managers = Person.managers.includes(:login).order(:last_name).all
